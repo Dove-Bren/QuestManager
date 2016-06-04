@@ -1,8 +1,7 @@
 name: QuestManager
 main: com.SkyIsland.QuestManager.QuestManagerPlugin
 version: 1.0
-softdepend: [Fanciful, Multiverse-Core]
-loadfirst: Multiverse-Core, Multiverse-Portals, Multiverse-Inventories
+softdepend: [Multiverse-Core, Multiverse-Portals, Multiverse-Inventories]
 permissions:
     questmanager.admin:
         description: The permission to do plugin-critical things like reload
