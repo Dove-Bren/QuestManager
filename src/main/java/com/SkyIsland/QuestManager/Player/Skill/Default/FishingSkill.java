@@ -180,7 +180,7 @@ public class FishingSkill extends LogSkill implements Listener {
 		if (!configFile.exists()) {
 			YamlWriter writer = new YamlWriter();
 			
-			writer.addLine("enabled", true, Lists.newArrayList("Whether or not this skill is allowed to be used.", "Note: To turn off imbueing altogether, see the imbument config", "in folder defaultly one up from here: imbuement.yml", "true | false"))
+			writer.addLine("enabled", true, Lists.newArrayList("Whether or not this skill is allowed to be used.",  "true | false"))
 				.addLine("startingLevel", 0, Lists.newArrayList("The level given to players who don't have this skill yet", "[int]"))
 				.addLine("difficultyPerRow", 15, Lists.newArrayList("How many difficulty levels are required to add", "another row of water to the minigame", "[int] greater than 0", "Will enforce cap of 5"))
 				.addLine("baseReelDifficulty", 0.03, Lists.newArrayList("Average reel change (out of 1) per half second.", "higher levels are harder", "[double] ratio out of 1. Game fails when", "the total number goes above 1 or below 0"))

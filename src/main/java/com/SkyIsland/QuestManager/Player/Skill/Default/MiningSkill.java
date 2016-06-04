@@ -209,7 +209,7 @@ public class MiningSkill extends LogSkill implements Listener {
 		if (!configFile.exists()) {
 			YamlWriter writer = new YamlWriter();
 			
-			writer.addLine("enabled", true, Lists.newArrayList("Whether or not this skill is allowed to be used.", "Note: To turn off imbueing altogether, see the imbument config", "in folder defaultly one up from here: imbuement.yml", "true | false"))
+			writer.addLine("enabled", true, Lists.newArrayList("Whether or not this skill is allowed to be used.", "true | false"))
 				.addLine("startingLevel", 0, Lists.newArrayList("The level given to players who don't have this skill yet", "[int]"))
 				.addLine("baseHardness", 1, Lists.newArrayList("Base toughness of mining materials.", "[double] ranges from 0 to 2"))
 				.addLine("hardnessDeviation", 0.5, Lists.newArrayList("Standard deviation on material type", "from the above average", "[double] Hardness is a scale from 0-2"))

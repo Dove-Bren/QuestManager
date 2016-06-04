@@ -237,7 +237,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 		if (!configFile.exists()) {
 			YamlWriter writer = new YamlWriter();
 			
-			writer.addLine("enabled", true, Lists.newArrayList("Whether or not this skill is allowed to be used.", "Note: To turn off imbueing altogether, see the imbument config", "in folder defaultly one up from here: imbuement.yml", "true | false"))
+			writer.addLine("enabled", true, Lists.newArrayList("Whether or not this skill is allowed to be used.",  "true | false"))
 				.addLine("startingLevel", 0, Lists.newArrayList("The level given to players who don't have this skill yet", "[int]"))
 				.addLine("timingBase", .3, Lists.newArrayList("Base time a player can be early or late", "and still count as having hit", "[double] number of seconds"))
 				.addLine("timingRate", .002, Lists.newArrayList("How many fewer seconds per difficulty", "that a player can hit and have it count", "[double] number of seconds"))
