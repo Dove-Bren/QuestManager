@@ -1,7 +1,7 @@
 name: QuestManager
 main: com.SkyIsland.QuestManager.QuestManagerPlugin
 version: 1.0
-softdepend: [Fanciful, Multiverse-Core]
+softdepend: [Fanciful, Multiverse-Portals, Multiverse-Inventories]
 loadfirst: Multiverse-Core, Multiverse-Portals, Multiverse-Inventories
 permissions:
     questmanager.admin:
