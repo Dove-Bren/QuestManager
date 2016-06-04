@@ -57,12 +57,12 @@ public class PluginConfiguration {
 		INVOKERNAME("interface.spellweaving.invokerName"),
 		INVOKERTYPE("interface.spellweaving.invokerType"),
 		ALTERTYPE("interface.magic.alterBlockType"),
-		COMBINEQUALITY("interface.crafting.combineQuality"),
+		//COMBINEQUALITY("interface.crafting.combineQuality"),
 		WORLDS("questWorlds"),
-		//QUESTS("quests"),
 		QUESTDIR("questDir"),
 		SAVEDIR("saveDir"),
-		ENEMYDIR("enemyDir"),
+		//ENEMYDIR("enemyDir"),
+		REGIONDIR("regionDir"),
 		SPELLDIR("spellDir"),
 		SKILLDIR("skillDir"),
 		SKILLCAP("skill.cap"),
@@ -346,11 +346,11 @@ public class PluginConfiguration {
 	}
 	
 	/**
-	 * Returns the path to where enemy spawning location is kept
+	 * Returns the path to where region data including enemy spawn data is kept
 	 * @return
 	 */
-	public String getEnemyPath() {
-		return config.getString(PluginConfigurationKey.ENEMYDIR.key);
+	public String getRegionPath() {
+		return config.getString(PluginConfigurationKey.REGIONDIR.key);
 	}
 	
 	/**
@@ -444,15 +444,6 @@ public class PluginConfiguration {
 	}
 	
 	/**
-	 * Should players be able to combine items to get all the items and quality combined and averaged?
-	 * For example, coal wih quality 2.0 and coal with quality 1.0 would make 2 x coal with quality 1.5
-	 * @return
-	 */
-	public boolean getCombineQualityItems() {
-		return config.getBoolean(PluginConfigurationKey.COMBINEQUALITY.key, true);
-	}
-	
-	/**
 	 * Sets up a default configuration file with blank values
 	 * @param configFile
 	 */
@@ -494,7 +485,6 @@ public class PluginConfiguration {
 		
 		config.set(PluginConfigurationKey.HOLDERNAME.key, "Magic Scroll");
 		config.set(PluginConfigurationKey.ALTERTYPE.key, "ENCHANTING_TABLE");
-		config.set(PluginConfigurationKey.COMBINEQUALITY.key, true);
 		
 		//magic options
 		config.set(PluginConfigurationKey.ALLOWMAGIC.key, true);
@@ -514,7 +504,7 @@ public class PluginConfiguration {
 		
 		config.set(PluginConfigurationKey.QUESTDIR.key, "quests/");
 		config.set(PluginConfigurationKey.SAVEDIR.key, "savedata/");
-		config.set(PluginConfigurationKey.ENEMYDIR.key, "enemies/");
+		config.set(PluginConfigurationKey.REGIONDIR.key, "regions/");
 		config.set(PluginConfigurationKey.SPELLDIR.key, "spells/");
 		config.set(PluginConfigurationKey.SKILLDIR.key, "skills/");
 		

@@ -157,7 +157,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 	
 	private File questDirectory;
 	
-	private File enemyDirectory;
+	private File regionDirectory;
 	
 	private File spellDirectory;
 	
@@ -198,9 +198,9 @@ public class QuestManagerPlugin extends JavaPlugin {
 			questDirectory.mkdirs();
 		}
 		
-		enemyDirectory = new File(getDataFolder(), config.getEnemyPath());
-		if (!enemyDirectory.exists()) {
-			enemyDirectory.mkdirs();
+		regionDirectory = new File(getDataFolder(), config.getRegionPath());
+		if (!regionDirectory.exists()) {
+			regionDirectory.mkdirs();
 		}
 		
 		spellDirectory = new File(getDataFolder(), config.getSpellPath());
@@ -304,7 +304,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 
 		imbuementHandler = new ImbuementHandler(new File(getDataFolder(), imbuementFileName));
 		
-		regionManager = new RegionManager(enemyDirectory, 3);
+		regionManager = new RegionManager(regionDirectory, 3);
 		
 		registerDefaultSkills();
 		

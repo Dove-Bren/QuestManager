@@ -4,215 +4,349 @@
 ############################
 version: 1.0
 
-############################
-# List of quests 
-############################
-quests:
-  - "Know Your Enemy"
-  - "The Fletcher"
-  - "Upgrades"
-  - "Mana"
-  - "Drowned Sorrows"
-  - "Among The Wreckage"
-  - "Slimey Things"
-  - "Strange Creatures"
-  - "Plain And Simple 2"
-  - "No Time"
-  - "Sun Vermin"
-  - "Wandering Curiosity"
-  - "Deep Blue"
-  - "Tuxedo"
-  - "Unnatural"
-  - "Sea Enemies"
-  - "Restless Imps"
-  - "Imp Safety"
-  - "Imp Hardware"
-  - "Dancing Bones"
-  - "Not Far Enough"
-  - "Too Many Legs"
-  - "Dazling Spiders"
-  - "Water Logged"
-  - "Natural Cleansing"
-  - "Twin Dragons"
-  - "Sticky Wishes"
-  - "The Imbuer"
-  - "Quest for the Apples"
-  - "Slippery Dreams"
-  - "Frozen With Fear"
-  - "Spider Hunting"
-  - "Managing The Realm"
-  - "Getting Started"
-  - "A Whole New World"
-  - "The Right Side"
-  - "More Than Bats"
-  - "Fire Maze"
-  - "Soft Like Me"
-  - "Bad Dog"
-  - "Out At Onuit"
-  - "Down In A Hole"
-  - "Moonlit Hunting"
-  - "White Petals"
-  - "Mite As Well"
-  - "Stealing Hearts"
-  - "A Hellish Discovery"
-  - "Dreadful News"
-  - "Clean Sweep"
-  - "Tastes Like Crab"
-  - "Food For Death"
-  - "Better Than The Dead"
-  - "Besting The Night"
-  - "First Orders"
-  - "Beating Strong"
-  - "Better Than Aloe"
-  - "Savages"
-  - "Deep Gaze"
-  - "Dark Depths"
-  - "Toxic Fashion"
-  - "Relatives"
-  - "Relatively Difficult"
-  - "World Tour"
-  - "Darker Places"
-  - "Not Peerless"
-  - "Packing Heat"
-  - "Heat Waves"
-  - "Into The Oven"
-  - "Leading The Pack"
-  - "Down At The Lake"
-  - "Around The Corner"
-  - "Curious Undead"
-  - "Rotten Breath"
-  - "The Walking Dead"
-  - "Shadow Chaser"
-  - "Just Bones"
-  - "Hell Spawn"
-  - "Hilt Of The Warrior"
-  - "Forging Bonds"
-  - "Support Relations"
-  - "Weapon Crafting"
-  - "Free Lunch"
-  - "Nighttime Meeting"
-  - "Neighbors"
-  - "Playing Fetch"
-  - "Artifacts"
-  - "The Moon Route"
-  - "The Sisters"
-  - "King Slime"
-  - "Piecing It Together"
-  - "Pup Slaying"
-  - "Basement Treasure"
-  - "Ancient Treasure"
-  - "Guiding Hands"
-  - "A Steady Hand"
-  - "Treasure At Last"
-  - "Probably Fine"
-  - "Monster Hunter"
-  - "Searching for Peace"
-  - "Unmarried Nations"
-  - "Sponsoring Death"
-  - "Proof"
-  - "A Hero of Heroes"
-  - "Help Wanted"
-  - "Research"
-  - "In Preparation"
-  - "Ancient Knowledge"
-  - "Wasted Time"
-  - "Admist The Coal"
-  - "Earning Trust"
-  - "Differences"
-  - "Rebury"
-  - "True Beauty"
-  - "Forest Hunting"
-  - "Bandit Raid"
-  - "Simple Service"
-  - "Forge Apprentice"
-  - "Strong Spirit"
-  - "Crafting Ties"
-  - "Rival Forges"
-  - "Wolves"
-  - "Lost Toy"
-  - "Angst"
-  - "Plain And Simple"
-  - "Inheritance"
-  - "Interlibrary Loan"
-  - "Hired Hand"
-  - "Off The Books"
-  - "Fossils"
-  - "The Gray"
-  - "Understudy"
-  - "Lungs of Steal"
-  - "Young Blood"
-  - "Excuses"
-  - "Pursuit"
-  - "Release"
-  - "Arachnidemons"
-  - "Forest Dweller"
-  - "Noisy Neighbors"
-  - "Reagents"
-  - "Momentos"
-  - "Family History"
-  - "Twisted Memories"
-  - "Family Secrets"
-  - "Imp Route"
-  - "Blessed Knowledge"
-  - "Darkest Black"
-  - "Void Master"
-  - "Water Master"
-  - "Light Master"
-  - "Curiosity"
-  - "Might of Generations"
+###############################################################################
+###                                                                         ###
+###                       Directory Listing                                 ###
+###                                                                         ###
+###############################################################################
+
+#####################################
+# Quest directory. All .yml files
+# in the directory are loaded as
+# quest templates
+#####################################
 questDir: quests/
+
+#####################################
+# Save directory. A folder where
+# QM will save and load quest state
+# information between starts and stops
+#####################################
 saveDir: savedata/
-enemyDir: enemies/
+
+#####################################
+# Region directory. All .yml files
+# found are loaded as region files.
+# These define enemy spawns, regions
+#####################################
+regionDir: region/
+
+#####################################
+# Spell directory. All .yml files
+# found are loaded as spell files.
+# These define spells available
+# and their effects/costs/etc
+#####################################
 spellDir: spells/
+
+#####################################
+# Skill directory. Skills look here
+# to find and/or create their specific
+# configuration files
+#####################################
 skillDir: skills/
-skill:
-  cap: 100
-  growth:
-    success: 0.10
-    fail: 0.025
-    cutoff: 10
-    cutoffUpper: true
-menus:
-  verboseMenus: false
-config:
-  conservativeMode: true
-player:
-  allowCrafting: false
-  allowTaming: false
-  allowNaming: false;
-  maxPartySize: 4
-world:
-  villagerCleanup: true
-interface:
-  usePortals: true
-  useXPMoney: true
-  adjustXP: true
-  titleInChat: true
-  compass:
-    enabled: true
-    type: "COMPASS"
-    name: "Magic Compass"
-  magic:
-    holderName: "Spell Vessel"
-    alterBlockType: "ENCHANTMENT_TABLE"
-  spellweaving:
-    invokerName: "Spell Invoker"
-    invokerType: CARROT_STICK
-  crafting:
-    combineQuality: true
+
+
+###############################################################################
+###                                                                         ###
+###                          Manager Settings                               ###
+###                                                                         ###
+###############################################################################
+
+#####################################
+# Which worlds should be treated as
+# quest worlds? Players not in these
+# worlds are overlooked by QM
+#####################################
 questWorlds:
   - "QuestWorld"
   - "QuestTutorial"
+  
+#####################################
+# Quest templates can be cleaned up if
+# they aren't able to be loaded in.
+# This turns that off
+#####################################
+config:
+  conservativeMode: true
+  
+#####################################
+# Some plugins modify the way chunks
+# are loaded or prevent certain ones
+# from unloaded at all. This can cause
+# issues with villagers. This option
+# removes villagers when chunks are
+# unloaded and puts them back when
+# needed. Comes with a little overhead
+# but fixes potential NPC clones
+#####################################
+world:
+  villagerCleanup: true
+
+
+###############################################################################
+###                                                                         ###
+###                          Player Interfaces                              ###
+###                                                                         ###
+###############################################################################
+
+#####################################
+# Should menus tell you when they
+# have expired, but you try clicking
+# them again? Turn on to discourage
+# spammy clickers
+#####################################
+menus:
+  verboseMenus: false
+  
+#####################################
+# Player-specific options. Only apply
+# when a player is in a QuestWorld
+#####################################
+player:
+  #####################################
+  # Can a player craft (crafting table
+  # or regular inventory crafting)
+  #####################################
+  allowCrafting: false
+
+  #####################################
+  # Can players tame animals in QWorlds?
+  #####################################
+  allowTaming: false
+  
+  #####################################
+  # Whether players can rename items
+  # on anvils. Important if items and
+  # drops rely on item names for info
+  #####################################
+  allowNaming: false;
+  
+  #####################################
+  # Maximum players that can be in a party
+  #####################################
+  maxPartySize: 4
+  
+#####################################
+# QuestWorld interfacing options
+#####################################
+interface:
+  #####################################
+  # Should QM use MultiverPortals to
+  # set player checkpoints when taking
+  # a portal to and from a QuestWorld?
+  # REQUIRES MultiverPortals
+  #####################################
+  usePortals: true
+  
+  #####################################
+  # XP can be used as money; When XP
+  # is picked up, it'll be used as xp
+  # instead, and the player's experience
+  # level is used as money indicator
+  #####################################
+  useXPMoney: true
+  
+  #####################################
+  # QM can change the amount of xp
+  # dropped by mobs automatically based
+  # on their name. This only works on
+  # mobs with names that include their
+  # 'level' []in format Mob (Lvl 4)]
+  #####################################
+  adjustXP: true
+  
+  #####################################
+  # Should player titles prefix their
+  # chat messages? Works across worlds
+  #####################################
+  titleInChat: true
+  
+  #####################################
+  # The Magic Compass points players to
+  # select locatable objectives for quests
+  # This configures the compass
+  #####################################
+  compass:
+    #####################################
+    # Should compasses work like the magic
+    # compass? If false, compasses function
+    # the same as vanilla compasses
+    #####################################
+    enabled: true
+    
+    #####################################
+    # What object should be used as a
+    # compass? This is a Bukkit.Material
+    #####################################
+    type: "COMPASS"
+    
+    #####################################
+    # What name should compasses have to
+    # have to be considered valid magic
+    # compasses?
+    #####################################
+    name: "Magic Compass"
+    
+  #####################################
+  # Magic interfaces. Don't mean anything
+  # if magic is disabled below
+  #####################################
+  magic:
+    #####################################
+    # Name vessels are required to have to
+    # be considered real and valid
+    #####################################
+    holderName: "Spell Vessel"
+    
+    #####################################
+    # What block do players use their
+    # vessels on to assign it a new spell?
+    # This is a Bukkit.Material
+    #####################################
+    alterBlockType: "ENCHANTMENT_TABLE"
+    
+  #####################################
+  # Spell Weaving interfaces
+  #####################################
+  spellweaving:
+    #####################################
+    # Name invokers are required to have
+    # to  be considered valid
+    #####################################
+    invokerName: "Spell Invoker"
+    
+    #####################################
+    # Item used as the invoker. Works well
+    # when you haven't made an invocation
+    # spell and want to use an item instead
+    # This is a Bukkit.Material
+    #####################################
+    invokerType: CARROT_STICK
+  
+  
+###############################################################################
+###                                                                         ###
+###                          Feature Settings                               ###
+###                                                                         ###
+###############################################################################  
+  
+#####################################
+# Default Skill behavioral settings
+#####################################
+skill:
+  #####################################
+  # Maximum skill level for any skill
+  #####################################
+  cap: 100
+  growth:
+    #####################################
+    # Percent tnl given when a skill is
+    # successfully used with an action of
+    # the same level
+    #####################################
+    success: 0.10
+    
+    #####################################
+    # Percent tnl given when a skill is
+    # failed, but the level matched. Can
+    # be 0.0 and everything works fine
+    #####################################
+    fail: 0.025
+    
+    #####################################
+    # Maximum difference between skill
+    # level and action level where a player
+    # still gets xp
+    #####################################
+    cutoff: 10
+    
+    #####################################
+    # Should the cutoff apply to actions
+    # that are at a higher level than the
+    # player? For example, a lvl 10 lumberjack
+    # chops down a lvl 80 tree. Deny XP?
+    #####################################
+    cutoffUpper: true
+    
+#####################################
+# Magic system configuration
+#####################################
+magic:
+  #####################################
+  # Can magic be used?
+  #####################################
+  enabled: true
+  
+  #####################################
+  # How much mana do new players get
+  #####################################
+  startingMana: 20
+  
+  #####################################
+  # How much mana is regenned in the day?
+  # If positive, this is the amount.
+  # if negtive, this is the percent
+  # (-50 is 50% of the total is regenned)
+  #####################################
+  dayRegen: 1.0
+  
+  #####################################
+  # How much mana is regenned in the day?
+  # If positive, this is the amount.
+  # if negtive, this is the percent
+  # (-50 is 50% of the total is regenned
+  #####################################
+  nightRegen: 1.0
+  
+  #####################################
+  # Do players ONLY regen if they can
+  # see the sky?
+  #####################################
+  outsideRegen: true
+  
+  #####################################
+  # How much mana does a player get each
+  # time they kill something?
+  # If positive, this is the amount.
+  # if negtive, this is the percent
+  # (-50 is 50% of the total is regenned
+  #####################################
+  regenOnKill: 1.0
+  
+  #####################################
+  # How much mana does a player get when
+  # they absorb a piece of xp
+  # If positive, this is the amount.
+  # if negtive, this is the percent
+  # (-50 is 50% of the total is regenned
+  #####################################
+  regenOnXP: 1.0
+  
+  #####################################
+  # How much mana does a player get for
+  # each piece of food they eat
+  # If positive, this is the amount.
+  # if negtive, this is the percent
+  # (-50 is 50% of the total is regenned
+  #####################################
+  regenOnFood: -50.0
+  
+#####################################
+# Maximum summons a player can have
+# at a time
+#####################################
 summonLimit: 2
+
+#####################################
+# Spell Weaving settings
+#####################################
 spellweaving:
   enabled: true
+  #####################################
+  # Should the invoker work? If not but
+  # you want to use spellweaving, you'll
+  # need to make sure to create a spell
+  # that has the Invoke Effect
+  #####################################
   useInvoker: true
-magic:
-  enabled: true
-  startingMana: 20
-  dayRegen: 1.0
-  nightRegen: 1.0
-  outsideRegen: true
-  regenOnKill: 1.0
-  regenOnXP: 1.0
-  regenOnFood: -50.0
