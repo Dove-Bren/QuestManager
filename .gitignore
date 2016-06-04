@@ -3,3 +3,6 @@
 bin/
 .settings/
 /bin1/
+.idea/
+.gradle/
+build/
