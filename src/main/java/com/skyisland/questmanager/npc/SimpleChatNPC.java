@@ -57,7 +57,7 @@ public class SimpleChatNPC extends SimpleNPC {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

@@ -152,7 +152,7 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

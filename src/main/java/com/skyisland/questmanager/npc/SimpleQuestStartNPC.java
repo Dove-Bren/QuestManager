@@ -64,7 +64,7 @@ public class SimpleQuestStartNPC extends SimpleStaticBioptionNPC implements Comp
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

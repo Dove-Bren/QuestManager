@@ -56,7 +56,7 @@ public class ShopNPC extends SimpleStaticBioptionNPC {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

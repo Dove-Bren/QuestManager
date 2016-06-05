@@ -28,12 +28,12 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 	
 	public final static CharSequence cmdBase = "=CMD=";
 		
-	public static enum Commands {
+	public enum Commands {
 		MENU("qmchatmenu");
 		
 		private String command;
 		
-		private Commands(String command) {
+		Commands(String command) {
 			this.command = command;
 		}
 		

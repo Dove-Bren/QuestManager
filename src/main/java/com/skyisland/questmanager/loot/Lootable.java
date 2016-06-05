@@ -12,7 +12,7 @@ import java.util.Random;
  */
 public interface Lootable {
 	
-	public List<Loot> getLoot();
+	List<Loot> getLoot();
 	
 	/**
 	 * Standard method of selecting a piece of loot from a list of loot items.<br />
@@ -25,7 +25,7 @@ public interface Lootable {
 	 * @param loot
 	 * @return
 	 */
-	public static Loot pickLoot(List<Loot> loot) {
+	static Loot pickLoot(List<Loot> loot) {
 		if (loot == null || loot.isEmpty()) {
 			return null;
 		}

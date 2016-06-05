@@ -93,7 +93,7 @@ public class MiningGui extends ReturnGuiInventory implements Alarmable<Integer> 
 		
 		private ItemStack icon;
 		
-		private BlockMaterial(ItemStack icon) {
+		BlockMaterial(ItemStack icon) {
 			this.icon = icon;
 		}
 		

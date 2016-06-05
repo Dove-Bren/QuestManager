@@ -42,7 +42,7 @@ public class SwapEffect extends SpellEffect {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

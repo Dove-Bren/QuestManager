@@ -11,5 +11,5 @@ import org.bukkit.Location;
  */
 public interface CompassTrackable {
 	
-	public Location getLocation();
+	Location getLocation();
 }

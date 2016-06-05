@@ -47,7 +47,7 @@ public class Chest implements ConfigurationSerializable {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

@@ -7,7 +7,7 @@ public interface Alarmable<T> {
 	 * Receipt of this method indicates that the object is no longer registered with the scheduler.
 	 * @param reference
 	 */
-	public void alarm (T reference);
+	void alarm(T reference);
 	
 	/**
 	 * Checks whether this method is equal to the passed.<br />
@@ -16,6 +16,6 @@ public interface Alarmable<T> {
 	 * @return
 	 */
 	@Override
-	public boolean equals(Object o);
+	boolean equals(Object o);
 	
 }

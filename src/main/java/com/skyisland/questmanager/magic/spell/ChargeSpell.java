@@ -62,7 +62,7 @@ public class ChargeSpell extends SimpleSelfSpell implements Listener {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
