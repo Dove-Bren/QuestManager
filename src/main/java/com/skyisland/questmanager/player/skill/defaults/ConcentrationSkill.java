@@ -110,5 +110,4 @@ public class ConcentrationSkill extends LogReducedSkill implements Listener {
 		this.perform(player);  
 		
 	}
-	
 }

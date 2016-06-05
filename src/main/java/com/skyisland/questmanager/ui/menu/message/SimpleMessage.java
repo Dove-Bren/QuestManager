@@ -99,7 +99,4 @@ public class SimpleMessage extends Message {
 		.then(message);	
 		
 	}
-	
-	
-	
 }

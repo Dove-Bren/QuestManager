@@ -17,5 +17,4 @@ public interface Alarmable<T> {
 	 */
 	@Override
 	public boolean equals(Object o);
-	
 }

@@ -175,5 +175,4 @@ public class ForgeNPC extends SimpleStaticBioptionNPC {
 
 		messageChat.show(player);
 	}
-	
 }

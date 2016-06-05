@@ -72,5 +72,4 @@ public class MagicCastEvent extends Event {
 	public void setFail(boolean isFail) {
 		this.isFail = isFail;
 	}
-	
 }

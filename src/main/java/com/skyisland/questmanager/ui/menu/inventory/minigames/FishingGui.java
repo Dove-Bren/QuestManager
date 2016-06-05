@@ -613,5 +613,4 @@ public class FishingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		
 		return false;
 	}
-	
 }

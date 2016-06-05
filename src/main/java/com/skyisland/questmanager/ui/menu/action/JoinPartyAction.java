@@ -38,5 +38,4 @@ public class JoinPartyAction implements MenuAction {
 		p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Tone.G));
 		p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Tone.E));
 	}
-
 }

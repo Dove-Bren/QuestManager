@@ -53,5 +53,4 @@ public abstract class Enemy implements ConfigurationSerializable {
 	public String generateNewEnemyClassID() {
 		return "_BASEenemyID_" + Enemy.enemyClassIDIndex++; 
 	}
-	
 }

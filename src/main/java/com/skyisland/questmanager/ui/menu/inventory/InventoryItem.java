@@ -41,5 +41,4 @@ public abstract class InventoryItem {
 	 * @return
 	 */
 	public abstract MenuAction getAction(QuestPlayer player);
-
 }

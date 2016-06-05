@@ -131,7 +131,4 @@ public class DamageEffect extends ImbuementEffect {
 		effect.setDisplayName(getDisplayName());
 		return effect;		
 	}
-	
-	
-	
 }

@@ -167,5 +167,4 @@ public class BankNPC extends SimpleStaticBioptionNPC {
 
 		messageChat.show(player);
 	}
-	
 }

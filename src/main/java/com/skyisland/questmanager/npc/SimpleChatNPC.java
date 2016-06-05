@@ -175,5 +175,4 @@ public class SimpleChatNPC extends SimpleNPC {
 	public void tick() {
 		
 	}
-
 }

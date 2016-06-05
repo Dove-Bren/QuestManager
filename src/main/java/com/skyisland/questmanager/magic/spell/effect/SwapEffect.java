@@ -77,7 +77,4 @@ public class SwapEffect extends SpellEffect {
 	public void apply(Location loc, MagicUser cause) {
 		; //do nothing
 	}
-	
-	
-	
 }

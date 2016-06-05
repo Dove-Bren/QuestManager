@@ -22,5 +22,4 @@ public class OpenInventoryGuiAction implements MenuAction {
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(
 				player.getPlayer().getPlayer(), menu);
 	}
-
 }

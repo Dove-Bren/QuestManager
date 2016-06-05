@@ -222,5 +222,4 @@ public class PlayerManager implements Tickable {
 	public TitleEffect getTitleEffect() {
 		return titleEffect;
 	}
-	
 }

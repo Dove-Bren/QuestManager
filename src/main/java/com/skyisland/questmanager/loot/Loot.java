@@ -164,5 +164,4 @@ public class Loot implements ConfigurationSerializable {
 	public void setItem(ItemStack item) {
 		this.item = item;
 	}
-
 }

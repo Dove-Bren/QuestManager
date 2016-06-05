@@ -81,5 +81,4 @@ public class ImbuementHolder {
 		return player.getStoredImbuement(holder.getDurability());
 		
 	}
-	
 }

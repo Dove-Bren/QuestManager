@@ -116,5 +116,4 @@ public class TwoHandedSkill extends LogSkill implements Listener {
 		this.perform(e.getPlayer(), e.isMiss());
 		
 	}
-	
 }

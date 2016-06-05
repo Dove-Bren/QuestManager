@@ -100,8 +100,4 @@ public class InventoryMenu implements Listener {
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().closeMenu((Player) e.getPlayer());
 		
 	}
-	
-	
-	
-	
 }

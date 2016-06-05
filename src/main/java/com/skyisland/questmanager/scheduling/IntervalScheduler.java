@@ -87,6 +87,4 @@ public class IntervalScheduler extends Scheduler {
 	public void register(Tickable tick) {
 		this.list.add(tick);
 	}
-
-	
 }

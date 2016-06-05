@@ -20,5 +20,4 @@ public class SimpleChatMenu extends ChatMenu {
 	protected boolean input(Player player, String arg) {
 		return true; //do nothing. Just a text menu
 	}
-
 }

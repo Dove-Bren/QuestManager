@@ -489,5 +489,4 @@ public class MiningSkill extends LogSkill implements Listener {
 		QualityItem result = new QualityItem(smeltItem.clone(), sum);
 		e.getPlayer().getInventory().addItem(result.getItem());
 	}
-	
 }

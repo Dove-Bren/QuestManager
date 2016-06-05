@@ -445,5 +445,4 @@ public class Party implements Participant, Listener {
 			p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Tone.E));
 		}
 	}
-	
 }

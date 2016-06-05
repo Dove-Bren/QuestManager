@@ -15,5 +15,4 @@ interface JsonRepresentedObject {
 	 * @throws IOException If an error occurs writing to the stream.
 	 */
 	public void writeJson(JsonWriter writer) throws IOException;
-	
 }

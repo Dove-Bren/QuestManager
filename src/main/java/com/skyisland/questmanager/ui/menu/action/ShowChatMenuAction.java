@@ -24,5 +24,4 @@ public class ShowChatMenuAction implements MenuAction {
 	public void onAction() {
 		menu.show(player);
 	}
-
 }

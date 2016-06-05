@@ -43,5 +43,4 @@ public class ImbueAction implements MenuAction {
 		p.getWorld().playSound(p.getLocation(), sound, 1, 1);
 		
 	}
-
 }

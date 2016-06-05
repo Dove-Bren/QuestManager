@@ -168,5 +168,4 @@ public class ShopNPC extends SimpleStaticBioptionNPC {
 
 		messageChat.show(player);
 	}
-	
 }

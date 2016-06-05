@@ -110,5 +110,4 @@ public class TacticsSkill extends LogReducedSkill implements Listener {
 		this.perform(e.getPlayer()); //only get a 'cause miss' if this skill caused it 
 		
 	}
-	
 }

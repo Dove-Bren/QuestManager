@@ -132,5 +132,4 @@ public class ServiceCraftItem extends ServiceItem {
 
 		return result;
 	}
-	
 }

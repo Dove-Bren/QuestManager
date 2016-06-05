@@ -10,5 +10,4 @@ import org.bukkit.inventory.ItemStack;
 public interface ItemFilter {
 
 	public boolean filterItem(ItemStack item);
-	
 }

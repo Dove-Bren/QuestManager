@@ -27,5 +27,4 @@ public interface StagedIncreaseSkill {
 	 * @param fail whether or not the action was failed. May or not award xp on failure, as determined by config
 	 */
 	public void performMajor(QuestPlayer participant, int actionLevel, boolean fail);
-	
 }

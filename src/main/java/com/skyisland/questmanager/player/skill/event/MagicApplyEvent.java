@@ -120,5 +120,4 @@ public class MagicApplyEvent extends Event {
 		
 		return calc;
 	}
-	
 }

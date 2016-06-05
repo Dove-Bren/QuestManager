@@ -797,5 +797,4 @@ public class QuestManager implements Listener {
 			}
 		}
 	}
-	
 }

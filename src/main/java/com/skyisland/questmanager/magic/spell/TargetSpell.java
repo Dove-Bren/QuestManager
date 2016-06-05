@@ -13,5 +13,4 @@ public abstract class TargetSpell extends Spell {
 	protected abstract void onBlockHit(MagicUser caster, Location loc);
 	
 	protected abstract void onEntityHit(MagicUser caster, LivingEntity target);
-	
 }

@@ -233,5 +233,4 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 //		ol.getBlock().setType(Material.STONE);
 //		
 //	}
-	
 }

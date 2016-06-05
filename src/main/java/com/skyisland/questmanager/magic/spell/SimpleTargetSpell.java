@@ -221,5 +221,4 @@ public class SimpleTargetSpell extends TargetSpell {
 			target.getWorld().playSound(target.getEyeLocation(), contactSound, 1, 1);
 		}
 	}
-
 }

@@ -145,5 +145,4 @@ public class ForgeAction implements MenuAction {
 		}
 		
 	}
-
 }

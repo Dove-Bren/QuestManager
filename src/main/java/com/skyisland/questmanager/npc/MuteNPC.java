@@ -143,7 +143,4 @@ public class MuteNPC extends SimpleNPC {
 		//we don't do anything on interact
 		;		
 	}
-	
-	
-	
 }

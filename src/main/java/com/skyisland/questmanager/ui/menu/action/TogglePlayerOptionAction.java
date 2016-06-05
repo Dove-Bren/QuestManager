@@ -43,7 +43,5 @@ public class TogglePlayerOptionAction implements MenuAction {
 				YamlWriter.toStandardFormat(key.name()),
 				(ret ? "on" : "off")
 				));
-		
 	}
-
 }

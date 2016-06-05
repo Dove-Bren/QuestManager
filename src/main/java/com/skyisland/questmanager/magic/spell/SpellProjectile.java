@@ -129,5 +129,4 @@ public class SpellProjectile implements Runnable {
 		}
 		
 	}
-	
 }

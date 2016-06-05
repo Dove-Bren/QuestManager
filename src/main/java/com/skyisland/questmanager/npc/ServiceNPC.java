@@ -168,5 +168,4 @@ public class ServiceNPC extends SimpleStaticBioptionNPC {
 
 		messageChat.show(player);
 	}
-	
 }

@@ -19,5 +19,4 @@ public interface StatekeepingRequirement {
 	 * whose information is stored in the state information.
 	 */
 	public void stop();
-	
 }

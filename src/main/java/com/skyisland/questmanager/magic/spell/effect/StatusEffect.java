@@ -299,6 +299,4 @@ public class StatusEffect extends ImbuementEffect {
 		effect.setDisplayName(getDisplayName());
 		return effect;		
 	}
-	
-	
 }

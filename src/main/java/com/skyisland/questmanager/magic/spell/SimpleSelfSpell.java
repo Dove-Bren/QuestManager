@@ -167,5 +167,4 @@ public class SimpleSelfSpell extends SelfSpell {
 			e.getWorld().playSound(e.getLocation().clone().add(0,1.5,0), castSound, 1, 1);
 		}
 	}
-	
 }

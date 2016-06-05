@@ -78,5 +78,4 @@ public abstract class Spell implements ConfigurationSerializable {
 	}
 	
 	public abstract void cast(MagicUser caster);
-	
 }

@@ -166,5 +166,4 @@ public class TreeMessage extends Message {
 	public List<Option> getOptions() {
 		return options;
 	}
-
 }

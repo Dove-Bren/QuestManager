@@ -8,5 +8,4 @@ package com.skyisland.questmanager.ui.menu.action;
 public interface MenuAction {
 	
 	public void onAction();
-	
 }

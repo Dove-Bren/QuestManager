@@ -218,5 +218,4 @@ public class TeleportNPC extends SimpleStaticBioptionNPC {
 
 		messageChat.show(player);
 	}
-	
 }

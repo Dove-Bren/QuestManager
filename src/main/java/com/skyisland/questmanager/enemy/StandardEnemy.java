@@ -224,6 +224,4 @@ public class StandardEnemy extends NormalEnemy {
 //		ol.getBlock().setType(Material.STONE);
 //		
 //	}
-	
-	
 }

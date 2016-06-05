@@ -67,7 +67,4 @@ public abstract class SimpleNPC extends NPC {
 	public void setStartingLoc(Location startingLoc) {
 		this.startingLoc = startingLoc;
 	}
-	
-	
-	
 }

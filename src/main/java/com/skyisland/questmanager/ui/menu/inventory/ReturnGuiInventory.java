@@ -10,5 +10,4 @@ import org.bukkit.inventory.ItemStack;
 public abstract class ReturnGuiInventory extends GuiInventory {
 	
 	public abstract ItemStack[] getResult();
-		
 }

@@ -61,5 +61,4 @@ public class TitleEffect implements Alarmable<Integer> {
 		
 		Alarm.getScheduler().schedule(this, 1, 120);
 	}
-	
 }

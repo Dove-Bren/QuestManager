@@ -93,5 +93,4 @@ public class History {
 		
 		return config;
 	}
-	
 }

@@ -178,5 +178,4 @@ public class BankStorageManager {
 					+ config.saveToString() + "]");
 		}
 	}
-	
 }

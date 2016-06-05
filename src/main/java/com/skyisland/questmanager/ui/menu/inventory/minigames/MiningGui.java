@@ -631,5 +631,4 @@ public class MiningGui extends ReturnGuiInventory implements Alarmable<Integer> 
 			
 		}
 	}
-	
 }

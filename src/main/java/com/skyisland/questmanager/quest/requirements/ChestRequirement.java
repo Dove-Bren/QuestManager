@@ -181,5 +181,4 @@ public class ChestRequirement extends Requirement implements Listener, Statekeep
 	public Location getLocation() {
 		return chest.getLocation();
 	}
-	
 }

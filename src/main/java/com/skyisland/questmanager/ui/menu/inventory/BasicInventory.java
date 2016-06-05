@@ -195,6 +195,4 @@ public class BasicInventory extends GuiInventory {
 	public InventoryItem getItem(int pos) {
 		return items.get(pos);
 	}
-	
-	
 }

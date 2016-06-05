@@ -153,5 +153,4 @@ public abstract class ChatMenu {
 		//wasn't in there, so add one
 		quest.addHistoryEvent(new HistoryEvent(desc));
 	}
-	
 }
