@@ -82,7 +82,7 @@ public class Party implements Participant, Listener {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

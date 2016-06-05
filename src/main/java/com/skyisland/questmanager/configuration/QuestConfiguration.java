@@ -28,7 +28,7 @@ import com.skyisland.questmanager.ui.menu.message.Message;
  */
 public class QuestConfiguration {
 	
-	public static enum EndType {
+	public enum EndType {
 		SAME,
 		OTHERNPC,
 		NOTURNIN;

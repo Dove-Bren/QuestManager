@@ -36,7 +36,7 @@ public class ServiceCraft extends Service {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

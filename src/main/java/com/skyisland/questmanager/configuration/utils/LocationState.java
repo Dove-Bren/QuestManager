@@ -46,7 +46,7 @@ public class LocationState implements ConfigurationSerializable {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -70,7 +70,7 @@ public class LocationState implements ConfigurationSerializable {
 		
 		private String key;
 		
-		private fields(String key) {
+		fields(String key) {
 			this.key = key;
 		}
 		

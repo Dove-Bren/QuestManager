@@ -45,7 +45,7 @@ public class SimpleSelfSpell extends SelfSpell {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

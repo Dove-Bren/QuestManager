@@ -17,7 +17,7 @@ public interface StagedIncreaseSkill {
 	 * @param actionLevel The level of the action that was performed. Maybe cooking salmon is a lvl 30 task, for example
 	 * @param fail whether or not the action was failed. May or not award xp on failure, as determined by config
 	 */
-	public void performMinor(QuestPlayer participant, int actionLevel, boolean fail);
+	void performMinor(QuestPlayer participant, int actionLevel, boolean fail);
 	
 	/**
 	 * Performs a large action of the skill, resulting in larger awarded xp.
@@ -26,6 +26,6 @@ public interface StagedIncreaseSkill {
 	 * @param actionLevel The level of the action that was performed. Maybe cooking salmon is a lvl 30 task, for example
 	 * @param fail whether or not the action was failed. May or not award xp on failure, as determined by config
 	 */
-	public void performMajor(QuestPlayer participant, int actionLevel, boolean fail);
+	void performMajor(QuestPlayer participant, int actionLevel, boolean fail);
 	
 }

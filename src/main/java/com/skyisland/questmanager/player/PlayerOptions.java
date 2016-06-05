@@ -38,14 +38,14 @@ public class PlayerOptions implements ConfigurationSerializable {
 		
 		private List<String> hint;
 		
-		private Key(String key, ItemStack icon, List<String> hint, Boolean def) {
+		Key(String key, ItemStack icon, List<String> hint, Boolean def) {
 			this.key = key;
 			this.def = def;
 			this.icon = icon;
 			this.hint = hint;
 		}
 		
-		private Key(String key, ItemStack icon, List<String> hint) {
+		Key(String key, ItemStack icon, List<String> hint) {
 			this(key, icon, hint, true);
 		}
 		

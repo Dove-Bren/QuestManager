@@ -62,7 +62,7 @@ public class TreeMessage extends Message {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
