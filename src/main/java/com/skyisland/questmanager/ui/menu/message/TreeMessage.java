@@ -1,5 +1,6 @@
 package com.skyisland.questmanager.ui.menu.message;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -83,9 +84,7 @@ public class TreeMessage extends Message {
 	public TreeMessage(FancyMessage body, Option ...options) {
 		super();
 		this.body = body;
-		for (Option opt : options) {
-			this.options.add(opt);
-		}
+		Collections.addAll(this.options, options);
 	}
 
 	@Override

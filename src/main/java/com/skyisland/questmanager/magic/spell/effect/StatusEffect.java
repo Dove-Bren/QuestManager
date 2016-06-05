@@ -275,21 +275,17 @@ public class StatusEffect extends ImbuementEffect {
 	}
 	
 	public boolean isEffectHarmful(PotionEffectType type) {
-		if (type.equals(PotionEffectType.BLINDNESS) 
-			|| type.equals(PotionEffectType.CONFUSION) 
-			|| type.equals(PotionEffectType.HARM) 
-			|| type.equals(PotionEffectType.HUNGER) 
-			|| type.equals(PotionEffectType.LEVITATION) 
-			|| type.equals(PotionEffectType.POISON) 
-			|| type.equals(PotionEffectType.SLOW) 
-			|| type.equals(PotionEffectType.SLOW_DIGGING) 
-			|| type.equals(PotionEffectType.UNLUCK) 
-			|| type.equals(PotionEffectType.WEAKNESS) 
-			|| type.equals(PotionEffectType.WITHER)) {
-			return true;
-		}
-				
-		return false;
+		return type.equals(PotionEffectType.BLINDNESS)
+			|| type.equals(PotionEffectType.CONFUSION)
+			|| type.equals(PotionEffectType.HARM)
+			|| type.equals(PotionEffectType.HUNGER)
+			|| type.equals(PotionEffectType.LEVITATION)
+			|| type.equals(PotionEffectType.POISON)
+			|| type.equals(PotionEffectType.SLOW)
+			|| type.equals(PotionEffectType.SLOW_DIGGING)
+			|| type.equals(PotionEffectType.UNLUCK)
+			|| type.equals(PotionEffectType.WEAKNESS)
+			|| type.equals(PotionEffectType.WITHER);
 	}
 
 	@Override

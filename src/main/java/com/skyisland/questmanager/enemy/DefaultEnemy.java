@@ -16,10 +16,10 @@ public class DefaultEnemy extends Enemy {
 	
 	/**
 	 * Registers this class as configuration serializable with all defined 
-	 * {@link aliases aliases}
+	 * {@link Aliases Aliases}
 	 */
 	public static void registerWithAliases() {
-		for (aliases alias : aliases.values()) {
+		for (Aliases alias : Aliases.values()) {
 			ConfigurationSerialization.registerClass(DefaultEnemy.class, alias.getAlias());
 		}
 	}
@@ -32,13 +32,13 @@ public class DefaultEnemy extends Enemy {
 	}
 	
 
-	private enum aliases {
+	private enum Aliases {
 		DEFAULT(DefaultEnemy.class.getName()),
 		SIMPLE("DefaultEnemy");
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		Aliases(String alias) {
 			this.alias = alias;
 		}
 		

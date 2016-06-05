@@ -11,6 +11,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -501,9 +502,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	 * @return This builder instance.
 	 */
 	public FancyMessage translationReplacements(final FancyMessage... replacements){
-		for(FancyMessage str : replacements){
-			latest().translationReplacements.add(str);
-		}
+		Collections.addAll(latest().translationReplacements, replacements);
 		
 		dirty = true;
 		

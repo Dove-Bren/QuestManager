@@ -36,12 +36,8 @@ public class SpellWeavingInvoker implements Listener {
 			if (!displayName.equals(item.getItemMeta().getDisplayName())) {
 				return false;
 			}
-			
-			if (!item.containsEnchantment(enchant)) {
-				return false;
-			}
-			
-			return true;
+
+			return item.containsEnchantment(enchant);
 		}
 
 		public static void setInvokerType(Material invokerType) {

@@ -66,11 +66,7 @@ public class SpellManager {
 	 * @return true if there was a spell by that name before, false otherwise
 	 */
 	public boolean addSpell(Spell spell) {
-		if (spells.put(spell.getName(), spell) != null) {
-			return true;
-		}
-		
-		return false;
+		return spells.put(spell.getName(), spell) != null;
 	}
 	
 	public Spell getSpell(String name) {

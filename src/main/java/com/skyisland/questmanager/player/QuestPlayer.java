@@ -3,7 +3,6 @@ package com.skyisland.questmanager.player;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -1541,12 +1540,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				count += item.getAmount();
 			}
 		}
-		
-		if (count >= searchItem.getAmount()) {
-			return true;
-		}
-		
-		return false;
+
+		return count >= searchItem.getAmount();
 	}
 	
 	/**
