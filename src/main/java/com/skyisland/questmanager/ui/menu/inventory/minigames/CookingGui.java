@@ -18,7 +18,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
-import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,7 +28,9 @@ import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.defaults.CookingSkill;
+import com.skyisland.questmanager.player.skill.defaults.CookingSkill.CookingStats;
 import com.skyisland.questmanager.player.skill.defaults.CookingSkill.OvenRecipe;
+import com.skyisland.questmanager.player.skill.event.CraftEvent;
 import com.skyisland.questmanager.scheduling.Alarm;
 import com.skyisland.questmanager.scheduling.Alarmable;
 import com.skyisland.questmanager.ui.menu.inventory.InventoryItem;
@@ -71,6 +72,8 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 	
 	private static final int startTime = 3;
 	
+	public static final Sound dangerSound = Sound.BLOCK_NOTE_PLING;
+	
 	private static final double updatePeriod = .1;
 	
 	private static final double failRate = 0.1;
@@ -104,15 +107,9 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 	
 	private double maxCookTime;
 	
-	private double averageHeat;
-	
-	private double heatDeviation;
-	
 	private double fuelSwapTime;
 	
 	private double bonusQuality;
-	
-	private QualityItem result;
 	
 	private int skillLevel;
 	
@@ -134,25 +131,21 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 	
 	private double nextFuelTime;
 	
-	public CookingGui(Player player, Furnace furnace, QualityItem result, int skillLevel,
-			double cookTime, double averageHeatGain, double heatDeviation, double fuelSwapTime,
-			double bonusQuality, int failInterval) {
+	private boolean useInputQuality;
+	
+	private double cooldown;
+	
+	public CookingGui(Player player, Furnace furnace, double bonusQuality, boolean useInputQuality) {
 		this.player = player;
-		this.result = result;
 		this.furnace = furnace;
-		this.skillLevel = skillLevel;
 		this.bonusQuality = bonusQuality;
-		this.cookTime = this.maxCookTime = cookTime;
-		this.averageHeat = averageHeatGain;
-		this.heatDeviation = heatDeviation;
-		this.fuelSwapTime = fuelSwapTime;
-		this.failInterval = failInterval;
+		this.useInputQuality = useInputQuality;
 		
 		this.gameState = State.STOPPED;
 		
-		for (Fuel fuel : Fuel.values()) {
-			Bukkit.addRecipe(new FurnaceRecipe(new ItemStack(Material.FIRE), fuel.icon.getType()));
-		}
+//		for (Fuel fuel : Fuel.values()) {
+//			Bukkit.addRecipe(new FurnaceRecipe(new ItemStack(Material.FIRE), fuel.icon.getType()));
+//		}
 		
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 		
@@ -178,18 +171,17 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 			if (gameState != State.STOPPED)
 				return null;
 			
-			OvenRecipe recipe = skillLink.getOvenRecipe(player.getInventory().getItem(slot));
-			if (recipe == null) {
-				player.sendMessage(noRecipeMessage);
-				return null;
-			}
-			
 			this.currentTarget = player.getInventory().getItem(slot);
 			
 			if (currentTarget == null) {
 				return null;
 			}
-			System.out.println(currentTarget.getType().name());
+			
+			OvenRecipe recipe = skillLink.getOvenRecipe(player.getInventory().getItem(slot));
+			if (recipe == null) {
+				player.sendMessage(noRecipeMessage);
+				return null;
+			}
 			
 			ItemStack replace = null;
 			if (currentTarget.getAmount() > 1) {
@@ -202,6 +194,12 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 			currentTarget.setAmount(1);
 			
 			furnace.getInventory().setResult(currentTarget);
+			QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
+			CookingStats stats = skillLink.getCookingStats(recipe, qp);
+			
+			this.cookTime = this.maxCookTime = stats.getCookTime();
+			this.failInterval = stats.getFailInterval();
+			this.fuelSwapTime = stats.getFuelSwapTime();
 			
 			start();
 			return null;
@@ -251,6 +249,7 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		
 		this.missIndex = 0;
 		this.cookTime = maxCookTime;
+		this.cooldown = 0;
 		
 		Alarm.getScheduler().schedule(this, 0, 1);
 		player.getPlayer().sendMessage(ChatColor.RED + "Get ready...");
@@ -263,6 +262,7 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		failBar = Bukkit.createBossBar("Failure", BarColor.BLUE, BarStyle.SEGMENTED_20, new BarFlag[0]);
 		failBar.setProgress(0f);
 		failBar.addPlayer(player);
+		
 		
 		this.gameState = State.STARTING;
 		
@@ -351,7 +351,24 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		if (!player.isOnline()) {
 			return;
 		}
+		
+		if (skillLink == null) {
+			return;
+		}
 
+
+		displayBar.removeAll();
+		failBar.removeAll();
+		Alarm.getScheduler().unregister(this);
+		this.gameState = State.STOPPED;
+		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
+		
+		OvenRecipe recipe = skillLink.getOvenRecipe(currentTarget);
+		QualityItem result = new QualityItem(recipe.output.clone());
+		
+		if (useInputQuality) {
+			result.setQuality((new QualityItem(currentTarget)).getQuality());
+		}
 
 		furnace.getInventory().setFuel(null);
 		furnace.getInventory().setSmelting(null);
@@ -359,17 +376,21 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		this.topFuel = null;
 		this.bottomFuel = null;
 		this.currentTarget = null;
-		displayBar.removeAll();
-		failBar.removeAll();
-		Alarm.getScheduler().unregister(this);
-		this.gameState = State.STOPPED;
-		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
+
+		CraftEvent event = new CraftEvent(qp, CraftEvent.CraftingType.COOKING, skillLevel, result);
+		Bukkit.getPluginManager().callEvent(event);
 		
-		
-		if (skillLink != null) {
+		if (event.isFail()) {
 			int range = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillCutoff();
-			skillLink.performMajor(qp, Math.max(qp.getSkillLevel(skillLink) - range, Math.min(qp.getSkillLevel(skillLink) + range, skillLevel)), false);
+			skillLink.perform(qp, Math.max(qp.getSkillLevel(skillLink) - range, Math.min(qp.getSkillLevel(skillLink) + range, skillLevel)), true);
+			return;
 		}
+		
+		result.setQuality(result.getQuality() * event.getQualityModifier());
+		result.getUnderlyingItem().setAmount((int) (result.getUnderlyingItem().getAmount() * event.getQuantityModifier()));
+		
+		int range = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillCutoff();
+		skillLink.performMajor(qp, Math.max(qp.getSkillLevel(skillLink) - range, Math.min(qp.getSkillLevel(skillLink) + range, skillLevel)), false);
 		
 		FancyMessage msg;
 		
@@ -449,17 +470,15 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 			if (nextFuelTime <= 0)
 				generateFuel();
 			
-			
-			int temp = (int) (Math.round(averageHeat + (random.nextGaussian() * heatDeviation))
-					* updatePeriod);
-			temp = Math.abs(temp);
-			
-				
-//			furnace.setBurnTime(((short) (furnace.getBurnTime() + temp)));
-//			furnace.update();
+
 			
 			if (Math.abs(furnace.getBurnTime() - 100) > failInterval) {
 				missIndex += (failRate * updatePeriod);
+				cooldown -= updatePeriod;
+				if (cooldown <= 0) {
+					cooldown = 1.0;
+					player.playSound(player.getLocation(), dangerSound, 1f, 1.8f);
+				}
 			} else {
 				this.cookTime -= updatePeriod;
 			}
@@ -488,6 +507,9 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		//player closed the inventory is what this means
 		HandlerList.unregisterAll(this);
 		loseGame();
+		
+		if (skillLink != null)
+			skillLink.unregisterOven(furnace.getLocation());
 		return null;
 	}
 	

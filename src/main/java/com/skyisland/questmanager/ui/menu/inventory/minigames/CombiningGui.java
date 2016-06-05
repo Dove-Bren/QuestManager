@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,11 +26,12 @@ import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.defaults.CookingSkill;
 import com.skyisland.questmanager.player.skill.defaults.CookingSkill.CombineRecipe;
-import com.skyisland.questmanager.player.skill.event.CraftEvent;
 import com.skyisland.questmanager.ui.menu.inventory.GuiInventory;
 import com.skyisland.questmanager.ui.menu.inventory.InventoryItem;
 
 public class CombiningGui extends GuiInventory {
+	
+	public static final Random random = new Random();
 	
 	public static CookingSkill skillLink = null;
 	
@@ -201,22 +203,22 @@ public class CombiningGui extends GuiInventory {
 		inv.setItem(2, null);
 		inv.setItem(3, null);
 		
-		CraftEvent event = new CraftEvent(qp, CraftEvent.CraftingType.COOKING, recipe.difficulty, result.clone());
-		Bukkit.getPluginManager().callEvent(event);
+		double chance = skillLink.getCombineChance(qp, recipe);
+		boolean fail = false;
+		if (random.nextDouble() >= chance) {
+			fail = true;
+		}
 		
-		if (event.isFail()) {
-			skillLink.perform(qp, recipe.difficulty, true);
+		if (fail) {
 			player.sendMessage(failMessage);
 			failEffect.play(player, player.getLocation());
 			player.getWorld().playSound(player.getLocation(), failSound, 1, 1);
 			return;
 		}
 		
-		skillLink.perform(qp, recipe.difficulty, false);
+		//skillLink.perform(qp, recipe.difficulty, false);
 		succeedEffect.play(player, player.getLocation());
 		
-		result.setQuality(event.getQualityModifier() * result.getQuality());
-		result.getUnderlyingItem().setAmount((int) Math.round(event.getQuantityModifier() * result.getUnderlyingItem().getAmount()));
 		
 		String name;
 		if (result.getItem().getItemMeta() == null || result.getItem().getItemMeta().getDisplayName() == null) {

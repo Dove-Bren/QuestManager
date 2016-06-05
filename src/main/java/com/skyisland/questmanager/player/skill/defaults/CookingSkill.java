@@ -26,8 +26,8 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.LogSkill;
-import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
+import com.skyisland.questmanager.player.skill.event.CraftEvent;
 import com.skyisland.questmanager.ui.menu.ActiveInventoryMenu;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.action.CollectFishAction;
@@ -35,6 +35,8 @@ import com.skyisland.questmanager.ui.menu.inventory.minigames.CombiningGui;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.CookingGui;
 
 public class CookingSkill extends LogSkill implements Listener {
+	
+	private static final String inUseMessage = ChatColor.GRAY + "That oven is already in use by another player";
 	
 	public static final String configName = "Cooking.yml";
 	
@@ -52,6 +54,35 @@ public class CookingSkill extends LogSkill implements Listener {
 			this.output = output;
 		}
 		
+	}
+	
+	public static final class CookingStats {
+		
+		private double cookTime;
+		
+		private double fuelSwapTime;
+		
+		private int failInterval;
+
+		public CookingStats(double cookTime, double fuelSwapTime,
+				int failInterval) {
+			super();
+			this.cookTime = cookTime;
+			this.fuelSwapTime = fuelSwapTime;
+			this.failInterval = failInterval;
+		}
+
+		public double getCookTime() {
+			return cookTime;
+		}
+
+		public double getFuelSwapTime() {
+			return fuelSwapTime;
+		}
+
+		public int getFailInterval() {
+			return failInterval;
+		}
 	}
 	
 	public static final class CombineRecipe {
@@ -126,9 +157,7 @@ public class CookingSkill extends LogSkill implements Listener {
 	
 	private Map<Location, QuestPlayer> furnaceMap;
 	
-	private double baseHeatRate;
-	
-	private double heatDeviation;
+	private double fuelSwapTime;
 	
 	private double baseTime;
 	
@@ -157,11 +186,10 @@ public class CookingSkill extends LogSkill implements Listener {
 		}
 		
 		this.startingLevel = config.getInt("startingLevel", 0);
-		this.baseHeatRate = config.getDouble("baseHeatRate", 15.0);
-		this.heatDeviation = config.getDouble("heatDeviation", 5.0);
 		this.baseTime = config.getDouble("baseTime", 20.0);
 		this.timeRate = config.getDouble("timeRate",  .2);
 		this.timeDiscount = config.getDouble("timeDiscount", .005);
+		this.fuelSwapTime = config.getDouble("fuelSwapTime", 1.0);
 		this.qualityRate = config.getDouble("qualityRate", .02);
 		this.useItemQuality = config.getBoolean("useItemQuality", true);
 		this.failInterval = config.getInt("failInterval", 25);
@@ -218,6 +246,7 @@ public class CookingSkill extends LogSkill implements Listener {
 			}
 		}
 				
+		this.furnaceMap = new HashMap<>();
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 		CookingGui.setCookingSkill(this);
 		CombiningGui.setCookingSkill(this);
@@ -229,11 +258,10 @@ public class CookingSkill extends LogSkill implements Listener {
 			
 			writer.addLine("enabled", true, Lists.newArrayList("Whether or not this skill is allowed to be used.",  "true | false"))
 				.addLine("startingLevel", 0, Lists.newArrayList("The level given to players who don't have this skill yet", "[int]"))
-				.addLine("baseHeatRate", 15.0, Lists.newArrayList("Base amount of heat gained or lost per second", "[double] heat per second, out of 200"))
-				.addLine("heatDeviation", 5.0, Lists.newArrayList("Standard deviation in how much the heat", "gain or loss can deviate", "[double] heat per second, out of 200"))
 				.addLine("baseTime", 20.0, Lists.newArrayList("Base time it takes to fufill a recipe", "[double] time in seconds"))
 				.addLine("timeRate",  .2, Lists.newArrayList("How many more seconds are added per", "difficulty of the recipe", "[double] time in seconds"))
 				.addLine("timeDiscount", .005, Lists.newArrayList("How much of the time a player gets cut", "off per skill level", "[double] 0.01 is 1%"))
+				.addLine("fuelSwapTime", 1.0, Lists.newArrayList("Time between fuel swaps if the player", "doesn't pick a fuel", "low and high values are difficult", "[double] time in seconds"))
 				.addLine("qualityRate", .02, Lists.newArrayList("Additional quality on a crafted item given", "per skill level"))
 				.addLine("useItemQuality", true, Lists.newArrayList("Should ingredient quality be used to calculate", "product quality? If false, quality from", "qualityRate * this skill level is the only", "source of quality. Else, that quality is", "added to the sum of the ingredients", "[true|false]"))
 				.addLine("failInterval", 25, Lists.newArrayList("How far from 100 (perfect center) the player", "can be without the job stalling and", "racking up failure", "[int] between 0-100"))
@@ -347,79 +375,21 @@ public class CookingSkill extends LogSkill implements Listener {
 			return;
 		}
 		
+		if (furnaceMap.containsKey(e.getClickedBlock().getLocation())) {
+			e.getPlayer().sendMessage(inUseMessage);
+			return;
+		}
+		
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(e.getPlayer());
 		
 		CookingGui gui = new CookingGui(e.getPlayer(), (Furnace) e.getClickedBlock().getState(),
-				new QualityItem(new ItemStack(Material.COOKED_BEEF)), 0, 10.0, 20.0, 5.0, 2.0, .20, 25);
+				bonusQuality, useItemQuality
+				);
 		InventoryMenu menu = new ActiveInventoryMenu(qp, gui, new CollectFishAction(qp));
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
 		
 		e.setCancelled(true);
 		return;
-		
-//		/*
-//		 * Player player, Furnace furnace, QualityItem result, int skillLevel,
-//			double cookTime, double averageHeatGain, double heatDeviation, double fuelSwapTime,
-//			double bonusQuality, int failInterval
-//		 */
-//		
-//		int level = qp.getSkillLevel(this);
-//		
-//		FishRecord record = getFish(level);
-//		if (record == null) {
-//			e.getPlayer().sendMessage(badRangeMessage);
-//			return;
-//		}
-//		
-//		FishEvent event = new FishEvent(qp, new QualityItem(record.icon), record.difficulty);
-//		Bukkit.getPluginManager().callEvent(event);
-//		
-//		if (event.isCancelled()) {
-//			return;
-//		}
-//		
-//		int deltaDifficulty = Math.max(0, record.difficulty - level);
-//		double obstacleTime, obstacleDeviation, completionTime;
-//		int rows, amount;
-//		float reelDifficulty, reelDeviation;
-//		
-//		
-//		obstacleTime = baseObstacleDifficulty + (deltaDifficulty * obstacleDifficultyRate);
-//		obstacleDeviation = baseObstacleDeviation;
-//		completionTime = baseTimePerDifficulty * record.difficulty;
-//		rows = (int) Math.min(5, Math.max(1, 1 + ((int) record.difficulty / (int) difficultyPerRow)));
-//		amount = 1 + (int) Math.floor(extraFishPerLevel * Math.max(level - record.difficulty, 0));
-//		reelDifficulty = baseReelDifficulty + (reelDifficultyRate * deltaDifficulty);
-//		reelDeviation = baseReelDeviation;
-//		
-//		////////Modifer Code - Move to eventhandler if mechs moved out of skill/////////
-//		
-//		event.setObstacleDifficultyModifier(event.getObstacleDifficultyModifier()
-//				- (obstacleDifficultyDiscount * level));
-//		event.setReelDifficultyModifier(event.getReelDifficultyModifier()
-//				- (reelDifficultyDiscount * level));
-//		event.setTimeModifier(event.getTimeModifier() - (timeDiscount * level));
-//		event.setQualityModifier(event.getQualityModifier() + (level * qualityRate));
-//		
-//		////////////////////////////////////////////////////////////////////////////////
-//		
-//		//apply modifiers
-//		obstacleTime *= event.getObstacleDifficultyModifier();
-//		obstacleDeviation *= event.getObstacleDeviationModifier();
-//		completionTime *= event.getTimeModifier();
-//		reelDifficulty *= event.getReelDifficultyModifier();
-//		reelDeviation *= event.getReelDeviationModifier();
-//		
-//		QualityItem reward = new QualityItem(record.icon.clone());
-//		reward.getUnderlyingItem().setAmount(amount);
-//		reward.setQuality(reward.getQuality() * event.getQualityModifier());
-//		
-////		FishingGui gui = new FishingGui(e.getPlayer(), reward, record.difficulty, rows,
-////				reelDifficulty, reelDeviation, obstacleTime, obstacleDeviation, completionTime);
-////		InventoryMenu menu = new ActiveInventoryMenu(qp, gui, new CollectFishAction(qp));
-////		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
-////		gui.start();
-		
 	}
 
 	/**
@@ -509,6 +479,35 @@ public class CookingSkill extends LogSkill implements Listener {
 			return false;
 		
 		return ChatColor.stripColor(m1.getDisplayName()).equals(ChatColor.stripColor(m2.getDisplayName()));
+	}
+	
+	public void unregisterOven(Location location) {
+		furnaceMap.remove(location);
+	}
+	
+	@EventHandler
+	public void onCook(CraftEvent e) {
+		if (e.getType() != CraftEvent.CraftingType.COOKING) {
+			return;
+		}
+		
+		double level = e.getPlayer().getSkillLevel(this);
+		e.setQualityModifier(e.getQualityModifier() + (level * qualityRate));
+	}
+	
+	public CookingStats getCookingStats(OvenRecipe recipe, QuestPlayer player) {
+		double cookTime, fuelSwapTime;
+		int failInterval;
+		int lvl = player.getSkillLevel(this);
+		
+		cookTime = baseTime + (timeRate * (double) recipe.difficulty);
+		cookTime *= 1.0 - ((double) lvl * timeDiscount);
+		fuelSwapTime = this.fuelSwapTime;
+		failInterval = this.failInterval;
+		
+		
+		
+		return new CookingStats(cookTime, fuelSwapTime, failInterval);
 	}
 	
 }
