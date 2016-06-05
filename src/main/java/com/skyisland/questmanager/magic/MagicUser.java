@@ -25,5 +25,4 @@ public interface MagicUser {
 	 * mana, skill level, etc
 	 */
 	void castSpellWeavingSpell();
-	
 }

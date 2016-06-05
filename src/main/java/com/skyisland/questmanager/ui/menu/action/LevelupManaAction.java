@@ -57,5 +57,4 @@ public class LevelupManaAction implements MenuAction {
 		.setFadeIn(20).setFadeOut(20).setStay(40).send(p);
 		
 	}
-
 }

@@ -145,5 +145,4 @@ public final class MessagePart implements JsonRepresentedObject, ConfigurationSe
 		part.translationReplacements = (ArrayList<JsonRepresentedObject>)serialized.get("translationReplacements");
 		return part;
 	}
-
 }

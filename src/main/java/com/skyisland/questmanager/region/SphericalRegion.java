@@ -152,5 +152,4 @@ public class SphericalRegion extends Region {
 		
 		return map;
 	}
-	
 }

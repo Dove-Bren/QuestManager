@@ -71,7 +71,5 @@ public class BioptionChatMenu extends ChatMenu implements RespondableMenu {
 			player.sendMessage("Something went wrong! [Invalid Biopt Argument!]");
 			return false;
 		}
-		
 	}
-
 }

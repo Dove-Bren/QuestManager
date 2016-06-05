@@ -176,5 +176,4 @@ public class InnNPC extends SimpleStaticBioptionNPC {
 
 		messageChat.show(player);
 	}
-	
 }

@@ -76,5 +76,4 @@ public class InvokeSpellWeavingEffect extends SpellEffect {
 	public void apply(Location loc, MagicUser cause) {
 		cause.castSpellWeavingSpell();
 	}
-	
 }

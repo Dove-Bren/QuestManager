@@ -288,5 +288,4 @@ public class SimpleQuestStartNPC extends SimpleStaticBioptionNPC implements Comp
 			return null;
 		}
 	}
-	
 }

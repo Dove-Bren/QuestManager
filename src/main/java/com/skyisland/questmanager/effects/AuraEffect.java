@@ -77,5 +77,4 @@ public class AuraEffect extends EntityEffect implements ConstantEffect, Alarmabl
 		
 		Alarm.getScheduler().schedule(this, 1, .25);
 	}
-	
 }

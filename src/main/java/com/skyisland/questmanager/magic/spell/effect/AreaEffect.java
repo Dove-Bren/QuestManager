@@ -116,5 +116,4 @@ public class AreaEffect extends SpellEffect {
 			}
 		}
 	}
-	
 }

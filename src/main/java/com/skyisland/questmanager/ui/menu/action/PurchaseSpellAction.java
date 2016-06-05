@@ -64,7 +64,5 @@ public class PurchaseSpellAction implements MenuAction {
 		//everything's good, so throw it in!
 		player.addSpell(spell);
 		player.addMoney(-cost);
-		
 	}
-
 }

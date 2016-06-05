@@ -52,5 +52,4 @@ public interface Lootable {
 		return loot.get(loot.size() - 1);
 		
 	}
-	
 }

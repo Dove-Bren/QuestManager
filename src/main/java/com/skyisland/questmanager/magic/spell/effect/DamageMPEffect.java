@@ -147,6 +147,5 @@ public class DamageMPEffect extends ImbuementEffect {
 		DamageMPEffect effect = new DamageMPEffect(damage * potency);
 		effect.setDisplayName(getDisplayName());
 		return effect;		
-	}	
-	
+	}
 }

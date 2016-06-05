@@ -17,5 +17,4 @@ public interface Tickable {
 	 * Tickable classes receive calls to this on a scheduled and regular basis
 	 */
 	void tick();
-	
 }

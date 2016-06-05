@@ -517,5 +517,4 @@ public class LumberjackSkill extends LogSkill implements Listener {
 	public void playerFinish(QuestPlayer player) {
 		activeSessions.remove(player.getPlayer().getUniqueId());
 	}
-	
 }

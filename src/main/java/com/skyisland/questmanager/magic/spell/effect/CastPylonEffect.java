@@ -90,7 +90,4 @@ public class CastPylonEffect extends SpellEffect {
 		
 		cause.addSpellPylon(pylon);
 	}
-	
-	
-	
 }

@@ -2212,5 +2212,4 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	public ImbuementSet getStoredImbuement(short data) {
 		return storedImbuements.get(Short.toUnsignedInt(data));
 	}
-	
 }

@@ -101,5 +101,4 @@ public class RingEffect extends EntityEffect implements ConstantEffect, Alarmabl
 		counter++;
 		Alarm.getScheduler().schedule(this, 1, .25);
 	}
-	
 }

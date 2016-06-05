@@ -6,7 +6,6 @@ package com.skyisland.questmanager.ui;
  *
  */
 public interface UITickable {
-	
+
 	void tick();
-	
 }

@@ -131,5 +131,4 @@ public class PlayerOptions implements ConfigurationSerializable {
 		
 		return po;
 	}
-	
 }

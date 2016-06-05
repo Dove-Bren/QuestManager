@@ -90,10 +90,10 @@ public class TreeMessage extends Message {
 
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("body", body);
-		List<> opts = new LinkedList<>();
+		List<Map<String, Object>> opts = new LinkedList<>();
 		Map<String, Object> om;
 		for (Option opt : options) {
 			om = new TreeMap<>();
@@ -166,5 +166,4 @@ public class TreeMessage extends Message {
 	public List<Option> getOptions() {
 		return options;
 	}
-
 }

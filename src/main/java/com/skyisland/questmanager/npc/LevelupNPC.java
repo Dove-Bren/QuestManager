@@ -301,5 +301,4 @@ public class LevelupNPC extends SimpleNPC {
 //		ChatMenu messageChat = new BioptionChatMenu(chat, new ShowChatMenuAction(levelChat, player), null);
 //		messageChat.show(player);
 //	}
-
 }

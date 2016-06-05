@@ -18,5 +18,4 @@ public abstract class GuiInventory implements ConfigurationSerializable {
 	public abstract InventoryItem getItem(int pos);
 	
 	public abstract Inventory getFormattedInventory(QuestPlayer player);
-		
 }

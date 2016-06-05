@@ -167,5 +167,4 @@ public class DummyNPC extends SimpleNPC {
 			((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999999, 10, false, false), true);
 		}
 	}
-	
 }

@@ -243,6 +243,4 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 			}
 		}
 	}
-	
-	
 }

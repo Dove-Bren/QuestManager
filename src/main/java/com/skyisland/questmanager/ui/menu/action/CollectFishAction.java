@@ -49,5 +49,4 @@ public class CollectFishAction implements MenuAction, FillableInventoryAction {
 		} else
 			ret = objects[0];
 	}
-
 }

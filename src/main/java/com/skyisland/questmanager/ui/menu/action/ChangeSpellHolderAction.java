@@ -105,5 +105,4 @@ public class ChangeSpellHolderAction implements MenuAction {
 			
 		}
 	}
-
 }

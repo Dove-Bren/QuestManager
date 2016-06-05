@@ -118,5 +118,4 @@ public class SpellPylon implements Alarmable<Integer> {
 	public Location getLocation() {
 		return location;
 	}
-	
 }

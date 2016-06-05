@@ -226,5 +226,4 @@ public class InteractRequirement extends Requirement implements Listener, Statek
 			return Action.RIGHT_CLICK_BLOCK;
 		}
 	}
-	
 }

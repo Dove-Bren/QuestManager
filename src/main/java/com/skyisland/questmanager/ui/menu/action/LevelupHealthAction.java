@@ -60,5 +60,4 @@ public class LevelupHealthAction implements MenuAction {
 		
 		
 	}
-
 }

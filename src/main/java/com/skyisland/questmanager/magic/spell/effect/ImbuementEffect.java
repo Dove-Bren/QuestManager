@@ -28,5 +28,4 @@ public abstract class ImbuementEffect extends SpellEffect {
 	public String getDisplayName() {
 		return displayName;
 	}
-	
 }

@@ -192,5 +192,4 @@ public class ArriveRequirement extends Requirement implements Listener, Statekee
 	public Location getLocation() {
 		return this.destination;
 	}
-	
 }

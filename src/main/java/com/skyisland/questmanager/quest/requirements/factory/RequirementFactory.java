@@ -8,5 +8,4 @@ import com.skyisland.questmanager.quest.requirements.Requirement;
 public abstract class RequirementFactory<T extends Requirement> {
 	
 	public abstract T fromConfig(Goal goal, ConfigurationSection conf);
-	
 }

@@ -142,5 +142,4 @@ public class SpellWeavingManager {
 		
 		return null;
 	}
-	
 }

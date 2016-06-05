@@ -186,7 +186,4 @@ public class SummonTamedEffect extends SpellEffect {
 	public void apply(Location loc, MagicUser cause) {
 		; //do nothing
 	}
-	
-	
-	
 }

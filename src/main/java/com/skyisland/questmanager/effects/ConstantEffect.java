@@ -8,5 +8,4 @@ package com.skyisland.questmanager.effects;
 public interface ConstantEffect {
 
 	void stop();
-	
 }

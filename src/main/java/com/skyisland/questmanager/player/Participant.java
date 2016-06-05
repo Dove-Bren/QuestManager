@@ -28,5 +28,4 @@ public interface Participant extends ConfigurationSerializable {
 	 * @return
 	 */
 	String getIDString();
-	
 }

@@ -102,5 +102,4 @@ public abstract class Requirement {
 	 * value.
 	 */
 	protected abstract void update();
-	
 }

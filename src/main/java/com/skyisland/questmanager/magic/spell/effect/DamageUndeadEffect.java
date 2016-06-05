@@ -135,6 +135,5 @@ public class DamageUndeadEffect extends ImbuementEffect {
 		DamageUndeadEffect effect = new DamageUndeadEffect(damage * potency);
 		effect.setDisplayName(getDisplayName());
 		return effect;		
-	}	
-	
+	}
 }

@@ -73,5 +73,4 @@ public class MagicRegenEvent extends Event implements Cancellable {
 	public double getFinalAmount() {
 		return amount * (1 + modifier);
 	}
-
 }

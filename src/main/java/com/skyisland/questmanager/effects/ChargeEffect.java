@@ -54,6 +54,4 @@ public class ChargeEffect extends QuestEffect implements Runnable {
 			player.getWorld().playEffect(tmp, effect, 0);
 		}
 	}
-	
-
 }

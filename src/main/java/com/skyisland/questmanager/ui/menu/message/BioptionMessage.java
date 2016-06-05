@@ -182,5 +182,4 @@ public class BioptionMessage extends Message {
 		.then(":\n")
 		.then(option2Msg);
 	}
-
 }

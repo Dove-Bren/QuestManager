@@ -330,5 +330,4 @@ public class DeliverRequirement extends Requirement implements Listener, Stateke
 	public String getDescription() {
 		return desc;
 	}
-	
 }

@@ -294,5 +294,4 @@ public class SlayRequirement extends Requirement implements Listener, Statekeepi
 	public String getDescription() {
 		return this.desc + " (" + this.progress + "/" + this.count + ")";
 	}
-	
 }

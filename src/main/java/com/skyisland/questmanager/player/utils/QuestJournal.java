@@ -235,5 +235,4 @@ public class QuestJournal {
 		
 		return ret;
 	}
-
 }

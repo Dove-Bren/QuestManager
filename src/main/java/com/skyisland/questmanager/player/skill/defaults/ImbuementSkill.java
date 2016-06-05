@@ -198,7 +198,4 @@ public class ImbuementSkill extends LogSkill implements Listener {
 		
 		return total * bonus;
 	}
-	
-	
-	
 }

@@ -34,5 +34,4 @@ public class QuestMonsterNPC extends NPC {
 	public void onEntityHurt(EntityDamageEvent e) {
 		
 	}
-
 }

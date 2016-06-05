@@ -126,6 +126,4 @@ public class Chest implements ConfigurationSerializable {
 	public void setMaterial(Material material) {
 		this.material = material;
 	}
-
-	
 }

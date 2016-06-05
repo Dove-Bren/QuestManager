@@ -318,5 +318,4 @@ public class QuestConfiguration {
 		
 		return quest;
 	}
-	
 }

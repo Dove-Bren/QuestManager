@@ -36,5 +36,4 @@ public class PartyDisbandEvent extends Event {
 	public Party getParty() {
 		return party;
 	}
-	
 }

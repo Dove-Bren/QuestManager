@@ -86,7 +86,4 @@ public class BlockEffect extends SpellEffect {
 			loc.getBlock().setType(typeTo);
 		}
 	}
-	
-	
-	
 }

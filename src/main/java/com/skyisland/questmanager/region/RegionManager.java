@@ -300,5 +300,4 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		
 		return null;
 	}
-	
 }

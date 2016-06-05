@@ -136,5 +136,4 @@ public class UIScheduler implements Runnable {
 		}
 		
 	}
-	
 }

@@ -110,5 +110,4 @@ public class QualityItem {
 		
 		return false;
 	}
-	
 }

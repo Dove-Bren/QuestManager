@@ -523,5 +523,4 @@ public class PluginConfiguration {
 		
 		return config;
 	}
-	
 }

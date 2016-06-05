@@ -25,5 +25,4 @@ public class BootFromPartyAction implements MenuAction {
 	public void onAction() {
 		party.removePlayer(other, ChatColor.DARK_RED + "You've been kicked from the party" + ChatColor.RESET);
 	}
-
 }

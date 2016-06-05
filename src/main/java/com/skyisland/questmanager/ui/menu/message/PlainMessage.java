@@ -91,7 +91,4 @@ public class PlainMessage extends Message {
 	public FancyMessage getFormattedMessage() {
 		return message;
 	}
-	
-	
-	
 }

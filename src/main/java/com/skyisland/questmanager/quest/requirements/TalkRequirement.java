@@ -152,5 +152,4 @@ public class TalkRequirement extends Requirement implements Listener, CompassTra
 		
 		return npc.getEntity().getLocation();
 	}
-	
 }

@@ -36,5 +36,4 @@ public class SkillManager {
 		
 		return ret;
 	}
-	
 }

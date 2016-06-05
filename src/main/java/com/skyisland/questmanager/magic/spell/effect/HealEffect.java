@@ -162,5 +162,4 @@ public class HealEffect extends ImbuementEffect {
 		effect.setDisplayName(getDisplayName());
 		return effect;
 	}
-	
 }

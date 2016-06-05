@@ -123,5 +123,4 @@ public class SorcerySkill extends LogSkill implements Listener {
 		e.setModifiedDamage(e.getModifiedDamage() + (lvl / levelRate));
 		
 	}
-	
 }

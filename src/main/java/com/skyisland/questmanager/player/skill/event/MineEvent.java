@@ -113,5 +113,4 @@ public class MineEvent extends Event implements Cancellable {
 	public void setCancelled(boolean arg0) {
 		this.isCancelled = arg0;
 	}
-	
 }

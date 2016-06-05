@@ -166,5 +166,4 @@ public class MagerySkill extends Skill implements Listener {
 		
 		
 	}
-	
 }

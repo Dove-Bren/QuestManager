@@ -98,5 +98,4 @@ public class ImbuementSet implements ConfigurationSerializable {
 		
 		return set;
 	}
-	
 }

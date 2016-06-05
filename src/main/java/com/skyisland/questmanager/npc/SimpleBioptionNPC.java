@@ -158,5 +158,4 @@ public class SimpleBioptionNPC extends SimpleNPC {
 		ChatMenu messageChat = new BioptionChatMenu(chat, null, null);
 		messageChat.show(player);
 	}
-
 }

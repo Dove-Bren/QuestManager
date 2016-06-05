@@ -65,7 +65,5 @@ public class PurchaseAction implements MenuAction {
 		//everything's good, so throw it in!
 		p.getInventory().addItem(item);
 		player.addMoney(-cost);
-		
 	}
-
 }

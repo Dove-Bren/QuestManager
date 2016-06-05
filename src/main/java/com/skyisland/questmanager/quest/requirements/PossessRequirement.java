@@ -217,6 +217,4 @@ public class PossessRequirement extends Requirement implements Listener {
 	public String getDescription() {
 		return this.desc;
 	}
-	
-	
 }

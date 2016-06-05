@@ -99,6 +99,4 @@ public class FireEffect extends ImbuementEffect {
 		effect.setDisplayName(getDisplayName());
 		return effect;
 	}
-	
-	
 }

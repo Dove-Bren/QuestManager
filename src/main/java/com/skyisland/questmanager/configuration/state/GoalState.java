@@ -104,7 +104,4 @@ public class GoalState {
 	public void addRequirementState(RequirementState state) {
 		requirementStates.add(state);
 	}
-	
-	
-	
 }

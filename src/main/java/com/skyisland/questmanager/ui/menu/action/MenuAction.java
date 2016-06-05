@@ -6,7 +6,6 @@ package com.skyisland.questmanager.ui.menu.action;
  *
  */
 public interface MenuAction {
-	
+
 	void onAction();
-	
 }
