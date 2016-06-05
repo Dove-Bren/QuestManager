@@ -3,9 +3,6 @@ package com.skyisland.questmanager.magic.spell.effect;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.magic.MagicUser;
-import com.skyisland.questmanager.magic.SummonManager;
-import com.skyisland.questmanager.QuestManagerPlugin;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.AnimalTamer;
@@ -15,7 +12,10 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Tameable;
 
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.magic.MagicUser;
 import com.skyisland.questmanager.magic.Summon;
+import com.skyisland.questmanager.magic.SummonManager;
 
 import net.md_5.bungee.api.ChatColor;
 
@@ -46,6 +46,7 @@ public class SummonTamedEffect extends SpellEffect {
 
 	private enum aliases {
 		DEFAULT(SummonTamedEffect.class.getName()),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + SummonTamedEffect.class.getSimpleName()),
 		LONGI("SpellSummonTamed"),
 		LONG("SummonTamedSpell"),
 		SHORT("SSummonTamed");

@@ -3,7 +3,6 @@ package com.skyisland.questmanager.magic.spell.effect;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,6 +11,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.magic.MagicUser;
 import com.skyisland.questmanager.player.PlayerOptions;
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -39,6 +39,7 @@ public class DamageMPEffect extends ImbuementEffect {
 
 	private enum aliases {
 		DEFAULT(DamageMPEffect.class.getName()),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + DamageMPEffect.class.getSimpleName()),
 		LONGI("SpellDamageMP"),
 		LONG("DamageMPSpell"),
 		SHORT("SDamageMP");

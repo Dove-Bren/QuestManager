@@ -3,12 +3,13 @@ package com.skyisland.questmanager.magic.spell.effect;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.magic.MagicUser;
-import com.skyisland.questmanager.magic.SpellPylon;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
+
+import com.skyisland.questmanager.magic.MagicUser;
+import com.skyisland.questmanager.magic.SpellPylon;
 
 /**
  * Creates in the world a pylon ties to the given player of a certain type
@@ -37,6 +38,7 @@ public class CastPylonEffect extends SpellEffect {
 
 	private enum aliases {
 		DEFAULT(CastPylonEffect.class.getName()),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + CastPylonEffect.class.getSimpleName()),
 		LONGI("SpellPylon"),
 		LONG("PylonSpell"),
 		SHORT("SPylon");

@@ -3,7 +3,6 @@ package com.skyisland.questmanager.magic.spell.effect;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -15,6 +14,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.magic.MagicUser;
 import com.skyisland.questmanager.player.PlayerOptions;
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -43,6 +43,7 @@ public class HealEffect extends ImbuementEffect {
 	private enum aliases {
 		DEFAULT(HealEffect.class.getName()),
 		LONGI("SpellHeal"),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + HealEffect.class.getSimpleName()),
 		LONG("HealSpell"),
 		SHORT("SHeal");
 		

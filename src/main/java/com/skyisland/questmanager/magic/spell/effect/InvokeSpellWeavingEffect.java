@@ -3,10 +3,11 @@ package com.skyisland.questmanager.magic.spell.effect;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.magic.MagicUser;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
+
+import com.skyisland.questmanager.magic.MagicUser;
 
 /**
  * This effect is intended to be used as a bridge between the spell holder interface and the spell weaving
@@ -37,6 +38,7 @@ public class InvokeSpellWeavingEffect extends SpellEffect {
 
 	private enum aliases {
 		DEFAULT(InvokeSpellWeavingEffect.class.getName()),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + InvokeSpellWeavingEffect.class.getSimpleName()),
 		LONGI("SpellWeavingInvoke"),
 		LONG("InvokeSpellWeavingSpell"),
 		SHORT("SInvoke");

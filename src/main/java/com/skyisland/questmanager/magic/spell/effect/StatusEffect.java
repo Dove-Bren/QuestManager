@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
-import com.skyisland.questmanager.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -18,6 +16,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.magic.MagicUser;
 import com.skyisland.questmanager.player.PlayerOptions;
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -49,6 +49,7 @@ public class StatusEffect extends ImbuementEffect {
 
 	private enum aliases {
 		DEFAULT(StatusEffect.class.getName()),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + StatusEffect.class.getSimpleName()),
 		LONGI("SpellStatus"),
 		LONG("StatusSpell"),
 		SHORT("SStatus");

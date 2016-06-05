@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.skyisland.questmanager.effects.AuraEffect;
 import com.skyisland.questmanager.magic.MagicUser;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -33,6 +34,7 @@ public class AreaEffect extends SpellEffect {
 
 	private enum aliases {
 		DEFAULT(AreaEffect.class.getName()),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + AuraEffect.class.getSimpleName()),
 		LONGI("SpellAreaOfEffect"),
 		LONG("AreaOfEffectSpell"),
 		SHORT("SArea");

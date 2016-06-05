@@ -3,11 +3,12 @@ package com.skyisland.questmanager.magic.spell.effect;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.magic.MagicUser;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
+
+import com.skyisland.questmanager.magic.MagicUser;
 
 /**
  * Manipulates blocks. This effect replaces one type of block with another
@@ -36,6 +37,7 @@ public class BlockEffect extends SpellEffect {
 
 	private enum aliases {
 		DEFAULT(BlockEffect.class.getName()),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + BlockEffect.class.getSimpleName()),
 		LONGI("SpellBlock"),
 		LONG("BlockSpell"),
 		SHORT("SBlock");

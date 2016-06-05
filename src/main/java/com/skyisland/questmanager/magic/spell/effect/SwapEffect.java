@@ -36,6 +36,7 @@ public class SwapEffect extends SpellEffect {
 
 	private enum aliases {
 		DEFAULT(SwapEffect.class.getName()),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + SwapEffect.class.getSimpleName()),
 		LONGI("SpellTeleport"),
 		LONG("TeleportSpell"),
 		SHORT("STeleport");

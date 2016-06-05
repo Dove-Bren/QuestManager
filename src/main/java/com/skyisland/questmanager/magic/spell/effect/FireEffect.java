@@ -3,7 +3,6 @@ package com.skyisland.questmanager.magic.spell.effect;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.magic.MagicUser;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
@@ -11,6 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.magic.MagicUser;
 
 /**
  * Catches entities on fire
@@ -40,6 +40,7 @@ public class FireEffect extends ImbuementEffect {
 	private enum aliases {
 		DEFAULT(FireEffect.class.getName()),
 		LONGI("SpellFire"),
+		OLD("com.SkyIsland.QuestManager.Magic.Spell.Effect." + FireEffect.class.getSimpleName()),
 		LONG("FireSpell"),
 		SHORT("SFire");
 		
