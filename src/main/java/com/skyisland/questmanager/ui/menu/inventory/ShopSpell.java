@@ -46,7 +46,4 @@ public class ShopSpell extends ShopItem {
 	public int getFamecost() {
 		return famecost;
 	}
-	
-	
-	
 }

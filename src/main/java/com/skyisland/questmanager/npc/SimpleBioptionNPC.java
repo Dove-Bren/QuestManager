@@ -55,7 +55,7 @@ public class SimpleBioptionNPC extends SimpleNPC {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -72,7 +72,7 @@ public class SimpleBioptionNPC extends SimpleNPC {
 		
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>(4);
+		Map<String, Object> map = new HashMap<>(4);
 		
 		map.put("name", name);
 		map.put("type", getEntity().getType());
@@ -158,5 +158,4 @@ public class SimpleBioptionNPC extends SimpleNPC {
 		ChatMenu messageChat = new BioptionChatMenu(chat, null, null);
 		messageChat.show(player);
 	}
-
 }

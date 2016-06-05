@@ -36,7 +36,7 @@ public abstract class Spell implements ConfigurationSerializable {
 		this.difficulty = difficulty;
 		this.name = name;
 		this.description = description;
-		this.spellEffects = new LinkedList<SpellEffect>();
+		this.spellEffects = new LinkedList<>();
 	}
 
 	public int getCost() {
@@ -78,5 +78,4 @@ public abstract class Spell implements ConfigurationSerializable {
 	}
 	
 	public abstract void cast(MagicUser caster);
-	
 }

@@ -54,5 +54,4 @@ public class CollectOreAction implements MenuAction, FillableInventoryAction {
 		} else
 			ret = objects[0];
 	}
-
 }

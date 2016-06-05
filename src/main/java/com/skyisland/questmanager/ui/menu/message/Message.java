@@ -21,5 +21,4 @@ public abstract class Message implements ConfigurationSerializable {
 	}
 	
 	public abstract FancyMessage getFormattedMessage();
-	
 }

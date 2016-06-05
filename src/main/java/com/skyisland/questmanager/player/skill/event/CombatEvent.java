@@ -198,5 +198,4 @@ public class CombatEvent extends Event {
 		
 		return Math.max(calc, 0.0);
 	}
-	
 }

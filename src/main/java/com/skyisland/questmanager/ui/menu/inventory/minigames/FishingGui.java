@@ -152,7 +152,7 @@ public class FishingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		}
 	}
 	
-	public static enum GamePhase {
+	public enum GamePhase {
 		SETTINGUP,
 		STARTING,
 		RUNNING,
@@ -613,5 +613,4 @@ public class FishingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		
 		return false;
 	}
-	
 }

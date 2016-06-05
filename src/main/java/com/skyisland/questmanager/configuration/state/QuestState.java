@@ -131,5 +131,4 @@ public class QuestState {
 	public void setHistory(History history) {
 		this.history = history;
 	}
-	
 }

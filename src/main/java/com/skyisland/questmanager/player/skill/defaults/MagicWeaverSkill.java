@@ -176,5 +176,4 @@ public class MagicWeaverSkill extends LogSkill implements Listener {
 		//e.setAmount((int) (e.getAmount() * rate));
 		e.setModifier(e.getModifier() + rate);
 	}
-	
 }

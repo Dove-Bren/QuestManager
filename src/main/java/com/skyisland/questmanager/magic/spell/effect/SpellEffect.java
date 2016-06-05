@@ -15,5 +15,4 @@ public abstract class SpellEffect implements ConfigurationSerializable {
 	public abstract void apply(Entity e, MagicUser cause);
 	
 	public abstract void apply(Location loc, MagicUser cause);
-	
 }

@@ -31,8 +31,6 @@ public class OpenInventoryAction implements MenuAction {
 		}
 
 		Player p = player.getPlayer().getPlayer();
-		
 		p.openInventory(inventory);
-		
 	}
 }

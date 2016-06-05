@@ -77,5 +77,4 @@ public class DefaultEnemy extends Enemy {
 		
 		return new DefaultEnemy(name, et);
 	}
-	
 }

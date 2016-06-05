@@ -6,17 +6,17 @@ import org.bukkit.entity.Entity;
 
 public interface MagicUser {
 	
-	public Entity getEntity();
+	Entity getEntity();
 	
-	public double getMP();
+	double getMP();
 	
-	public void addMP(double amount);
+	void addMP(double amount);
 	
-	public void addSpellPylon(SpellPylon pylon);
+	void addSpellPylon(SpellPylon pylon);
 	
-	public List<SpellPylon> getSpellPylons();
+	List<SpellPylon> getSpellPylons();
 	
-	public void clearSpellPylons();
+	void clearSpellPylons();
 	
 	/**
 	 * Cast the currently set up spell weaving spell. Spell cast, cost, difficulty, etc
@@ -24,6 +24,5 @@ public interface MagicUser {
 	 * Pylons should be destroyed at this time, and checks should be made to player
 	 * mana, skill level, etc
 	 */
-	public void castSpellWeavingSpell();
-	
+	void castSpellWeavingSpell();
 }

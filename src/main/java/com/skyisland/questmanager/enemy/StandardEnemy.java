@@ -49,7 +49,7 @@ public class StandardEnemy extends NormalEnemy {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -224,6 +224,4 @@ public class StandardEnemy extends NormalEnemy {
 //		ol.getBlock().setType(Material.STONE);
 //		
 //	}
-	
-	
 }

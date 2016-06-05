@@ -165,16 +165,7 @@ public abstract class NPC implements ConfigurationSerializable, Listener, Tickab
 		if (now) {
 			e.remove();
 		} else {
-			Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, 
-					new Runnable(){
-	
-						@Override
-						public void run() {
-							e.remove();
-						}
-					
-					}, 1
-			);
+			Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, e::remove, 1);
 		}
 	}
 	

@@ -123,13 +123,7 @@ public class DeliverRequirement extends Requirement implements Listener, Stateke
 //					
 //					return;
 					final Requirement req = this;
-					Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, 
-							new Runnable() {
-								public void run() {
-									req.update();
-							}
-					}
-							, 1);
+					Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, req::update, 1);
 				}
 			}
 			
@@ -193,13 +187,7 @@ public class DeliverRequirement extends Requirement implements Listener, Stateke
 //					return;
 //					}
 					final Requirement req = this;
-					Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, 
-							new Runnable() {
-								public void run() {
-									req.update();
-							}
-					}
-							, 1);
+					Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, req::update, 1);
 				}
 			
 			}
@@ -342,5 +330,4 @@ public class DeliverRequirement extends Requirement implements Listener, Stateke
 	public String getDescription() {
 		return desc;
 	}
-	
 }

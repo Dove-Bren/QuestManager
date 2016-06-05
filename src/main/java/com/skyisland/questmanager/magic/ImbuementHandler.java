@@ -264,7 +264,7 @@ public class ImbuementHandler {
 			return new HashSet<>(1);
 		}
 		
-		Set<Material> list = new HashSet<Material>();
+		Set<Material> list = new HashSet<>();
 		for (Material type : types) {
 			if (materialMap.containsKey(type)) {
 				list.add(type);

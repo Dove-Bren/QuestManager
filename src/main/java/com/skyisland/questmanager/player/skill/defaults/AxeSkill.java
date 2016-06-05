@@ -135,5 +135,4 @@ public class AxeSkill extends LogSkill implements Listener {
 		this.perform(e.getPlayer(), causeMiss); //only get a 'cause miss' if this skill caused it 
 		
 	}
-	
 }

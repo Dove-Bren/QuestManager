@@ -67,7 +67,7 @@ public class Goal {
 
 		Goal goal = new Goal(quest, name, description);
 		
-		List<ConfigurationSection> reqs = new LinkedList<ConfigurationSection>();
+		List<ConfigurationSection> reqs = new LinkedList<>();
 		for (String requirementKey : config.getConfigurationSection("requirements").getKeys(false)) {
 			reqs.add( config.getConfigurationSection("requirements")
 					.getConfigurationSection(requirementKey));
@@ -99,7 +99,7 @@ public class Goal {
 		this.name = name;
 		this.description = description;
 		
-		this.requirements = new LinkedList<Requirement>();
+		this.requirements = new LinkedList<>();
 		//this.chests = new LinkedList<Chest>();
 	}
 	
@@ -218,5 +218,4 @@ public class Goal {
 			}
 		}
 	}
-	
 }

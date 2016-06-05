@@ -80,7 +80,4 @@ public class ShopItem extends InventoryItem {
 	public int getFamecost() {
 		return famecost;
 	}
-	
-	
-	
 }

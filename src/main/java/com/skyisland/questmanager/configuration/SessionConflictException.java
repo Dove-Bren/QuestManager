@@ -11,5 +11,4 @@ public class SessionConflictException extends Exception {
 	 * 
 	 */
 	private static final long serialVersionUID = -3837482558390581456L;
-	
 }

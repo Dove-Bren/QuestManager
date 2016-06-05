@@ -82,7 +82,7 @@ public class Party implements Participant, Listener {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -93,7 +93,7 @@ public class Party implements Participant, Listener {
 	
 	public Party() {
 		name = "";
-		members = new LinkedList<QuestPlayer>();
+		members = new LinkedList<>();
 		leader = null;
 		partyBoard = Bukkit.getScoreboardManager().getNewScoreboard();
 		tLeader = partyBoard.registerNewTeam("Leader");
@@ -191,7 +191,7 @@ public class Party implements Participant, Listener {
 	
 	@Override
 	public Collection<QuestPlayer> getParticipants() {
-		Set<QuestPlayer> set = new HashSet<QuestPlayer>(members);
+		Set<QuestPlayer> set = new HashSet<>(members);
 		set.add(leader);
 		return set;
 	}
@@ -208,12 +208,12 @@ public class Party implements Participant, Listener {
 		//party name,
 		//party leader,
 		//party members
-		Map<String, Object> map = new HashMap<String, Object>(3);
+		Map<String, Object> map = new HashMap<>(3);
 		
 		map.put("name", name);
 		map.put("leader", leader.serialize());
 		
-		List<Map<String, Object>> sl = new LinkedList<Map<String, Object>>();
+		List<Map<String, Object>> sl = new LinkedList<>();
 		for (QuestPlayer p : members) {
 			sl.add(
 					p.serialize()
@@ -445,5 +445,4 @@ public class Party implements Participant, Listener {
 			p.playNote(p.getLocation(), Instrument.PIANO, Note.natural(1, Tone.E));
 		}
 	}
-	
 }

@@ -10,5 +10,4 @@ public abstract class ServiceItem extends InventoryItem {
 	}
 	
 	public abstract Service getService();
-
 }

@@ -47,8 +47,4 @@ public class ActiveInventoryMenu extends InventoryMenu implements RespondableMen
 			action.onAction();
 		
 	}
-	
-	
-	
-	
 }

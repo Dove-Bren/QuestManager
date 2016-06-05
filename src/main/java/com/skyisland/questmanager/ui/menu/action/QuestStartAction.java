@@ -95,7 +95,5 @@ public class QuestStartAction implements MenuAction {
 						questAcceptSound, 2, 1);
 			}
 		}
-		
 	}
-
 }

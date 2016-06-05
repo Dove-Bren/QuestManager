@@ -64,7 +64,7 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	 * @param spawnrate
 	 */
 	public RegionManager(double spawnrate) {
-		regionMap = new HashMap<Region, RegionRecord>();
+		regionMap = new HashMap<>();
 		this.spawnrate = spawnrate;
 		
 		Alarm.getScheduler().schedule(this, EnemyAlarms.SPAWN, spawnrate);
@@ -100,7 +100,7 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 			return false;
 		}
 		
-		regionMap.put(region, new RegionRecord(null, new WeightedList<Enemy>()));
+		regionMap.put(region, new RegionRecord(null, new WeightedList<>()));
 		
 		return true;
 	}
@@ -300,5 +300,4 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		
 		return null;
 	}
-	
 }

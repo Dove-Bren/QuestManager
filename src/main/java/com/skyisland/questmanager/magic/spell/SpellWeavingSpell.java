@@ -62,7 +62,7 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 		 * Creates new unordered blank recipe. Good for building
 		 */
 		public SpellWeavingRecipe() {
-			this(new LinkedList<String>(), false);
+			this(new LinkedList<>(), false);
 		}
 		
 		public SpellWeavingRecipe addComponent(String type) {
@@ -108,9 +108,7 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 			} else {
 				//harder. Duplicate list, remove as we go through one and check if it's empty at the end
 				List<String> copy = new ArrayList<>(components.size());
-				for (String key : components) {
-					copy.add(key);
-				}
+				copy.addAll(components);
 				
 				for (String key : typeList) {
 					if (!copy.remove(key)) {
@@ -152,7 +150,7 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		

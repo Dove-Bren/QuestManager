@@ -330,5 +330,4 @@ public class FishingSkill extends LogSkill implements Listener {
 		
 		return null;
 	}
-	
 }

@@ -36,7 +36,7 @@ public class ServiceCraft extends Service {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -101,7 +101,7 @@ public class ServiceCraft extends Service {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("name", name);
 		map.put("cost", cost);

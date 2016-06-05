@@ -91,5 +91,4 @@ public class InnAction implements MenuAction {
 		}
 		
 	}
-
 }

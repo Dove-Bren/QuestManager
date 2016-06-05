@@ -56,7 +56,7 @@ public class StatusEffect extends ImbuementEffect {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -71,7 +71,7 @@ public class StatusEffect extends ImbuementEffect {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("effect", effect);
 		
@@ -300,6 +300,4 @@ public class StatusEffect extends ImbuementEffect {
 		effect.setDisplayName(getDisplayName());
 		return effect;		
 	}
-	
-	
 }

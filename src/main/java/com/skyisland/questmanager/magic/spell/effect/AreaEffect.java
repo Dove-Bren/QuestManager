@@ -41,7 +41,7 @@ public class AreaEffect extends SpellEffect {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -55,17 +55,15 @@ public class AreaEffect extends SpellEffect {
 		//load effects
 		@SuppressWarnings("unchecked")
 		List<SpellEffect> effects = (List<SpellEffect>) map.get("effects");
-		
-		for (SpellEffect effect : effects) {
-			ret.addEffect(effect);
-		}
+
+		effects.forEach(ret::addEffect);
 		
 		return ret;
 	}
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("radius", radius);
 		map.put("effects", effects);
@@ -84,7 +82,7 @@ public class AreaEffect extends SpellEffect {
 	 */
 	public AreaEffect(double radius) {
 		this.radius = radius;
-		this.effects = new LinkedList<SpellEffect>();
+		this.effects = new LinkedList<>();
 	}
 	
 	public void addEffect(SpellEffect effect) {
@@ -120,5 +118,4 @@ public class AreaEffect extends SpellEffect {
 			}
 		}
 	}
-	
 }

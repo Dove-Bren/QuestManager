@@ -66,7 +66,7 @@ public class ChangeSpellHolderAction implements MenuAction {
 				desc = s.getDescription();
 			}
 			ItemMeta meta = holder.getItemMeta();
-			List<String> descList = new LinkedList<String>();
+			List<String> descList = new LinkedList<>();
 			String mid = "";
 			for (int i = 0; i < 15 - (newSpell.length() / 2); i++) {
 				mid = mid + " ";
@@ -105,5 +105,4 @@ public class ChangeSpellHolderAction implements MenuAction {
 			
 		}
 	}
-
 }

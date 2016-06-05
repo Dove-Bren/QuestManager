@@ -44,7 +44,7 @@ public class SimpleTargetSpell extends TargetSpell {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -76,9 +76,7 @@ public class SimpleTargetSpell extends TargetSpell {
 		
 		@SuppressWarnings("unchecked")
 		List<SpellEffect> effects = (List<SpellEffect>) map.get("effects");
-		for (SpellEffect effect : effects) {
-			spell.addSpellEffect(effect);
-		}
+		effects.forEach(spell::addSpellEffect);
 		
 		if (map.containsKey("projectileeffect")) {
 			spell.setProjectileEffect(Effect.valueOf((String) map.get("projectileeffect")));
@@ -97,7 +95,7 @@ public class SimpleTargetSpell extends TargetSpell {
 	}
 	
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("cost", getCost());
 		map.put("name", getName());
@@ -221,5 +219,4 @@ public class SimpleTargetSpell extends TargetSpell {
 			target.getWorld().playSound(target.getEyeLocation(), contactSound, 1, 1);
 		}
 	}
-
 }

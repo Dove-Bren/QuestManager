@@ -89,5 +89,4 @@ public class SpellWeavingInvoker implements Listener {
 		qp.castSpellWeavingSpell();
 		
 	}
-	
 }

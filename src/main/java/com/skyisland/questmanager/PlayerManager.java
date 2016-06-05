@@ -43,8 +43,8 @@ public class PlayerManager implements Tickable {
 	 */
 	public PlayerManager(YamlConfiguration config) {
 		
-		players = new HashMap<UUID, QuestPlayer>();
-		parties = new HashMap<GUID, Party>();
+		players = new HashMap<>();
+		parties = new HashMap<>();
 		
 		QuestManagerPlugin.questManagerPlugin.getLogger().info("Loading player database...");
 		
@@ -222,5 +222,4 @@ public class PlayerManager implements Tickable {
 	public TitleEffect getTitleEffect() {
 		return titleEffect;
 	}
-	
 }

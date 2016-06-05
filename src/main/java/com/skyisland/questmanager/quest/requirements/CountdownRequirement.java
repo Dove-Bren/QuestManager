@@ -179,6 +179,4 @@ public class CountdownRequirement extends Requirement implements Tickable, State
 		
 		return ret;
 	}
-	
-	
 }

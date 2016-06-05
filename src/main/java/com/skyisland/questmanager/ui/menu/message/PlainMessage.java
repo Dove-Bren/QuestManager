@@ -37,7 +37,7 @@ public class PlainMessage extends Message {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -64,7 +64,7 @@ public class PlainMessage extends Message {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		
 		map.put("text", message);
@@ -91,7 +91,4 @@ public class PlainMessage extends Message {
 	public FancyMessage getFormattedMessage() {
 		return message;
 	}
-	
-	
-	
 }

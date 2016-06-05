@@ -11,5 +11,4 @@ import org.bukkit.entity.Entity;
 public abstract class QuestEffect {
 
 	public abstract void play(Entity player, Location location);
-	
 }

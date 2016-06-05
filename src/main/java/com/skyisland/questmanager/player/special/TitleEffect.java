@@ -20,7 +20,7 @@ public class TitleEffect implements Alarmable<Integer> {
 		}
 	}
 	
-	public static enum TitleEffectType {
+	public enum TitleEffectType {
 		
 		SLIMEKING(new effectRunnable(){
 			public void run(Location loc) {
@@ -35,7 +35,7 @@ public class TitleEffect implements Alarmable<Integer> {
 		
 		private effectRunnable effect;
 		
-		private TitleEffectType(effectRunnable effect) {
+		TitleEffectType(effectRunnable effect) {
 			this.effect = effect;
 		}
 		
@@ -61,5 +61,4 @@ public class TitleEffect implements Alarmable<Integer> {
 		
 		Alarm.getScheduler().schedule(this, 1, 120);
 	}
-	
 }

@@ -146,5 +146,4 @@ public class OfferServiceAction implements MenuAction {
 		
 		menu.show(player.getPlayer().getPlayer());
 	}
-
 }

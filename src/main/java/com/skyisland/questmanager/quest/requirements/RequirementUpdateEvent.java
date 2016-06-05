@@ -49,5 +49,4 @@ public class RequirementUpdateEvent extends Event {
 	public Requirement getRequirement() {
 		return requirement;
 	}
-	
 }

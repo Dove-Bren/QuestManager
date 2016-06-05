@@ -67,7 +67,7 @@ public class UIScheduler implements Runnable {
 	private int cycle;
 	
 	private UIScheduler() {
-		records = new HashMap<Integer, Record>();
+		records = new HashMap<>();
 		rand = new Random();
 		cycle = 0;
 		
@@ -136,5 +136,4 @@ public class UIScheduler implements Runnable {
 		}
 		
 	}
-	
 }

@@ -15,7 +15,7 @@ public class SkillManager {
 	
 	
 	public SkillManager() {
-		skills = new HashSet<Skill>();
+		skills = new HashSet<>();
 	}
 	
 	public void registerSkill(Skill skill) {
@@ -36,5 +36,4 @@ public class SkillManager {
 		
 		return ret;
 	}
-	
 }

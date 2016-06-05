@@ -66,7 +66,5 @@ public class TeleportAction implements MenuAction {
 			
 			menu.show(player.getPlayer().getPlayer(), null);
 		}
-		
 	}
-
 }

@@ -64,7 +64,7 @@ public enum QuestConfigurationField {
 	
 	private String key;
 	
-	private QuestConfigurationField(String key, Object def) {
+	QuestConfigurationField(String key, Object def) {
 		this.def = def;
 		this.key = key;
 	}

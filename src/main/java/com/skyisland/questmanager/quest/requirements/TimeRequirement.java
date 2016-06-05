@@ -148,5 +148,4 @@ public class TimeRequirement extends Requirement implements Tickable {
 	public String getDescription() {
 		return this.desc;
 	}
-	
 }

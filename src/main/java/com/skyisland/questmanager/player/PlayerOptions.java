@@ -38,14 +38,14 @@ public class PlayerOptions implements ConfigurationSerializable {
 		
 		private List<String> hint;
 		
-		private Key(String key, ItemStack icon, List<String> hint, Boolean def) {
+		Key(String key, ItemStack icon, List<String> hint, Boolean def) {
 			this.key = key;
 			this.def = def;
 			this.icon = icon;
 			this.hint = hint;
 		}
 		
-		private Key(String key, ItemStack icon, List<String> hint) {
+		Key(String key, ItemStack icon, List<String> hint) {
 			this(key, icon, hint, true);
 		}
 		
@@ -103,7 +103,7 @@ public class PlayerOptions implements ConfigurationSerializable {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new TreeMap<String, Object>();
+		Map<String, Object> map = new TreeMap<>();
 		
 		for (Key key : Key.values()) {
 			map.put(key.getKey(), opts.get(key));
@@ -131,5 +131,4 @@ public class PlayerOptions implements ConfigurationSerializable {
 		
 		return po;
 	}
-	
 }

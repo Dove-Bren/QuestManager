@@ -111,5 +111,4 @@ public class CreateImbuementAction implements MenuAction, FillableInventoryActio
 		Material[] ret = new Material[types.size()];
 		setComponentTypes(types.toArray(ret));
 	}
-
 }

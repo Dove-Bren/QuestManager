@@ -140,5 +140,4 @@ public class SwordsmanshipSkill extends LogSkill implements Listener {
 		this.perform(e.getPlayer(), causeMiss); //only get a 'cause miss' if this skill caused it 
 		
 	}
-	
 }

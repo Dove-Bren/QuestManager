@@ -94,5 +94,4 @@ public class CraftServiceAction implements MenuAction {
 		
 		menu.show(player.getPlayer().getPlayer());
 	}
-
 }

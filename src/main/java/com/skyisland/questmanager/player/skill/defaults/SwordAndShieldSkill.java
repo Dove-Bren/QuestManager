@@ -116,5 +116,4 @@ public class SwordAndShieldSkill extends Skill implements Listener {
 		this.perform(e.getPlayer(), e.isMiss());
 		
 	}
-	
 }

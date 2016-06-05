@@ -64,7 +64,7 @@ public class Loot implements ConfigurationSerializable {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -164,5 +164,4 @@ public class Loot implements ConfigurationSerializable {
 	public void setItem(ItemStack item) {
 		this.item = item;
 	}
-
 }

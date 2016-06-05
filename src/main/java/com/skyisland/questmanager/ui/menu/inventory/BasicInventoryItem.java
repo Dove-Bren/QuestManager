@@ -78,6 +78,5 @@ public class BasicInventoryItem extends InventoryItem {
 	@Override
 	public MenuAction getAction(QuestPlayer player) {
 		return action;
-	}	
-	
+	}
 }

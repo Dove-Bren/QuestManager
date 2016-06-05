@@ -172,5 +172,4 @@ public class SpellWeavingSkill extends Skill implements Listener {
 		
 		
 	}
-	
 }

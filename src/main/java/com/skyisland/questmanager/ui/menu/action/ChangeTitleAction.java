@@ -28,5 +28,4 @@ public class ChangeTitleAction implements MenuAction {
 				.then(newTitle))
 		.show(player.getPlayer().getPlayer());
 	}
-
 }

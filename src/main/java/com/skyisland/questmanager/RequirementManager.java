@@ -21,7 +21,7 @@ public class RequirementManager {
 	 * Creates a new, empty RequirementManager
 	 */
 	public RequirementManager() {
-		factories = new HashMap<String, RequirementFactory<?>>();
+		factories = new HashMap<>();
 	}
 	
 	/**
@@ -63,5 +63,4 @@ public class RequirementManager {
 		
 		
 	}
-	
 }

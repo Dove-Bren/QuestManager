@@ -48,5 +48,4 @@ public abstract class SimpleStaticBioptionNPC extends SimpleBioptionNPC {
 			((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999999, 10, false, false), true);
 		}
 	}
-
 }

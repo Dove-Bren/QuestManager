@@ -77,5 +77,4 @@ public class SpellHolder {
 		return QuestManagerPlugin.questManagerPlugin.getSpellManager().getSpell
 			(player.getStoredSpells().get(holder.getType()));
 	}
-	
 }

@@ -51,7 +51,7 @@ public class BasicInventory extends GuiInventory {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -124,14 +124,14 @@ public class BasicInventory extends GuiInventory {
 		 * 8:
 		 * 	""
 		 */
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		if (items.isEmpty()) {
 			return map;
 		}
 		
 		for (Entry<Integer, BasicInventoryItem> e : items.entrySet()) {
-			Map<String, Object> subMap = new HashMap<String, Object>(4);
+			Map<String, Object> subMap = new HashMap<>(4);
 			
 			//create subMap as specified in comments above
 			subMap.put("display", e.getValue().getDisplay(null));
@@ -164,7 +164,7 @@ public class BasicInventory extends GuiInventory {
 		YamlConfiguration config = new YamlConfiguration();
 		config.createSection("top", configMap);
 		
-		Map<Integer, BasicInventoryItem> map = new HashMap<Integer, BasicInventoryItem>();
+		Map<Integer, BasicInventoryItem> map = new HashMap<>();
 		ConfigurationSection conf = config.getConfigurationSection("top");
 		
 		for (String slotString : conf.getKeys(false)) {
@@ -195,6 +195,4 @@ public class BasicInventory extends GuiInventory {
 	public InventoryItem getItem(int pos) {
 		return items.get(pos);
 	}
-	
-	
 }

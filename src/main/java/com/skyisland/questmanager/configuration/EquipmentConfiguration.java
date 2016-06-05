@@ -183,6 +183,4 @@ public class EquipmentConfiguration {
 	public void setHeldOff(ItemStack heldOff) {
 		this.heldOff = heldOff;
 	}
-	
-	
 }
