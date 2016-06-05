@@ -208,9 +208,7 @@ public class QuestManager implements Listener {
 		
 		//get quest static npcs
 		if (!questTemplate.getAuxNPCs().isEmpty())
-		for (NPC np : questTemplate.getAuxNPCs()) {
-			questNPCs.add(np);
-		}
+			questNPCs.addAll(questTemplate.getAuxNPCs());
 		
 		//now instantiate starting NPC associated ot this quest
 		NPC npc = questTemplate.GetStartingNPCInstance();
@@ -331,10 +329,8 @@ public class QuestManager implements Listener {
 			QuestManagerPlugin.questManagerPlugin.getLogger().info(
 					"Stopping quests and saving state information for " + runningQuests.size() +
 					" quests...");
-			
-			for (Quest quest : runningQuests) {
-				quest.stop();
-			}
+
+			runningQuests.forEach(Quest::stop);
 			
 			QuestManagerPlugin.questManagerPlugin.getLogger().info("done!");
 		}
@@ -354,9 +350,7 @@ public class QuestManager implements Listener {
 	 */
 	public void haltQuests() {
 		if (runningQuests != null && !runningQuests.isEmpty()) {
-			for (Quest quest : runningQuests) {
-				quest.halt();
-			}
+			runningQuests.forEach(Quest::halt);
 		}
 	}
 	

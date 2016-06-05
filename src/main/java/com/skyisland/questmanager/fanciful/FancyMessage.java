@@ -726,9 +726,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 		StringBuilder result = new StringBuilder();
 		for (MessagePart part : this) {
 			result.append(part.color == null ? "" : part.color);
-			for(ChatColor formatSpecifier : part.styles){
-				result.append(formatSpecifier);
-			}
+			part.styles.forEach(result::append);
 			result.append(part.text);
 		}
 		return result.toString();

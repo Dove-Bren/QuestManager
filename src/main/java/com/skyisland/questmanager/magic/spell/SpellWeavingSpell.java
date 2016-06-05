@@ -108,9 +108,7 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 			} else {
 				//harder. Duplicate list, remove as we go through one and check if it's empty at the end
 				List<String> copy = new ArrayList<>(components.size());
-				for (String key : components) {
-					copy.add(key);
-				}
+				copy.addAll(components);
 				
 				for (String key : typeList) {
 					if (!copy.remove(key)) {

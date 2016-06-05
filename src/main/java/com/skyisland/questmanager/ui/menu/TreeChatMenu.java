@@ -54,10 +54,8 @@ public class TreeChatMenu extends ChatMenu implements RespondableMenu {
 		this.options = new TreeMap<>();
 		
 		keyindex = 1;
-		
-		for (Option opt : options) {
-			addOption(opt);
-		}
+
+		options.forEach(this::addOption);
 		
 		this.setMessage(formatMessage(body));
 	}

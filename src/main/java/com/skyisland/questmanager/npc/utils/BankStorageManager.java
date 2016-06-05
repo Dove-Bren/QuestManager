@@ -163,10 +163,8 @@ public class BankStorageManager {
 		
 		YamlConfiguration config = new YamlConfiguration();
 		List<BankStorage> list = new LinkedList<>();
-		
-		for (BankStorage store : storageMap.values()) {
-			list.add(store);
-		}	
+
+		list.addAll(storageMap.values());
 		
 		config.set("banks", list);
 		

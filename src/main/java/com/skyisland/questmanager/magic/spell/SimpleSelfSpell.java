@@ -74,9 +74,7 @@ public class SimpleSelfSpell extends SelfSpell {
 		
 		@SuppressWarnings("unchecked")
 		List<SpellEffect> effects = (List<SpellEffect>) map.get("effects");
-		for (SpellEffect effect : effects) {
-			spell.addSpellEffect(effect);
-		}
+		effects.forEach(spell::addSpellEffect);
 		
 		if (map.containsKey("casteffect")) {
 			spell.setCastEffect(Effect.valueOf((String) map.get("casteffect")));

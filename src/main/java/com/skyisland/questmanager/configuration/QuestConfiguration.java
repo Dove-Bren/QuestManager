@@ -294,9 +294,7 @@ public class QuestConfiguration {
 		}
 		
 		//activate first goal
-		for (Requirement req : quest.getGoals().get(0).getRequirements()) {
-			req.activate();
-		}
+		quest.getGoals().get(0).getRequirements().forEach(Requirement::activate);
 		
 		//get fame and reward info
 		quest.setFame(config.getInt(QuestConfigurationField.FAME.getKey()));
@@ -309,9 +307,7 @@ public class QuestConfiguration {
 
 		
 		if (rewards != null && !rewards.isEmpty())
-		for (ItemStack item : rewards) {
-			quest.addItemReward(item);
-		}
+			rewards.forEach(quest::addItemReward);
 		
 		if (participant != null)
 			for (QuestPlayer qp : participant.getParticipants()) {

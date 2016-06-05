@@ -53,10 +53,8 @@ public class AreaEffect extends SpellEffect {
 		//load effects
 		@SuppressWarnings("unchecked")
 		List<SpellEffect> effects = (List<SpellEffect>) map.get("effects");
-		
-		for (SpellEffect effect : effects) {
-			ret.addEffect(effect);
-		}
+
+		effects.forEach(ret::addEffect);
 		
 		return ret;
 	}

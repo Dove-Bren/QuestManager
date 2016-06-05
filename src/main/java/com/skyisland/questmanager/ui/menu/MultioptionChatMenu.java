@@ -72,10 +72,8 @@ public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {
 		this.options = new TreeMap<>();
 		
 		keyindex = 1;
-		
-		for (ChatMenuOption opt : options) {
-			addOption(opt);
-		}
+
+		options.forEach(this::addOption);
 		
 		this.setMessage(formatMessage(body));
 	}

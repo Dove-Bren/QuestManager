@@ -183,10 +183,8 @@ public class Quest implements Listener {
 			goal = goals.get(goalIndex);
 		}
 		goal.loadState(state.getGoalState());
-		
-		for (Requirement req : goal.getRequirements()) {
-			req.activate();
-		}
+
+		goal.getRequirements().forEach(Requirement::activate);
 		
 		history = state.getHistory();
 		
@@ -382,9 +380,7 @@ public class Quest implements Listener {
 		}
 		
 		//just remove players
-		for (QuestPlayer player : participant.getParticipants()) {
-			removePlayer(player);
-		}
+		participant.getParticipants().forEach(this::removePlayer);
 		
 		//remove NPCs
 //		if (!npcs.isEmpty()) 
@@ -744,9 +740,7 @@ public class Quest implements Listener {
 		}
 		
 		Goal goal = goals.get(goalIndex);
-		for (Requirement req : goal.getRequirements()) {
-			req.activate();
-		}
+		goal.getRequirements().forEach(Requirement::activate);
 		
 		tellParticipants("You've completed your current objective for the quest " + ChatColor.GOLD + this.getName() + ChatColor.RESET);
 	}

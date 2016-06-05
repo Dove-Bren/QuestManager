@@ -394,10 +394,8 @@ public class QuestManagerPlugin extends JavaPlugin {
 		
 		//unregister our scheduler
 		Bukkit.getScheduler().cancelTasks(this);
-		
-		for (Party party : playerManager.getParties()) {
-			party.disband();
-		}
+
+		playerManager.getParties().forEach(Party::disband);
 		
 		//save user database
 		playerManager.save(new File(getDataFolder(), playerConfigFileName));
@@ -406,9 +404,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 		stopAllQuests();
 		summonManager.removeSummons();
 		for (QuestPlayer p : playerManager.getPlayers()) {
-			for (SpellPylon pylon : p.getSpellPylons()) {
-				pylon.remove();
-			}
+			p.getSpellPylons().forEach(SpellPylon::remove);
 			
 			p.clearSpellPylons();
 		}

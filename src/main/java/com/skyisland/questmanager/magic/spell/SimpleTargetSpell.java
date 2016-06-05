@@ -76,9 +76,7 @@ public class SimpleTargetSpell extends TargetSpell {
 		
 		@SuppressWarnings("unchecked")
 		List<SpellEffect> effects = (List<SpellEffect>) map.get("effects");
-		for (SpellEffect effect : effects) {
-			spell.addSpellEffect(effect);
-		}
+		effects.forEach(spell::addSpellEffect);
 		
 		if (map.containsKey("projectileeffect")) {
 			spell.setProjectileEffect(Effect.valueOf((String) map.get("projectileeffect")));

@@ -57,9 +57,7 @@ public final class SummonManager {
 	 * Goes through all summons and removes them, also clearing this manager's list
 	 */
 	public void removeSummons() {
-		for (Summon s : summons) {
-			s.remove();
-		}
+		summons.forEach(Summon::remove);
 		
 		summons.clear();
 	}

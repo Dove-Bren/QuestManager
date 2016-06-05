@@ -78,9 +78,7 @@ public class IntervalScheduler extends Scheduler {
 	@Override
 	public void run() {
 		//when run, just tick everything.
-		for (Tickable t : list) {
-			t.tick();
-		}
+		list.forEach(Tickable::tick);
 	}
 
 	@Override
