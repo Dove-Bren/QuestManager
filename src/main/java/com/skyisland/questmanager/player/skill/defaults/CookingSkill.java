@@ -140,6 +140,8 @@ public class CookingSkill extends LogSkill implements Listener {
 	
 	private boolean useItemQuality;
 	
+	private double combineDifficultyRate;
+	
 	private List<OvenRecipe> oRecipes;
 	
 	private List<CombineRecipe> cRecipes;
@@ -163,6 +165,7 @@ public class CookingSkill extends LogSkill implements Listener {
 		this.qualityRate = config.getDouble("qualityRate", .02);
 		this.useItemQuality = config.getBoolean("useItemQuality", true);
 		this.failInterval = config.getInt("failInterval", 25);
+		this.combineDifficultyRate = config.getDouble("combineDifficultyRate", .05);
 		this.bonusQuality = config.getDouble("bonusQuality", .20);
 		
 		this.oRecipes = new LinkedList<>();
@@ -234,6 +237,7 @@ public class CookingSkill extends LogSkill implements Listener {
 				.addLine("qualityRate", .02, Lists.newArrayList("Additional quality on a crafted item given", "per skill level"))
 				.addLine("useItemQuality", true, Lists.newArrayList("Should ingredient quality be used to calculate", "product quality? If false, quality from", "qualityRate * this skill level is the only", "source of quality. Else, that quality is", "added to the sum of the ingredients", "[true|false]"))
 				.addLine("failInterval", 25, Lists.newArrayList("How far from 100 (perfect center) the player", "can be without the job stalling and", "racking up failure", "[int] between 0-100"))
+				.addLine("combineDifficultyRate", .05, Lists.newArrayList("Success-change penalty per level difference in", "mixing recipes and player skill", "[double] 0.05 is 5% per level"))
 				.addLine("bonusQuality", .20, Lists.newArrayList("Bonus quality percent added to a", "perfect cooking craft", "[double] .2 is 20%"));
 			
 			Map<String, Map<String, Object>> map = new HashMap<>();
@@ -472,6 +476,11 @@ public class CookingSkill extends LogSkill implements Listener {
 		}
 		
 		return null;
+	}
+	
+	public double getCombineChance(QuestPlayer player, CombineRecipe recipe) {
+		int level = player.getSkillLevel(this);
+		return Math.max(0, Math.min(1, combineDifficultyRate * (recipe.difficulty - level)));
 	}
 	
 	private boolean isMatch(ItemStack i1, ItemStack i2) {

@@ -1,5 +1,7 @@
 package com.skyisland.questmanager.ui.menu.inventory.minigames;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -79,7 +81,8 @@ public class CombiningGui extends GuiInventory {
 
 	@Override
 	public InventoryItem getItem(int pos) {
-		System.out.println(pos);
+		if (skillLink == null) 
+			return null;
 		
 		/*
 		 * 0,1,2 are bottom slots
@@ -95,16 +98,24 @@ public class CombiningGui extends GuiInventory {
 		if (pos == 3)
 			return null; //nothing to do... right?
 		
-		if (pos > 4) {
+		if (pos > 4)
 			submitItem(pos + 4);
+		else {
+			//ingredient slot. taking back?
+			if (inv.getItem(pos) != null) {
+				player.getInventory().addItem(inv.getItem(pos));
+				inv.setItem(pos, null);
+			}
+		}
+		
+		QualityItem result = getResult(true);
+		if (result == null) {
+			inv.setItem(3, null);
 			return null;
 		}
 		
-		//ingredient slot. taking back?
-		if (inv.getItem(pos) != null) {
-			player.getInventory().addItem(inv.getItem(pos));
-			inv.setItem(pos, null);
-		}
+		
+		inv.setItem(3, result.getItem());
 		
 		return null; //tell it to do nothing
 	}
@@ -155,40 +166,40 @@ public class CombiningGui extends GuiInventory {
 			}
 			
 			if (same) {
-				combineQuality(args);
+				QualityItem result = combineQuality(args);
+				
+				player.getWorld().playSound(player.getEyeLocation(), mixSound, 1, 1);
+				if (!(player.getInventory().addItem(result.getItem())).isEmpty()) {
+					player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
+					player.getWorld().dropItem(player.getEyeLocation(), result.getItem());
+				}
+				
 				inv.setItem(0, null);
 				inv.setItem(1, null);
 				inv.setItem(2, null);
+				inv.setItem(3, null);
 				return;
 			}
 
 			inv.setItem(0, null);
 			inv.setItem(1, null);
 			inv.setItem(2, null);
+			inv.setItem(3, null);
 			player.sendMessage(noRecipeMessage);
 			return;
 		}
 		
 
+		
+		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
+		
+		QualityItem result = getResult(false);
+		
+
 		inv.setItem(0, null);
 		inv.setItem(1, null);
 		inv.setItem(2, null);
-		
-		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
-		QualityItem result = new QualityItem(recipe.result);
-		
-		double sum = 0;
-		int count = 0;
-		QualityItem qi;
-		for (ItemStack item : args) {
-			if (item == null)
-				continue;
-			qi = new QualityItem(item);
-			count ++;
-			sum += qi.getQuality();
-		}
-		
-		result.setQuality(Math.max(0, sum / (double) count));
+		inv.setItem(3, null);
 		
 		CraftEvent event = new CraftEvent(qp, CraftEvent.CraftingType.COOKING, recipe.difficulty, result.clone());
 		Bukkit.getPluginManager().callEvent(event);
@@ -231,6 +242,7 @@ public class CombiningGui extends GuiInventory {
 	}
 	
 	private void submitItem(int slot) {
+		
 		int pos = -1; //where we're going to insert it. 0-2
 		for (int i = 0; i < 3; i++) {
 			if (inv.getItem(i) == null) {
@@ -246,20 +258,27 @@ public class CombiningGui extends GuiInventory {
 		
 		slot = slot % 36;
 		
+
+		if (player.getInventory().getItem(slot) == null)
+			return;
+		
 		ItemStack item = player.getInventory().getItem(slot);
 		ItemStack replace = null;
 		if (item.getAmount() > 1) {
-			replace = item.clone();
+			replace = new ItemStack(item);
 			replace.setAmount(item.getAmount() - 1);
+			replace.setItemMeta(item.getItemMeta().clone());
 		}
 		
 		player.getInventory().setItem(slot, replace);
 		
 		item.setAmount(1);
 		inv.setItem(pos, item);
+		System.out.println("submit done");
+		
 	}
 	
-	private void combineQuality(List<ItemStack> inputs) {
+	private QualityItem combineQuality(List<ItemStack> inputs) {
 		double sum = 0;
 		int count = 0;
 		ItemStack example = null;
@@ -273,18 +292,106 @@ public class CombiningGui extends GuiInventory {
 		}
 		
 		if (count == 0)
-			return;
+			return null;
 		
 		QualityItem output = new QualityItem(example);
 		output.setQuality(sum / count);
 		output.getUnderlyingItem().setAmount(count);
 		
-		player.getWorld().playSound(player.getLocation(), mixSound, 1, 1);
+		return output;
+	}
+	
+	private QualityItem getResult(boolean printInfo) {
+		if (skillLink == null)
+			return null;
 		
-		if (!(player.getInventory().addItem(output.getItem())).isEmpty()) {
-			player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
-			player.getWorld().dropItem(player.getEyeLocation(), output.getItem());
+		if (inv.getItem(0) == null && inv.getItem(1) == null && inv.getItem(2) == null)
+			return null;
+		
+		List<ItemStack> args = new ArrayList<>(3);
+		args.add(inv.getItem(0) == null ? null : inv.getItem(0).clone());
+		args.add(inv.getItem(1) == null ? null : inv.getItem(1).clone());
+		args.add(inv.getItem(2) == null ? null : inv.getItem(2).clone());
+		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
+		
+		CombineRecipe recipe = skillLink.getMixingRecipe(inv.getItem(0), inv.getItem(1), inv.getItem(2));
+		if (recipe == null) {
+			//one last check; are they combining quality items?
+			boolean same = true;
+			Material type = null;
+			short data = 0;
+			for (ItemStack item : args) {
+				if (item == null)
+					continue;
+				if (type == null) {
+					type = item.getType();
+					data = item.getDurability();
+					continue;
+				}
+				
+				if (item.getType() != type || item.getDurability() != data) {
+					same = false;
+					break;
+				}
+			}
+			
+			if (same) {
+				return combineQuality(args);
+			}
+
+		} else {
+			QualityItem result = new QualityItem(recipe.result.clone());
+			
+			double sum = 0;
+			int count = 0;
+			QualityItem qi;
+			for (ItemStack item : args) {
+				if (item == null)
+					continue;
+				qi = new QualityItem(item);
+				count ++;
+				sum += qi.getQuality();
+			}
+			
+			result.setQuality(Math.max(0, sum / (double) count));
+			
+			if (printInfo) {
+				ItemMeta meta = result.getUnderlyingItem().getItemMeta();
+				List<String> lore = meta.getLore();
+				if (lore == null)
+					lore = new LinkedList<>();
+				int level = qp.getSkillLevel(skillLink);
+				int cutoff = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillCutoff();
+				
+				String builder;
+				lore.add("  -  ");
+				builder = "";
+				if (level - recipe.difficulty > cutoff)
+					builder += ChatColor.GREEN;
+				else if (recipe.difficulty - level > 
+					QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillUpperCutoff())
+					builder += ChatColor.RED;
+				else
+					builder += ChatColor.BLUE;
+				builder += "Difficulty: " + recipe.difficulty;
+				lore.add(builder);
+				builder = ChatColor.YELLOW + "";
+				double chance = skillLink.getCombineChance(qp, recipe);
+				if (chance > .9)
+					builder = ChatColor.GREEN + "";
+				
+				builder += String.format("Success Chance: %.2f", chance);
+				lore.add(builder);				
+				
+				meta.setLore(lore);
+				result.getUnderlyingItem().setItemMeta(meta);
+			}
+			
+			return result;
 		}
+		
+		return null;
+		
 	}
 	
 }

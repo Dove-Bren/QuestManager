@@ -262,12 +262,10 @@ skill:
     cutoff: 10
     
     #####################################
-    # Should the cutoff apply to actions
-    # that are at a higher level than the
-    # player? For example, a lvl 10 lumberjack
-    # chops down a lvl 80 tree. Deny XP?
+    # How much higher a skill can be and
+    # the player still get xp for a failure
     #####################################
-    cutoffUpper: true
+    cutoffUpper: 10
     
 #####################################
 # Magic system configuration
