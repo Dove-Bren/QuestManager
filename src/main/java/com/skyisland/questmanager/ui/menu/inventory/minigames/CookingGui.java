@@ -364,7 +364,7 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
 		
 		OvenRecipe recipe = skillLink.getOvenRecipe(currentTarget);
-		QualityItem result = new QualityItem(recipe.output.clone());
+		QualityItem result = new QualityItem(recipe.output.getItem().clone());
 		
 		if (useInputQuality) {
 			result.setQuality((new QualityItem(currentTarget)).getQuality());

@@ -342,7 +342,7 @@ public class CombiningGui extends GuiInventory {
 			}
 
 		} else {
-			QualityItem result = new QualityItem(recipe.result.clone());
+			QualityItem result = new QualityItem(recipe.result.getItem().clone());
 			
 			double sum = 0;
 			int count = 0;

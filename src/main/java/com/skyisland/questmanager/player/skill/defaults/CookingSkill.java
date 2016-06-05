@@ -16,7 +16,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -25,6 +27,7 @@ import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.FoodItem;
 import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.CraftEvent;
@@ -39,6 +42,8 @@ public class CookingSkill extends LogSkill implements Listener {
 	private static final String inUseMessage = ChatColor.GRAY + "That oven is already in use by another player";
 	
 	public static final String configName = "Cooking.yml";
+
+	private static final String blacklistMessage = ChatColor.GRAY + "You cannot eat food in that state!";
 	
 	public static final class OvenRecipe {
 		
@@ -46,9 +51,9 @@ public class CookingSkill extends LogSkill implements Listener {
 		
 		public ItemStack input;
 		
-		public ItemStack output;
+		public FoodItem output;
 		
-		public OvenRecipe(int difficulty, ItemStack input, ItemStack output) {
+		public OvenRecipe(int difficulty, ItemStack input, FoodItem output) {
 			this.difficulty = difficulty;
 			this.input = input;
 			this.output = output;
@@ -95,10 +100,10 @@ public class CookingSkill extends LogSkill implements Listener {
 		
 		public ItemStack input3;
 		
-		public ItemStack result;
+		public FoodItem result;
 		
 		public CombineRecipe(int difficulty, ItemStack input1, ItemStack input2, ItemStack input3,
-				ItemStack result) {
+				FoodItem result) {
 			this.difficulty = difficulty;
 			this.input1 = input1;
 			this.input2 = input2;
@@ -171,6 +176,10 @@ public class CookingSkill extends LogSkill implements Listener {
 	
 	private List<CombineRecipe> cRecipes;
 	
+	private List<Material> foodBlacklist;
+	
+	private double hungerRate;
+	
 	public CookingSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
 				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
@@ -191,6 +200,7 @@ public class CookingSkill extends LogSkill implements Listener {
 		this.failInterval = config.getInt("failInterval", 25);
 		this.combineDifficultyRate = config.getDouble("combineDifficultyRate", .05);
 		this.bonusQuality = config.getDouble("bonusQuality", .20);
+		this.hungerRate = config.getDouble("hungerRate", .005);
 		
 		this.oRecipes = new LinkedList<>();
 		if (!config.contains("oven")) {
@@ -207,7 +217,7 @@ public class CookingSkill extends LogSkill implements Listener {
 				try {
 					oRecipes.add(new OvenRecipe(
 							sex.getInt(key + ".difficulty"), sex.getItemStack(key + ".input"),
-							sex.getItemStack(key + ".output")
+							new FoodItem(sex.getItemStack(key + ".output"), sex.getInt(key + ".output.food"))
 							));
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -233,13 +243,27 @@ public class CookingSkill extends LogSkill implements Listener {
 							sex.getInt(key + ".difficulty"), sex.getItemStack(key + ".input1"),
 							(sex.contains(key + ".input2") ? sex.getItemStack(key + ".input2") : null),
 							(sex.contains(key + ".input3") ? sex.getItemStack(key + ".input3") : null),
-							sex.getItemStack(key + ".output")
+							new FoodItem(sex.getItemStack(key + ".output"), sex.getInt(key + ".food"))
 							));
 				} catch (Exception e) {
 					e.printStackTrace();
 					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Skipping that one! ^");
 				}
 			}
+		}
+		
+		this.foodBlacklist = new LinkedList<>();
+		if (config.contains("badfoods")) {
+			List<String> blacklist = config.getStringList("badfoods");
+			for (String b : blacklist) {
+				try {
+					foodBlacklist.add(Material.valueOf(b.toUpperCase()));
+				} catch (Exception e) {
+					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Could not find Material: "
+							+ b);
+				}
+			}
+			
 		}
 				
 		this.furnaceMap = new HashMap<>();
@@ -262,7 +286,9 @@ public class CookingSkill extends LogSkill implements Listener {
 				.addLine("useItemQuality", true, Lists.newArrayList("Should ingredient quality be used to calculate", "product quality? If false, quality from", "qualityRate * this skill level is the only", "source of quality. Else, that quality is", "added to the sum of the ingredients", "[true|false]"))
 				.addLine("failInterval", 25, Lists.newArrayList("How far from 100 (perfect center) the player", "can be without the job stalling and", "racking up failure", "[int] between 0-100"))
 				.addLine("combineDifficultyRate", .05, Lists.newArrayList("Success-change penalty per level difference in", "mixing recipes and player skill", "[double] 0.05 is 5% per level"))
-				.addLine("bonusQuality", .20, Lists.newArrayList("Bonus quality percent added to a", "perfect cooking craft", "[double] .2 is 20%"));
+				.addLine("bonusQuality", .20, Lists.newArrayList("Bonus quality percent added to a", "perfect cooking craft", "[double] .2 is 20%"))
+				.addLine("hungerRate", .005, Lists.newArrayList("How much should hunger be scaled per", "hundreth of quality?", "[double] percentage scaled"));
+			
 			
 			Map<String, Map<String, Object>> map = new HashMap<>();
 			Map<String, Object> sub = new HashMap<>();
@@ -278,6 +304,7 @@ public class CookingSkill extends LogSkill implements Listener {
 			meta.setDisplayName("Trout");
 			item.setItemMeta(meta);
 			sub.put("output", item);
+			sub.put("food", 3);
 			map.put("Trout", sub);
 			
 			sub = new HashMap<>();
@@ -292,11 +319,12 @@ public class CookingSkill extends LogSkill implements Listener {
 			meta.setDisplayName("Salmon");
 			item.setItemMeta(meta);
 			sub.put("output", item);
+			sub.put("food", 4);
 			map.put("Salmon", sub);
 			
 			sub = new HashMap<>();
 			sub.put("difficulty", 20);
-			item = new ItemStack(Material.CLAY);
+			item = new ItemStack(Material.CLAY_BALL);
 			meta = item.getItemMeta();
 			meta.setDisplayName("Dough");
 			item.setItemMeta(meta);
@@ -304,6 +332,7 @@ public class CookingSkill extends LogSkill implements Listener {
 			item = new ItemStack(Material.BREAD);
 			meta = item.getItemMeta();
 			sub.put("output", item);
+			sub.put("food", 3);
 			map.put("Bread", sub);
 			
 			
@@ -316,11 +345,12 @@ public class CookingSkill extends LogSkill implements Listener {
 			sub.put("input1", item);
 			item = new ItemStack(Material.WHEAT);
 			sub.put("input2", item);
-			item = new ItemStack(Material.CLAY);
+			item = new ItemStack(Material.CLAY_BALL);
 			meta = item.getItemMeta();
 			meta.setDisplayName("Dough");
 			item.setItemMeta(meta);
 			sub.put("output", item);
+			sub.put("food", 0);
 			map.put("Dough", sub);
 			
 			writer.addLine("mixing", map, Lists.newArrayList("List of mixing recipes. Names of", "input items must match exactly", "Difficulty follows the traditional (think magery)", "spell calculations. No rounding happens.", "name: {difficulty: [int], input1: [itemstack], input 2..3: [itemstack|null] output: [itemstack]}"));
@@ -353,7 +383,7 @@ public class CookingSkill extends LogSkill implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlayerCook(PlayerInteractEvent e) {		
+	public void onPlayerCook(PlayerInteractEvent e) {	
 		if (!QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds()
 				.contains(e.getPlayer().getWorld().getName())) {
 			return;
@@ -505,5 +535,47 @@ public class CookingSkill extends LogSkill implements Listener {
 		
 		return new CookingStats(cookTime, fuelSwapTime, failInterval);
 	}
+	
+	@EventHandler
+	public void onPlayerEat(PlayerItemConsumeEvent e) {
+		if (!QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds()
+				.contains(e.getPlayer().getWorld().getName())) {
+			return;
+		}
+		
+		e.setCancelled(true);
+		
+		if (foodBlacklist.contains(e.getItem().getType())) {
+			e.getPlayer().sendMessage(blacklistMessage);
+			return;
+		}
+		
+		ItemStack inHand = e.getItem();
+		FoodItem food = FoodItem.wrapItem(inHand.clone());
+		int pos = e.getPlayer().getInventory().getHeldItemSlot();
+		
+		inHand.setAmount(inHand.getAmount() - 1);
+		if (inHand.getAmount() == 0)
+			inHand = null;
+		
+		e.getPlayer().getInventory().setItem(pos, inHand);
+		
+		double qualityDifference = food.getQuality() - 1.0;
+		qualityDifference = qualityDifference * hungerRate;
+		int newLevel = Math.min(20, e.getPlayer().getFoodLevel()
+				+ (int) Math.round(food.getFoodLevel() * (1 + qualityDifference)));
+		
+		FoodLevelChangeEvent event = new FoodLevelChangeEvent(e.getPlayer(), newLevel);
+		Bukkit.getPluginManager().callEvent(event);
+		if (event.isCancelled()) {
+			return;
+		}
+		
+		newLevel = event.getFoodLevel();
+		
+		e.getPlayer().setFoodLevel(newLevel);
+		
+	}
+	
 	
 }
