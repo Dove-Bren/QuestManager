@@ -121,15 +121,11 @@ public class CookingSkill extends LogSkill implements Listener {
 		
 		int level = player.getSkillLevel(this);
 		
-		//TODO
-//		ret += "\n\n" + ChatColor.GOLD + "Fish Range: " 
-//				+ Math.max(0, level - maxDifficultyRange) + " - " + (level + maxDifficultyRange);
-//		ret += "\n" + ChatColor.GOLD + "Catch Quality: +" + (level * qualityRate);
-//		
-//		ret += "\n" + ChatColor.GREEN + "Difficulty: " 
-//				+ ((int) (100 - (100 * (level * reelDifficultyDiscount)))) + "%" + ChatColor.RESET;
-//		ret += "\n" + ChatColor.DARK_BLUE + "Reeling Time: "
-//				+ ((int) (100 - (100 * (level * timeDiscount))) + "%"); 
+		
+		ret += "\n\n" + ChatColor.GOLD + "Bonus Quality: +" + (level * bonusQuality);
+		
+		ret += "\n" + ChatColor.GREEN + "Time Discount: " 
+				+ ((int) 100 * (timeDiscount *  level)) + "%" + ChatColor.RESET;
 		
 		return ret;
 	}
