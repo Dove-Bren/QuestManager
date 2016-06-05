@@ -87,6 +87,7 @@ public class SpellWeavingInvoker implements Listener {
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(e.getPlayer());
 		
 		qp.castSpellWeavingSpell();
+		
 	}
 	
 }

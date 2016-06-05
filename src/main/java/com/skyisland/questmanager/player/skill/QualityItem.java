@@ -7,6 +7,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.skyisland.questmanager.QuestManagerPlugin;
+
 /**
  * Item with some sort of given quality
  * @author Skyler
@@ -21,7 +23,29 @@ public class QualityItem {
 	private double quality;
 	
 	public QualityItem(ItemStack item) {
-		this(item, normalQuality);
+		if (!item.hasItemMeta() || !item.getItemMeta().hasLore()
+				|| !item.getItemMeta().getLore().get(0).toLowerCase().contains("quality: ")) {
+			this.item = item;
+			this.quality = normalQuality;
+			return;
+		}
+		
+		String line = ChatColor.stripColor(item.getItemMeta().getLore().get(0));
+		line = line.toLowerCase().substring(line.indexOf("quality: ") + 9).trim();
+		double quality = normalQuality;
+		try {
+			quality = Double.parseDouble(line);
+		} catch (Exception e) {
+			e.printStackTrace();
+			QuestManagerPlugin.questManagerPlugin.getLogger().info("Just pretending it said " + normalQuality);
+		}
+		this.item = item;
+		ItemMeta meta = item.getItemMeta();
+		List<String> lore = meta.getLore();
+		lore.remove(0);
+		meta.setLore(lore);
+		this.item.setItemMeta(meta);
+		this.quality = quality;
 	}
 	
 	public QualityItem(ItemStack item, double quality) {

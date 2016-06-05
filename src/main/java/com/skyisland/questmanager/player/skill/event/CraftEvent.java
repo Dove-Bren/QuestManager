@@ -2,10 +2,9 @@ package com.skyisland.questmanager.player.skill.event;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Recipe;
 
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.QualityItem;
 
 /**
  * Called when a {@link QuestPlayer QuestPlayer} is crafting
@@ -14,6 +13,13 @@ import com.skyisland.questmanager.player.QuestPlayer;
  *
  */
 public class CraftEvent extends Event {
+	
+	public enum CraftingType {
+		COOKING,
+		SMITHING,
+		FASHIONING,
+		VANILLA;
+	}
 
 	private static final HandlerList handlers = new HandlerList();
 		
@@ -30,18 +36,24 @@ public class CraftEvent extends Event {
 	
 	private boolean isFail;
 	
-	private Recipe recipe;
-	
 	private int difficulty;
 	
-	private ItemStack outcome;
+	private QualityItem outcome;
 	
-	public CraftEvent(QuestPlayer player, Recipe recipe, int difficulty, ItemStack outcome) {
+	private double quantityModifier;
+	
+	private double qualityModifier;
+	
+	private CraftingType type;
+	
+	public CraftEvent(QuestPlayer player, CraftingType type, int difficulty, QualityItem outcome) {
 		this.player = player;
 		this.isFail = false;
-		this.recipe = recipe;
 		this.difficulty = difficulty;
 		this.outcome = outcome;
+		this.type = type;
+		
+		this.qualityModifier = this.quantityModifier = 1.0;
 	}
 
 	public QuestPlayer getPlayer() {
@@ -60,14 +72,6 @@ public class CraftEvent extends Event {
 		this.isFail = isFail;
 	}
 
-	public Recipe getRecipe() {
-		return recipe;
-	}
-
-	public void setRecipe(Recipe recipe) {
-		this.recipe = recipe;
-	}
-
 	public int getDifficulty() {
 		return difficulty;
 	}
@@ -76,11 +80,31 @@ public class CraftEvent extends Event {
 		this.difficulty = difficulty;
 	}
 
-	public ItemStack getOutcome() {
+	public double getQualityModifier() {
+		return qualityModifier;
+	}
+
+	public void setQualityModifier(double qualityModifier) {
+		this.qualityModifier = qualityModifier;
+	}
+
+	public double getQuantityModifier() {
+		return quantityModifier;
+	}
+
+	public void setQuantityModifier(double quantityModifier) {
+		this.quantityModifier = quantityModifier;
+	}
+
+	public CraftingType getType() {
+		return type;
+	}
+
+	public QualityItem getOutcome() {
 		return outcome;
 	}
 
-	public void setOutcome(ItemStack outcome) {
+	public void setOutcome(QualityItem outcome) {
 		this.outcome = outcome;
-	}	
+	}
 }
