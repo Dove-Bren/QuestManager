@@ -1,5 +1,5 @@
 name: QuestManager
-main: com.SkyIsland.QuestManager.QuestManagerPlugin
+main: com.skyisland.questmanager.QuestManagerPlugin
 version: 1.0
 softdepend: [Multiverse-Core, Multiverse-Portals, Multiverse-Inventories]
 permissions:
