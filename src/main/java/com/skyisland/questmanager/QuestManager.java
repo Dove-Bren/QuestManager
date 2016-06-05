@@ -70,9 +70,9 @@ public class QuestManager implements Listener {
 	 */
 	public QuestManager(File questDirectory, File saveDirectory) {
 		
-		runningQuests = new LinkedList<Quest>();
-		questTemplates = new LinkedList<QuestConfiguration>();
-		questNPCs = new HashSet<NPC>();
+		runningQuests = new LinkedList<>();
+		questTemplates = new LinkedList<>();
+		questNPCs = new HashSet<>();
 		scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
@@ -208,9 +208,7 @@ public class QuestManager implements Listener {
 		
 		//get quest static npcs
 		if (!questTemplate.getAuxNPCs().isEmpty())
-		for (NPC np : questTemplate.getAuxNPCs()) {
-			questNPCs.add(np);
-		}
+			questNPCs.addAll(questTemplate.getAuxNPCs());
 		
 		//now instantiate starting NPC associated ot this quest
 		NPC npc = questTemplate.GetStartingNPCInstance();
@@ -331,10 +329,8 @@ public class QuestManager implements Listener {
 			QuestManagerPlugin.questManagerPlugin.getLogger().info(
 					"Stopping quests and saving state information for " + runningQuests.size() +
 					" quests...");
-			
-			for (Quest quest : runningQuests) {
-				quest.stop();
-			}
+
+			runningQuests.forEach(Quest::stop);
 			
 			QuestManagerPlugin.questManagerPlugin.getLogger().info("done!");
 		}
@@ -354,9 +350,7 @@ public class QuestManager implements Listener {
 	 */
 	public void haltQuests() {
 		if (runningQuests != null && !runningQuests.isEmpty()) {
-			for (Quest quest : runningQuests) {
-				quest.halt();
-			}
+			runningQuests.forEach(Quest::halt);
 		}
 	}
 	
@@ -403,19 +397,14 @@ public class QuestManager implements Listener {
 			
 			for (final NPC npc : questNPCs) {
 				npc.getEntity().getLocation().getChunk().load();
-				Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, 
-						new Runnable(){
-
-							@Override
-							public void run() {
-								for (Entity e : npc.getEntity().getLocation().getChunk().getEntities()) {
-									if (e.getType().equals(EntityType.VILLAGER)) {
-										e.remove();
-									}
-								}
+				Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin,
+					() -> {
+						for (Entity e : npc.getEntity().getLocation().getChunk().getEntities()) {
+							if (e.getType().equals(EntityType.VILLAGER)) {
+								e.remove();
 							}
-						
-						}, 1
+						}
+					}, 1
 				);
 			}
 			

@@ -48,11 +48,11 @@ public class QualityItem {
 		ItemMeta meta = ret.getItemMeta();
 		List<String> lore;
 		if (meta.getLore() != null && !meta.getLore().isEmpty()) {
-			lore = new ArrayList<String>(meta.getLore().size());
+			lore = new ArrayList<>(meta.getLore().size());
 			lore.add(line);
 			lore.addAll(meta.getLore());
 		} else {
-			lore = new ArrayList<String>(1);
+			lore = new ArrayList<>(1);
 			lore.add(line);
 		}
 		

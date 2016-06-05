@@ -47,7 +47,7 @@ public class Chest implements ConfigurationSerializable {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -64,7 +64,7 @@ public class Chest implements ConfigurationSerializable {
 
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		if (inventory == null) {
 			return map;
@@ -110,9 +110,7 @@ public class Chest implements ConfigurationSerializable {
 	
 	public Inventory getInventory(InventoryHolder holder) {
 		Inventory inv = Bukkit.createInventory(holder, (int) (9 * (1 + Math.floor(inventory.size()/9))));
-		for (ItemStack item : inventory) {
-			inv.addItem(item);
-		}
+		inventory.forEach(inv::addItem);
 		
 		return inv;
 	}

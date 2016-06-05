@@ -75,7 +75,7 @@ public class YamlWriter {
 	private List<Entry> entries;
 	
 	public YamlWriter() {
-		this.entries = new LinkedList<Entry>();
+		this.entries = new LinkedList<>();
 	}
 	
 	public YamlWriter addLine(String key, Object value) {

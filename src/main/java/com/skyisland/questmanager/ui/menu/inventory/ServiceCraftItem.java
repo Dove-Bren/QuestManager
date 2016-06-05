@@ -47,7 +47,7 @@ public class ServiceCraftItem extends ServiceItem {
 		}
 		ItemStack ret = getRawDisplayItem().clone();
 		ItemMeta meta = ret.getItemMeta();
-		List<String> lore = new LinkedList<String>();
+		List<String> lore = new LinkedList<>();
 		lore.add(
 				ChatColor.DARK_PURPLE + "Craft  " + (craft.getCost() <= player.getMoney() ? ChatColor.GOLD : ChatColor.DARK_RED) + 
 					"      Cost: " + craft.getCost());

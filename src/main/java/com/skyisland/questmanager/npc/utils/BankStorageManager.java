@@ -37,7 +37,7 @@ public class BankStorageManager {
 		
 		protected BankStorage(String key) {
 			this.storageKey = key;
-			this.invMap = new TreeMap<UUID, Inventory>();
+			this.invMap = new TreeMap<>();
 		}
 		
 		protected void setInventory(UUID player, Inventory inv) {
@@ -50,7 +50,7 @@ public class BankStorageManager {
 		
 		@Override
 		public Map<String, Object> serialize() {
-			Map<String, Object> map = new HashMap<String, Object>();
+			Map<String, Object> map = new HashMap<>();
 			Map<Integer, ItemStack> items;
 			int index;
 			
@@ -163,10 +163,8 @@ public class BankStorageManager {
 		
 		YamlConfiguration config = new YamlConfiguration();
 		List<BankStorage> list = new LinkedList<>();
-		
-		for (BankStorage store : storageMap.values()) {
-			list.add(store);
-		}	
+
+		list.addAll(storageMap.values());
 		
 		config.set("banks", list);
 		

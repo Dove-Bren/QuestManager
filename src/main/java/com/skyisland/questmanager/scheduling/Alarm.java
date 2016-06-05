@@ -13,7 +13,7 @@ private static final int ticksPerSecond = 20;
 	
 	private static Alarm scheduler;
 	
-	private Map<Alarmable<? extends Object>, Reminder<? extends Object>> map;
+	private Map<Alarmable<?>, Reminder<?>> map;
 	
 	private class Reminder<E> extends BukkitRunnable {
 		
@@ -54,7 +54,7 @@ private static final int ticksPerSecond = 20;
 	}
 	
 	private Alarm() {
-		map = new HashMap<Alarmable<? extends Object>, Reminder<? extends Object>>();
+		map = new HashMap<>();
 	}
 	
 	/**
@@ -84,7 +84,7 @@ private static final int ticksPerSecond = 20;
 
 		boolean exists = map.containsKey(alarmable);
 		
-		Reminder<E> reminder = new Reminder<E>(alarmable, reference);
+		Reminder<E> reminder = new Reminder<>(alarmable, reference);
 		
 		map.put(alarmable, reminder);
 		
@@ -102,7 +102,7 @@ private static final int ticksPerSecond = 20;
 	 * @param tickable
 	 * @return Whether or not this was successful, including whther there was something waiting
 	 */
-	public boolean unregister(Alarmable<? extends Object> tickable) {
+	public boolean unregister(Alarmable<?> tickable) {
 		if (map.containsKey(tickable)) {
 			map.get(tickable).cancel();
 			return map.remove(tickable) != null;

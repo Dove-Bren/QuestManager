@@ -16,5 +16,5 @@ public interface Tickable {
 	 * This method can mean anything a Tickable class wants it to be. Scheduled
 	 * Tickable classes receive calls to this on a scheduled and regular basis
 	 */
-	public void tick();
+	void tick();
 }

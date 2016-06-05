@@ -21,7 +21,7 @@ public class GoalState {
 	public GoalState() {
 		name = "";
 		
-		requirementStates = new LinkedList<RequirementState>();
+		requirementStates = new LinkedList<>();
 	}
 
 
@@ -33,7 +33,7 @@ public class GoalState {
 		
 		name = config.getString("name");
 		
-		requirementStates = new LinkedList<RequirementState>();
+		requirementStates = new LinkedList<>();
 		
 		if (config.contains("requirementStates"))
 		for (String reqKey : config.getConfigurationSection("requirementStates").getKeys(false)) {

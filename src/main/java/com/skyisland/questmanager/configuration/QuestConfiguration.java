@@ -28,7 +28,7 @@ import com.skyisland.questmanager.ui.menu.message.Message;
  */
 public class QuestConfiguration {
 	
-	public static enum EndType {
+	public enum EndType {
 		SAME,
 		OTHERNPC,
 		NOTURNIN;
@@ -184,7 +184,7 @@ public class QuestConfiguration {
 	
 	public Collection<NPC> getAuxNPCs() {
 		
-		List<NPC> npcs = new LinkedList<NPC>();
+		List<NPC> npcs = new LinkedList<>();
 		
 		//get list of NPCs and get them created
 		if (config.contains(QuestConfigurationField.NPCS.getKey())) {
@@ -281,7 +281,7 @@ public class QuestConfiguration {
 		ConfigurationSection questSection = config.getConfigurationSection(
 				QuestConfigurationField.GOALS.getKey());
 		
-		List<ConfigurationSection> goalList = new LinkedList<ConfigurationSection>();
+		List<ConfigurationSection> goalList = new LinkedList<>();
 		for (String key : questSection.getKeys(false)) {
 			goalList.add(questSection.getConfigurationSection(key));
 		}
@@ -294,9 +294,7 @@ public class QuestConfiguration {
 		}
 		
 		//activate first goal
-		for (Requirement req : quest.getGoals().get(0).getRequirements()) {
-			req.activate();
-		}
+		quest.getGoals().get(0).getRequirements().forEach(Requirement::activate);
 		
 		//get fame and reward info
 		quest.setFame(config.getInt(QuestConfigurationField.FAME.getKey()));
@@ -309,9 +307,7 @@ public class QuestConfiguration {
 
 		
 		if (rewards != null && !rewards.isEmpty())
-		for (ItemStack item : rewards) {
-			quest.addItemReward(item);
-		}
+			rewards.forEach(quest::addItemReward);
 		
 		if (participant != null)
 			for (QuestPlayer qp : participant.getParticipants()) {

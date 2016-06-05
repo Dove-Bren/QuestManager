@@ -40,7 +40,7 @@ public class WeightedList<T>  {
 	private Random rand;
 	
 	public WeightedList() {
-		this.list = new LinkedList<Item<T>>();
+		this.list = new LinkedList<>();
 		rand = new Random();
 	}
 	
@@ -51,7 +51,7 @@ public class WeightedList<T>  {
 	 * @param weight
 	 */
 	public void add(T object, Double weight) {
-		list.add(new Item<T>(object, weight));
+		list.add(new Item<>(object, weight));
 	}
 	
 	/**
@@ -91,7 +91,7 @@ public class WeightedList<T>  {
 	 * @return
 	 */
 	public Set<T> getElements() {
-		Set<T> set = new HashSet<T>();
+		Set<T> set = new HashSet<>();
 		
 		for (Item<T> i : list) {
 			set.add(i.getObject());

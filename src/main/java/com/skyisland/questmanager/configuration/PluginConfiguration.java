@@ -75,7 +75,7 @@ public class PluginConfiguration {
 		
 		private String key;
 		
-		private PluginConfigurationKey(String key) {
+		PluginConfigurationKey(String key) {
 			this.key = key;
 		}
 		

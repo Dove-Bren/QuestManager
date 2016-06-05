@@ -43,7 +43,7 @@ public class InvokeSpellWeavingEffect extends SpellEffect {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -58,7 +58,7 @@ public class InvokeSpellWeavingEffect extends SpellEffect {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 
 		return map;
 	}

@@ -45,7 +45,7 @@ public class SimpleSelfSpell extends SelfSpell {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -74,9 +74,7 @@ public class SimpleSelfSpell extends SelfSpell {
 		
 		@SuppressWarnings("unchecked")
 		List<SpellEffect> effects = (List<SpellEffect>) map.get("effects");
-		for (SpellEffect effect : effects) {
-			spell.addSpellEffect(effect);
-		}
+		effects.forEach(spell::addSpellEffect);
 		
 		if (map.containsKey("casteffect")) {
 			spell.setCastEffect(Effect.valueOf((String) map.get("casteffect")));
@@ -89,7 +87,7 @@ public class SimpleSelfSpell extends SelfSpell {
 	}
 	
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("cost", getCost());
 		map.put("name", getName());

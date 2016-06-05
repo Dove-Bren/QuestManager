@@ -47,7 +47,7 @@ public class ServiceOfferItem extends ServiceItem {
 		}
 		ItemStack ret = getRawDisplayItem().clone();
 		ItemMeta meta = ret.getItemMeta();
-		List<String> lore = new LinkedList<String>();
+		List<String> lore = new LinkedList<>();
 		lore.add(
 				ChatColor.BLUE + "Offer               " + ChatColor.GOLD + offer.getPrice());
 		lore.add(ChatColor.DARK_RED + "Requested:");

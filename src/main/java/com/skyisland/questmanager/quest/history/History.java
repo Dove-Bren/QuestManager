@@ -39,7 +39,7 @@ public class History {
 	 * Creates a new history with no events
 	 */
 	public History() {
-		this.events = new LinkedList<HistoryEvent>();
+		this.events = new LinkedList<>();
 	}
 	
 	public List<HistoryEvent> events() {
@@ -83,7 +83,7 @@ public class History {
 		if (events.isEmpty()) {
 			return config;
 		}
-		List<String> list = new ArrayList<String>(events.size());
+		List<String> list = new ArrayList<>(events.size());
 		
 		for (HistoryEvent e : events) {
 			list.add(e.getDescription());

@@ -55,7 +55,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -76,7 +76,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		super(name, type);
 		this.hp = hp;
 		this.attack = attack;
-		this.loot = new LinkedList<Loot>();
+		this.loot = new LinkedList<>();
 		
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}

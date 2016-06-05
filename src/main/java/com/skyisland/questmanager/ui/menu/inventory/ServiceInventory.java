@@ -50,7 +50,7 @@ public class ServiceInventory extends GuiInventory {
 		
 		private String alias;
 		
-		private aliases(String alias) {
+		aliases(String alias) {
 			this.alias = alias;
 		}
 		
@@ -109,7 +109,7 @@ public class ServiceInventory extends GuiInventory {
 		 * 8:
 		 * 	""
 		 */
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		if (items.isEmpty()) {
 			return map;
@@ -135,7 +135,7 @@ public class ServiceInventory extends GuiInventory {
 		YamlConfiguration config = new YamlConfiguration();
 		config.createSection("top", configMap);
 		
-		Map<Integer, ServiceItem> map = new HashMap<Integer, ServiceItem>();
+		Map<Integer, ServiceItem> map = new HashMap<>();
 		ConfigurationSection conf = config.getConfigurationSection("top");
 		
 		for (String slotString : conf.getKeys(false)) {

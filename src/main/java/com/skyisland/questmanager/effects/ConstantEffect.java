@@ -7,5 +7,5 @@ package com.skyisland.questmanager.effects;
  */
 public interface ConstantEffect {
 
-	public void stop();
+	void stop();
 }
