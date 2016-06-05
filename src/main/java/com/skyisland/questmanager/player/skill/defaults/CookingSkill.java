@@ -317,7 +317,7 @@ public class CookingSkill extends LogSkill implements Listener {
 		
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(e.getPlayer());
 		
-		CombiningGui gui = new CombiningGui(e.getPlayer(), "Boiling");
+		CombiningGui gui = new CombiningGui(e.getPlayer(), "Mixing Pot");
 		InventoryMenu menu = new InventoryMenu(qp, gui);
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
 		

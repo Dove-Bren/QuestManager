@@ -131,19 +131,51 @@ public class CombiningGui extends GuiInventory {
 			return;
 		
 
-		inv.setItem(0, null);
-		inv.setItem(1, null);
-		inv.setItem(2, null);
+		List<ItemStack> args = Lists.newArrayList(inv.getItem(0), inv.getItem(1), inv.getItem(2));
 		
 		CombineRecipe recipe = skillLink.getMixingRecipe(inv.getItem(0), inv.getItem(1), inv.getItem(2));
 		if (recipe == null) {
+			//one last check; are they combining quality items?
+			boolean same = true;
+			Material type = null;
+			short data = 0;
+			for (ItemStack item : args) {
+				if (item == null)
+					continue;
+				if (type == null) {
+					type = item.getType();
+					data = item.getDurability();
+					continue;
+				}
+				
+				if (item.getType() != type || item.getDurability() != data) {
+					same = false;
+					break;
+				}
+			}
+			
+			if (same) {
+				combineQuality(args);
+				inv.setItem(0, null);
+				inv.setItem(1, null);
+				inv.setItem(2, null);
+				return;
+			}
+
+			inv.setItem(0, null);
+			inv.setItem(1, null);
+			inv.setItem(2, null);
 			player.sendMessage(noRecipeMessage);
 			return;
 		}
 		
+
+		inv.setItem(0, null);
+		inv.setItem(1, null);
+		inv.setItem(2, null);
+		
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
 		QualityItem result = new QualityItem(recipe.result);
-		List<ItemStack> args = Lists.newArrayList(inv.getItem(0), inv.getItem(1), inv.getItem(2));
 		
 		double sum = 0;
 		int count = 0;
@@ -225,6 +257,34 @@ public class CombiningGui extends GuiInventory {
 		
 		item.setAmount(1);
 		inv.setItem(pos, item);
+	}
+	
+	private void combineQuality(List<ItemStack> inputs) {
+		double sum = 0;
+		int count = 0;
+		ItemStack example = null;
+		for (ItemStack item : inputs) {
+			if (item == null)
+				continue;
+			
+			example = item;
+			sum += (new QualityItem(item)).getQuality();
+			count++;
+		}
+		
+		if (count == 0)
+			return;
+		
+		QualityItem output = new QualityItem(example);
+		output.setQuality(sum / count);
+		output.getUnderlyingItem().setAmount(count);
+		
+		player.getWorld().playSound(player.getLocation(), mixSound, 1, 1);
+		
+		if (!(player.getInventory().addItem(output.getItem())).isEmpty()) {
+			player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
+			player.getWorld().dropItem(player.getEyeLocation(), output.getItem());
+		}
 	}
 	
 }
