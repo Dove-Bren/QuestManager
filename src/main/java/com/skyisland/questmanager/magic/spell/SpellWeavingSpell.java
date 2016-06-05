@@ -62,7 +62,7 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 		 * Creates new unordered blank recipe. Good for building
 		 */
 		public SpellWeavingRecipe() {
-			this(new LinkedList<String>(), false);
+			this(new LinkedList<>(), false);
 		}
 		
 		public SpellWeavingRecipe addComponent(String type) {

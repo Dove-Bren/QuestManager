@@ -77,7 +77,7 @@ public class TreeMessage extends Message {
 	
 	private TreeMessage() {
 		super();
-		this.options = new LinkedList<Option>();
+		this.options = new LinkedList<>();
 	}
 	
 	public TreeMessage(FancyMessage body, Option ...options) {
@@ -93,7 +93,7 @@ public class TreeMessage extends Message {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("body", body);
-		List<Map<String, Object>> opts = new LinkedList<Map<String, Object>>();
+		List<> opts = new LinkedList<>();
 		Map<String, Object> om;
 		for (Option opt : options) {
 			om = new TreeMap<>();
@@ -123,7 +123,7 @@ public class TreeMessage extends Message {
 		}
 		
 		//load options
-		List<Option> options = new LinkedList<Option>();
+		List<Option> options = new LinkedList<>();
 		Option o;
 		Object oLab;
 		FancyMessage label;

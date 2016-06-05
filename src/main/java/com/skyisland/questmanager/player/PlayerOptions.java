@@ -103,7 +103,7 @@ public class PlayerOptions implements ConfigurationSerializable {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new TreeMap<String, Object>();
+		Map<String, Object> map = new TreeMap<>();
 		
 		for (Key key : Key.values()) {
 			map.put(key.getKey(), opts.get(key));

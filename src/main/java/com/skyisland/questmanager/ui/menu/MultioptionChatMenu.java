@@ -32,7 +32,7 @@ public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {
 	public MultioptionChatMenu(Message body, ChatMenuOption option) {
 		super(body.getFormattedMessage());
 		
-		options = new TreeMap<String, ChatMenuOption>();
+		options = new TreeMap<>();
 		addOption(option);
 		
 		keyindex = 1;
@@ -43,7 +43,7 @@ public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {
 	public MultioptionChatMenu(Message body) {
 		super(body.getFormattedMessage());
 		
-		options = new TreeMap<String, ChatMenuOption>();
+		options = new TreeMap<>();
 		
 		keyindex = 1;
 		
@@ -54,7 +54,7 @@ public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {
 		super(body.getFormattedMessage());
 
 		
-		this.options = new TreeMap<String, ChatMenuOption>();
+		this.options = new TreeMap<>();
 		
 		keyindex = 1;
 		
@@ -69,7 +69,7 @@ public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {
 		super(body.getFormattedMessage());
 
 		
-		this.options = new TreeMap<String, ChatMenuOption>();
+		this.options = new TreeMap<>();
 		
 		keyindex = 1;
 		

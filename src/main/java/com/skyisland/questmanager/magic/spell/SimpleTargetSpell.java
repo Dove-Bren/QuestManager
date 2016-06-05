@@ -97,7 +97,7 @@ public class SimpleTargetSpell extends TargetSpell {
 	}
 	
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("cost", getCost());
 		map.put("name", getName());

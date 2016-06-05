@@ -76,7 +76,7 @@ public class ContributionInventory extends ReturnGuiInventory {
 		this.maxItems = maxItems;
 		this.invName = name;
 		
-		this.items = new HashMap<Integer, ItemStack>();
+		this.items = new HashMap<>();
 		
 		if (!player.getPlayer().isOnline()) {
 			System.out.println("Cannot fetch inventory for offline player [GuiInventory@getFormattedInventory]");

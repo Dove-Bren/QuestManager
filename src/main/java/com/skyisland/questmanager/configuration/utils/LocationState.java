@@ -96,7 +96,7 @@ public class LocationState implements ConfigurationSerializable {
 	 */
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> config = new HashMap<String, Object>(6);
+		Map<String, Object> config = new HashMap<>(6);
 		config.put(fields.X.getKey(), location.getX());
 		config.put(fields.Y.getKey(), location.getY());
 		config.put(fields.Z.getKey(), location.getZ());

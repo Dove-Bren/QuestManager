@@ -57,7 +57,7 @@ public class SwapEffect extends SpellEffect {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		return map;
 	}

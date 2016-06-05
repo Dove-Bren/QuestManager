@@ -63,7 +63,7 @@ public class HealEffect extends ImbuementEffect {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("amount", amount);
 		

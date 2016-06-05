@@ -79,7 +79,7 @@ public class BioptionMessage extends Message {
 
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("body", body);
 		map.put("option1Label", option1Label);

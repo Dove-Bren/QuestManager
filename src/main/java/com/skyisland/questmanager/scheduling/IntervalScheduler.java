@@ -48,7 +48,7 @@ public class IntervalScheduler extends Scheduler {
 	private IntervalScheduler() {
 		this.delay = defaultDelay;
 		
-		this.list = new LinkedList<Tickable>();
+		this.list = new LinkedList<>();
 		
 		Bukkit.getScheduler().runTaskTimer(QuestManagerPlugin.questManagerPlugin
 				, this, delay, delay);

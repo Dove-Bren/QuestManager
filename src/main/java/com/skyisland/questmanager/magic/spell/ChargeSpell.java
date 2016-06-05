@@ -130,7 +130,7 @@ public class ChargeSpell extends SimpleSelfSpell implements Listener {
 
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("cost", getCost());
 		map.put("name", getName());

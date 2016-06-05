@@ -12,7 +12,7 @@ public class SpellManager {
 	private Map<String, Spell> spells;
 	
 	public SpellManager() {
-		this.spells = new HashMap<String, Spell>();
+		this.spells = new HashMap<>();
 	}
 	
 	public SpellManager(File spellDirectory) {

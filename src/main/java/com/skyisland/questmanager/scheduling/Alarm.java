@@ -84,7 +84,7 @@ private static final int ticksPerSecond = 20;
 
 		boolean exists = map.containsKey(alarmable);
 		
-		Reminder<E> reminder = new Reminder<E>(alarmable, reference);
+		Reminder<E> reminder = new Reminder<>(alarmable, reference);
 		
 		map.put(alarmable, reminder);
 		

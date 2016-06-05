@@ -253,12 +253,12 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		this.maxHp = 20;
 		this.level = 1;
 		this.title = "The Unknown";
-		this.unlockedTitles = new LinkedList<String>();
-		this.journalNotes = new LinkedList<String>();
+		this.unlockedTitles = new LinkedList<>();
+		this.journalNotes = new LinkedList<>();
 		this.spells = new LinkedList<>();
 		this.storedSpells = new HashMap<>();
 		this.storedImbuements = new HashMap<>();
-		this.pylons = new LinkedList<SpellPylon>();
+		this.pylons = new LinkedList<>();
 		this.skillLevels = new HashMap<>();
 		this.skillXP = new HashMap<>();
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
@@ -273,8 +273,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	public QuestPlayer(OfflinePlayer player) {
 		this();
 		this.playerID = player.getUniqueId();
-		this.currentQuests = new LinkedList<Quest>();
-		this.completedQuests = new LinkedList<String>();
+		this.currentQuests = new LinkedList<>();
+		this.completedQuests = new LinkedList<>();
 		this.history = new History();
 		
 		if (player.isOnline()) {
@@ -628,7 +628,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 
 	@Override
 	public Collection<QuestPlayer> getParticipants() {
-		Collection<QuestPlayer> col = new ArrayList<QuestPlayer>();
+		Collection<QuestPlayer> col = new ArrayList<>();
 		col.add(this);
 		return col;
 	}
@@ -638,7 +638,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	 */
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>(3);
+		Map<String, Object> map = new HashMap<>(3);
 		map.put("title", title);
 		map.put("unlockedtitles", unlockedTitles);
 		map.put("fame", fame);
@@ -812,15 +812,15 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		////////////////////////////////
 				
 		if (qp.completedQuests == null) {
-			qp.completedQuests = new LinkedList<String>();
+			qp.completedQuests = new LinkedList<>();
 		}
 		
 		if (qp.unlockedTitles == null) {
-			qp.unlockedTitles = new LinkedList<String>();
+			qp.unlockedTitles = new LinkedList<>();
 		}
 		
 		if (qp.journalNotes == null) {
-			qp.journalNotes = new LinkedList<String>();
+			qp.journalNotes = new LinkedList<>();
 		}
 		
 		return qp;
@@ -1312,7 +1312,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			return;
 		}
 		
-		LinkedList<ChatMenuOption> opts = new LinkedList<ChatMenuOption>();
+		LinkedList<ChatMenuOption> opts = new LinkedList<>();
 		
 		for (String t : unlockedTitles) {
 			opts.add(new ChatMenuOption(
@@ -1358,7 +1358,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			return;
 		}
 		
-		LinkedList<ChatMenuOption> opts = new LinkedList<ChatMenuOption>();
+		LinkedList<ChatMenuOption> opts = new LinkedList<>();
 		
 		//spells.sort(null); Not working. Dunno why :S
 		
@@ -2006,8 +2006,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	public void castSpellWeavingSpell() {
 		
 		SpellWeavingSpell spell;
-		List<String> typeList = new ArrayList<String>(pylons.size());
-		List<Location> points = new ArrayList<Location>(pylons.size());
+		List<String> typeList = new ArrayList<>(pylons.size());
+		List<Location> points = new ArrayList<>(pylons.size());
 		for (SpellPylon pylon : pylons) {
 			typeList.add(pylon.getType());
 			points.add(pylon.getLocation());
@@ -2103,37 +2103,32 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		final double centx = centerx, centz = centerz;
 		
 		//sort points for convext-ivity
-		Collections.sort(points, new Comparator<Location>(){
+		Collections.sort(points, (o1, o2) -> {
+            //Code taken from
+            //http://stackoverflow.com/questions/6989100/sort-points-in-clockwise-order
+            if (o1.getX() - centx >= 0 && o2.getX() - centx < 0)
+                return -1;
+            if (o1.getX() - centx < 0 && o2.getX() - centx >= 0)
+                return 1;
+            if (o1.getX() - centx == 0 && o2.getX() - centx == 0) {
+                if (o1.getY() - centz >= 0 || o2.getY() - centz >= 0)
+                    return Double.compare(o2.getY(), o1.getY());
+                return Double.compare(o1.getY(), o2.getY());
+            }
 
-			@Override
-			public int compare(Location o1, Location o2) {
-				//Code taken from
-				//http://stackoverflow.com/questions/6989100/sort-points-in-clockwise-order
-				if (o1.getX() - centx >= 0 && o2.getX() - centx < 0)
-			        return -1;
-			    if (o1.getX() - centx < 0 && o2.getX() - centx >= 0)
-			        return 1;
-			    if (o1.getX() - centx == 0 && o2.getX() - centx == 0) {
-			        if (o1.getY() - centz >= 0 || o2.getY() - centz >= 0)
-			            return Double.compare(o2.getY(), o1.getY());
-			        return Double.compare(o1.getY(), o2.getY());
-			    }
+            // compute the cross product of vectors (center -> a) x (center -> b)
+            double det = (o1.getX() - centx) * (o2.getY() - centz) - (o2.getX() - centx) * (o1.getY() - centz);
+            if (det < 0)
+                return -1;
+            if (det > 0)
+                return 1;
 
-			    // compute the cross product of vectors (center -> a) x (center -> b)
-			    double det = (o1.getX() - centx) * (o2.getY() - centz) - (o2.getX() - centx) * (o1.getY() - centz);
-			    if (det < 0)
-			        return -1;
-			    if (det > 0)
-			        return 1;
-
-			    // points a and b are on the same line from the center
-			    // check which point is closer to the center
-			    double d1 = (o1.getX() - centx) * (o1.getX() - centx) + (o1.getY() - centz) * (o1.getY() - centz);
-			    double d2 = (o2.getX() - centx) * (o2.getX() - centx) + (o2.getY() - centz) * (o2.getY() - centz);
-			    return Double.compare(d2,d1);
-			}
-			
-		});
+            // points a and b are on the same line from the center
+            // check which point is closer to the center
+            double d1 = (o1.getX() - centx) * (o1.getX() - centx) + (o1.getY() - centz) * (o1.getY() - centz);
+            double d2 = (o2.getX() - centx) * (o2.getX() - centx) + (o2.getY() - centz) * (o2.getY() - centz);
+            return Double.compare(d2,d1);
+        });
 		
 		for (Entity entity : points.get(0).getWorld().getEntities()) {
 			if (   entity.getLocation().getX() < minx

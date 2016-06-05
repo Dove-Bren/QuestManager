@@ -101,7 +101,7 @@ public class ServiceCraft extends Service {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("name", name);
 		map.put("cost", cost);

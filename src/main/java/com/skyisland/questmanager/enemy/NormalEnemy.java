@@ -76,7 +76,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		super(name, type);
 		this.hp = hp;
 		this.attack = attack;
-		this.loot = new LinkedList<Loot>();
+		this.loot = new LinkedList<>();
 		
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}

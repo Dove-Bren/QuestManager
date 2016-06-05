@@ -23,7 +23,7 @@ public class InventoryGuiHandler implements Listener {
 	
 	
 	public InventoryGuiHandler() {
-		this.menus = new HashMap<UUID, InventoryMenu>();
+		this.menus = new HashMap<>();
 	}
 	
 	/**

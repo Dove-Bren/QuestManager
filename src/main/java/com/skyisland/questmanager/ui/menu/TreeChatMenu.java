@@ -36,7 +36,7 @@ public class TreeChatMenu extends ChatMenu implements RespondableMenu {
 		super(body.getFormattedMessage());
 
 		
-		this.options = new TreeMap<String, Option>();
+		this.options = new TreeMap<>();
 		
 		keyindex = 1;
 		
@@ -51,7 +51,7 @@ public class TreeChatMenu extends ChatMenu implements RespondableMenu {
 		super(body.getFormattedMessage());
 
 		
-		this.options = new TreeMap<String, Option>();
+		this.options = new TreeMap<>();
 		
 		keyindex = 1;
 		

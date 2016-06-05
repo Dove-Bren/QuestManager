@@ -112,7 +112,7 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 			plugin.getCommand(command.getCommand()).setExecutor(this);
 		}
 		
-		menus = new TreeMap<UUID, MenuRecord>();
+		menus = new TreeMap<>();
 		if (ChatGuiHandler.rand == null) {
 			ChatGuiHandler.rand = new Random();
 		}
@@ -227,7 +227,7 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 			return;
 		}
 		
-		Iterator<UUID> it = (new ArrayList<UUID>(menus.keySet())).iterator();
+		Iterator<UUID> it = (new ArrayList<>(menus.keySet())).iterator();
 		
 		while (it.hasNext()) {
 			UUID key = it.next();

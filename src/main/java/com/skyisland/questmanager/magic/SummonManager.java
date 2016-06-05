@@ -20,7 +20,7 @@ public final class SummonManager {
 	
 	public SummonManager() {
 		this.summons = new LinkedList<>();
-		playerCount = new HashMap<UUID, Integer>();
+		playerCount = new HashMap<>();
 		summonLimit = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSummonLimit();
 	}
 	

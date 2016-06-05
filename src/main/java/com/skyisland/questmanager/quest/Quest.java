@@ -114,7 +114,7 @@ public class Quest implements Listener {
 		this.template = template;
 		
 		this.running = false;
-		this.goals = new LinkedList<Goal>();
+		this.goals = new LinkedList<>();
 		this.goalIndex = 0;
 		
 		this.history = new History();
@@ -133,7 +133,7 @@ public class Quest implements Listener {
 		}
 		
 		
-		itemRewards = new LinkedList<ItemStack>();
+		itemRewards = new LinkedList<>();
 		
 		this.ID = Quest.nextID();
 		

@@ -144,7 +144,7 @@ public class SphericalRegion extends Region {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("world", world.getName());
 		map.put("center", center);

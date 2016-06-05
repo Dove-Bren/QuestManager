@@ -184,7 +184,7 @@ public class QuestConfiguration {
 	
 	public Collection<NPC> getAuxNPCs() {
 		
-		List<NPC> npcs = new LinkedList<NPC>();
+		List<NPC> npcs = new LinkedList<>();
 		
 		//get list of NPCs and get them created
 		if (config.contains(QuestConfigurationField.NPCS.getKey())) {
@@ -281,7 +281,7 @@ public class QuestConfiguration {
 		ConfigurationSection questSection = config.getConfigurationSection(
 				QuestConfigurationField.GOALS.getKey());
 		
-		List<ConfigurationSection> goalList = new LinkedList<ConfigurationSection>();
+		List<ConfigurationSection> goalList = new LinkedList<>();
 		for (String key : questSection.getKeys(false)) {
 			goalList.add(questSection.getConfigurationSection(key));
 		}

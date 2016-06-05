@@ -69,7 +69,7 @@ public class DispersedScheduler extends Scheduler {
 		this.delay = defaultDelay;
 		this.rest = defaultRest;
 		
-		this.list = new LinkedList<Tickable>();
+		this.list = new LinkedList<>();
 		
 		resting = true;
 		Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin

@@ -63,7 +63,7 @@ public class AreaEffect extends SpellEffect {
 	
 	@Override
 	public Map<String, Object> serialize() {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<>();
 		
 		map.put("radius", radius);
 		map.put("effects", effects);
@@ -82,7 +82,7 @@ public class AreaEffect extends SpellEffect {
 	 */
 	public AreaEffect(double radius) {
 		this.radius = radius;
-		this.effects = new LinkedList<SpellEffect>();
+		this.effects = new LinkedList<>();
 	}
 	
 	public void addEffect(SpellEffect effect) {
