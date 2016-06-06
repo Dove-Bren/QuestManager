@@ -101,7 +101,7 @@ public class QualityItem {
 	
 	@Override
 	public QualityItem clone() {
-		return new QualityItem(item, quality);
+		return new QualityItem(item.clone(), quality);
 	}
 	
 	public boolean isSimilar(ItemStack item) {

@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Furnace;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -121,16 +122,16 @@ public class CookingSkill extends LogSkill implements Listener {
 	}
 	
 	public String getDescription(QuestPlayer player) {
-		String ret = ChatColor.WHITE + "Fishing skill determines the types of fish caught and how difficulty it"
-				+ " is to catch them.";
+		String ret = ChatColor.WHITE + "The Cooking Skill governs the players ability to create difficult"
+				+ " mixtures and complicated meals. It also how good a player's dishes are.";
 		
 		int level = player.getSkillLevel(this);
 		
 		
-		ret += "\n\n" + ChatColor.GOLD + "Bonus Quality: +" + (level * bonusQuality);
+		ret += "\n\n" + ChatColor.GOLD + "Bonus Quality: +" + String.format("%.2f", (level * bonusQuality));
 		
 		ret += "\n" + ChatColor.GREEN + "Time Discount: " 
-				+ ((int) 100 * (timeDiscount *  level)) + "%" + ChatColor.RESET;
+				+ (int) (100 * (timeDiscount *  level)) + "%" + ChatColor.RESET;
 		
 		return ret;
 	}
@@ -217,7 +218,7 @@ public class CookingSkill extends LogSkill implements Listener {
 				try {
 					oRecipes.add(new OvenRecipe(
 							sex.getInt(key + ".difficulty"), sex.getItemStack(key + ".input"),
-							new FoodItem(sex.getItemStack(key + ".output"), sex.getInt(key + ".output.food"))
+							new FoodItem(sex.getItemStack(key + ".output"), sex.getInt(key + ".food"))
 							));
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -270,6 +271,9 @@ public class CookingSkill extends LogSkill implements Listener {
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 		CookingGui.setCookingSkill(this);
 		CombiningGui.setCookingSkill(this);
+		
+		for (OvenRecipe r : oRecipes) 
+			System.out.println("Registered oven item with " + r.output.getItem().getItemMeta().getLore());
 	}
 	
 	private YamlConfiguration createConfig(File configFile) {
@@ -476,7 +480,7 @@ public class CookingSkill extends LogSkill implements Listener {
 	
 	public double getCombineChance(QuestPlayer player, CombineRecipe recipe) {
 		int level = player.getSkillLevel(this);
-		return Math.max(0, Math.min(1, combineDifficultyRate * (recipe.difficulty - level)));
+		return 1.0 - Math.max(0, Math.min(1, combineDifficultyRate * ((double) (recipe.difficulty - level))));
 	}
 	
 	private boolean isMatch(ItemStack i1, ItemStack i2) {
@@ -574,6 +578,7 @@ public class CookingSkill extends LogSkill implements Listener {
 		newLevel = event.getFoodLevel();
 		
 		e.getPlayer().setFoodLevel(newLevel);
+		e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 1,1);
 		
 	}
 	

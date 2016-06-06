@@ -23,6 +23,7 @@ import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.effects.ChargeEffect;
 import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.FoodItem;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.defaults.CookingSkill;
 import com.skyisland.questmanager.player.skill.defaults.CookingSkill.CombineRecipe;
@@ -213,11 +214,13 @@ public class CombiningGui extends GuiInventory {
 			player.sendMessage(failMessage);
 			failEffect.play(player, player.getLocation());
 			player.getWorld().playSound(player.getLocation(), failSound, 1, 1);
+			skillLink.performMinor(qp, recipe.difficulty, true);
 			return;
 		}
 		
 		//skillLink.perform(qp, recipe.difficulty, false);
 		succeedEffect.play(player, player.getLocation());
+		skillLink.performMinor(qp, recipe.difficulty, false);
 		
 		
 		String name;
@@ -342,7 +345,7 @@ public class CombiningGui extends GuiInventory {
 			}
 
 		} else {
-			QualityItem result = new QualityItem(recipe.result.getItem().clone());
+			FoodItem result = recipe.result.clone();
 			
 			double sum = 0;
 			int count = 0;

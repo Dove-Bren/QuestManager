@@ -26,6 +26,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.FoodItem;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.defaults.CookingSkill;
 import com.skyisland.questmanager.player.skill.defaults.CookingSkill.CookingStats;
@@ -364,7 +365,7 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
 		
 		OvenRecipe recipe = skillLink.getOvenRecipe(currentTarget);
-		QualityItem result = new QualityItem(recipe.output.getItem().clone());
+		FoodItem result = recipe.output.clone();
 		
 		if (useInputQuality) {
 			result.setQuality((new QualityItem(currentTarget)).getQuality());

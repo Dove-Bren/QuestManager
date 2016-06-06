@@ -30,7 +30,7 @@ public class FoodItem extends QualityItem {
 		}
 		
 		String line = ChatColor.stripColor(item.getItemMeta().getLore().get(0));
-		line = line.toLowerCase().substring(line.indexOf("food level: ") + 13).trim();
+		line = line.toLowerCase().substring(line.indexOf("food level: ") + 12).trim();
 		int foodLevel = defaultFoodLevel;
 		try {
 			foodLevel = Integer.parseInt(line);
@@ -90,4 +90,10 @@ public class FoodItem extends QualityItem {
 		return foodLevel;
 	}
 	
+	@Override
+	public FoodItem clone() {
+		FoodItem ret = new FoodItem(getUnderlyingItem().clone(), foodLevel);
+		ret.setQuality(this.getQuality());
+		return ret;
+	}
 }
