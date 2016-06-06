@@ -434,7 +434,6 @@ public class LumberjackSkill extends LogSkill implements Listener {
 		
 		
 		if (e.getClickedBlock().getType() != Material.WORKBENCH) {
-			System.out.println("Material: " + e.getClickedBlock().getType().name());
 			return;
 		}
 		

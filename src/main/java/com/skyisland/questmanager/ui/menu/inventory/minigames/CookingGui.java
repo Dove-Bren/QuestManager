@@ -67,7 +67,7 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 	
 	public static final String winMessage = "Success!" + ChatColor.RESET + " You successfully cooked ";
 	
-	public static final String noRecipeMessage = ChatColor.YELLOW + "You don't know any recipes with that item, and burnt it immediately";
+	public static final String noRecipeMessage = ChatColor.YELLOW + "You don't know any recipes with that item!";
 	
 	public static final Sound startSound = Sound.BLOCK_FIRE_AMBIENT;
 	

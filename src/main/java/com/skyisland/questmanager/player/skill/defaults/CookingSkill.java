@@ -128,7 +128,7 @@ public class CookingSkill extends LogSkill implements Listener {
 		int level = player.getSkillLevel(this);
 		
 		
-		ret += "\n\n" + ChatColor.GOLD + "Bonus Quality: +" + String.format("%.2f", (level * bonusQuality));
+		ret += "\n\n" + ChatColor.GOLD + "Bonus Quality: +" + String.format("%.2f", (level * qualityRate));
 		
 		ret += "\n" + ChatColor.GREEN + "Time Discount: " 
 				+ (int) (100 * (timeDiscount *  level)) + "%" + ChatColor.RESET;
@@ -272,8 +272,6 @@ public class CookingSkill extends LogSkill implements Listener {
 		CookingGui.setCookingSkill(this);
 		CombiningGui.setCookingSkill(this);
 		
-		for (OvenRecipe r : oRecipes) 
-			System.out.println("Registered oven item with " + r.output.getItem().getItemMeta().getLore());
 	}
 	
 	private YamlConfiguration createConfig(File configFile) {
