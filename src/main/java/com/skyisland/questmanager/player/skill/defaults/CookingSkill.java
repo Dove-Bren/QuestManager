@@ -28,9 +28,11 @@ import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.CraftingSkill;
 import com.skyisland.questmanager.player.skill.FoodItem;
 import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.Skill;
+import com.skyisland.questmanager.player.skill.SkillRecipe;
 import com.skyisland.questmanager.player.skill.event.CraftEvent;
 import com.skyisland.questmanager.ui.menu.ActiveInventoryMenu;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
@@ -38,7 +40,7 @@ import com.skyisland.questmanager.ui.menu.action.CollectFishAction;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.CombiningGui;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.CookingGui;
 
-public class CookingSkill extends LogSkill implements Listener {
+public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 	
 	private static final String inUseMessage = ChatColor.GRAY + "That oven is already in use by another player";
 	
@@ -46,7 +48,7 @@ public class CookingSkill extends LogSkill implements Listener {
 
 	private static final String blacklistMessage = ChatColor.GRAY + "You cannot eat food in that state!";
 	
-	public static final class OvenRecipe {
+	public static final class OvenRecipe implements SkillRecipe {
 		
 		public int difficulty;
 		
@@ -58,6 +60,22 @@ public class CookingSkill extends LogSkill implements Listener {
 			this.difficulty = difficulty;
 			this.input = input;
 			this.output = output;
+		}
+		
+		@Override
+		public ItemStack getDisplay() {
+			return output.getItem();
+		}
+		
+		@Override
+		public String getDescription() {
+			String name;
+			name = YamlWriter.toStandardFormat(input.getType().name());
+			
+			if (input.hasItemMeta() && input.getItemMeta().hasDisplayName())
+				name = input.getItemMeta().getDisplayName();
+			
+			return "Cook a [" + name + "] in any oven";
 		}
 		
 	}
@@ -91,7 +109,7 @@ public class CookingSkill extends LogSkill implements Listener {
 		}
 	}
 	
-	public static final class CombineRecipe {
+	public static final class CombineRecipe implements SkillRecipe {
 		
 		public int difficulty;
 		
@@ -106,10 +124,64 @@ public class CookingSkill extends LogSkill implements Listener {
 		public CombineRecipe(int difficulty, ItemStack input1, ItemStack input2, ItemStack input3,
 				FoodItem result) {
 			this.difficulty = difficulty;
+			if (input1 == null && input2 != null) {
+				input1 = input2;
+				input2 = null;
+			} else if (input1 == null && input3 != null) {
+				input1 = input3;
+				input3 = null;
+			}
 			this.input1 = input1;
+			if (input3 != null && input2 == null) {
+				input2 = input3;
+				input3 = null;
+			}
+				
 			this.input2 = input2;
 			this.input3 = input3;
 			this.result = result;
+		}
+		
+		@Override
+		public ItemStack getDisplay() {
+			return result.getItem();
+		}
+		
+		@Override
+		public String getDescription() {
+			String name;
+			name = YamlWriter.toStandardFormat(input1.getType().name());
+			
+			String builder = "In a mixing pot, stir together ";
+			if (input1.hasItemMeta() && input1.getItemMeta().hasDisplayName())
+				name = input1.getItemMeta().getDisplayName();
+			builder += "a [" + name + "] ";
+			
+			if (input2 == null) {
+				return builder;
+			}
+			
+			name = YamlWriter.toStandardFormat(input2.getType().name());
+			if (input2.hasItemMeta() && input2.getItemMeta().hasDisplayName())
+				name = input2.getItemMeta().getDisplayName();
+			if (input3 == null) 
+				builder += "and ";
+			else 
+				builder += ", ";
+			
+			builder += "a [" + name + "] ";
+			
+			if (input3 == null) {
+				return builder;
+			}
+			
+			name = YamlWriter.toStandardFormat(input3.getType().name());
+			if (input3.hasItemMeta() && input3.getItemMeta().hasDisplayName())
+				name = input3.getItemMeta().getDisplayName();
+			builder += ", and a [" + name + "] ";
+			
+			
+			return builder;
 		}
 	}
 
@@ -578,6 +650,16 @@ public class CookingSkill extends LogSkill implements Listener {
 		e.getPlayer().setFoodLevel(newLevel);
 		e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 1,1);
 		
+	}
+
+	@Override
+	public List<SkillRecipe> getRecipes() {
+		List<SkillRecipe> list = new LinkedList<>();
+		
+		list.addAll(cRecipes);
+		list.addAll(oRecipes);
+		
+		return list;
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,19 +24,21 @@ import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.CraftingSkill;
 import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.Skill;
+import com.skyisland.questmanager.player.skill.SkillRecipe;
 import com.skyisland.questmanager.player.skill.event.CraftEvent;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.FashioningGui;
 
-public class FashioningSkill extends LogSkill implements Listener {
+public class FashioningSkill extends LogSkill implements Listener, CraftingSkill {
 	
 	private static final String inUseMessage = ChatColor.GRAY + "That fashioning bench is already in use by another player";
 	
 	public static final String configName = "Fashioning.yml";
 
-	public static final class FashioningRecipe {
+	public static final class FashioningRecipe implements SkillRecipe {
 		
 		public int difficulty;
 		
@@ -47,9 +50,38 @@ public class FashioningSkill extends LogSkill implements Listener {
 		
 		public FashioningRecipe(int difficulty, ItemStack input1, ItemStack input2, ItemStack result) {
 			this.difficulty = difficulty;
+			if (input1 == null && input2 != null) {
+				input1 = input2; //swap!
+				input2 = null;
+			}
 			this.input1 = input1;
 			this.input2 = input2;
 			this.result = result;
+		}
+		
+		@Override
+		public ItemStack getDisplay() {
+			return result;
+		}
+		
+		@Override
+		public String getDescription() {
+			String name;
+			name = YamlWriter.toStandardFormat(input1.getType().name());
+			String builder = "Fashion together a ";
+			
+			if (input1.hasItemMeta() && input1.getItemMeta().hasDisplayName())
+				name = input1.getItemMeta().getDisplayName();
+			builder += "[" + name + "]";
+			
+			if (input2 != null) {
+				name = YamlWriter.toStandardFormat(input2.getType().name());
+				if (input2.hasItemMeta() && input2.getItemMeta().hasDisplayName())
+					name = input2.getItemMeta().getDisplayName();
+				builder += " and a [" + name + "]";
+			}
+			
+			return builder;
 		}
 	}
 
@@ -310,5 +342,10 @@ public class FashioningSkill extends LogSkill implements Listener {
 		
 		double level = e.getPlayer().getSkillLevel(this);
 		e.setQualityModifier(e.getQualityModifier() + (level * qualityRate));
+	}
+
+	@Override
+	public List<SkillRecipe> getRecipes() {
+		return new ArrayList<SkillRecipe>(recipes);
 	}	
 }

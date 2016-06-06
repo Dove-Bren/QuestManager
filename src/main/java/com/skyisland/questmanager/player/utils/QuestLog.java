@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.CraftingSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.quest.Quest;
 import org.bukkit.Bukkit;
@@ -234,16 +235,32 @@ public class QuestLog {
 					builder += generatePageJSON(title.toJSONString().replace("\"", escq));
 					lines = 1;
 					title = new FancyMessage("\n  " + s.getName())
-							.tooltip(desc)
-							.color(ChatColor.BLACK)
-						.then(" " + qp.getSkillLevel(s) + "."
+							.color(ChatColor.BLACK);
+					
+					if (s instanceof CraftingSkill) {
+						System.out.println("craftingskill: " + s.getName());
+						title.tooltip(desc + "\n\n" + ChatColor.BLUE + "Click here for recipes")
+						.command("/player recipe " + s.getName());
+					} else {
+						title.tooltip(desc);
+					}
+					
+					title.then(" " + qp.getSkillLevel(s) + "."
 							+ ((int) (qp.getSkillExperience(s)*100)) + "")
 							.color(ChatColor.DARK_GREEN);
 				} else {
 					title.then("\n  " + s.getName())
-							.tooltip(desc)
-							.color(ChatColor.BLACK)
-						.then(" " + qp.getSkillLevel(s) + "."
+							.color(ChatColor.BLACK);
+					
+					if (s instanceof CraftingSkill) {
+						System.out.println("craftingskill: " + s.getName());
+						title.tooltip(desc + "\n\n" + ChatColor.BLUE + "Click here for recipes")
+						.command("/player recipe " + s.getName());
+					} else {
+						title.tooltip(desc);
+					}
+					
+					title.then(" " + qp.getSkillLevel(s) + "."
 							+ ((int) (qp.getSkillExperience(s)*100)) + "")
 							.color(ChatColor.DARK_GREEN);
 					lines++;

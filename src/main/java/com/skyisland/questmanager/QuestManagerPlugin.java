@@ -70,6 +70,8 @@ import com.skyisland.questmanager.npc.utils.ServiceOffer;
 import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.PlayerOptions;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.CraftingSkill;
+import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.SkillManager;
 import com.skyisland.questmanager.player.skill.defaults.ArcherySkill;
 import com.skyisland.questmanager.player.skill.defaults.AxeSkill;
@@ -108,6 +110,7 @@ import com.skyisland.questmanager.region.SphericalRegion;
 import com.skyisland.questmanager.ui.ChatGuiHandler;
 import com.skyisland.questmanager.ui.InventoryGuiHandler;
 import com.skyisland.questmanager.ui.menu.action.PartyInviteAction;
+import com.skyisland.questmanager.ui.menu.action.ShowSkillRecipesAction;
 import com.skyisland.questmanager.ui.menu.inventory.ServiceInventory;
 import com.skyisland.questmanager.ui.menu.inventory.ShopInventory;
 import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
@@ -779,6 +782,37 @@ public class QuestManagerPlugin extends JavaPlugin {
 			
 			if (args[0].equals("options")) {
 				qp.showPlayerOptionMenu();
+				return true;
+			}
+			
+			if (args[0].equals("recipe")) {
+				String skillName = args[1];
+				
+				if (args.length > 2) {
+					for (int i = 2; i < args.length; i++) {
+						skillName += " " + args[i];
+					}
+				}
+				CraftingSkill skill = null;
+				for (Skill s : skillManager.getAllSkills()) {
+					if (s.getName().equals(skillName)) {
+						if (s instanceof CraftingSkill) {
+							skill = (CraftingSkill) s;
+							break;
+						} else {
+							sender.sendMessage(ChatColor.RED + "That skill has no associated recipes!");
+							return true;
+						}
+					}
+				}
+				
+				if (skill == null) {
+					sender.sendMessage(ChatColor.YELLOW + "Unable to find the skill " + skillName);
+					return true;
+				}
+				
+				(new ShowSkillRecipesAction(qp, skill)).onAction();
+				
 				return true;
 			}
 		}
