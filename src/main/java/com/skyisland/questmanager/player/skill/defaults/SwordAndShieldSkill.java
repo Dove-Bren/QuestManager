@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -32,6 +33,11 @@ public class SwordAndShieldSkill extends Skill implements Listener {
 	
 	public String getName() {
 		return "Sword&Shield";
+	}
+	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.SHIELD);
 	}
 	
 	public String getDescription(QuestPlayer player) {

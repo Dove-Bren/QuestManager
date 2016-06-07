@@ -58,6 +58,11 @@ public class FishingSkill extends LogSkill implements Listener {
 		return "Fishing";
 	}
 	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.FISHING_ROD);
+	}
+	
 	public String getDescription(QuestPlayer player) {
 		String ret = ChatColor.WHITE + "Fishing skill determines the types of fish caught and how difficulty it"
 				+ " is to catch them.";

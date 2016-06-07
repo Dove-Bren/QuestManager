@@ -110,6 +110,7 @@ import com.skyisland.questmanager.region.SphericalRegion;
 import com.skyisland.questmanager.ui.ChatGuiHandler;
 import com.skyisland.questmanager.ui.InventoryGuiHandler;
 import com.skyisland.questmanager.ui.menu.action.PartyInviteAction;
+import com.skyisland.questmanager.ui.menu.action.ShowSkillMenuAction;
 import com.skyisland.questmanager.ui.menu.action.ShowSkillRecipesAction;
 import com.skyisland.questmanager.ui.menu.inventory.ServiceInventory;
 import com.skyisland.questmanager.ui.menu.inventory.ShopInventory;
@@ -813,6 +814,11 @@ public class QuestManagerPlugin extends JavaPlugin {
 				
 				(new ShowSkillRecipesAction(qp, skill)).onAction();
 				
+				return true;
+			}
+			
+			if (args[0].toLowerCase().equals("skills")) {
+				new ShowSkillMenuAction(qp).onAction();
 				return true;
 			}
 		}

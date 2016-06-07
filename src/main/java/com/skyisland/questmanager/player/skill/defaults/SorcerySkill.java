@@ -32,6 +32,11 @@ public class SorcerySkill extends LogSkill implements Listener {
 		return "Sorcery";
 	}
 	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.ENCHANTED_BOOK);
+	}
+	
 	public String getDescription(QuestPlayer player) {
 		String ret = ChatColor.WHITE + "Sorcery applies when a player is only equiped with magic. The magic the "
 				+ "player can focus is more potent than when trying to combine it's use with other objects.";

@@ -6,55 +6,62 @@ import java.util.List;
 import org.bukkit.ChatColor;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.PlayerOptions;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.CraftingSkill;
 import com.skyisland.questmanager.player.skill.Skill;
-import com.skyisland.questmanager.player.skill.SkillRecipe;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.inventory.BasicInventory;
 import com.skyisland.questmanager.ui.menu.inventory.BasicInventoryItem;
 
-public class ShowSkillRecipesAction implements MenuAction {
-	
-	private CraftingSkill skill;
+public class ShowSkillMenuAction implements MenuAction {
 	
 	private QuestPlayer player;
 	
-	public ShowSkillRecipesAction(QuestPlayer player, CraftingSkill skill) {
-		this.skill = skill;
+	public ShowSkillMenuAction(QuestPlayer player) {
 		this.player = player;
 	}
 	
 	@Override
 	public void onAction() {
 		BasicInventory inv = new BasicInventory();
-		List<String> desc;
-		String name;
-		for (SkillRecipe recipe : skill.getRecipes()) {
-			if (!player.getOptions().getOption(PlayerOptions.Key.SKILL_RECIPES_ALL) &&
-					recipe.getDifficulty() - player.getSkillLevel((Skill) skill) > QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillCutoff()) {
-				continue;
+		List<String> descList;
+		for (Skill.Type type : Skill.Type.values()) {
+			
+			boolean spoil = player.getOptions().getOption(PlayerOptions.Key.SKILL_REVEAL);
+			for (Skill s : QuestManagerPlugin.questManagerPlugin.getSkillManager().getSkills(type)) {
+				//get a formatted description. (Code from QuestPlayer's magic menu)
+				
+				if (!spoil && player.getSkillLevel(s) <= 0 && player.getSkillExperience(s) <= 0) {
+					continue;
+				}
+				
+				descList = formatDescription(s.getDescription(player));
+
+				descList.add(0, ChatColor.DARK_GREEN + "" + player.getSkillLevel(s) + "."
+						+ ((int) (player.getSkillExperience(s)*100)) + "");
+				
+				descList.add(0, s.getName());
+				
+				MenuAction responseAction = null;
+				
+				
+				if (s instanceof CraftingSkill) {
+					descList.add(" ");
+					descList.add(ChatColor.BLUE + "Click here for recipes");
+					responseAction = new ShowSkillRecipesAction(player, (CraftingSkill) s);
+				}
+				
+				inv.addInventoryItem(new BasicInventoryItem(
+						s.getIcon(), descList, responseAction
+						));
+				
+				
 			}
-			
-			
-			name = YamlWriter.toStandardFormat(recipe.getDisplay().getType().name());
-			if (recipe.getDisplay().hasItemMeta() && recipe.getDisplay().getItemMeta().hasDisplayName())
-				name = recipe.getDisplay().getItemMeta().getDisplayName();
-			
-			desc = formatDescription(recipe.getDescription());
-			desc.add(0, ChatColor.LIGHT_PURPLE + name);
-			inv.addInventoryItem(new BasicInventoryItem(
-					recipe.getDisplay(), desc, null
-					));
-			
 		}
 		
 		
 		InventoryMenu menu = new InventoryMenu(player, inv);
-
-		player.getPlayer().getPlayer().closeInventory();
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(
 				player.getPlayer().getPlayer(), menu);
 	}
@@ -66,6 +73,13 @@ public class ShowSkillRecipesAction implements MenuAction {
 		while (desc.length() > 30) {
 			
 			desc = desc.trim();
+			
+			pos = desc.indexOf("\n");
+			if (pos != -1 && pos < 30) {
+				descList.add(ChatColor.WHITE + desc.substring(0, pos));
+				desc = desc.substring(pos + 1);
+				continue;
+			}
 			
 			//find first space before 30
 			mid = desc.substring(0, 30);

@@ -5,8 +5,10 @@ import java.io.File;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.magic.ImbuementHandler;
@@ -31,6 +33,11 @@ public class ImbuementSkill extends LogSkill implements Listener {
 	
 	public String getName() {
 		return "Imbuement";
+	}
+	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.MAGMA_CREAM);
 	}
 	
 	public String getDescription(QuestPlayer player) {

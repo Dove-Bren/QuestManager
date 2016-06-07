@@ -72,6 +72,11 @@ public class MiningSkill extends LogSkill implements Listener {
 		return "Mining";
 	}
 	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.IRON_PICKAXE);
+	}
+	
 	public String getDescription(QuestPlayer player) {//proficient
 		String ret = ChatColor.WHITE + "Those proficient in mining can mine more delicate ores and do so with more"
 				+ " finesse. Additionally, ores mined yield better results of increasing quantity.";

@@ -3,13 +3,14 @@ package com.skyisland.questmanager.player.skill;
 import java.util.Collection;
 import java.util.Random;
 
+import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.inventory.ItemStack;
+
+import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.PluginConfiguration;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.defaults.TwoHandedSkill;
-import org.bukkit.attribute.AttributeInstance;
-import org.bukkit.attribute.AttributeModifier;
-
-import com.skyisland.questmanager.QuestManagerPlugin;
 
 /**
  * A player skill. Skills can pertain to any aspect of the game, from combat to crafting.<br />
@@ -105,6 +106,14 @@ public abstract class Skill implements Comparable<Skill> {
 	public abstract Type getType();
 	
 	public abstract String getName();
+	
+	
+	/**
+	 * Returns an icon to be used as a display icon for the skill in the player skill menu.<br />
+	 * All names and lore are wiped away when rendering for the inventory. Enchantment, durability, etc are not
+	 * @return
+	 */
+	public abstract ItemStack getIcon();
 	
 	/**
 	 * Get a pre-formated description that can be sent to the user.<br />

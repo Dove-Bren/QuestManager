@@ -98,6 +98,11 @@ public class FashioningSkill extends LogSkill implements Listener, CraftingSkill
 		return "Fashioning";
 	}
 	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.LEATHER);
+	}
+	
 	public String getDescription(QuestPlayer player) {
 		String ret = ChatColor.WHITE + "Fashioning Skills allow a player to take ordinary objects and "
 				+ "combine them into something of new purpose";

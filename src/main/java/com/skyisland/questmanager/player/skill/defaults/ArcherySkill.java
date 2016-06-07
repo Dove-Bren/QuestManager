@@ -13,6 +13,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -52,6 +53,11 @@ public class ArcherySkill extends LogSkill implements Listener {
 	@Override
 	public String getConfigKey() {
 		return "Archery";
+	}
+	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.ARROW);
 	}
 
 	@Override

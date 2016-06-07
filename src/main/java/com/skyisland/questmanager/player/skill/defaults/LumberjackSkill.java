@@ -103,6 +103,11 @@ public class LumberjackSkill extends LogSkill implements Listener {
 		return "Lumberjack";
 	}
 	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.IRON_AXE);
+	}
+	
 	public String getDescription(QuestPlayer player) {//proficient
 		String ret = ChatColor.WHITE + "Lumberjacks fell trees and claim their valuable wood. More skilled"
 				+ " lumberjacks do the work with fewer strikes, yet more reward.";

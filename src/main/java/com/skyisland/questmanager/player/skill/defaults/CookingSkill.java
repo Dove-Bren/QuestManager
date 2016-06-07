@@ -227,6 +227,11 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 	public String getConfigKey() {
 		return "Cooking";
 	}
+	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.BREAD);
+	}
 
 	@Override
 	public boolean equals(Object o) {

@@ -4,9 +4,11 @@ import java.io.File;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
@@ -29,7 +31,7 @@ public class AxeSkill extends LogSkill implements Listener {
 	}
 	
 	public String getDescription(QuestPlayer player) {
-		String ret = ChatColor.WHITE + "Axe Skill governs the player's ability to hit their target while "
+		String ret = "Axe Skill governs the player's ability to hit their target while "
 				+ "using an axe.";
 		
 		int lvl = player.getSkillLevel(this);
@@ -50,6 +52,11 @@ public class AxeSkill extends LogSkill implements Listener {
 	@Override
 	public String getConfigKey() {
 		return "Axe";
+	}
+	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.DIAMOND_AXE);
 	}
 
 	@Override

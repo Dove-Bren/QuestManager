@@ -166,110 +166,113 @@ public class QuestLog {
 		builder += generatePageJSON(title.toJSONString().replace("\"", escq));
 		
 		
-		title = new FancyMessage("        Skills")
-				.color(ChatColor.BLACK);
-		int lines = 0;
-		
-		//combat skills
-		for (Skill.Type type : Skill.Type.values()) {
+		if (qp.getOptions().getOption(PlayerOptions.Key.SKILL_LIST)) {
+			title = new FancyMessage("        Skills")
+					.color(ChatColor.BLACK)
+					.tooltip(ChatColor.BLUE + "Click here to open the skills menu")
+					.command("/player skills");
+			int lines = 0;
 			
-			title.then("\n\n" + toNormalCase(type.name()))
-				.color(ChatColor.DARK_RED).style(ChatColor.BOLD);
-			lines += 2;
-			boolean spoil = qp.getOptions().getOption(PlayerOptions.Key.SKILL_REVEAL);
-			for (Skill s : QuestManagerPlugin.questManagerPlugin.getSkillManager().getSkills(type)) {
-				//get a formatted description. (Code from QuestPlayer's magic menu)
+			
+			//combat skills
+			for (Skill.Type type : Skill.Type.values()) {
 				
-				if (!spoil && qp.getSkillLevel(s) <= 0 && qp.getSkillExperience(s) <= 0) {
-					continue;
-				}
-				
-				List<String> descList = new LinkedList<>();
-				String desc;
-				desc = s.getDescription(qp);
-				
-				String mid;
-				int pos;
-				while (desc.length() > 30) {
+				title.then("\n\n" + toNormalCase(type.name()))
+					.color(ChatColor.DARK_RED).style(ChatColor.BOLD);
+				lines += 2;
+				boolean spoil = qp.getOptions().getOption(PlayerOptions.Key.SKILL_REVEAL);
+				for (Skill s : QuestManagerPlugin.questManagerPlugin.getSkillManager().getSkills(type)) {
+					//get a formatted description. (Code from QuestPlayer's magic menu)
 					
-					desc = desc.trim();
+					if (!spoil && qp.getSkillLevel(s) <= 0 && qp.getSkillExperience(s) <= 0) {
+						continue;
+					}
 					
-					//first, check for newline before 30 limit
-					pos = desc.substring(0, 30).indexOf("\n");
-					if (pos != -1) {
-						//there's a newline, so split before it
-						//[and some sting\nwith a newline]
-						mid = desc.substring(0, pos);
-						mid = mid.substring(0, 1 + mid.length() - (("\n").length())); //chop off the \n
-						descList.add(mid);
+					List<String> descList = new LinkedList<>();
+					String desc;
+					desc = s.getDescription(qp);
+					
+					String mid;
+					int pos;
+					while (desc.length() > 30) {
+						
+						desc = desc.trim();
+						
+						//first, check for newline before 30 limit
+						pos = desc.substring(0, 30).indexOf("\n");
+						if (pos != -1) {
+							//there's a newline, so split before it
+							//[and some sting\nwith a newline]
+							mid = desc.substring(0, pos);
+							mid = mid.substring(0, 1 + mid.length() - (("\n").length())); //chop off the \n
+							descList.add(mid);
+							desc = desc.substring(pos);
+							continue;
+						}
+						
+						//find first space before 30
+						mid = desc.substring(0, 30);
+						pos = mid.lastIndexOf(" ");
+						if (pos == -1) {
+							descList.add(mid);
+							desc = desc.substring(30);
+							continue;
+						}
+						//else we found a space
+						descList.add(mid.substring(0, pos));
 						desc = desc.substring(pos);
-						continue;
 					}
 					
-					//find first space before 30
-					mid = desc.substring(0, 30);
-					pos = mid.lastIndexOf(" ");
-					if (pos == -1) {
-						descList.add(mid);
-						desc = desc.substring(30);
-						continue;
-					}
-					//else we found a space
-					descList.add(mid.substring(0, pos));
-					desc = desc.substring(pos);
-				}
-				
-				descList.add(desc.trim());
-				
-				desc = "";
-				for (int i = 0; i < descList.size() - 1; i++) {
-					desc += descList.get(i) + "\n";
-				}
-				desc += descList.get(descList.size() - 1);
-				
-				
-				if (lines > 12) {
-					//not enough room on the page
-					//write page, continue
-					builder += ", ";
-					builder += generatePageJSON(title.toJSONString().replace("\"", escq));
-					lines = 1;
-					title = new FancyMessage("\n  " + s.getName())
-							.color(ChatColor.BLACK);
+					descList.add(desc.trim());
 					
-					if (s instanceof CraftingSkill) {
-						System.out.println("craftingskill: " + s.getName());
-						title.tooltip(desc + "\n\n" + ChatColor.BLUE + "Click here for recipes")
-						.command("/player recipe " + s.getName());
+					desc = "";
+					for (int i = 0; i < descList.size() - 1; i++) {
+						desc += descList.get(i) + "\n";
+					}
+					desc += descList.get(descList.size() - 1);
+					
+					
+					if (lines > 12) {
+						//not enough room on the page
+						//write page, continue
+						builder += ", ";
+						builder += generatePageJSON(title.toJSONString().replace("\"", escq));
+						lines = 1;
+						title = new FancyMessage("\n  " + s.getName())
+								.color(ChatColor.BLACK);
+						
+						if (s instanceof CraftingSkill) {
+							title.tooltip(desc + "\n\n" + ChatColor.BLUE + "Click here for recipes")
+							.command("/player recipe " + s.getName());
+						} else {
+							title.tooltip(desc);
+						}
+						
+						title.then(" " + qp.getSkillLevel(s) + "."
+								+ ((int) (qp.getSkillExperience(s)*100)) + "")
+								.color(ChatColor.DARK_GREEN);
 					} else {
-						title.tooltip(desc);
+						title.then("\n  " + s.getName())
+								.color(ChatColor.BLACK);
+						
+						if (s instanceof CraftingSkill) {
+							title.tooltip(desc + "\n\n" + ChatColor.BLUE + "Click here for recipes")
+							.command("/player recipe " + s.getName());
+						} else {
+							title.tooltip(desc);
+						}
+						
+						title.then(" " + qp.getSkillLevel(s) + "."
+								+ ((int) (qp.getSkillExperience(s)*100)) + "")
+								.color(ChatColor.DARK_GREEN);
+						lines++;
 					}
-					
-					title.then(" " + qp.getSkillLevel(s) + "."
-							+ ((int) (qp.getSkillExperience(s)*100)) + "")
-							.color(ChatColor.DARK_GREEN);
-				} else {
-					title.then("\n  " + s.getName())
-							.color(ChatColor.BLACK);
-					
-					if (s instanceof CraftingSkill) {
-						System.out.println("craftingskill: " + s.getName());
-						title.tooltip(desc + "\n\n" + ChatColor.BLUE + "Click here for recipes")
-						.command("/player recipe " + s.getName());
-					} else {
-						title.tooltip(desc);
-					}
-					
-					title.then(" " + qp.getSkillLevel(s) + "."
-							+ ((int) (qp.getSkillExperience(s)*100)) + "")
-							.color(ChatColor.DARK_GREEN);
-					lines++;
 				}
 			}
-		}
-		
 		builder += ", ";
 		builder += generatePageJSON(title.toJSONString().replace("\"", escq));
+		}
+		
 		
 		
 		//13 lines

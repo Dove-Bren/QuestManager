@@ -7,11 +7,13 @@ import com.skyisland.questmanager.magic.MagicRegenEvent;
 import com.skyisland.questmanager.player.utils.SpellHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -39,6 +41,11 @@ public class MagicWeaverSkill extends LogSkill implements Listener {
 	
 	public String getName() {
 		return "Magic Weaver";
+	}
+	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.RECORD_10);
 	}
 	
 	public String getDescription(QuestPlayer player) {

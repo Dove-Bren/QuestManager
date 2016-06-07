@@ -10,11 +10,13 @@ import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 import com.google.common.collect.Lists;
 
@@ -30,6 +32,11 @@ public class SwordsmanshipSkill extends LogSkill implements Listener {
 	
 	public String getName() {
 		return "Swordsmanship";
+	}
+	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.DIAMOND_SWORD);
 	}
 	
 	public String getDescription(QuestPlayer player) {

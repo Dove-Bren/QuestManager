@@ -8,9 +8,11 @@ import com.skyisland.questmanager.player.skill.event.MagicCastEvent;
 import com.skyisland.questmanager.player.skill.Skill;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.skill.event.MagicApplyEvent;
@@ -26,6 +28,11 @@ public class MagerySkill extends Skill implements Listener {
 	
 	public String getName() {
 		return "Magery";
+	}
+	
+	@Override
+	public ItemStack getIcon() {
+		return new ItemStack(Material.MONSTER_EGG);
 	}
 	
 	public String getDescription(QuestPlayer player) {
