@@ -242,7 +242,6 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	private QuestPlayer() {
-		System.out.println("creation");
 		this.fame = 0;
 		this.alphaFame = 0;
 		this.money = 0;
@@ -1736,6 +1735,17 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				
 				if (this.party != null) {
 					this.party.updateScoreboard(this, (int) p.getHealth());
+				}
+				
+				if (getOptions().isDirty()) {
+					FancyMessage msg = new FancyMessage("Welcome! New player options are available! "
+							+ "Please take a moment to review your ")
+							.color(ChatColor.GOLD)
+							.then("[Player Options]")
+							.color(ChatColor.GREEN)
+							.command("/player options")
+							.tooltip(ChatColor.AQUA + "Click here to open player options");
+					msg.send(getPlayer().getPlayer());
 				}
 			}
 		}

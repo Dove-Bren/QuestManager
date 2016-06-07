@@ -7,8 +7,10 @@ import org.bukkit.ChatColor;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
+import com.skyisland.questmanager.player.PlayerOptions;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.CraftingSkill;
+import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.SkillRecipe;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.inventory.BasicInventory;
@@ -31,6 +33,12 @@ public class ShowSkillRecipesAction implements MenuAction {
 		List<String> desc;
 		String name;
 		for (SkillRecipe recipe : skill.getRecipes()) {
+			if (!player.getOptions().getOption(PlayerOptions.Key.SKILL_RECIPES_ALL) &&
+					recipe.getDifficulty() - player.getSkillLevel((Skill) skill) > QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillCutoff()) {
+				continue;
+			}
+			
+			
 			name = YamlWriter.toStandardFormat(recipe.getDisplay().getType().name());
 			if (recipe.getDisplay().hasItemMeta() && recipe.getDisplay().getItemMeta().hasDisplayName())
 				name = recipe.getDisplay().getItemMeta().getDisplayName();

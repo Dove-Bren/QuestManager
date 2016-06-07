@@ -7,21 +7,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.skyisland.questmanager.configuration.PluginConfiguration;
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.player.Participant;
-import com.skyisland.questmanager.player.Party;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.scheduling.IntervalScheduler;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.skyisland.questmanager.configuration.PluginConfiguration;
 import com.skyisland.questmanager.configuration.utils.GUID;
+import com.skyisland.questmanager.player.Participant;
+import com.skyisland.questmanager.player.Party;
+import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.special.TitleEffect;
+import com.skyisland.questmanager.scheduling.IntervalScheduler;
 import com.skyisland.questmanager.scheduling.Tickable;
 
 /**
@@ -103,16 +101,6 @@ public class PlayerManager implements Tickable {
 		//initialize a player!
 		QuestPlayer player = new QuestPlayer(Bukkit.getOfflinePlayer(id));
 		players.put(id, player);
-			
-		if (player.getPlayer() != null && player.getPlayer().isOnline()) {
-			FancyMessage msg = new FancyMessage("Welcome! Please take a moment to review your ")
-					.color(ChatColor.GOLD)
-					.then("Player Options")
-					.color(ChatColor.GREEN)
-					.command("/player options")
-					.tooltip(ChatColor.AQUA + "Click here to open player options");
-			msg.send(player.getPlayer().getPlayer());
-		}
 		
 		return player;
 	}

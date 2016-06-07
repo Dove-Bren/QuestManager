@@ -83,6 +83,11 @@ public class FashioningSkill extends LogSkill implements Listener, CraftingSkill
 			
 			return builder;
 		}
+
+		@Override
+		public int getDifficulty() {
+			return this.difficulty;
+		}
 	}
 
 	public Type getType() {

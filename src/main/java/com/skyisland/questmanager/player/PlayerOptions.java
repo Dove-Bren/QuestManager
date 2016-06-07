@@ -28,7 +28,11 @@ public class PlayerOptions implements ConfigurationSerializable {
 				Lists.newArrayList("Lets you know when your", "summon has died or expired")),
 		SKILL_REVEAL("skill.showAll", new ItemStack(Material.EMPTY_MAP),
 				Lists.newArrayList("Displays all skills in the", "skill table regardless of if", 
-						"you've experienced the skill yet", "(spoilers)"), false);
+						"you've experienced the skill yet", "(spoilers)"), false),
+		SKILL_LIST("skill.inLog", new ItemStack(Material.WRITTEN_BOOK),
+				Lists.newArrayList("Display skill levels in", "the questlog. If off, you", "can still use the command", "/player skills", "to see your skill levels"), true),
+		SKILL_RECIPES_ALL("skill.recipes.all", new ItemStack(Material.SHEARS),
+				Lists.newArrayList("Shows all recipes for", "a skill even if it is", "way more difficult than", "what you could achieve"));
 		
 		private String key;
 		
@@ -74,12 +78,16 @@ public class PlayerOptions implements ConfigurationSerializable {
 	
 	private Map<Key, Boolean> opts;
 	
+	private boolean dirty;
+	
 	protected PlayerOptions() {
 		opts = new HashMap<>();
 		
 		for (Key key : Key.values()) {
 			opts.put(key, key.getDefault());
 		}
+		
+		this.dirty = true;
 	}
 	
 	/**
@@ -114,6 +122,7 @@ public class PlayerOptions implements ConfigurationSerializable {
 	
 	public static PlayerOptions valueOf(Map<String, Object> map) {
 		PlayerOptions po = new PlayerOptions();
+		po.dirty = false;
 		
 		for (Key key : Key.values()) {
 			if (map.containsKey(key.getKey())) {
@@ -126,9 +135,27 @@ public class PlayerOptions implements ConfigurationSerializable {
 				}
 				
 				po.setOption(key, (boolean) map.get(key.getKey()));
-			}
+			} else
+				po.dirty = true;
 		}
 		
 		return po;
+	}
+
+	/**
+	 * Returns whether this config has options it couldn't find when deserializing
+	 * it's configuration section. Useful for telling players when there are new options
+	 * @return
+	 */
+	public boolean isDirty() {
+		return dirty;
+	}
+
+	/**
+	 * @see #isDirty()
+	 * @param dirty
+	 */
+	public void setDirty(boolean dirty) {
+		this.dirty = dirty;
 	}
 }

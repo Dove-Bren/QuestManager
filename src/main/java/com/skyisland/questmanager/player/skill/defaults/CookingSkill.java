@@ -77,6 +77,11 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 			
 			return "Cook a [" + name + "] in any oven";
 		}
+
+		@Override
+		public int getDifficulty() {
+			return this.difficulty;
+		}
 		
 	}
 	
@@ -182,6 +187,11 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 			
 			
 			return builder;
+		}
+
+		@Override
+		public int getDifficulty() {
+			return this.difficulty;
 		}
 	}
 

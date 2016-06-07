@@ -8,4 +8,6 @@ public interface SkillRecipe {
 	
 	ItemStack getDisplay();
 	
+	int getDifficulty();
+	
 }
