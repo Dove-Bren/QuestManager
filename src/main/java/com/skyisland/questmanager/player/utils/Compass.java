@@ -41,12 +41,8 @@ public class Compass {
 			if (!displayName.equals(item.getItemMeta().getDisplayName())) {
 				return false;
 			}
-			
-			if (!item.containsEnchantment(enchant)) {
-				return false;
-			}
-			
-			return true;
+
+			return item.containsEnchantment(enchant);
 		}
 
 		public static void setCompassType(Material compassType) {

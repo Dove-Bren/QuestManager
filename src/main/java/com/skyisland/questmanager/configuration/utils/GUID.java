@@ -7,7 +7,7 @@ package com.skyisland.questmanager.configuration.utils;
  */
 public class GUID {
 	
-	private static long nextID = 1l;
+	private static long nextID = 1L;
 	
 	private long ID;
 	

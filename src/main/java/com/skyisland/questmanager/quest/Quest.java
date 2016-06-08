@@ -768,12 +768,8 @@ public class Quest implements Listener {
 		}
 		
 		Quest other = (Quest) o;
-		
-		if (other.ID == ID && other.getName().equals(this.getName())) {
-			return true;
-		}
-		
-		return false;
+
+		return other.ID == ID && other.getName().equals(this.getName());
 	}
 	
 	@Override

@@ -91,17 +91,11 @@ public class PluginConfiguration {
 			config = createDefaultConfig(configFile);
 		} else 	try {
 			config.load(configFile);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidConfigurationException e) {
+		} catch (IOException | InvalidConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		if (config.getBoolean(PluginConfigurationKey.CONSERVATIVE.key, true)) {
 			QuestManagerPlugin.questManagerPlugin.getLogger().info("Conservative mode is on,"
 					+ " so invalid configs will simply be ignored instead of destroyed.");
@@ -496,7 +490,7 @@ public class PluginConfiguration {
 		config.set(PluginConfigurationKey.XPREGEN.key, 0.0);
 		config.set(PluginConfigurationKey.FOODREGEN.key, 0.0);
 		
-		List<String> worlds = new ArrayList<String>();
+		List<String> worlds = new ArrayList<>();
 		worlds.add("QuestWorld");
 		worlds.add("TutorialWorld");
 		config.set(PluginConfigurationKey.WORLDS.key, worlds);

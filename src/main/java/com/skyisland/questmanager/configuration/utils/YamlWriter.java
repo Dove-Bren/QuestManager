@@ -38,7 +38,7 @@ public class YamlWriter {
 	public static String toStandardFormat(String string) {
 		string = YamlWriter.toStandardCase(string);
 		
-		while (string.indexOf("_") != -1) {
+		while (string.contains("_")) {
 			string = string.substring(0, string.indexOf("_")) + " "
 				+ YamlWriter.toStandardCase(string.substring(string.indexOf("_") + 1));
 		}

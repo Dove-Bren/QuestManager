@@ -26,12 +26,8 @@ public class SpellHolder {
 			if (!displayName.equals(item.getItemMeta().getDisplayName())) {
 				return false;
 			}
-			
-			if (!item.containsEnchantment(enchant)) {
-				return false;
-			}
-			
-			return true;
+
+			return item.containsEnchantment(enchant);
 		}
 
 		public static void setDisplayName(String displayName) {
@@ -49,11 +45,7 @@ public class SpellHolder {
 		private static Material blockType = Material.ENCHANTMENT_TABLE;
 		
 		public static boolean isTable(Block block) {
-			if (block == null || block.getType() != blockType) {
-				return false;
-			}
-			
-			return true;
+			return !(block == null || block.getType() != blockType);
 		}
 
 		public static void setBlockType(Material blockType) {

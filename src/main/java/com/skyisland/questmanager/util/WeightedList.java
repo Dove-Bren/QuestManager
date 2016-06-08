@@ -71,12 +71,10 @@ public class WeightedList<T>  {
 		
 		double index = rand.nextDouble() * max;
 		max = 0;
-		ListIterator<Item<T>> it = list.listIterator();
-		
-		while (it.hasNext()) {
-			Item<T> i = it.next();
+
+		for (Item<T> i : list) {
 			max += i.getWeight();
-			
+
 			if (max >= index) {
 				return i.getObject();
 			}

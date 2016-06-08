@@ -94,7 +94,7 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 		
 		public ItemStack icon;
 		
-		private Fuel(int burntime, ItemStack icon) {
+		Fuel(int burntime, ItemStack icon) {
 			this.burntime = (short) burntime;
 			this.icon = icon;
 		}

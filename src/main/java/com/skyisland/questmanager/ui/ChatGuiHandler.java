@@ -226,18 +226,15 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 		if (menus.isEmpty()) {
 			return;
 		}
-		
-		Iterator<UUID> it = (new ArrayList<>(menus.keySet())).iterator();
-		
-		while (it.hasNext()) {
-			UUID key = it.next();
+
+		for (UUID key : (new ArrayList<>(menus.keySet()))) {
 			MenuRecord record = menus.get(key);
-			
+
 			//check if they've already been ticked
 			if (record.isTicked()) {
 				menus.remove(key);
 				Bukkit.getPlayer(key).sendMessage(
-						ChatColor.GRAY + "Your menu has expired.");
+					ChatColor.GRAY + "Your menu has expired.");
 			} else {
 				record.tick();
 			}

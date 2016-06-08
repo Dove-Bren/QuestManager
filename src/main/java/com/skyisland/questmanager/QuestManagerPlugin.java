@@ -342,17 +342,11 @@ public class QuestManagerPlugin extends JavaPlugin {
 			YamlConfiguration playerConfig = new YamlConfiguration();
 			try {
 				playerConfig.load(playerFile);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvalidConfigurationException e) {
+			} catch (IOException | InvalidConfigurationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			playerManager = new PlayerManager(playerConfig);
+		playerManager = new PlayerManager(playerConfig);
 		
 		
 		//parse config & instantiate manager

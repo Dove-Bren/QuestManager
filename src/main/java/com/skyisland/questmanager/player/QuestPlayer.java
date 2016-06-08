@@ -1539,12 +1539,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				count += item.getAmount();
 			}
 		}
-		
-		if (count >= searchItem.getAmount()) {
-			return true;
-		}
-		
-		return false;
+
+		return count >= searchItem.getAmount();
 	}
 	
 	/**
