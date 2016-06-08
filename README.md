@@ -1,5 +1,4 @@
 # QuestManager [![Build Status](https://api.travis-ci.org/Dove-Bren/QuestManager.svg)](https://travis-ci.org/Dove-Bren/QuestManager)
-============
 
 Quest Manager (QM) is a plugin that creates, imports, and manages quests on a Bukkit server.  Quests vary from things as simple as 'deliver this item to this npc' to as complicated as 'kill this horde of monsters, fight a boss, and then have one member of your party be at each of these locations all at once' and so on. 
 
