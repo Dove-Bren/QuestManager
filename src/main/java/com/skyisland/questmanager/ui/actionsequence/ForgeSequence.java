@@ -15,9 +15,11 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
@@ -48,6 +50,10 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 	private static final String wrongToolMessage = ChatColor.RED + "You dropped your tool! Switch back quickly!";
 	
 	private static final String wrongToolTimeoutMessage = ChatColor.YELLOW + "The metal cooled and cast while you fumbled for your tool";
+	
+	private static final String notHotMessage = ChatColor.YELLOW + "You cannot hammer the metal when it is not hot";
+	
+	private static final Sound notHotSound = Sound.ENTITY_ITEM_BREAK;
 	
 	private static final Sound startSound = Sound.BLOCK_FURNACE_FIRE_CRACKLE;
 	
@@ -124,7 +130,7 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 		if (!player.getPlayer().isOnline())
 			return;
 		
-		state = State.RUNNING;
+		state = State.STARTING;
 		Alarm.getScheduler().schedule(this, 0, 1);
 		player.getPlayer().getPlayer().sendMessage(ChatColor.GREEN + "Get Ready...");
 		
@@ -133,6 +139,7 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 		displayBar.addPlayer(player.getPlayer().getPlayer());
 		
 		this.timeLeft = coolTime;
+		isCooling = true;
 		
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}
@@ -215,6 +222,9 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 		displayBar.removeAll();
 		
 		skill.submitJob(inputs, hammerHits, cut, quelch);
+		skill.playerFinish(player);
+		
+		HandlerList.unregisterAll(this);
 		
 	}
 	
@@ -226,9 +236,13 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 		if (isWrongTool)
 			return;
 		
+		if (e.getHand() == EquipmentSlot.OFF_HAND)
+			return;
+		
 		if (!e.getPlayer().getUniqueId().equals(player.getPlayer().getUniqueId()))
 			return;
 		
+		e.setCancelled(true);
 		
 		if (skill.isAnvil(e.getClickedBlock())) {
 			doAnvilClick(e);
@@ -269,6 +283,12 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 	private void doAnvilClick(PlayerInteractEvent e) {
 		if (cut) {
 			e.getPlayer().sendMessage(alreadyCutMessage);
+			return;
+		}
+		
+		if (isCooling) {
+			e.getPlayer().sendMessage(notHotMessage);
+			e.getPlayer().playSound(e.getPlayer().getLocation(), notHotSound, 1, 1);
 			return;
 		}
 		

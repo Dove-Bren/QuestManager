@@ -47,8 +47,6 @@ public class LumberjackSkill extends LogSkill implements Listener {
 	
 	public static final String notOreMessage = ChatColor.DARK_GRAY + "There doesn't appear to be any good wood near that area";
 	
-	public static final String tooSoonMessage = ChatColor.DARK_GRAY + "The wood has yet to regrow on this tree";
-	
 	private static final class TreeRecord {
 		
 		private int difficulty;
@@ -519,6 +517,9 @@ public class LumberjackSkill extends LogSkill implements Listener {
 	}
 	
 	public void playerFinish(QuestPlayer player) {
-		activeSessions.remove(player.getPlayer().getUniqueId());
+		LumberjackSequence session = activeSessions.remove(player.getPlayer().getUniqueId());
+		if (session == null) {
+			return;
+		}
 	}
 }

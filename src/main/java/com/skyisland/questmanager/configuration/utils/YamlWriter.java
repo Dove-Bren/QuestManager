@@ -137,7 +137,7 @@ public class YamlWriter {
 				y.createSection(entry.getKey(), (Map<?, ?>) entry.getObj());
 				writer.println(y.saveToString());
 			} else {
-				writer.println(entry.getKey() + ": " + entry.getObj().toString());
+				writer.println(entry.getKey() + ": " + entry.getObj());
 			}
 			writer.println();
 			

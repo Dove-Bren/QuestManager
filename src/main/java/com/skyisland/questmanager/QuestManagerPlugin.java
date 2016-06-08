@@ -85,6 +85,7 @@ import com.skyisland.questmanager.player.skill.defaults.LumberjackSkill;
 import com.skyisland.questmanager.player.skill.defaults.MagerySkill;
 import com.skyisland.questmanager.player.skill.defaults.MagicWeaverSkill;
 import com.skyisland.questmanager.player.skill.defaults.MiningSkill;
+import com.skyisland.questmanager.player.skill.defaults.SmithingSkill;
 import com.skyisland.questmanager.player.skill.defaults.SorcerySkill;
 import com.skyisland.questmanager.player.skill.defaults.SpellWeavingSkill;
 import com.skyisland.questmanager.player.skill.defaults.SwordAndShieldSkill;
@@ -446,6 +447,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 		skillManager.registerSkill(new LumberjackSkill());
 		skillManager.registerSkill(new CookingSkill());
 		skillManager.registerSkill(new FashioningSkill());
+		skillManager.registerSkill(new SmithingSkill());
 	}
 	
 	

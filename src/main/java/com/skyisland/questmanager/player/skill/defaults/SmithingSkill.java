@@ -1,13 +1,11 @@
 package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -30,14 +28,11 @@ import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.effects.ChargeEffect;
-import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.LogSkill;
-import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.SkillRecipe;
-import com.skyisland.questmanager.player.skill.event.WoodChopEvent;
-import com.skyisland.questmanager.ui.actionsequence.LumberjackSequence;
+import com.skyisland.questmanager.ui.actionsequence.ForgeSequence;
 
 public class SmithingSkill extends LogSkill implements Listener {
 	
@@ -589,7 +584,7 @@ public class SmithingSkill extends LogSkill implements Listener {
 			map.put("Bronze", sub);
 			
 			
-			writer.addLine("metals", map, Lists.newArrayList("List of metals and their components.", "Plan difficulties carefully, as players that are", "at a level with no wood in range (maxDifficultyRange)", "are stuck forever!", "name: {difficulty: [int], reward: [itemstack], woodCount: [int], treeType: [TreeSpecies], region: [null or Location]}"));
+			writer.addLine("metals", map, Lists.newArrayList("List of metals and their components.", "Plan difficulties carefully, as players that are", "at a level with no wood in range (maxDifficultyRange)", "are stuck forever!"));
 			
 			
 			
@@ -663,6 +658,9 @@ public class SmithingSkill extends LogSkill implements Listener {
 			sub.put("output", item);
 			map.put("Copper_Sword", sub);
 			
+			writer.addLine("recipes", map, Lists.newArrayList("Recipes that use the forging action sequence"));
+		
+			
 			
 			try {
 				writer.save(configFile);
@@ -717,45 +715,39 @@ public class SmithingSkill extends LogSkill implements Listener {
 		
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(e.getPlayer());
 		
-		int deltaDifficulty = Math.max(0, record.difficulty - level);
-		int amount, hits;
-		double timing, averageSwing, swingDeviation;
+		double heatTime, coolTime, hitChance;
+		
+//		SmithingSkill skill, QuestPlayer player, String display, List<ItemStack> inputs,
+//		double heatTime, double coolTime, double hitChance
+		
+		//NEED TO OPEN INVENTORY, GET INGREDIENTS, PASS THOSE TO SEQUENCE.
+		//ALSO SOMEHOW FIGURE OUT THE BASE MATERIAL FOR STATS?
 		
 		
-		timing = timingBase + (record.difficulty * timingRate);
-		averageSwing = baseDelay;
-		swingDeviation = delayDeviation;
-		hits = (int) Math.round(baseHits + (hitRate * deltaDifficulty));
-		amount = record.woodCount;
+//		heatTime = heatBase + (heatRate * )
+//		
+//		QualityItem reward = new QualityItem(record.reward.clone());
+//		reward.getUnderlyingItem().setAmount(amount);
+//		reward.setQuality(reward.getQuality() * event.getQualityModifier());
+//		
+//		//QuestPlayer player, Vector treeLocation, QualityItem input, double averageSwingTime,
+//		//double swingTimeDeviation, double reactionTime, int hits, String displayName
+//		LumberjackSequence sequence = new LumberjackSequence(qp, e.getClickedBlock().getLocation().toVector(),
+//				reward, averageSwing, swingDeviation, timing, hits, record.name, record.difficulty);
+//		activeSessions.put(e.getPlayer().getUniqueId(), sequence);
+//		sequence.start();
 		
-		////////Modifer Code - Move to eventhandler if mechs moved out of skill/////////
-		
-		event.setHitsModifier(event.getHitsModifier() - (hitBonus * level));
-		event.setAmountModifier(event.getAmountModifier() + (extraWoodPerLevel * deltaDifficulty));
-		event.setQualityModifier(event.getQualityModifier() + (level * qualityRate));
-		
-		////////////////////////////////////////////////////////////////////////////////
-		
-		//apply modifiers
-		timing *= event.getTimingModifier();
-		averageSwing *= event.getSwingTimeModifier();
-		hits *= event.getHitsModifier();
-		amount *= event.getAmountModifier();
-		
-		QualityItem reward = new QualityItem(record.reward.clone());
-		reward.getUnderlyingItem().setAmount(amount);
-		reward.setQuality(reward.getQuality() * event.getQualityModifier());
-		
-		//QuestPlayer player, Vector treeLocation, QualityItem input, double averageSwingTime,
-		//double swingTimeDeviation, double reactionTime, int hits, String displayName
-		LumberjackSequence sequence = new LumberjackSequence(qp, e.getClickedBlock().getLocation().toVector(),
-				reward, averageSwing, swingDeviation, timing, hits, record.name, record.difficulty);
-		activeSessions.put(e.getPlayer().getUniqueId(), sequence);
-		sequence.start();
+		ForgeSequence seq = new ForgeSequence(this, qp, "Iron Sword", Lists.newArrayList(new ItemStack(Material.IRON_INGOT)),
+				3.0, 5.0, .8);
+		activePlayers.add(e.getPlayer());
+		seq.start();
 		
 	}
 
-	public void submitJob(List<ItemStack> inputs, int hammers, boolean cut, boolean squelch) {
+	public void submitJob(List<ItemStack> inputs, int hammers, boolean cut, boolean quelch) {
+		
+		System.out.println("inputs: " + inputs.toString());
+		System.out.println("hammers: " + hammers + " : cut: " + cut + " : quelch: " + quelch);
 		//TODO
 		/*
 		 * 
