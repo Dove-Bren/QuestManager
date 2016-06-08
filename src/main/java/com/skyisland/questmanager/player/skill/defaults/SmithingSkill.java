@@ -11,7 +11,9 @@ import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,6 +29,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
+import com.skyisland.questmanager.effects.ChargeEffect;
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.QualityItem;
@@ -44,6 +48,16 @@ public class SmithingSkill extends LogSkill implements Listener {
 	public static final String notOreMessage = ChatColor.DARK_GRAY + "There doesn't appear to be any good wood near that area";
 	
 	public static final String tooSoonMessage = ChatColor.DARK_GRAY + "The wood has yet to regrow on this tree";
+	
+	private static final String winMessage = ChatColor.GREEN + "You successfully forged ";
+	
+	private static final Sound loseSound = Sound.BLOCK_FIRE_EXTINGUISH;
+	
+	private static final Sound winSound = Sound.ENTITY_PLAYER_LEVELUP;
+	
+	private static final ChargeEffect successEffect = new ChargeEffect(Effect.LAVA_POP);
+	
+	private static final ChargeEffect failEffect = new ChargeEffect(Effect.SMALL_SMOKE);
 	
 	private static final class Metal {
 		
@@ -679,12 +693,8 @@ public class SmithingSkill extends LogSkill implements Listener {
 			return;
 		}
 
-		if (e.getItem() == null || e.getItem().getType() != toolType) {
+		if (!isTool(e.getItem())) {
 			return;
-		}
-		
-		if (toolName != null && (!e.getItem().hasItemMeta() || !e.getItem().getItemMeta().getDisplayName().equals(toolName))) {
-			return; //didn't have a name or it didn't match, but we had a registered name
 		}
 
 		if (e.getClickedBlock().getType() == anvilType) {
@@ -747,9 +757,80 @@ public class SmithingSkill extends LogSkill implements Listener {
 
 	public void submitJob(List<ItemStack> inputs, int hammers, boolean cut, boolean squelch) {
 		//TODO
+		/*
+		 * 
+		
+			int range = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillCutoff();
+			skill.playerFinish(player);
+			skill.performMajor(player, Math.max(player.getSkillLevel(skill) - range, Math.min(player.getSkillLevel(skill) + range, skill)), false);
+		
+		if (!player.getPlayer().isOnline()) {
+			return;
+		}
+		
+		Player p = player.getPlayer().getPlayer();
+		
+		p.sendMessage(winMessage);
+		p.getWorld().playSound(p.getLocation(), winSound, 1, 1);
+		successEffect.play(p, p.getLocation());
+		
+		double qratio;
+		if (offByIndex == 0)
+			qratio = 1 + perfectBonus;
+		else {
+			qratio = 1.0 / (1.0 + (offByIndex / 5.0));
+		}
+		input.setQuality(input.getQuality() * qratio);
+		
+		String name;
+		if (input.getItem().getItemMeta() == null || input.getItem().getItemMeta().getDisplayName() == null) {
+			name = YamlWriter.toStandardFormat(input.getItem().getType().toString());
+		} else {
+			name = input.getItem().getItemMeta().getDisplayName();
+		}
+		
+		FancyMessage msg = new FancyMessage(winMessage)
+				.color(ChatColor.GREEN)
+			.then(input.getItem().getAmount() > 1 ? input.getItem().getAmount() + "x " : "a ")
+			.then("[" + name + "]")
+				.color(ChatColor.DARK_PURPLE)
+				.itemTooltip(input.getItem());
+		
+		
+		msg.send(p);
+		if (!(p.getInventory().addItem(input.getItem())).isEmpty()) {
+			p.sendMessage(ChatColor.RED + "There is no space left in your inventory");
+			p.getWorld().dropItem(p.getEyeLocation(), input.getItem());
+		}
+		 */
 	}
 	
 	public void playerFinish(QuestPlayer player) {
 		activePlayers.remove(player.getPlayer());
+	}
+
+	/**
+	 * Checks whether the given item is infact the smithing tool
+	 * @param item
+	 * @return
+	 */
+	public boolean isTool(ItemStack item) {
+		if (item == null || item.getType() != toolType) {
+			return false;
+		}
+		
+		if (toolName != null && (!item.hasItemMeta() || !item.getItemMeta().getDisplayName().equals(toolName))) {
+			return false; //didn't have a name or it didn't match, but we had a registered name
+		}
+		
+		return true;
+	}
+	
+	public boolean isAnvil(Block block) {
+		return block != null && block.getType() == anvilType;
+	}
+	
+	public boolean isCutter(Block block) {
+		return block != null && block.getType() == smeltingType;
 	}
 }
