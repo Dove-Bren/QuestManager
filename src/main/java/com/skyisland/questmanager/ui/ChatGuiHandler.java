@@ -1,14 +1,11 @@
 package com.skyisland.questmanager.ui;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.UUID;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.ui.menu.RespondableMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,6 +13,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.skyisland.questmanager.fanciful.FancyMessage;
+import com.skyisland.questmanager.ui.menu.RespondableMenu;
 
 /**
  * Organizes, catches, and dispatches chat click events to the responsible menus

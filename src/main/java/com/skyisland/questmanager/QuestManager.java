@@ -461,8 +461,6 @@ public class QuestManager implements Listener {
 				QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(
 						e.getPlayer().getUniqueId()).addQuestBook();
 				
-//				QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(
-//						e.getPlayer().getUniqueId()).updateQuestBook(false);
 			}
 		}
 		
@@ -661,54 +659,11 @@ public class QuestManager implements Listener {
 				
 				
 				if (trip != true) {
-//					if (entity instanceof LivingEntity) {
-//						if (!((LivingEntity) entity).getRemoveWhenFarAway()) {
-//							continue;
-//						}
-//					}
 					entity.remove();
 				}
 			}
 		}
 	}
-	
-//	@EventHandler
-//	public void onChunkUnload(ChunkUnloadEvent e) {
-//		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds().contains(e.getWorld().getName())) {
-//			
-//			if (questNPCs == null || questNPCs.isEmpty() || e.getChunk().getEntities().length == 0) {
-//				return;
-//			}
-////			for (Entity entity : e.getChunk().getEntities()) {
-////				trip = false;
-////				for (NPC npc : questNPCs) {
-////					if (npc.getEntity() == null) {
-////						return;
-////					}
-////					if (npc.getEntity().getUniqueId().equals(entity.getUniqueId())) {
-////						trip = true;
-////						break;
-////					}
-////				}
-////				
-////				
-////				if (trip == true) {
-////					entity.remove();
-////				}
-////			}
-//			
-//			Set<UUID> ids = new HashSet<UUID>();
-//			for (Entity entity : e.getChunk().getEntities()) {
-//				ids.add(entity.getUniqueId());
-//			}
-//			
-//			for (NPC npc : questNPCs) {
-//				if (ids.contains(npc.getID())) {
-//					npc.removeEntity(true);
-//				}
-//			}
-//		}
-//	}
 	
 	private void makeAnchors() {
 		this.anchors = new HashMap<>();
@@ -721,13 +676,7 @@ public class QuestManager implements Listener {
 			
 			Location loc = world.getSpawnLocation().clone();
 			loc.setY(5);
-			//Entity vil = world.spawnEntity(loc, EntityType.);
-			//vil.setRemoveWhenFarAway(false);
-			//vil.setCustomName("Anchor");
 			loc.getBlock().setType(Material.COMMAND);
-			//vil.setOp(true);
-			
-			
 			anchors.put(worldName, (CommandBlock) loc.getBlock().getState());
 		}
 	}

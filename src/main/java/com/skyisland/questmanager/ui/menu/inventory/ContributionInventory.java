@@ -20,36 +20,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
  */
 public class ContributionInventory extends ReturnGuiInventory {
 	
-//	private static final class ContributionAction implements MenuAction {
-//
-//		private ContributionInventory gui;
-//		
-//		private ItemStack item;
-//		
-//		private ContributionAction(ContributionInventory gui) {
-//			this.gui = gui;
-//		}
-//		
-//		@Override
-//		public void onAction() {
-//			int openpos = -1;
-//			for (int pos : gui.items.keySet()) {
-//				if (gui.items.get(pos) == null || gui.items.get(pos).getType() == Material.AIR) {
-//					openpos = pos;
-//					break;
-//				}
-//			}
-//			
-//			if (openpos == -1) {
-//				//no space
-//				return; //do nothing, already cancelled
-//			}
-//			
-//			
-//		}
-//		
-//	}
-	
 	private Map<Integer, ItemStack> items;
 	
 	private ItemFilter filter;

@@ -107,7 +107,6 @@ public class VanquishRequirement extends Requirement implements Listener, Statek
 		try {
 			econ.load( foeState.getConfigurationSection("equipment"));
 		} catch (InvalidConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -256,11 +255,6 @@ public class VanquishRequirement extends Requirement implements Listener, Statek
 		
 		//for laziness imma just do the same thing
 		loadState(new RequirementState(config));
-		
-//		RequirementState fakeState = new RequirementState();
-//		fakeState.importConfig(config);
-//		loadState(fakeState);
-		
 		
 	}
 	

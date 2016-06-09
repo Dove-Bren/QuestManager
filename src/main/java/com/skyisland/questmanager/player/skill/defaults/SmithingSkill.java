@@ -1,6 +1,7 @@
 package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -29,12 +30,13 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.effects.ChargeEffect;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.CraftingSkill;
 import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.SkillRecipe;
 import com.skyisland.questmanager.ui.actionsequence.ForgeSequence;
 
-public class SmithingSkill extends LogSkill implements Listener {
+public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	
 	public static final String configName = "Smithing.yml";
 	
@@ -54,7 +56,7 @@ public class SmithingSkill extends LogSkill implements Listener {
 	
 	private static final ChargeEffect failEffect = new ChargeEffect(Effect.SMALL_SMOKE);
 	
-	private static final class Metal {
+	private static final class Metal implements SkillRecipe {
 		
 		protected List<ItemStack> inputs;
 		
@@ -148,6 +150,47 @@ public class SmithingSkill extends LogSkill implements Listener {
 			return minimum;
 			
 			
+		}
+
+		@Override
+		public ItemStack getDisplay() {
+			return image;
+		}
+		
+		@Override
+		public String getDescription() {
+			return "With your tool, select a forge's heatbars. Then, combine " + delistInputs();
+		}
+
+
+		@Override
+		public int getDifficulty() {
+			return difficulty;
+		}
+		
+		private String delistInputs() {
+			if (inputs == null || inputs.isEmpty())
+				return "";
+			
+			String builder = "";
+			Iterator<ItemStack> it = inputs.iterator();
+			ItemStack cur = null;
+			while (it.hasNext()) {
+				if (cur != null) {
+					builder += ", ";
+					if (it.hasNext())
+						builder += "and ";
+				}
+				cur = it.next();
+				builder += (cur.getAmount() > 1 ? (cur.getAmount() + "x ") : "a ");
+				if (cur.hasItemMeta() && cur.getItemMeta().hasDisplayName())
+					builder += cur.getItemMeta().getDisplayName();
+				else
+					builder += YamlWriter.toStandardFormat(cur.getData().toString());
+				
+			}
+			
+			return builder;
 		}
 		
 	}
@@ -816,5 +859,12 @@ public class SmithingSkill extends LogSkill implements Listener {
 	
 	public boolean isCutter(Block block) {
 		return block != null && block.getType() == smeltingType;
+	}
+
+	@Override
+	public List<SkillRecipe> getRecipes() {
+		List<SkillRecipe> list = new ArrayList<>(metals.values());
+		list.addAll(forgeRecipes);
+		return list;
 	}
 }

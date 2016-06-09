@@ -72,9 +72,6 @@ public class InnAction implements MenuAction {
 					new PotionEffect(PotionEffectType.BLINDNESS, 60, 5));
 
 
-//			(new TitleObject(new FancyMessage("Sweet Dreams").color(ChatColor.GREEN).toJSONString(),
-//					new FancyMessage("Your health and hunger are restored").color(ChatColor.BLUE).toJSONString()))
-//			.setFadeIn(20).setFadeOut(20).setStay(40).send(p);
 			new TitleObject(ChatColor.GREEN + "Sweet Dreams" + ChatColor.RESET,
 					ChatColor.BLUE + "Health and hunger have been restored")
 					.setFadeIn(20).setFadeOut(20).setStay(40).send(p);

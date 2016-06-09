@@ -58,8 +58,6 @@ public class GoalState {
 			i++;
 		}
 		
-		//config.set("goals", requirementStates);
-		
 		config.save(file);
 	}
 	

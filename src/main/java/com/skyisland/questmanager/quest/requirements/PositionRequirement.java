@@ -98,7 +98,6 @@ public class PositionRequirement extends Requirement implements Listener, Compas
 		for (QuestPlayer qp : participants.getParticipants()) {
 			if (qp.getPlayer().getUniqueId().equals(e.getPlayer().getUniqueId())) {	
 				update();
-				//updateQuest();
 				return;
 			}
 		}

@@ -120,7 +120,6 @@ public class CuboidRegion implements Region {
 	@Override
 	public int hashCode() {
 		return (int) (84000 + (7 * least.getX())
-				//+ (379 * world.getName().hashCode())
 				+ (13 * least.getY())
 				+ (17 * least.getZ())
 				+ (23 * most.getX())

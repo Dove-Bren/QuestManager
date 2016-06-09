@@ -10,7 +10,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 
-/*
+/**
  * Depicts a QM enemy, which can be created or destroyed as the world loads and unloads.
  * Each enemy object represents a unique, spawnable enemy type. Each instance of an enemy is created from this
  * class when spawning things, but this class doesn't hold instances.

@@ -110,7 +110,6 @@ public class BankNPC extends SimpleStaticBioptionNPC {
 			tmp.createSection("key",  (Map<?, ?>) map.get("equipment"));
 			econ.load(tmp.getConfigurationSection("key"));
 		} catch (InvalidConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -85,11 +85,6 @@ public class TalkRequirement extends Requirement implements Listener, CompassTra
 						HandlerList.unregisterAll(this);
 						updateQuest();
 						
-//						String desc = menu.getMessage().toOldMessageFormat()
-//								.replaceAll(ChatColor.WHITE + "", ChatColor.BLACK + "");
-//						desc = desc.replace("-", "");
-//						updateQuestHistory(qp, desc);
-						
 						menu.show(e.getPlayer(), getGoal().getQuest());
 					}
 				}

@@ -201,27 +201,4 @@ public class StandardEnemy extends NormalEnemy {
 		
 		
 	}
-	
-	//LEGACY CODE LEFT HERE FOR LULZ
-//	@Override
-//	public void spawn(Location loc) {
-//		
-//		String cmd = "summon "
-//				+ this.type + " " + loc.getX() + " " + loc.getY() + " " + loc.getZ() + " "
-//				+ "{CustomName:" + name + ",CustomNameVisible:1,Attributes:["
-//				+ "{Name:generic.maxHealth,Base:" + hp + "},"
-//				+ "{Name:generic.attackDamage,Base:" + attack + "}],"
-//				+ "Equipment:[" + equipmentString(hands) + "," + equipmentString(boots) + "," 
-//				+ equipmentString(legs) + "," + equipmentString(chest) + "," + equipmentString(head) 
-//				+ "],DropChances:[0.0F,0.0F,0.0F,0.0F,0.0F]}";
-//		
-//		CommandBlock sender = QuestManagerPlugin.questManagerPlugin.getManager().getAnchor(loc.getWorld().getName());
-//		Location ol = sender.getLocation().clone().add(0,1,0);
-//		sender.setCommand(cmd);
-//		ol.getBlock().setType(Material.REDSTONE_BLOCK);
-//		ol.getBlock().getState().update(true);
-//		sender.update(true);
-//		ol.getBlock().setType(Material.STONE);
-//		
-//	}
 }

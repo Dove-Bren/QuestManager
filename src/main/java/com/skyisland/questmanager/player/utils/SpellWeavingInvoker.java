@@ -63,10 +63,6 @@ public class SpellWeavingInvoker implements Listener {
 	
 	@EventHandler
 	public void onPlayerUse(PlayerInteractEvent e) {
-//		if (e.isCancelled()) {
-//			return;
-//		}
-		
 		if (!(e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK))) {
 			return; //not right click
 		}

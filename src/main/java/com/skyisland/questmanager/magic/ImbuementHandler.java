@@ -237,7 +237,6 @@ public class ImbuementHandler {
 		}
 		
 		//went thorugh and total'ed each up. Now create effects, return
-		//List<ImbuementEffect> effects = new ArrayList<>(applicable.size());
 		Map<ImbuementEffect, Double> effects = new HashMap<>();
 		
 		for (String key : totals.keySet()) {
