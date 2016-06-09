@@ -62,7 +62,6 @@ public class TreeChatMenu extends ChatMenu implements RespondableMenu {
 
 	/**
 	 * Adds the given option to the list of options used in the menu.
-	 * @param option
 	 */
 	private void addOption(Option option) {
 		this.options.put(genKey(), option);
@@ -102,7 +101,6 @@ public class TreeChatMenu extends ChatMenu implements RespondableMenu {
 	
 	/**
 	 * Uses the internal key index to generate the next key for registration
-	 * @return
 	 */
 	private String genKey() {
 		String key = "M" + keyindex;

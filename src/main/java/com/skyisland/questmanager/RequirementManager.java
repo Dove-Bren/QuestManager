@@ -44,7 +44,7 @@ public class RequirementManager {
 	}
 	
 	/**
-	 * Uses registered factories to instantiate a requirement from the given key and configuration file.<br />
+	 * Uses registered factories to instantiate a requirement from the given key and configuration file.
 	 * Keys must first be registered using {@link #registerFactory(String, RequirementFactory)}
 	 * @param uniqueKey The key to look up, usually from the configuration file being loaded
 	 * @param conf The configuration section used to instantiate the requirement. 

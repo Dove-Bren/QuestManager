@@ -7,11 +7,10 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * Stores a list of items associated with a weight. This list is designed to be used to pull out
- * random elements, and not for simple traversal.
- * @author Skyler
+ * Stores a list of items associated with a weight.
+ * This list is designed to be used to pull out random elements, and not for simple traversal.
  *
- * @param <T>
+ * @param <T> The type of the elements of the weighted list.
  */
 public class WeightedList<T>  {
 	
@@ -44,10 +43,8 @@ public class WeightedList<T>  {
 	}
 	
 	/**
-	 * Adds an element to the list.<br />
+	 * Adds an element to the list.
 	 * <b>Note:</b> This method does not detect or avoid duplicates in any way.
-	 * @param object
-	 * @param weight
 	 */
 	public void add(T object, Double weight) {
 		list.add(new Item<>(object, weight));
@@ -85,7 +82,6 @@ public class WeightedList<T>  {
 	
 	/**
 	 * Returns all elements stored in this list, without their associated weights.
-	 * @return
 	 */
 	public Set<T> getElements() {
 		Set<T> set = new HashSet<>();

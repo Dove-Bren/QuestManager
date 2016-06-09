@@ -34,7 +34,7 @@ import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
 import com.skyisland.questmanager.configuration.utils.LocationState;
 
 /**
- * Requirement that a given entity must be slain.<br />
+ * Requirement that a given entity must be slain.
  * This requirement purposely does not require the entity be slain by certain participants.
  * Instead it is simply required that the provided entity is defeated.
  * @author Skyler
@@ -168,7 +168,6 @@ public class VanquishRequirement extends Requirement implements Listener, Statek
 	/**
 	 * Catches entity death events and changes state to reflect whether or not this requirement
 	 * is satisfied
-	 * @param e
 	 */
 	@EventHandler
 	public void onVanquish(EntityDeathEvent e) {

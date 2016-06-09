@@ -33,11 +33,11 @@ import com.skyisland.questmanager.quest.requirements.Requirement;
 import com.skyisland.questmanager.quest.requirements.RequirementUpdateEvent;
 
 /**
- * Quest Interface!<br />
+ * Quest Interface!
  * 
  * 
  * 
- * @breakdown
+ * Breakdown:
  * quests run and stop. They save their state and load their state. They 
  * subscribe to events and have {@link Requirement Requirements}. They are completed or failed.
  * They have rewards, disperse rewards, and collect tolls. They do whatever
@@ -45,17 +45,14 @@ import com.skyisland.questmanager.quest.requirements.RequirementUpdateEvent;
  * 
  * Specifically the quest interface specifies that quests can be started,
  * stopped, and halted. Quests must also keep track of involved players and
- * any parts of the quest involved (future work?). <br />
+ * any parts of the quest involved (future work?).
  * 
- * @TODO maybe split this into 'involved quests' and 'casual quests', where 'involved quests'
+ * TODO: maybe split this into 'involved quests' and 'casual quests', where 'involved quests'
  * would not require any teleports out of dungeons, etc and 'involved quests' take you to
  * a special location you cannot otherwise access? If so, this should be made abstract  again
  * and the methods addPlayer and removePlayer should be made abstract and defined in subclasses,
  * where casualQuests would just remove them from the list (like this class does) and 
  * involvedQuests would teleport them out too
- * 
- * @author Skyler
- *
  */
 public class Quest implements Listener {
 	
@@ -89,7 +86,7 @@ public class Quest implements Listener {
 	
 	/**
 	 * Whether or not this quest should be triggered on and then never evaluated again,
-	 * or if it can go between completed and not completed depending on its requirements.<br />
+	 * or if it can go between completed and not completed depending on its requirements.
 	 * In other words, does this quest be ready to turn in and never can be un-ready after.
 	 * <p>
 	 * As a specific example, consider a quest to deliver 10 apples. This quest can be ready
@@ -147,8 +144,6 @@ public class Quest implements Listener {
 	/**
 	 * @throws InvalidConfigurationException 
 	 * Loads quest/objective/requirement state from the provided file
-	 * @param state
-	 * @throws  
 	 */
 	public void loadState(QuestState state) throws InvalidConfigurationException {
 		
@@ -225,10 +220,9 @@ public class Quest implements Listener {
 	}
 	
 	/**
-	 * Returns whether or not the quest is ready to turn in.<br />
+	 * Returns whether or not the quest is ready to turn in.
 	 * This method causes its goals to be re-evaluated to guarantee the returned result
 	 * is accurate at the time the method is called
-	 * @return
 	 */
 	public boolean isReady() {
 		update();
@@ -353,8 +347,8 @@ public class Quest implements Listener {
 	/**
 	 * <i>Immediately</i> stops the quest, returning players to a free-roaming
 	 * state. Quests are not to perform save-state procedures when
-	 * halted. <br/>
-	 * <b>Quests must immediately stop execution when asked to halt.<b>
+	 * halted.
+	 * <b>Quests must immediately stop execution when asked to halt.</b>
 	 */
 	public void halt() {
 		
@@ -386,7 +380,7 @@ public class Quest implements Listener {
 	/**
 	 * Returns the name of the quest, including text formatters and colors.
 	 * @return The name of the quest
-	 * @see {@link org.bukkit.ChatColor ChatColor}
+	 * @see org.bukkit.ChatColor
 	 */
 	public String getName() {
 		return template.getName();
@@ -394,7 +388,6 @@ public class Quest implements Listener {
 	
 	/**
 	 * Returns a list of enlisted goals
-	 * @return
 	 */
 	public List<Goal> getGoals() {
 		return goals;
@@ -406,17 +399,15 @@ public class Quest implements Listener {
 	
 	/**
 	 * Appends the provided goal to the current list of goals
-	 * @param goal
 	 */
 	public void addGoal(Goal goal) {
 		goals.add(goal);
 	}
 	
 	/**
-	 * Returns a multilined description of the quest and its current objective.<br />
+	 * Returns a multilined description of the quest and its current objective.
 	 * This method does not support JSON and the fancyness that comes with it. 
-	 * @see getJSONDescription()
-	 * @return
+	 * @see Quest#getJSONDescription()
 	 */
 	public String getDescription() {
 		String builder = ChatColor.GOLD + template.getName();
@@ -502,7 +493,6 @@ public class Quest implements Listener {
 	
 	/**
 	 * Returns the current history for reading or changing
-	 * @return
 	 */
 	public History getHistory() {
 		return history;
@@ -510,7 +500,6 @@ public class Quest implements Listener {
 	
 	/**
 	 * Adds an event to this quests history and updates all participants journals silently
-	 * @param event
 	 */
 	public void addHistoryEvent(HistoryEvent event) {
 		if (history == null) {

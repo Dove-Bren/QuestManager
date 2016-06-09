@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Specifies a given object keeps a list of loot you can get from it.<br />
+ * Specifies a given object keeps a list of loot you can get from it.
  * Example application are enemies (which have loot on drop) or random chests.
  * @author Skyler
  *
@@ -15,15 +15,13 @@ public interface Lootable {
 	List<Loot> getLoot();
 	
 	/**
-	 * Standard method of selecting a piece of loot from a list of loot items.<br />
+	 * Standard method of selecting a piece of loot from a list of loot items.
 	 * This method will return null if the argument list is either null or empty.
 	 * <p>
 	 * The algorithm this method follows the definition of {@link Loot}'s weight member; the chance a piece
-	 * of loot is selected is equal to<br />
+	 * of loot is selected is equal to
 	 * &nbsp;&nbsp;&nbsp;&nbsp;(<i>weight</i>) / (<i>Pool weight total</i>)
 	 * </p>
-	 * @param loot
-	 * @return
 	 */
 	static Loot pickLoot(List<Loot> loot) {
 		if (loot == null || loot.isEmpty()) {

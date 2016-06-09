@@ -71,7 +71,6 @@ public class ChestRequirement extends Requirement implements Listener, Statekeep
 
 	/**
 	 * Catches a player's interaction and sees if it's with our 'chest'
-	 * @param e
 	 */
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {

@@ -8,7 +8,7 @@ import org.bukkit.entity.Entity;
 import com.skyisland.questmanager.QuestManagerPlugin;
 
 /**
- * Charging-like effect.<br />
+ * Charging-like effect.
  * A circle of particles appears around the target, then moves up quickly
  * @author Skyler
  *

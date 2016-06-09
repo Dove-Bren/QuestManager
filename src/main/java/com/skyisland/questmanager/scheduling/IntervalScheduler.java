@@ -32,10 +32,9 @@ public class IntervalScheduler extends Scheduler {
 	private static IntervalScheduler scheduler = null;
 	
 	/**
-	 * Return the current instanced DispersedScheduler.<br />
+	 * Return the current instanced DispersedScheduler.
 	 * If a scheduler has yet to be created, it will be created with default values
 	 * from this call.
-	 * @return
 	 */
 	public static IntervalScheduler getScheduler() {
 		if (scheduler == null) {

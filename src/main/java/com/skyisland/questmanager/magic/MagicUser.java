@@ -20,7 +20,7 @@ public interface MagicUser {
 	
 	/**
 	 * Cast the currently set up spell weaving spell. Spell cast, cost, difficulty, etc
-	 * are determined by the spell the player has created with their current pylons.<br />
+	 * are determined by the spell the player has created with their current pylons.
 	 * Pylons should be destroyed at this time, and checks should be made to player
 	 * mana, skill level, etc
 	 */

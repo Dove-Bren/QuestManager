@@ -20,7 +20,7 @@ import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.quest.history.HistoryEvent;
 
 /**
- * A quest journal keeps track of the current target quest's history<br />
+ * A quest journal keeps track of the current target quest's history
  * This class provides nice helper functions for making that happen
  * @author Skyler
  * @see QuestLog
@@ -213,8 +213,6 @@ public class QuestJournal {
 	
 	/**
 	 * Used to build pages for primitive strings
-	 * @param line
-	 * @return
 	 */
 	private static String generatePage(String line) {
 		if (line == null) {

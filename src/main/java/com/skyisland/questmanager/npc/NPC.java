@@ -47,7 +47,7 @@ public abstract class NPC implements ConfigurationSerializable, Listener, Tickab
 	}
 	
 	/**
-	 * Returns the entity this NPC is attached to.<br />
+	 * Returns the entity this NPC is attached to.
 	 * This method attempts to save cycles by caching the last known entity to
 	 * represent our UUID'd creature. If the cache is no longer valid, an entire
 	 * sweep of worlds and entities is performed to lookup the entity.
@@ -83,7 +83,6 @@ public abstract class NPC implements ConfigurationSerializable, Listener, Tickab
 	
 	/**
 	 * Register an entity to this NPC. This method also updates the ID of this npc
-	 * @param entity
 	 */
 	public void setEntity(Entity entity) {
 		this.entity = entity;
@@ -95,7 +94,6 @@ public abstract class NPC implements ConfigurationSerializable, Listener, Tickab
 	
 	/**
 	 * Specify the ID used for this entity
-	 * @param id
 	 */
 	public void setID(UUID id) {
 		this.id = id;

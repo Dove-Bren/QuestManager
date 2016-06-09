@@ -36,7 +36,7 @@ import com.skyisland.questmanager.ui.menu.action.LevelupManaAction;
 import com.skyisland.questmanager.ui.menu.message.Message;
 
 /**
- * Prompts the player with some amount of text and gives them the option to level up.<br />
+ * Prompts the player with some amount of text and gives them the option to level up.
  * The amount given in the level up's is also determined in the configuration, including options
  * for rate and base amounts.
  * If both the base and rate amounts for any attribute, the option to increase it will not be included.

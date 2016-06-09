@@ -12,7 +12,7 @@ import com.skyisland.questmanager.magic.MagicUser;
 /**
  * This effect is intended to be used as a bridge between the spell holder interface and the spell weaving
  * system. Since Spell Weaving spells have their own difficulty and mana cost, it's encouraged that any
- * spells made out of this effect are either very little to low cost and difficulty.<br />
+ * spells made out of this effect are either very little to low cost and difficulty.
  * This effect does not take into consideration location or entity it's being applies on. It simple
  * uses the caster in both cases.
  */

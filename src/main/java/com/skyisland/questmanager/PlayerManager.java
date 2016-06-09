@@ -37,7 +37,6 @@ public class PlayerManager implements Tickable {
 	
 	/**
 	 * Creates and loads player manager information from the provided configuration file.
-	 * @param config
 	 */
 	public PlayerManager(YamlConfiguration config) {
 		
@@ -76,22 +75,18 @@ public class PlayerManager implements Tickable {
 	}
 	
 	/**
-	 * Returns the QuestPlayer corresponding the the passed OfflinePlayer.<br />
+	 * Returns the QuestPlayer corresponding the the passed OfflinePlayer.
 	 * This method creates a new QuestPlayer wrapper for the provided UUID if there does not
 	 * already exist a record for it.
-	 * @param id
-	 * @return
 	 */	
 	public QuestPlayer getPlayer(OfflinePlayer player) {
 		return (player == null ? null : getPlayer(player.getUniqueId()));
 	}
 	
 	/**
-	 * Returns the QuestPlayer corresponding the the passed UUID.<br />
+	 * Returns the QuestPlayer corresponding the the passed UUID.
 	 * This method creates a new QuestPlayer wrapper for the provided UUID if there does not
 	 * already exist a record for it.
-	 * @param id
-	 * @return
 	 */
 	public QuestPlayer getPlayer(UUID id) {
 		if (players.containsKey(id)) {
@@ -107,9 +102,7 @@ public class PlayerManager implements Tickable {
 	
 	/**
 	 * Returns the party paired with the given ID.
-	 * <br />if the party doesn't exist, null is returned instead
-	 * @param id
-	 * @return
+	 * if the party doesn't exist, null is returned instead
 	 */
 	public Party getParty(GUID id) {
 		if (!parties.containsKey(id)) {

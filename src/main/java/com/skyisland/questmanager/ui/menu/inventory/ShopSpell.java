@@ -7,8 +7,8 @@ import com.skyisland.questmanager.ui.menu.action.MenuAction;
 import com.skyisland.questmanager.ui.menu.action.PurchaseSpellAction;
 
 /**
- * An item used in an inventory menu.<br />
- * This is composed of an actual item stack, a display item type, and the cost & fame requirement
+ * An item used in an inventory menu.
+ * This is composed of an actual item stack, a display item type, and the cost and fame requirement
  * of the item.
  * @author Skyler
  *

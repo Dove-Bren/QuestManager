@@ -99,7 +99,6 @@ public class InteractRequirement extends Requirement implements Listener, Statek
 
 	/**
 	 * Catches a player's interaction and sees if it's the one we've been waiting for
-	 * @param e
 	 */
 	@EventHandler
 	public void onInteract(PlayerInteractEvent e) {
@@ -205,11 +204,9 @@ public class InteractRequirement extends Requirement implements Listener, Statek
 	}
 	
 	/**
-	 * Check to see if the nature of the actions are the same.<br />
+	 * Check to see if the nature of the actions are the same.
 	 * Specifically, check to see if both are 'left click' or 'right click' cause we don't
 	 * really care about the whole block/air thing
-	 * @param otherAction
-	 * @return
 	 */
 	private boolean actionsMatch(Action otherAction) {
 		if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) {

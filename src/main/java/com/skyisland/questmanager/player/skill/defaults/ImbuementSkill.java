@@ -147,9 +147,8 @@ public class ImbuementSkill extends LogSkill implements Listener {
 	}
 	
 	/**
-	 * returns the configed apply time<br />
+	 * returns the configed apply time
 	 * If not enabled, returns 0.
-	 * @return
 	 */
 	public double getApplyTime(QuestPlayer player) {
 		if (!enabled) {
@@ -163,9 +162,8 @@ public class ImbuementSkill extends LogSkill implements Listener {
 	}
 	
 	/**
-	 * Calculates the apply cost from config variables.<br />
+	 * Calculates the apply cost from config variables.
 	 * If not enabled, returns 0.
-	 * @return
 	 */
 	public double getApplyCost(QuestPlayer player, ImbuementSet effects) {
 		if (!enabled || effects == null || effects.getEffectMap().isEmpty()) {
@@ -181,9 +179,8 @@ public class ImbuementSkill extends LogSkill implements Listener {
 	
 	/**
 	 * Calculates the per-slash cost from config variables. This includes calculating any player 
-	 * bonuses<br />
+	 * bonuses
 	 * If not enabled, returns 0.
-	 * @return
 	 */
 	public double getSlashCost(QuestPlayer player, ImbuementSet effects) {
 		if (!enabled || effects == null || effects.getEffectMap().isEmpty()) {

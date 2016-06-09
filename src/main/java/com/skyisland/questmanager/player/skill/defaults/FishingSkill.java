@@ -316,7 +316,6 @@ public class FishingSkill extends LogSkill implements Listener {
 	/**
 	 * Finds and returns a fish (if one exists) within {@link #maxDifficultyRange} of the provided
 	 * difficulty.
-	 * @param difficulty
 	 * @return A fish record within the provided limits, or null if none were found
 	 */
 	private FishRecord getFish(int difficulty) {

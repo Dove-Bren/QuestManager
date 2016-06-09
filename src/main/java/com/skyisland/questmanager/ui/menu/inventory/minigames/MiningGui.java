@@ -278,7 +278,6 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 	/**
 	 * Hits the block (just the block) at the given position, possibly breaking it. Reveals surrounding
 	 * blocks
-	 * @param pos
 	 */
 	private void hitBlock(int pos) {
 		switch (backend.get(pos)) {
@@ -405,9 +404,8 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 	}
 	
 	/**
-	 * Returns the number of intact ore blocks, or -1 if they are not separated.<br />
+	 * Returns the number of intact ore blocks, or -1 if they are not separated.
 	 * If non-negative, the game is finished
-	 * @return
 	 */
 	private int isWon() {
 		//find first non-null ore slot

@@ -78,7 +78,6 @@ public class AreaEffect extends SpellEffect {
 	/**
 	 * Makes an empty area of effect shell. It contains no spell effects.
 	 * @see #addEffect(SpellEffect)
-	 * @param radius
 	 */
 	public AreaEffect(double radius) {
 		this.radius = radius;

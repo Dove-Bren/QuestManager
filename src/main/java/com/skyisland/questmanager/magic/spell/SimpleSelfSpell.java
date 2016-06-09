@@ -110,12 +110,9 @@ public class SimpleSelfSpell extends SelfSpell {
 	protected Sound castSound;
 	
 	/**
-	 * Creates a simple spell made to be cast on the self.<br />
+	 * Creates a simple spell made to be cast on the self.
 	 * This spell will have no effects until added using 
 	 * {@link #addSpellEffect(SpellEffect)}
-	 * @param cost
-	 * @param name
-	 * @param description
 	 */
 	public SimpleSelfSpell(int cost, int difficulty, String name, String description) {
 		super(cost, difficulty, name, description);

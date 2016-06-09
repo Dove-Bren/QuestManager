@@ -74,7 +74,6 @@ public class History {
 	
 	/**
 	 * Returns a config file (section) that stores the information contained in this history
-	 * @return
 	 */
 	public YamlConfiguration toConfig() {
 		

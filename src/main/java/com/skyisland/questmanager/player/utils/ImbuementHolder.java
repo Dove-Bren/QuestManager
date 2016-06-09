@@ -63,10 +63,8 @@ public class ImbuementHolder {
 	}
 	
 	/**
-	 * Tries to lookup the imbuement stored with the provided spell holder.<br />
+	 * Tries to lookup the imbuement stored with the provided spell holder.
 	 * If the item passed has no associated spell, <i>null</i> is returned.
-	 * @param player 
-	 * @param holder 
 	 * @return The imbuement that is associated with the holder, or null if there is none
 	 */
 	public static ImbuementSet getImbuement(QuestPlayer player, ItemStack holder) {

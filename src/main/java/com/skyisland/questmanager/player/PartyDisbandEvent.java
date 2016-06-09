@@ -22,8 +22,7 @@ public class PartyDisbandEvent extends Event {
 	}
 	
 	/**
-	 * Constructs an event with given party<br />
-	 * @param requirement
+	 * Constructs an event with given party
 	 */
 	public PartyDisbandEvent(Party party) {
 		this.party = party;
@@ -31,7 +30,6 @@ public class PartyDisbandEvent extends Event {
 	
 	/**
 	 * Returns the party that disbanded.
-	 * @return
 	 */
 	public Party getParty() {
 		return party;

@@ -94,7 +94,6 @@ public class WoodChopEvent extends Event implements Cancellable {
 	/**
 	 * Returns a copy of the result item. <b>Note:</b> Changes to the quality here are not supported, and will
 	 * not be carried over. To affect the quality of the result, use {@link #setQualityModifier(double)}
-	 * @return
 	 */
 	public QualityItem getResult() {
 		return result;

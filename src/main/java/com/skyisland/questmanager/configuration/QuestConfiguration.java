@@ -60,7 +60,7 @@ public class QuestConfiguration {
 	
 	/**
 	 * Checks the held configuration file for missing/corrupted/outdated fields, and corrects
-	 * them when possible. <br />
+	 * them when possible.
 	 * This is an internal method with straight implementation details.
 	 * @see QuestConfigurationField
 	 */
@@ -95,16 +95,14 @@ public class QuestConfiguration {
 	
 	/**
 	 * Gets the quest description
-	 * @return
 	 */
 	public String getDescription() {
 		return config.getString(QuestConfigurationField.DESCRIPTION.getKey(), (String) QuestConfigurationField.DESCRIPTION.getDefault());
 	}
 	
 	/**
-	 * Returns the end hint for this quest.<br /.
+	 * Returns the end hint for this quest.
 	 * This usually denotes which NPC to turn it into, in a slightly more custimized fashion than just subbing in the name
-	 * @return
 	 */
 	public String getEndHint() {
 		return config.getString(QuestConfigurationField.ENDHINT.getKey(), (String) QuestConfigurationField.ENDHINT.getDefault());
@@ -112,7 +110,6 @@ public class QuestConfiguration {
 	
 	/**
 	 * Gets whether or not the embedded quest has {@link Quest#keepState save-state} enabled
-	 * @return
 	 */
 	public boolean getSaveState() {
 		return config.getBoolean(QuestConfigurationField.SAVESTATE.getKey(), 
@@ -127,7 +124,6 @@ public class QuestConfiguration {
 	/**
 	 * Is this quest a session quest? Session quests can only have one instantiation at a time,
 	 * or one session at a time.
-	 * @return
 	 */
 	public boolean isSession() {
 		return config.getBoolean(QuestConfigurationField.SESSION.getKey(), 
@@ -205,7 +201,7 @@ public class QuestConfiguration {
 	}
 	
 	/**
-	 * Reads and instantiates a new starting npc for this quest.<br />
+	 * Reads and instantiates a new starting npc for this quest.
 	 * It's common practice to only call this method a single time, as you only need one copy
 	 * of 'earl' who people talk to to give the quest.
 	 * @return The new NPC instance
@@ -257,12 +253,13 @@ public class QuestConfiguration {
 	}
 	
 	/**
-	 * Returns the complete {@link Quest Quest} this configuration represents.<br />
+	 * Returns the complete {@link Quest Quest} this configuration represents.
 	 * Subsequent calls to this method return new instances of the represented quest. It is
 	 * up to the caller to keep track of returned quests and optimize performance when simply
 	 * needing a reference to previously-instantiated Quests
 	 * @return A new quest instance
-	 * @throws InvalidConfigurationException, SessionConflictException 
+	 * @throws InvalidConfigurationException
+	 * @throws SessionConflictException
 	 */
 	public Quest instanceQuest(Participant participant) throws InvalidConfigurationException,
 		SessionConflictException {

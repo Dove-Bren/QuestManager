@@ -42,8 +42,6 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 		/**
 		 * Creates a recipe out of the given components. If the recipe is ordered, the order
 		 * of the list is the order of the components.
-		 * @param componenets
-		 * @param isOrdered
 		 */
 		public SpellWeavingRecipe(List<String> componenets, boolean isOrdered) {
 			this.components = componenets;
@@ -52,7 +50,6 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 		
 		/**
 		 * Makes a new recipe with the given components. The recipe defaults to <i>not ordered</i>
-		 * @param components
 		 */
 		public SpellWeavingRecipe(List<String> components) {
 			this(components, false);
@@ -215,12 +212,10 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 	}
 	
 	/**
-	 * Casts the spell with all provided entities as targets.<br />
+	 * Casts the spell with all provided entities as targets.
 	 * This method handles XP awarding, so it should only be called when blocks will be unaffected. To
 	 * instead apply an affect on a set of entities and a set of locations, use 
 	 * {@link #castOnAll(MagicUser, Collection, Collection)} instead
-	 * @param caster
-	 * @param targets
 	 */
 	public void castOnEntities(MagicUser caster, Collection<Entity> targets) {
 		if (caster instanceof QuestPlayer) {

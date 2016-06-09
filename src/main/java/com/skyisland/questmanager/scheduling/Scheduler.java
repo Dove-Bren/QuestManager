@@ -10,7 +10,6 @@ public abstract class Scheduler implements Runnable {
 	
 	/**
 	 * Register a Tickable entity to be ticked 
-	 * @param tick
 	 */
 	public abstract void register(Tickable tick);
 }

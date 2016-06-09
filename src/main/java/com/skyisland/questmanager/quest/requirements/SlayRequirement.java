@@ -20,13 +20,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 /**
- * Requires the participants to defeat (kill) some number of a type of entity.<br />
- * This requirement is set up to work with parties.<br />
+ * Requires the participants to defeat (kill) some number of a type of entity.
+ * This requirement is set up to work with parties.
  * This requirement also will check to make sure the name of the entities slaid matches 
  * what is provided. If no name is provided, any entity of the same entity type
  * will be considered valid.
  * @author Skyler
- * @see {@link PositionRequirement}
+ * @see PositionRequirement
  */
 public class SlayRequirement extends Requirement implements Listener, StatekeepingRequirement {
 	
@@ -67,7 +67,6 @@ public class SlayRequirement extends Requirement implements Listener, Statekeepi
 	
 	/**
 	 * Super secret private constructor for factory call convenience
-	 * @param goal
 	 */
 	private SlayRequirement(Goal goal) {
 		super(goal);	

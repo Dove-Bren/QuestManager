@@ -76,7 +76,6 @@ public class LocationState implements ConfigurationSerializable {
 		
 		/**
 		 * Returns the configuration key mapped to this field
-		 * @return
 		 */
 		public String getKey() {
 			return this.key;
@@ -85,7 +84,6 @@ public class LocationState implements ConfigurationSerializable {
 	
 	/**
 	 * Creates a LocationState with the information from the passed location.
-	 * @param location
 	 */
 	public LocationState(Location location) {
 		this.location = location;
@@ -108,8 +106,6 @@ public class LocationState implements ConfigurationSerializable {
 	
 	/**
 	 * Uses the passed configuration map to instantiate a new location (and wrapper).
-	 * @param configMap
-	 * @return
 	 */
 	public static LocationState valueOf(Map<String, Object> configMap) {
 		World world = Bukkit.getWorld((String) configMap.get(fields.WORLD.getKey()));
@@ -139,7 +135,6 @@ public class LocationState implements ConfigurationSerializable {
 	
 	/**
 	 * Return the location wrapped by this class
-	 * @return
 	 */
 	public Location getLocation() {
 		return location;

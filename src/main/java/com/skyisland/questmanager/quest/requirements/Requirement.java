@@ -7,8 +7,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 
 /**
- * Represents a specific requirement needed to achieve a goal in a quest.<br />
- * Requirements are the gnitty-gritty details of how to achieve a goal. Examples inlcude:<br />
+ * Represents a specific requirement needed to achieve a goal in a quest.
+ * Requirements are the gnitty-gritty details of how to achieve a goal. Examples inlcude:
  * <ul>
  * <li>Kill a boss</li>
  * <li>Reach the village</li>
@@ -32,7 +32,6 @@ public abstract class Requirement {
 
 	/**
 	 * Creates a requirement with an empty string for a description
-	 * @param goal
 	 */
 	public Requirement(Goal goal) {
 		this(goal, "");
@@ -40,8 +39,6 @@ public abstract class Requirement {
 	
 	/**
 	 * Creates the parameterized requirement
-	 * @param goal
-	 * @param description
 	 */
 	public Requirement(Goal goal, String description) {
 		this.goal = goal;
@@ -57,7 +54,6 @@ public abstract class Requirement {
 	
 	/**
 	 * Returns the goal this requirement belongs to
-	 * @return
 	 */
 	public Goal getGoal() {
 		return goal;
@@ -65,18 +61,16 @@ public abstract class Requirement {
 	
 	/**
 	 * Returns the description of this requirement
-	 * @return
 	 */
 	public abstract String getDescription();
 	
 	/**
-	 * Returns whether or not the current requirement is completed.<br />
+	 * Returns whether or not the current requirement is completed.
 	 * Requirements that may change back and forth may return false even after a call
 	 * to this method had previously returned true. As a result, this method should always 
-	 * be called each time a parent goal is checking its own completion status.<br />
+	 * be called each time a parent goal is checking its own completion status.
 	 * This method makes an internal call to update state information to make sure that the
 	 * value returned is current.
-	 * @return
 	 */
 	public boolean isCompleted() {
 		update();

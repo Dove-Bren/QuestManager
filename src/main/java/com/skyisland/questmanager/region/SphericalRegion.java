@@ -11,7 +11,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-public class SphericalRegion extends Region {
+public class SphericalRegion implements Region {
 	
 	/**
 	 * Registers this class as configuration serializable with all defined 

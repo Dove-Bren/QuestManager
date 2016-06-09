@@ -22,8 +22,6 @@ public class YamlWriter {
 	
 	/**
 	 * Takes a string and changes the first letter to be capital, and the rest lowercase
-	 * @param string
-	 * @return
 	 */
 	public static String toStandardCase(String string) {
 		return (string.substring(0, 1).toUpperCase()) + (string.substring(1).toLowerCase());
@@ -32,8 +30,6 @@ public class YamlWriter {
 	/**
 	 * Takes a string (word) and changes the first letter to capital. Then, for every
 	 * Underscore ("_") in the word, it inserts a space and capitalizes the letter right after
-	 * @param string
-	 * @return
 	 */
 	public static String toStandardFormat(String string) {
 		string = YamlWriter.toStandardCase(string);
@@ -89,10 +85,9 @@ public class YamlWriter {
 	}
 	
 	/**
-	 * Constructs a YAML from the given entries, discarding comments.<br />
-	 * This is nice for a working YAML from what was created, but not for saving manually.<br />
+	 * Constructs a YAML from the given entries, discarding comments.
+	 * This is nice for a working YAML from what was created, but not for saving manually.
 	 * If you wish to save the yaml with the defined comments, use the {@link #save(File)} method.
-	 * @return
 	 */
 	public YamlConfiguration buildYaml() {
 		YamlConfiguration config = new YamlConfiguration();
@@ -105,10 +100,9 @@ public class YamlWriter {
 	}
 	
 	/**
-	 * Saves the contained configuration with comments out to the provide file.<br />
+	 * Saves the contained configuration with comments out to the provide file.
 	 * <b>IMPORTANT:</b> this method only works with simple object outputs. It serialized with a simple
 	 * <i>toString()</i> method call.
-	 * @param outFile
 	 * @throws FileNotFoundException
 	 */
 	public void save(File outFile) throws FileNotFoundException {

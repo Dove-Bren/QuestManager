@@ -7,7 +7,7 @@ import com.skyisland.questmanager.fanciful.FancyMessage;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 /**
- * Wraps arounds a simple, single -use- message.<br />
+ * Wraps arounds a simple, single -use- message.
  * @author Skyler
  *
  */

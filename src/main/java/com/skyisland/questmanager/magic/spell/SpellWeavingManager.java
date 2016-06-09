@@ -15,16 +15,16 @@ import com.skyisland.questmanager.QuestManagerPlugin;
  * combinations to trigger different spells. The mechanic behind it involves creation of pylons (which
  * are set up to be done through a {@link CastPylonEffect
  * CastPylonEffect}) and then triggered. Trigger mechanics may differ in implementation, but were provided
- * through the framework through either the {@link com.SkyIsland.QuestManager.Magic.Spell.Effect.TriggerWeaveEffect
- * TriggerWeaveEffect} spell effect or the {@link com.SkyIsland.QuestManager.Player.Utils.SpellWeavingTrigger
- * SpellWeavingTrigger} defined object. Both can be used, or a single one. Both casting implementations are
+ * through the framework through either the com.SkyIsland.QuestManager.Magic.Spell.Effect.TriggerWeaveEffect
+ * spell effect or the com.SkyIsland.QuestManager.Player.Utils.SpellWeavingTrigger
+ * defined object. Both can be used, or a single one. Both casting implementations are
  * the same.</p>
  * <p>
  * The manager keeps records of recipes and deals with configuration of spells. 
  * </p>
  * 
  * @author Skyler
- * @see {@link SpellWeavingSpell}
+ * @see SpellWeavingSpell
  *
  */
 public class SpellWeavingManager {
@@ -98,7 +98,6 @@ public class SpellWeavingManager {
 	 * any discrepency, changing whether the spell is ordered or not will cause it to potentially be
 	 * evaluated in the wrong order and invalidate the preference promised in {@link #getSpell(List)}.
 	 * </p>
-	 * @param spell
 	 * @return Whether the spell was added or not. False if the spell is null or has less than 3 components.
 	 */
 	public boolean registerSpell(SpellWeavingSpell spell) {
@@ -119,11 +118,9 @@ public class SpellWeavingManager {
 	/**
 	 * Runs through the registered spells and checks for a match with the given type list. If no registered
 	 * spell matches the provided list, null is returned. Spells with ordered recipes are considered
-	 * before spells with no ordering.<br />
+	 * before spells with no ordering.
 	 * <b>Note:</b> order is not internally established. Spells are checked in the order they were added,
 	 * so typeLists that match multiple recipes will return the matching spell that was registered first
-	 * @param typeList
-	 * @return
 	 */
 	public SpellWeavingSpell getSpell(List<String> typeList) {
 		//searched for matches in ordered spells first

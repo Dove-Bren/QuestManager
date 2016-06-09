@@ -31,7 +31,6 @@ public abstract class ChatMenu {
 	
 	/**
 	 * Constructs a menu around the provided FancyMessage.
-	 * @param msg 
 	 */
 	public ChatMenu(FancyMessage msg) {
 		this.message = msg;
@@ -42,9 +41,8 @@ public abstract class ChatMenu {
 	}
 	
 	/**
-	 * Sets this menu to be backed by the provided quest.<br />
+	 * Sets this menu to be backed by the provided quest.
 	 * Backed menus will be logged into backer quests' histories.
-	 * @param quest
 	 */
 	public void setQuestBacker(Quest quest) {
 		this.questBacker = quest;
@@ -56,7 +54,6 @@ public abstract class ChatMenu {
 	
 	/**
 	 * Shows this menu to the provided player.
-	 * @param player
 	 */
 	public void show(Player player) {
 		show(player, questBacker);
@@ -65,7 +62,6 @@ public abstract class ChatMenu {
 	/**
 	 * Shows this menu to the provided player and logs the menu's outcome into a history event
 	 * for the provided quest
-	 * @param player
 	 * @param updateQuest The quest to log this menu under, or null for non-quest menues
 	 */
 	public void show(Player player, Quest updateQuest) {
@@ -92,7 +88,7 @@ public abstract class ChatMenu {
 	}
 	
 	/**
-	 * Defines the menu that goes with most standard message types.<br />
+	 * Defines the menu that goes with most standard message types.
 	 * If you do not register your own message types here, they will always default
 	 * to simple message menus when using this command!
 	 * <p>
@@ -101,8 +97,6 @@ public abstract class ChatMenu {
 	 * from a {@link BioptionMessage} would have its menu options as null, meaning no action
 	 * would be executed when the options were clicked.
 	 * </p>
-	 * @param message
-	 * @return
 	 */
 	public static ChatMenu getDefaultMenu(Message message) {
 		

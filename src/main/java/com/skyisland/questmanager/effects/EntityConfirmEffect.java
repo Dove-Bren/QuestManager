@@ -7,7 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 /**
- * Effect signaling to the player that the entity they just interacted with was correct. <br />
+ * Effect signaling to the player that the entity they just interacted with was correct.
  * This effect was made with the 'slay' requirement in mind, where it'll display effects when you kill
  * the right kind of enemy.
  * @author Skyler

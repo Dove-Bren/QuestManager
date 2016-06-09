@@ -127,18 +127,15 @@ public class CombatEvent extends Event {
 
 	/**
 	 * Gets the base amount of damage being done. 
-	 * @return
 	 */
 	public double getDamage() {
 		return damage;
 	}
 
 	/**
-	 * Sets the base amount of damage being done.<br />
+	 * Sets the base amount of damage being done.
 	 * This is not intended to be changed for simple 'bonus damage' adjustments. For that, see
 	 * {@link #setModifiedDamage(double)}
-	 * @param damage
-	 * @return
 	 */
 	public void setDamage(double damage) {
 		this.damage = damage;
@@ -147,7 +144,6 @@ public class CombatEvent extends Event {
 	/**
 	 * Returns the current amount of bonus damage being dealt to the target. This includes negative amounts
 	 * for damage penalties.
-	 * @return
 	 */
 	public double getModifiedDamage() {
 		return modifiedDamage;
@@ -155,25 +151,22 @@ public class CombatEvent extends Event {
 
 	/**
 	 * Sets the damage modifier for the event. This includes bonuses and penalties to damage
-	 * @param modifiedDamage
 	 */
 	public void setModifiedDamage(double modifiedDamage) {
 		this.modifiedDamage = modifiedDamage;
 	}
 
 	/**
-	 * Gets the current efficiency of the event.<br />
+	 * Gets the current efficiency of the event.
 	 * This is a multiplicitive bonus/penalty done after modifications
-	 * @return
 	 */
 	public double getEfficiency() {
 		return efficiency;
 	}
 
 	/**
-	 * Sets the efficiency the event will be executed at.<br />
+	 * Sets the efficiency the event will be executed at.
 	 * This is the final modification done, and is multiplicitive (e.g. efficiency 1 does 100% of damage)
-	 * @param efficiency
 	 */
 	public void setEfficiency(double efficiency) {
 		this.efficiency = efficiency;
@@ -188,7 +181,7 @@ public class CombatEvent extends Event {
 	}
 	
 	/**
-	 * Performs all calculations with given parameters to determine the final damage dealt.<br />
+	 * Performs all calculations with given parameters to determine the final damage dealt.
 	 * Damage will not be negative. This calculation also does not consider whether or not the attack missed.
 	 * @return the damage that would be dealt, or 0 if the damage would be negative
 	 */

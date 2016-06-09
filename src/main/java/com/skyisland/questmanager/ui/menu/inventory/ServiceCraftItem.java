@@ -32,13 +32,11 @@ public class ServiceCraftItem extends ServiceItem {
 	}
 	
 	/**
-	 * Returns the item that should be used to display the item to the given player.<br />
+	 * Returns the item that should be used to display the item to the given player.
 	 * This method formats the lore, etc to display correctly (and with correct colors) to
-	 * the provided player given their fame and money.<br /><br />
+	 * the provided player given their fame and money.
 	 * 
 	 * If the passed player is null, the item without lore is returned.
-	 * @param player
-	 * @return
 	 */
 	@Override
 	public ItemStack getDisplay(QuestPlayer player) {
@@ -98,8 +96,6 @@ public class ServiceCraftItem extends ServiceItem {
 	
 	/**
 	 * Removes underscores from passed string and convers to title case
-	 * @param input
-	 * @return
 	 */
 	public static String toCase(String input) {
 		input = input.replace("_", " ");

@@ -7,7 +7,6 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * Holds key and default information for defined quest config fields.
- * <p>
  * Fields|Keys|Defaults are:
  * <ul>
  * <li>NAME | name | "Generated Quest"</li>
@@ -32,7 +31,6 @@ import org.bukkit.inventory.ItemStack;
  * <li> SPELLREWARD | spellreward | <i>null</i></li>
  * <li> ENDHINT | turninhint | "Turn In"</li>
  * </ul>
- * </p>
  * @author Skyler
  *
  */

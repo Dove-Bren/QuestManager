@@ -8,14 +8,14 @@ import com.skyisland.questmanager.player.QuestPlayer;
  * Same as a log Skill, except the xp gain is further decreased. The idea is that common skills
  * that apply all over the place should level up less.
  * @author Skyler
- * @see {@link Skill}
- * @see {@link #perform(QuestPlayer, int, boolean)}
+ * @see com.skyisland.questmanager.player.skill.Skill
+ * @see LogReducedSkill#perform(QuestPlayer, int, boolean)
  */
 public abstract class LogReducedSkill extends Skill implements StagedIncreaseSkill {
 
 	/**
 	 * Adds experience to the skill, standardized as the specified amount for performing an action of
-	 * level <i>actionLevel</i> and either succeeding or failing, as determined by <i>fail</i><br />
+	 * level <i>actionLevel</i> and either succeeding or failing, as determined by <i>fail</i>
 	 * This implementation differs from the standard one in that xp gains generally decrease as the
 	 * skill level increases. Performing an action with action-level matching skill level at level one gives
 	 * much more xp than doing the same at a high level.

@@ -11,7 +11,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-public class CuboidRegion extends Region {
+public class CuboidRegion implements Region {
 
 	/**
 	 * Registers this class as configuration serializable with all defined 

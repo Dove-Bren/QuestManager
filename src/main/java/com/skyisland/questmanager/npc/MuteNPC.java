@@ -19,11 +19,12 @@ import com.skyisland.questmanager.configuration.utils.LocationState;
 /**
  * Basic NPC with no interactivity.
  * @author Skyler
- * @config <i>name</i>: "name"<br />
- * <i>type</i>: "EntityType.VALUE.toString"<br />
- * <i>location</i>: <br />
- * &nbsp;&nbsp;==: org.bukkit.Location or com.SkyIsland.QuestManager.Configuration.Utils.LocationState<br />
- * <i>equipment</i>:<br />
+ * config:
+ * <i>name</i>: "name"
+ * <i>type</i>: "EntityType.VALUE.toString"
+ * <i>location</i>:
+ * &nbsp;&nbsp;==: org.bukkit.Location or com.SkyIsland.QuestManager.Configuration.Utils.LocationState
+ * <i>equipment</i>:
  * &nbsp;&nbsp;[valid {@link EquipmentConfiguration}]
  */
 public class MuteNPC extends SimpleNPC {

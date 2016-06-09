@@ -16,7 +16,7 @@ import com.skyisland.questmanager.player.utils.SpellHolder;
 import com.skyisland.questmanager.player.utils.SpellWeavingInvoker;
 
 /**
- * Wrapper class for configuration files needed by the plugin.<br />
+ * Wrapper class for configuration files needed by the plugin.
  * This does not include configuration files for individual quests.
  * @author Skyler
  *
@@ -113,9 +113,8 @@ public class PluginConfiguration {
 	}
 	
 	/**
-	 * Returns the version number of the current configuration file.<br />
+	 * Returns the version number of the current configuration file.
 	 * This is simply the reported version number in the configuration file.
-	 * @return
 	 */
 	public double getVersion() {
 		return config.getDouble(PluginConfigurationKey.VERSION.key, 0.0);
@@ -127,7 +126,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Gets the stored quest path information -- where the quest configuration files are stored
-	 * @return
 	 */
 	public String getQuestPath() {
 		return config.getString(PluginConfigurationKey.QUESTDIR.key);
@@ -136,27 +134,24 @@ public class PluginConfiguration {
 	/**
 	 * Indicates whether or not the config indicates invalid configuration files, states, or
 	 * active logs should be kept or removed.
-	 * @return
 	 */
 	public boolean getKeepOnError() {
 		return config.getBoolean(PluginConfigurationKey.CONSERVATIVE.key, true);
 	}
 	
 	/**
-	 * Should the plugin remove ALL villager in quest worlds before populating it with quest related NPCs?<br />
+	 * Should the plugin remove ALL villager in quest worlds before populating it with quest related NPCs?
 	 * This is useful to avoid stray villagers escape on error of the plugin, but removed the possibility to use villagers
 	 * that aren't managed by QuestManager in registered QuestWorlds!
-	 * @return
 	 */
 	public boolean getVillagerCleanup() {
 		return config.getBoolean(PluginConfigurationKey.CLEANUPVILLAGERS.key);
 	}
 	
 	/**
-	 * Should xp gained in the quest world count as 'money'?<br />
+	 * Should xp gained in the quest world count as 'money'?
 	 * When this is enabled, all XP received is instead converted to 'money'. This is represented to the player's client
 	 * as the level of the player.
-	 * @return
 	 */
 	public boolean getXPMoney() {
 		return config.getBoolean(PluginConfigurationKey.XPMONEY.key);
@@ -164,7 +159,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Returns the largest size a party can get
-	 * @return
 	 */
 	public int getMaxPartySize() {
 		return config.getInt(PluginConfigurationKey.PARTYSIZE.key);
@@ -172,7 +166,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Returns how many summons a player is allowed to have
-	 * @return
 	 */
 	public int getSummonLimit() {
 		return config.getInt(PluginConfigurationKey.SUMMONLIMIT.key, 2);
@@ -180,16 +173,14 @@ public class PluginConfiguration {
 	
 	/**
 	 * Can players tame animals in the QuestWorlds?
-	 * @return
 	 */
 	public boolean getAllowTaming() {
 		return config.getBoolean(PluginConfigurationKey.ALLOWTAMING.key);
 	}
 	
 	/**
-	 * Whether or not multiverse portals should be used and tracked.<br />
-	 * When this is on, players will be returned to the last portal they used when leaving registered QuestWorlds.<br />
-	 * @return
+	 * Whether or not multiverse portals should be used and tracked.
+	 * When this is on, players will be returned to the last portal they used when leaving registered QuestWorlds.
 	 */
 	public boolean getUsePortals() {
 		return config.getBoolean(PluginConfigurationKey.PORTALS.key);
@@ -197,8 +188,7 @@ public class PluginConfiguration {
 	
 	/**
 	 * Returns whether or not the number of XP mobs drop should depend on their level
-	 * @note Currently, this requires that the name of the mob have "Lvl ###" in it! TODO
-	 * @return
+	 * Note: Currently, this requires that the name of the mob have "Lvl ###" in it! TODO
 	 */
 	public boolean getAdjustXP() {
 		return config.getBoolean(PluginConfigurationKey.ADJUSTXP.key);
@@ -206,7 +196,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Returns whether or not magic is set to be enabled
-	 * @return
 	 */
 	public boolean getMagicEnabled() {
 		return config.getBoolean(PluginConfigurationKey.ALLOWMAGIC.key);
@@ -214,14 +203,13 @@ public class PluginConfiguration {
 	
 	/**
 	 * Gets the specified default mana allotment, for new players
-	 * @return
 	 */
 	public int getStartingMana() {
 		return config.getInt(PluginConfigurationKey.MANADEFAULT.key);
 	}
 	
 	/**
-	 * Returns the amount of mp to regen in the day.<br />
+	 * Returns the amount of mp to regen in the day.
 	 * Negative amounts indicate a percentage to regen rather than a constant (-(return)%)
 	 * @return The amount to regen; positive values indicate a constant, negative a rate (out of 100)
 	 */
@@ -269,9 +257,8 @@ public class PluginConfiguration {
 	}
 	
 	/**
-	 * Indicates whether or not menus should print out extra messages about expired menus.<br />
+	 * Indicates whether or not menus should print out extra messages about expired menus.
 	 * This can be used as a security feature to avoid players from spamming old menus!
-	 * @return
 	 */
 	public boolean getMenuVerbose() {
 		return config.getBoolean(PluginConfigurationKey.VERBOSEMENUS.key);
@@ -283,7 +270,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Whether or not renaming of items, entities is allowed through anvils
-	 * @return
 	 */
 	public boolean getAllowNaming() {
 		return config.getBoolean(PluginConfigurationKey.ALLOWNAMING.key);
@@ -291,7 +277,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Returns whether or not titles should be put into chat in all worlds
-	 * @return
 	 */
 	public boolean getChatTitle() {
 		return config.getBoolean(PluginConfigurationKey.TITLECHAT.key);
@@ -299,7 +284,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Returns whether or not compasses are enabled
-	 * @return
 	 */
 	public boolean getCompassEnabled() {
 		return config.getBoolean(PluginConfigurationKey.COMPASS.key, true);
@@ -307,7 +291,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Gets the configuration's defined material for the compass object
-	 * @return
 	 */
 	public Material getCompassType() {
 		try {
@@ -322,7 +305,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Returns the name of the compass object
-	 * @return
 	 */
 	public String getCompassName() {
 		return config.getString(PluginConfigurationKey.COMPASSNAME.key, "Magic Compass");
@@ -330,7 +312,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Gets the stored save data path information
-	 * @return
 	 */
 	public String getSavePath() {
 		return config.getString(PluginConfigurationKey.SAVEDIR.key);
@@ -338,7 +319,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Returns the path to where region data including enemy spawn data is kept
-	 * @return
 	 */
 	public String getRegionPath() {
 		return config.getString(PluginConfigurationKey.REGIONDIR.key);
@@ -346,7 +326,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Returns the path to where spell configuration
-	 * @return
 	 */
 	public String getSpellPath() {
 		return config.getString(PluginConfigurationKey.SPELLDIR.key);
@@ -359,7 +338,6 @@ public class PluginConfiguration {
 	/**
 	 * Returns the plugin-wide skill cap. This is the maximum level any skill can achieve.
 	 * Defaults to <i>100</i> if it is absent from the config.
-	 * @return
 	 */
 	public int getSkillCap() {
 		return config.getInt(PluginConfigurationKey.SKILLCAP.key, 100);
@@ -380,7 +358,6 @@ public class PluginConfiguration {
 	/**
 	 * Returns the limit of how might higher a spell difficulty level can be than a players where the player
 	 * will still get xp on failure.
-	 * @return
 	 */
 	public int getSkillUpperCutoff() {
 		return config.getInt(PluginConfigurationKey.SKILLGROWTHUPPERCUTOFF.key, 20);
@@ -388,7 +365,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Gets the name of the spell holders
-	 * @return
 	 */
 	public String getSpellHolderName() {
 		return config.getString(PluginConfigurationKey.HOLDERNAME.key);
@@ -396,7 +372,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Gets the material block type used for spell holder alteration
-	 * @return
 	 */
 	public Material getAlterType() {
 		return Material.valueOf(config.getString(PluginConfigurationKey.ALTERTYPE.key));
@@ -404,7 +379,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Gets whether spell weaving is enabled on this server
-	 * @return
 	 */
 	public boolean getAllowSpellWeaving() {
 		return config.getBoolean(PluginConfigurationKey.ALLOWWEAVING.key, true);
@@ -412,7 +386,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Gets whther or not to use the spell invoker
-	 * @return
 	 */
 	public boolean getUseWeavingInvoker() {
 		return config.getBoolean(PluginConfigurationKey.USEINVOKER.key, true);
@@ -420,7 +393,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * This manager's custom invoker name
-	 * @return
 	 */
 	public String getSpellInvokerName() {
 		return config.getString(PluginConfigurationKey.INVOKERNAME.key);
@@ -428,7 +400,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * The material used to stand for the spell weaving invoker
-	 * @return
 	 */
 	public Material getInvokerType() {
 		return Material.valueOf(config.getString(PluginConfigurationKey.INVOKERTYPE.key));
@@ -436,7 +407,6 @@ public class PluginConfiguration {
 	
 	/**
 	 * Sets up a default configuration file with blank values
-	 * @param configFile
 	 */
 	private YamlConfiguration createDefaultConfig(File configFile) {
 		if (configFile.isDirectory()) {

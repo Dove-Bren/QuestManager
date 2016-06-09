@@ -24,12 +24,7 @@ public class MagicRegenEvent extends Event implements Cancellable {
 	public static HandlerList getHandlerList() {
 		return handlers;
 	}
-	
-	/**
-	 * 
-	 * @param entity
-	 * @param amount
-	 */
+
 	public MagicRegenEvent(MagicUser entity, double amount) {
 		this.entity = entity;
 		this.amount = amount;
@@ -64,7 +59,6 @@ public class MagicRegenEvent extends Event implements Cancellable {
 	
 	/**
 	 * Set the modifier. This amount (+ 1) is multiplied by the amount to get the final amount
-	 * @param mod
 	 */
 	public void setModifier(double mod) {
 		this.modifier = mod;

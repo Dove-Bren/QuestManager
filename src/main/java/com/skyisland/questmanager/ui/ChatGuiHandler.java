@@ -77,7 +77,6 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 		}
 
 		/**
-		 * @param ticked the ticked to set
 		 */
 		public void tick() {
 			this.ticked = true;
@@ -104,7 +103,6 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 	
 	/**
 	 * Creates a new GUI Handler for the provided plugin.
-	 * @param plugin 
 	 * @param verboseMode Whether or not to send messages to players about expires menus
 	 */
 	public ChatGuiHandler(JavaPlugin plugin, boolean verboseMode) {
@@ -141,7 +139,6 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 	 * Executes the menu command with the given parameters
 	 * @param sender Who send the command
 	 * @param args All passes arguments
-	 * @return 
 	 */
 	private boolean menuCommand(CommandSender sender, String[] args) {
 		
@@ -183,11 +180,8 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 		
 	}
 	
-	
-	
 	/**
 	 * Registers the menu 
-	 * @param menu
 	 */
 	public void showMenu(Player player, ChatMenu menu) {
 		if (player == null || menu == null) {
@@ -217,7 +211,7 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 	}
 	
 	/**
-	 * Performs internal timer check and update on menu entries.<br />
+	 * Performs internal timer check and update on menu entries.
 	 * Calling this method in a manner inconsistent with a timeout timer results in 
 	 * undefined behavior, and is not recommended.
 	 */

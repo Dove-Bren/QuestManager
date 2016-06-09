@@ -62,7 +62,6 @@ public class TalkRequirement extends Requirement implements Listener, CompassTra
 
 	/**
 	 * Catches a player's interaction and sees if it's the one we've been waiting for
-	 * @param e
 	 */
 	@EventHandler
 	public void onInteract(PlayerInteractAtEntityEvent e) {

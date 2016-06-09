@@ -35,7 +35,6 @@ public class AuraEffect extends EntityEffect implements ConstantEffect, Alarmabl
 	 * AuraEffect that creates the given particle effect.
 	 * @param effect The particle to create
 	 * @param count How many to create per 5 ticks (.25 seconds)
-	 * @param optional data to be passed to the effect. See {@link org.bukkit.Effect}. Defaults to 0
 	 */
 	public AuraEffect(Effect effect, int count, int data) {
 		this.effect = effect;

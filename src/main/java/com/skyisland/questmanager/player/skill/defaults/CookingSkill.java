@@ -506,9 +506,8 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 	}
 
 	/**
-	 * Scans the available recipes given the provided input and returns the first matching recipe.<br />
+	 * Scans the available recipes given the provided input and returns the first matching recipe.
 	 * If multiple recipes are defined with the same input, the first registered is returned.
-	 * @param input
 	 * @return A recipe with the same input as given, if one exists. Null otherwise
 	 */
 	public OvenRecipe getOvenRecipe(ItemStack input) {
@@ -526,9 +525,8 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 	}
 
 	/**
-	 * With the provided inputs, looks for a combine recipe with the same constraints.<br />
+	 * With the provided inputs, looks for a combine recipe with the same constraints.
 	 * The recipe provided must match all constraints. This included names
-	 * @param input
 	 * @return A recipe with the same input as given, if one exists. Null otherwise
 	 */
 	public CombineRecipe getMixingRecipe(ItemStack input1, ItemStack input2, ItemStack input3) {

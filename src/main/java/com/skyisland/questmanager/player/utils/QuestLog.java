@@ -26,7 +26,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.PlayerOptions;
 
 /**
- * Utility class for the quest log.<br />
+ * Utility class for the quest log.
  * Provides nice, simple wrapper functions for the elaborate workings of the Quest Log.
  * 4-1-16 Quest Log will also now hold Skill information
  * @author Skyler
@@ -333,8 +333,6 @@ public class QuestLog {
 	
 	/**
 	 * Used to build pages for primitive strings
-	 * @param line
-	 * @return
 	 */
 	private static String generatePage(String line) {
 		String ret = "\"[" + escq + escq + ",";

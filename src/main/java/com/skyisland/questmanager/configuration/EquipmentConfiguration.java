@@ -10,7 +10,7 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Convenience class for storing equipment configuration.<br />
+ * Convenience class for storing equipment configuration.
  * @author Skyler
  *
  */
