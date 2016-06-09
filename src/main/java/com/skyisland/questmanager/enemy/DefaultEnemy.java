@@ -7,7 +7,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.EntityType;
 
 /**
- * Default enemy type for default mobs in minecraft.<br />
+ * Default enemy type for default mobs in minecraft.
  * Wrapper for QM enemies
  * @author Skyler
  *

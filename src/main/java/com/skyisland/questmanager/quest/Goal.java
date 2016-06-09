@@ -17,7 +17,7 @@ import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
 import com.skyisland.questmanager.quest.requirements.Requirement;
 
 /**
- * Tracks objectives in a quest.<br />
+ * Tracks objectives in a quest.
  * Goals have specific requirements that must be met before they are considered clear.
  * @author Skyler
  *
@@ -41,8 +41,6 @@ public class Goal {
 	
 	/**
 	 * Creates a goal from the provided goal configuration
-	 * @param config
-	 * @return
 	 * @throws InvalidConfigurationException 
 	 */
 	public static Goal fromConfig(Quest quest, ConfigurationSection config) throws InvalidConfigurationException {
@@ -168,7 +166,6 @@ public class Goal {
 	
 	/**
 	 * Adds a new requirement to this goal
-	 * @param requirement
 	 */
 	public void addRequirement(Requirement requirement) {
 		requirements.add(requirement);
@@ -179,9 +176,8 @@ public class Goal {
 	}
 	
 	/**
-	 * Assesses and reports whether the goal has been completed.<br />
+	 * Assesses and reports whether the goal has been completed.
 	 * Please note that goals that have no requirements defaultly return true.
-	 * @return
 	 */
 	public boolean isComplete() {
 		if (requirements.isEmpty()) {

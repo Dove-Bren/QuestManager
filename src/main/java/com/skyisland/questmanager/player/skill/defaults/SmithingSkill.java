@@ -98,11 +98,10 @@ public class SmithingSkill extends LogSkill implements Listener {
 		}
 		
 		/**
-		 * Returns how many of this material can be made with the given inputs.<br />
+		 * Returns how many of this material can be made with the given inputs.
 		 * Input types must match exactly, least a -1 is returned. If they do match, the maximum
 		 * number of ingots that could be made are returned. If the types are correct but there is too
 		 * little of a certain type (or all) of input, 0 may be returned. This means 0, not 'it didn't match'
-		 * @param inputs
 		 * @return -1 if this material cannot be made with those inputs, The number of whole units of this material
 		 * that could be produced otherwise
 		 */
@@ -205,11 +204,6 @@ public class SmithingSkill extends LogSkill implements Listener {
 
 		/**
 		 * Checks and returns whether the given combination matched this recipe
-		 * @param hammerHits
-		 * @param cut
-		 * @param quelched
-		 * @param inputs
-		 * @return
 		 */
 		public boolean isMatch(int hammerHits, boolean cut, boolean quelched, List<ItemStack> inputs) {
 			//easiest part first: check ints and bools
@@ -803,8 +797,6 @@ public class SmithingSkill extends LogSkill implements Listener {
 
 	/**
 	 * Checks whether the given item is infact the smithing tool
-	 * @param item
-	 * @return
 	 */
 	public boolean isTool(ItemStack item) {
 		if (item == null || item.getType() != toolType) {

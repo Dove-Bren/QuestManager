@@ -32,13 +32,11 @@ public class ServiceOfferItem extends ServiceItem {
 	}
 	
 	/**
-	 * Returns the item that should be used to display the item to the given player.<br />
+	 * Returns the item that should be used to display the item to the given player.
 	 * This method formats the lore, etc to display correctly (and with correct colors) to
-	 * the provided player given their fame and money.<br /><br />
+	 * the provided player given their fame and money.
 	 * 
 	 * If the passed player is null, the item without lore is returned.
-	 * @param player
-	 * @return
 	 */
 	@Override
 	public ItemStack getDisplay(QuestPlayer player) {
@@ -68,7 +66,6 @@ public class ServiceOfferItem extends ServiceItem {
 	
 	/**
 	 * Returns the item this offer desires
-	 * @return
 	 */
 	public ItemStack getItem() {
 		return offer.getItem();

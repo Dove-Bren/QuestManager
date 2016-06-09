@@ -26,7 +26,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
  * loot would have a 66.6% chance of being drawn. 
  * </p>
  * <p>
- * The exact probability per loot generation is given as <br />
+ * The exact probability per loot generation is given as
  * &nbsp;&nbsp;&nbsp;&nbsp;(<i>weight</i>) / (<i>Pool weight total</i>)
  * </p>
  * @author Skyler
@@ -135,10 +135,8 @@ public class Loot implements ConfigurationSerializable {
 	private ItemStack item;
 	
 	/**
-	 * Creates a piece of loot with the given item and weight.<br />
-	 * If weight is <= 0, 1.0 is taken as weight instead. 
-	 * @param item
-	 * @param weight
+	 * Creates a piece of loot with the given item and weight.
+	 * If weight is less than or equal to 0, 1.0 is taken as weight instead.
 	 */
 	public Loot(ItemStack item, double weight) {
 		this.item = item;

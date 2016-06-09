@@ -53,7 +53,6 @@ public class FoodItem extends QualityItem {
 	
 	/**
 	 * Gets a formateed itemstack that has food level in the lore
-	 * @return
 	 */
 	public ItemStack getItem() {
 		if (getUnderlyingItem() == null) {

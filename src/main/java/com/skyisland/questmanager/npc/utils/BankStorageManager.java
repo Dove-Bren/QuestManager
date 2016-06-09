@@ -20,7 +20,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
- * Manages NPC Bank storage methods<br />
+ * Manages NPC Bank storage methods.
  * Specifically, stores bank inventories against IDs intended to be unique per bank
  * NPC. This is not enforced -- which allows for global-type banks or aligned banks --
  * but is supported.

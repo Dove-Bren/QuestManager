@@ -13,8 +13,8 @@ import com.skyisland.questmanager.ui.menu.action.MenuAction;
 import net.md_5.bungee.api.ChatColor;
 
 /**
- * An item used in an inventory menu.<br />
- * This is composed of an actual item stack, a display item type, and the cost & fame requirement
+ * An item used in an inventory menu.
+ * This is composed of an actual item stack, a display item type, and the cost and fame requirement
  * of the item.
  * @author Skyler
  *
@@ -29,9 +29,7 @@ public class BasicInventoryItem extends InventoryItem {
 	
 	/**
 	 * Makes a simple wrapper item that runs the provided action when clicked. Tooltip can be null.
-	 * @param icon
 	 * @param tooltip The tooltip to display. If null, no tooltip is displayed
-	 * @param action
 	 */
 	public BasicInventoryItem(ItemStack icon, List<String> tooltip, MenuAction action) {
 		super(icon);
@@ -62,13 +60,11 @@ public class BasicInventoryItem extends InventoryItem {
 	}
 	
 	/**
-	 * Returns the item that should be used to display the item to the given player.<br />
+	 * Returns the item that should be used to display the item to the given player.
 	 * This method formats the lore, etc to display correctly (and with correct colors) to
-	 * the provided player given their fame and money.<br /><br />
+	 * the provided player given their fame and money.
 	 * 
 	 * If the passed player is null, the item without lore is returned.
-	 * @param player
-	 * @return
 	 */
 	@Override
 	public ItemStack getDisplay(QuestPlayer player) {

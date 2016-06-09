@@ -64,11 +64,6 @@ public class LumberjackSkill extends LogSkill implements Listener {
 		/**
 		 * Creates a new tree record to dictate what kind of trees a player can find when attempting to
 		 * chop down a tree.
-		 * @param difficulty
-		 * @param name
-		 * @param reward
-		 * @param woodCount
-		 * @param woodType
 		 * @param region The region this tree can be found in (regardless of if type matches), or null
 		 * if no region is defined (anytime the tree type matches, this record is valid)
 		 */
@@ -399,7 +394,6 @@ public class LumberjackSkill extends LogSkill implements Listener {
 	/**
 	 * Finds and returns a fish (if one exists) within {@link #maxDifficultyRange} of the provided
 	 * difficulty.
-	 * @param difficulty
 	 * @return A fish record within the provided limits, or null if none were found
 	 */
 	private TreeRecord getTree(Block clickedBlock, int difficulty) {

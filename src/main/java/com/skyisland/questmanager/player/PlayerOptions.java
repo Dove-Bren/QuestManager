@@ -15,7 +15,7 @@ import com.google.common.collect.Lists;
 /**
  * Stores player options for easier access and modification
  * @author Skyler
- * @see {@link QuestPlayer}
+ * @see QuestPlayer
  */
 public class PlayerOptions implements ConfigurationSerializable {
 	
@@ -92,7 +92,6 @@ public class PlayerOptions implements ConfigurationSerializable {
 	
 	/**
 	 * Returns the currently registered option for the provided key.
-	 * @param key
 	 * @return True or false, depending on the users settings
 	 */
 	public boolean getOption(Key key) {
@@ -145,7 +144,6 @@ public class PlayerOptions implements ConfigurationSerializable {
 	/**
 	 * Returns whether this config has options it couldn't find when deserializing
 	 * it's configuration section. Useful for telling players when there are new options
-	 * @return
 	 */
 	public boolean isDirty() {
 		return dirty;
@@ -153,7 +151,6 @@ public class PlayerOptions implements ConfigurationSerializable {
 
 	/**
 	 * @see #isDirty()
-	 * @param dirty
 	 */
 	public void setDirty(boolean dirty) {
 		this.dirty = dirty;

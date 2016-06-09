@@ -22,12 +22,9 @@ public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {
 	private int keyindex;
 	
 	/**
-	 * Creates (but does not show!) a menu with zero or more options. Each option is associated with<br />
+	 * Creates (but does not show!) a menu with zero or more options. Each option is associated with
 	 * The provided MenuActions allow for more control over the action of the menu buttons. If
 	 * there is no desired action for a corresponding action, <i>null</i> should be passed.
-	 * @param msg The fully-encoded message used for menu text
-	 * @param opt1 Action enacted when option 1 is clicked by the user
-	 * @param opt2 Action enacted when option 2 is clicked by the user
 	 */
 	public MultioptionChatMenu(Message body, ChatMenuOption option) {
 		super(body.getFormattedMessage());
@@ -80,7 +77,6 @@ public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {
 	
 	/**
 	 * Adds the given option to the list of options used in the menu.
-	 * @param option
 	 */
 	private void addOption(ChatMenuOption option) {
 		this.options.put(genKey(), option);
@@ -109,7 +105,6 @@ public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {
 	
 	/**
 	 * Uses the internal key index to generate the next key for registration
-	 * @return
 	 */
 	private String genKey() {
 		String key = "M" + keyindex;

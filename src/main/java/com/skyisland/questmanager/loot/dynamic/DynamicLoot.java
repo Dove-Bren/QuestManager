@@ -21,7 +21,7 @@ public class DynamicLoot extends Loot {
 	
 	/**
 	 * Adds the provided generator to the table of available generators, used when pieces of loot attempt
-	 * to specify what method of selecting various attributes.<br />
+	 * to specify what method of selecting various attributes.
 	 * This method is intended to allow plugins to add their own generators and have the loot use it. If you
 	 * are writing a plugin for QM, you are <i>encouraged</i> to use this method.
 	 * @param configkey The key specified in the loot's config

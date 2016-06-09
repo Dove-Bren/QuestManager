@@ -17,7 +17,7 @@ public class UIScheduler implements Runnable {
 	
 	/**
 	 * How precise this scheduler runs. The value here represents how often the scheduler
-	 * appraises its scheduled tasks and runs things.<br />
+	 * appraises its scheduled tasks and runs things.
 	 * This value is in second. In other words, the scheduler cycles every 1 / <i>resolution</i>
 	 * seconds.
 	 */
@@ -78,10 +78,8 @@ public class UIScheduler implements Runnable {
 	}
 	
 	/**
-	 * Registers the task to be executed once over <i>n</i> cycles.<br />
+	 * Registers the task to be executed once over <i>n</i> cycles.
 	 * Once cycle is defined as 1 / {@link #resolution resolution} seconds.
-	 * @param task
-	 * @param n
 	 */
 	public int schedule(UITickable task, int n) {
 		Record record = new Record(task, n);
@@ -97,13 +95,11 @@ public class UIScheduler implements Runnable {
 	}
 	
 	/**
-	 * Registers the task to be executed every <i>n</i> seconds.<br />
+	 * Registers the task to be executed every <i>n</i> seconds.
 	 * The precision of the scheduling is limited by the {@link #resolution resolution}.
 	 * This method will round to the nearest number of cycles, and instead only serves as a
 	 * convenience method to allow scheduling for a target amount of time instead of an abstract
 	 * number of cycles.
-	 * @param task
-	 * @param seconds
 	 * @return an integer key used for unregistering the task
 	 */
 	public int schedule(UITickable task, float n) {
@@ -115,7 +111,6 @@ public class UIScheduler implements Runnable {
 	
 	/**
 	 * Unregisters the task assigned to the given Identifying key
-	 * @param key
 	 */
 	public void unschedule(int key) {
 		records.remove(key);

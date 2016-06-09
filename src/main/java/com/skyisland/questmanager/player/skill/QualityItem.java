@@ -59,7 +59,6 @@ public class QualityItem {
 	
 	/**
 	 * Returns a formatted item
-	 * @return
 	 */
 	public ItemStack getItem() {
 		if (item == null) {

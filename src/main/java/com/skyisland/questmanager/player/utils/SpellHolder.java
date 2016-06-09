@@ -55,10 +55,8 @@ public class SpellHolder {
 	}
 	
 	/**
-	 * Tries to lookup the spell stored with the provided spell holder.<br />
+	 * Tries to lookup the spell stored with the provided spell holder.
 	 * If the item passed has no associated spell, <i>null</i> is returned.
-	 * @param player 
-	 * @param holder 
 	 * @return The spell that is associated with the holder, or null if there is none
 	 */
 	public static Spell getSpell(QuestPlayer player, ItemStack holder) {

@@ -50,8 +50,6 @@ public class SpellPylon implements Alarmable<Integer> {
 	 * Creates a spell pylon with the given type at the given location. Also sets the icon to
 	 * that which is provided. If nothing is provided for icon (icon == null), a generic clock head
 	 * is used instead (whcih still looks kinda cool)
-	 * @param type
-	 * @param icon
 	 * @param l Center location for the pylon
 	 */
 	public SpellPylon(String type, ItemStack icon, Location l) {

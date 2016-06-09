@@ -69,10 +69,8 @@ public class OfferServiceAction implements MenuAction {
 	}
 	
 	/**
-	 * Checks whether the passed inventory has enough of the provided item.<br />
+	 * Checks whether the passed inventory has enough of the provided item.
 	 * This method checks the name of the item when calculating how much they have
-	 * @param searchItem
-	 * @return
 	 */
 	private boolean hasItem(Inventory inv, ItemStack searchItem) {
 		int count = 0;
@@ -94,10 +92,8 @@ public class OfferServiceAction implements MenuAction {
 	}
 	
 	/**
-	 * Removes the passed item from the player's inventory.<br />
+	 * Removes the passed item from the player's inventory.
 	 * This method also uses item lore to make sure the correct items are removed
-	 * @param inv
-	 * @param item
 	 */
 	private void removeItem(Inventory inv, ItemStack searchItem) {
 		//gotta go through and find ones that match the name

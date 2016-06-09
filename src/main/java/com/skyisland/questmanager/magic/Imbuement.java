@@ -21,8 +21,8 @@ import com.skyisland.questmanager.player.skill.event.CombatEvent;
 /**
  * An active imbuement. Watches for events, takes action, fights crime, you name it! 
  * @author Skyler
- * @see {@link QuestPlayer QuestPlayer}
- * @see {@link ImbuementHandler}
+ * @see QuestPlayer
+ * @see ImbuementHandler
  */
 public class Imbuement implements Listener {
 	

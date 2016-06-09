@@ -18,7 +18,7 @@ public class BioptionChatMenu extends ChatMenu implements RespondableMenu {
 	/**
 	 * Creates (but does not show!) a menu with two options. Menu message, option labels, and 
 	 * responses to each option are loaded from the passed 
-	 * {@link BioptionMessage BioptionMessage}. <br />
+	 * {@link BioptionMessage BioptionMessage}.
 	 * The provided MenuActions allow for more control over the action of the menu buttons. If
 	 * there is no desired action for a corresponding action, <i>null</i> should be passed.
 	 * @param msg The fully-encoded message used for menu text

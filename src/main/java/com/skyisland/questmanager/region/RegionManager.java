@@ -61,7 +61,6 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	
 	/**
 	 * Creates an enemy manager with the provided spawn rate
-	 * @param spawnrate
 	 */
 	public RegionManager(double spawnrate) {
 		regionMap = new HashMap<>();
@@ -71,7 +70,7 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	}
 	
 	/**
-	 * Creates a new Enemy Manager using the provided file or files in the provided directory.<br />
+	 * Creates a new Enemy Manager using the provided file or files in the provided directory.
 	 * Spawnrate defaults to 3.0
 	 * @param target The file to load or the directory to search for files to load
 	 */
@@ -80,9 +79,8 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	}
 	
 	/**
-	 * Creates a new Enemy Manager using the provided file or files in the provided directory.<br />
+	 * Creates a new Enemy Manager using the provided file or files in the provided directory.
 	 * @param target The file to load or the directory to search for files to load
-	 * @param spawnrate
 	 */
 	public RegionManager(File target, double spawnrate) {
 		this(spawnrate);
@@ -90,9 +88,8 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	}
 	
 	/**
-	 * Registers the region with the manager.<br />
+	 * Registers the region with the manager.
 	 * Regions must be registered before they can start being associated with enemy types.
-	 * @param region
 	 * @return false if the region is null or already in the map, true otherwise
 	 */
 	public boolean registerRegion(Region region) {
@@ -106,12 +103,9 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	}
 	
 	/**
-	 * Adds the enemy to the list of enemies for a region.<br />
+	 * Adds the enemy to the list of enemies for a region.
 	 * The underlying list does not make any checks against duplicates. Duplicate adds/inserts
 	 * will result in duplicate entries.
-	 * @param key
-	 * @param enemy
-	 * @param weight
 	 * @return false if the region is not in the map, true otherwise
 	 */
 	public boolean addEnemy(Region key, Enemy enemy, double weight) {
@@ -127,9 +121,6 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	
 	/**
 	 * Adds the enemy to the region with a default weight 1
-	 * @param key
-	 * @param enemy
-	 * @return
 	 * @see #addEnemy(Region, Enemy, double)
 	 */
 	public boolean addEnemy(Region key, Enemy enemy) {
@@ -191,7 +182,6 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	
 	/**
 	 * Spawns an enemy in the provided region from that region's list of enemies
-	 * @param region
 	 */
 	private void spawnInRegion(Region region) {
 		if (regionMap.get(region).enemies == null || regionMap.get(region).enemies.isEmpty()) 
@@ -205,9 +195,8 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	}
 	
 	/**
-	 * Loads regions and enemies from the provided config file.<br />
+	 * Loads regions and enemies from the provided config file.
 	 * Does not clear the current map before adding what's found in the config
-	 * @param config
 	 */
 	private void load(File target) {
 		/*
@@ -281,7 +270,6 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	
 	/**
 	 * Attempts to find a registered region that the given location falls in
-	 * @param location
 	 * @return The region the location lies in, or null if none were found
 	 */
 	public Region getRegion(Location location) {

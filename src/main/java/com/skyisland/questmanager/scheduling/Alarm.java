@@ -43,7 +43,6 @@ private static final int ticksPerSecond = 20;
 	
 	/**
 	 * Returns the scheduler that can be used to registered {@link Tickable} objects
-	 * @return
 	 */
 	public static Alarm getScheduler() {
 		if (scheduler == null) {
@@ -59,7 +58,6 @@ private static final int ticksPerSecond = 20;
 	
 	/**
 	 * Internal reminder mechanism that allows the scheduler to know 
-	 * @param reminder
 	 */
 	private <E> void notify(Reminder<E> reminder) {
 		map.remove(reminder.getOwner());
@@ -67,11 +65,10 @@ private static final int ticksPerSecond = 20;
 	}
 	
 	/**
-	 * Schedules the provided tickable object to be reminded in (<i>seconds</i>) seconds via the {@link Tickable#tick(Object)}
-	 * method.<br />
+	 * Schedules the provided tickable object to be reminded in (<i>seconds</i>) seconds via the {@link Alarmable}
+	 * method.
 	 * Note that the object provided as a 'reference' object is passed back to the tickable object, possibly as a way to
 	 * distinguish between alert events.
-	 * @param tickable The instance to 'tick' when the time is up
 	 * @param reference An object that can be identified and acted upon when the instance if 'ticked'
 	 * @param seconds How many seconds to remind the instance after. <b>Please Note:</b> values that
 	 * are not divisible by .05 will be rounded to the nearest .05 (a server tick).
@@ -99,7 +96,6 @@ private static final int ticksPerSecond = 20;
 	
 	/**
 	 * Attempts to unregister the tickable instance.
-	 * @param tickable
 	 * @return Whether or not this was successful, including whther there was something waiting
 	 */
 	public boolean unregister(Alarmable<?> tickable) {

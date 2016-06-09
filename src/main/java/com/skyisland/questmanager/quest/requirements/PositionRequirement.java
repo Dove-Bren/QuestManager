@@ -17,12 +17,12 @@ import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 
 /**
- * Requirement that a participant must be at the provided location.<br />
+ * Requirement that a participant must be at the provided location.
  * Unlike the {@link ArriveRequirement} this requirement is that someone be located there
  * for this to be completed. That means if they leave, the requirement will no longer
  * be satisfied!
  * @author Skyler
- * @see {@link ArriveRequirement}
+ * @see ArriveRequirement
  */
 public class PositionRequirement extends Requirement implements Listener, CompassTrackable {
 	

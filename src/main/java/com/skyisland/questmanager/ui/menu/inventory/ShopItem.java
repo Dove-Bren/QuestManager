@@ -11,8 +11,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import com.skyisland.questmanager.ui.menu.action.MenuAction;
 
 /**
- * An item used in an inventory menu.<br />
- * This is composed of an actual item stack, a display item type, and the cost & fame requirement
+ * An item used in an inventory menu.
+ * This is composed of an actual item stack, a display item type, and the cost and fame requirement
  * of the item.
  * @author Skyler
  *
@@ -33,13 +33,11 @@ public class ShopItem extends InventoryItem {
 	}
 	
 	/**
-	 * Returns the item that should be used to display the item to the given player.<br />
+	 * Returns the item that should be used to display the item to the given player.
 	 * This method formats the lore, etc to display correctly (and with correct colors) to
-	 * the provided player given their fame and money.<br /><br />
+	 * the provided player given their fame and money.
 	 * 
 	 * If the passed player is null, the item without lore is returned.
-	 * @param player
-	 * @return
 	 */
 	@Override
 	public ItemStack getDisplay(QuestPlayer player) {

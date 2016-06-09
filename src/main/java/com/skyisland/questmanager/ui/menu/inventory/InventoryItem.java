@@ -6,8 +6,8 @@ import org.bukkit.inventory.ItemStack;
 import com.skyisland.questmanager.ui.menu.action.MenuAction;
 
 /**
- * An item used in an inventory menu.<br />
- * This is composed of an actual item stack, a display item type, and the cost & fame requirement
+ * An item used in an inventory menu.
+ * This is composed of an actual item stack, a display item type, and the cost and fame requirement
  * of the item.
  * @author Skyler
  *
@@ -22,7 +22,6 @@ public abstract class InventoryItem {
 	
 	/**
 	 * Returns the display item without any modification to the lore, etc. This is like the unformatted version
-	 * @return
 	 */
 	public ItemStack getRawDisplayItem() {
 		return displayItem;
@@ -30,15 +29,11 @@ public abstract class InventoryItem {
 	
 	/**
 	 * Returns a nice, pretty display item ocmplete with lore and naming magic
-	 * @param player
-	 * @return
 	 */
 	public abstract ItemStack getDisplay(QuestPlayer player);
 	
 	/**
 	 * Return the action that should be performed when this menu item is clicked/activated
-	 * @param player
-	 * @return
 	 */
 	public abstract MenuAction getAction(QuestPlayer player);
 }

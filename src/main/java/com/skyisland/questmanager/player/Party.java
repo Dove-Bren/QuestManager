@@ -172,8 +172,6 @@ public class Party implements Participant, Listener {
 	
 	/**
 	 * Updates the scoreboard to reflect the given score for the given player.
-	 * @param player
-	 * @param score
 	 */
 	public void updateScoreboard(QuestPlayer player, int score) {
 		if (!leader.getIDString().equals(player.getIDString()) && !members.contains(player)) {
@@ -266,7 +264,6 @@ public class Party implements Participant, Listener {
 	/**
 	 * Adds the player to the party, returning true if successful. If the player cannot be added,
 	 * false is returned instead.
-	 * @param player
 	 * @return true if successful
 	 */
 	@SuppressWarnings("deprecation")

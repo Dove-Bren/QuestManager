@@ -221,7 +221,6 @@ public class QuestManager implements Listener {
 	
 	/**
 	 * Loads state from a file, recursively visiting directories
-	 * @param stateFile
 	 * @return the number of state files loaded
 	 */
 	private int loadStateFile(File stateFile) {
@@ -298,7 +297,7 @@ public class QuestManager implements Listener {
 	}
 	
 	/**
-	 * Registers the quest, providing no frequency information.<br />
+	 * Registers the quest, providing no frequency information.
 	 * Quests without frequency information are given equal chances of being
 	 * produced when requesting a random quest.
 	 */
@@ -318,7 +317,7 @@ public class QuestManager implements Listener {
 	
 	
 	/**
-	 * Passes a stop signal to all quest managers, requesting a soft stop.<br />
+	 * Passes a stop signal to all quest managers, requesting a soft stop.
 	 * Soft stops typically save state and perform a padded stopping procedure,
 	 * and are not guaranteed to stop all runningQuests.
 	 */
@@ -367,7 +366,6 @@ public class QuestManager implements Listener {
 	/**
 	 * Looks up the matching quest config based on name.
 	 * This manager does not look beyond the quests allowed to it
-	 * @param questName 
 	 * @return the Quest Configuration used as a template, or null if it wasn't found
 	 */
 	public QuestConfiguration getQuestTemplate(String questName) {
@@ -741,7 +739,6 @@ public class QuestManager implements Listener {
 	/**
 	 * Looks up an NPC by it's name.
 	 * If there are multiple NPC's by the same name, lookup behavior is undefined.
-	 * @param name
 	 * @return An NPC with the given name, or null if it doesn't exist
 	 */
 	public NPC getNPC(String name) {
@@ -769,9 +766,8 @@ public class QuestManager implements Listener {
 	}
 	
 	/**
-	 * Registers an NPC as an aux NPC to avoid removal.<br />
+	 * Registers an NPC as an aux NPC to avoid removal.
 	 * These NPCs are not cleaned up and are the responsibility of the creator to use {@link #unregisterNPC(NPC)}
-	 * @param questNPC
 	 */
 	public void registerNPC(NPC questNPC) {
 		this.questNPCs.add(questNPC);

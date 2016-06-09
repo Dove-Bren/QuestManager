@@ -62,7 +62,6 @@ public class SpellManager {
 	
 	/**
 	 * Adds the spell to the manager, overwriting any with a conflicting name;
-	 * @param spell
 	 * @return true if there was a spell by that name before, false otherwise
 	 */
 	public boolean addSpell(Spell spell) {
@@ -75,7 +74,6 @@ public class SpellManager {
 	
 	/**
 	 * Returns a list of all registered spell names
-	 * @return
 	 */
 	public Set<String> getSpells() {
 		return spells.keySet();

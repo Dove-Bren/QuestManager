@@ -84,10 +84,10 @@ public class TimeRequirement extends Requirement implements Tickable {
 	}
 	
 	/**
-	 * Checks all involved {@link Participant Participant(s)}
-	 * to check if the required item & quantity requirements are satisfied.<br />
+	 * Checks all involved {@link Participant}s
+	 * to check if the required item and quantity requirements are satisfied.
 	 * <b>Note:</b> This does not check if the above quantity-requirement is met <i>across</i>
-	 * all members, but instead of any single member has the required number of items.<br />
+	 * all members, but instead of any single member has the required number of items.
 	 * TODO fix the above noted problem
 	 */
 	@Override

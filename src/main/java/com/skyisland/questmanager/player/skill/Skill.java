@@ -13,11 +13,11 @@ import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.defaults.TwoHandedSkill;
 
 /**
- * A player skill. Skills can pertain to any aspect of the game, from combat to crafting.<br />
+ * A player skill. Skills can pertain to any aspect of the game, from combat to crafting.
  * Implementations are responsible for catching events and acting on them. Implementations are <b>heavily
  * encouraged</b> to use the pre-built skill events rather than the bukkit ones, as they include the ability
  * to transfer information about success/failure between the potential many different skills that may
- * influence an action.<br />
+ * influence an action.
  * While an implementation may override the level-up and experience-gain mechanics of a skill, prebuilt ones
  * are included in this class to allow a uniform config-specified skill experience. For more information, see
  * the {@link #perform(QuestPlayer, int, boolean)} method.
@@ -77,9 +77,7 @@ public abstract class Skill implements Comparable<Skill> {
 	
 	/**
 	 * Awards experience equivalent of performing an action of the same level as the skill and either
-	 * succeeding or failing.<br />
-	 * In other words, {@link #perform(int, boolean) perform(actionLevel, false)};
-	 * @param actionLevel
+	 * succeeding or failing.
 	 */
 	public void perform(QuestPlayer participant, int actionLevel) {
 		perform(participant, actionLevel, false);
@@ -87,17 +85,14 @@ public abstract class Skill implements Comparable<Skill> {
 	
 	/**
 	 * Awards experience equivalent of performing an action of the same level as the skill and either
-	 * succeeding or failing.<br />
-	 * In other words, {@link #perform(int, boolean) perform(this.level, fail)};
-	 * @param fail
+	 * succeeding or failing.
 	 */
 	public void perform(QuestPlayer participant, boolean fail) {
 		perform(participant, participant.getSkillLevel(this), fail);
 	}
 	
 	/**
-	 * Awards experience equivalent of performing an action of the same level as the skill and succeeding.<br />
-	 * In other words, {@link #perform(int, boolean) perform(this.level, false)};
+	 * Awards experience equivalent of performing an action of the same level as the skill and succeeding.
 	 */
 	public void perform(QuestPlayer participant) {
 		perform(participant, participant.getSkillLevel(this), false);
@@ -109,18 +104,16 @@ public abstract class Skill implements Comparable<Skill> {
 	
 	
 	/**
-	 * Returns an icon to be used as a display icon for the skill in the player skill menu.<br />
+	 * Returns an icon to be used as a display icon for the skill in the player skill menu.
 	 * All names and lore are wiped away when rendering for the inventory. Enchantment, durability, etc are not
-	 * @return
 	 */
 	public abstract ItemStack getIcon();
 	
 	/**
-	 * Get a pre-formated description that can be sent to the user.<br />
+	 * Get a pre-formatted description that can be sent to the user.
 	 * Message should contain a brief description followed by any specifics defined by the
 	 * Skill. For example, the {@link TwoHandedSkill TwoHandedSkill}
 	 * should have details about what the current hit chance and bonus damage is. 
-	 * @return
 	 */
 	public abstract String getDescription(QuestPlayer player);
 	
@@ -130,19 +123,15 @@ public abstract class Skill implements Comparable<Skill> {
 	public abstract boolean equals(Object o);
 	
 	/**
-	 * Returns a key that can be used to figure out what skill information is being looked at in a player config file.<br />
+	 * Returns a key that can be used to figure out what skill information is being looked at in a player config file.
 	 * The key can be simple, but should try to be unique. For example, two-handed skill could have "two_handed"
-	 * @return
 	 */
 	public abstract String getConfigKey();
 	
 	/**
 	 * Sets the provided attribute up with a modifier by the given name (overwriting one if it exists)
-	 * for the given amount. <br />
+	 * for the given amount.
 	 * <b>This is done</b> under the {@link AttributeModifier.Operation#ADD_SCALAR} operation!
-	 * @param attribute
-	 * @param name
-	 * @param amt
 	 */
 	public static void setAttributeModifier(AttributeInstance attribute, String name, double amt) {
 		Collection<AttributeModifier> mods = attribute.getModifiers();

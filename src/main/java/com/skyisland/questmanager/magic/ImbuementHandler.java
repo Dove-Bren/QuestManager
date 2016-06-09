@@ -185,7 +185,7 @@ public class ImbuementHandler {
 	}
 	
 	/**
-	 * Returns a list of effects associated with the given item type.<br />
+	 * Returns a list of effects associated with the given item type.
 	 * No information about potency is provided. To get a list of effects to apply to
 	 * an imbued item, use the {@link #getCombinedEffects(Material...)} method instead
 	 */
@@ -210,8 +210,6 @@ public class ImbuementHandler {
 	
 	/**
 	 * Provides a list of effects obtained as if a player with 0 bonus imbued them together.
-	 * @param types
-	 * @return
 	 */
 	public ImbuementSet getCombinedEffects(Material ... types) {
 		return getCombinedEffects(0.0, types);
@@ -256,7 +254,6 @@ public class ImbuementHandler {
 	
 	/**
 	 * Sifts through the given types and returns a set of types with associated ImbuementEffects.
-	 * @param types
 	 * @return an empty set if types is null or empty, or the set of all types defined in the config;
 	 */
 	public Set<Material> getApplicableMaterials(Material[] types) {
@@ -275,10 +272,8 @@ public class ImbuementHandler {
 	}
 	
 	/**
-	 * Calculates the bonus to potency the given player would have. This is based on the Imbuement skill.<br />
+	 * Calculates the bonus to potency the given player would have. This is based on the Imbuement skill.
 	 * If useSkill is disabled, returns 0.
-	 * @param player
-	 * @return
 	 */
 	public double getPotencyBonus(QuestPlayer player) {
 		if (!useSkill) {
@@ -294,10 +289,8 @@ public class ImbuementHandler {
 	}
 	
 	/**
-	 * Calculates how many slots a player should have. This is basedon the Imbuement skill.<br />
+	 * Calculates how many slots a player should have. This is basedon the Imbuement skill.
 	 * If useSkill is disabled, returns maxSlots.
-	 * @param player
-	 * @return
 	 */
 	public int getImbuementSlots(QuestPlayer player) {
 		if (!useSkill) {

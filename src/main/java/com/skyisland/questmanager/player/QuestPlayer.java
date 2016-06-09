@@ -263,10 +263,9 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	/**
-	 * Creates a new QuestPlayer wrapper for the given player.<br />
+	 * Creates a new QuestPlayer wrapper for the given player.
 	 * This wrapper holds no information, and is best used when the player has never been
 	 * wrapped before
-	 * @param player
 	 */
 	public QuestPlayer(OfflinePlayer player) {
 		this();
@@ -290,7 +289,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	/**
-	 * Adds a quest book to the players inventory, if there is space.<br />
+	 * Adds a quest book to the players inventory, if there is space.
 	 * This method will produce a fully updated quest book in the players inventory.
 	 */
 	public void addQuestBook() {
@@ -305,7 +304,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	/**
-	 * Updates the players quest book, if they have it in their inventory.<br />
+	 * Updates the players quest book, if they have it in their inventory.
 	 * If the user does not have abook already or has discarded it, this method will do nothing.
 	 */
 	public void updateQuestBook(boolean silent) {
@@ -352,12 +351,10 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	/**
-	 * Checks and returns whether or not the player is in this TYPE of quest.<br />
+	 * Checks and returns whether or not the player is in this TYPE of quest.
 	 * To see whether this player is in this particular instance of the quest, use
-	 * the quest's {@link Quest#getPlayers() getPlayers()}
+	 * the quest's {@link Quest#getParticipants()}
 	 * method and traditional lookup techniques instead.
-	 * @param quest
-	 * @return
 	 */
 	public boolean isInQuest(Quest quest) {
 		return isInQuest(quest.getName());
@@ -430,9 +427,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	/**
-	 * Returns how much fame this player has received over their game life.<Br />
+	 * Returns how much fame this player has received over their game life.
 	 * Alpha fame is not spent when leveling up or doing similar fame-spending activities.
-	 * @return
 	 */
 	public int getAlphaFame() {
 		return alphaFame;
@@ -512,7 +508,6 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	
 	/**
 	 * Add some money to the player's wallet
-	 * @param money
 	 */
 	public void addMoney(int money) {
 		this.money += money;
@@ -604,7 +599,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 //	/**
-//	 * Returns the currently-stored information in a YamlConfiguration. <br />
+//	 * Returns the currently-stored information in a YamlConfiguration.
 //	 * Output from this method should be expected to be used with {@link QuestPlayer#fromConfig(YamlConfiguration)}
 //	 * to produce an exact duplicate.
 //	 * @return
@@ -1232,7 +1227,6 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	
 	/**
 	 * Displays for this quest player a player menu for the given player.
-	 * @param player
 	 */
 	private void showPlayerMenu(QuestPlayer player) {
 		/*
@@ -1430,8 +1424,6 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	/**
 	 * Finalizes a calculated imbuement creation. If imbuement is null, considered a failure and does not
 	 * replace currently held imbuement
-	 * @param holder
-	 * @param imbuement
 	 */
 	public void performImbuement(ItemStack holder, ImbuementSet imbuement) {
 		ImbuementSkill skill = QuestManagerPlugin.questManagerPlugin.getImbuementHandler().getImbuementSkill();
@@ -1514,10 +1506,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	/**
-	 * Checks whether this player has enough of the provided item.<br />
+	 * Checks whether this player has enough of the provided item.
 	 * This method checks the name of the item when calculating how much they have
-	 * @param searchItem
-	 * @return
 	 */
 	public boolean hasItem(ItemStack searchItem) {
 		if (!getPlayer().isOnline()) {
@@ -1544,10 +1534,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	/**
-	 * Removes the passed item from the player's inventory.<br />
+	 * Removes the passed item from the player's inventory.
 	 * This method also uses item lore to make sure the correct items are removed
-	 * @param inv
-	 * @param item
 	 */
 	public void removeItem(ItemStack searchItem) {
 		
@@ -1624,10 +1612,9 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	/**
-	 * Regens the player's MP by the amount specified.<br />
+	 * Regens the player's MP by the amount specified.
 	 * If the amount is negative, the player regens a fraction of their max mp (-amount%)
 	 * If the player is at or past full mana, this function will return out immediately
-	 * @param amt
 	 */
 	public void regenMP(double amt) {
 		if (amt == 0) {
@@ -1749,8 +1736,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	
 	/**
 	 * Returns a map of potential spells stored against their materials
-	 * @see {@link SpellHolder SpellHolder}
-	 * @return
+	 * @see SpellHolder
 	 */
 	public Map<Material, String> getStoredSpells() {
 		return storedSpells;
@@ -1758,7 +1744,6 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	
 	/**
 	 * Returns all spells unlocked by the player
-	 * @return
 	 */
 	public List<String> getSpells() {
 		return spells;
@@ -2061,11 +2046,9 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	/**
-	 * Returns a list of all entities in the custom multi-point bounding poly provided.<br />
+	 * Returns a list of all entities in the custom multi-point bounding poly provided.
 	 * Behavior is undefined when all listed points are not in the same world (as we use
 	 * one of the points' world to get a list of entities to check!)
-	 * @param points
-	 * @return
 	 */
 	private List<Entity> getEntitiesInBound(List<Location> points) {
 		List<Entity> list = new LinkedList<>();

@@ -17,7 +17,7 @@ import org.bukkit.inventory.Inventory;
 import com.skyisland.questmanager.npc.utils.ServiceOffer;
 
 /**
- * Inventory that has service deals.<br />
+ * Inventory that has service deals.
  * The inventory can hold only service items, and not regular purchases.
  * @author Skyler
  *

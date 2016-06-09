@@ -20,11 +20,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
- * Requirement that a participant must arrive at a location (or be within some radius of it)<br />
+ * Requirement that a participant must arrive at a location (or be within some radius of it)
  * This requirement <b>does not require</b> that a participant <i>stay</i> at the location.
  * It only requires that someone get there at some point.
  * @author Skyler
- * @see {@link PositionRequirement}
+ * @see PositionRequirement
  */
 public class ArriveRequirement extends Requirement implements Listener, StatekeepingRequirement, CompassTrackable {
 	
@@ -56,7 +56,6 @@ public class ArriveRequirement extends Requirement implements Listener, Statekee
 	
 	/**
 	 * Super secret private constructor for factory call convenience
-	 * @param goal
 	 */
 	private ArriveRequirement(Goal goal) {
 		super(goal);	

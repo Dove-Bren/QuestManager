@@ -120,10 +120,10 @@ import com.skyisland.questmanager.ui.menu.message.TreeMessage;
 
 /**
  * Provided API and Command Line interaction between enlisted quest managers and
- * the user. <br />
+ * the user.
  * 
  * @author Skyler
- * @todo Figure out where QuestManagers are going to be created. Through a
+ * TODO: Figure out where QuestManagers are going to be created. Through a
  * command? If so, how do you specify which quests for which manager? Do you
  * go through every single one and add it? Maybe instead through configs? 
  * What do the configs need? Maybe world name, list of quest names? How do
@@ -445,7 +445,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 	
 	
 	/**
-	 * Attempts to softly stop all running quest managers and quests.<br />
+	 * Attempts to softly stop all running quest managers and quests.
 	 * Quest managers (and underlying quests) may not be able to stop softly,
 	 * and this method is not guaranteed to stop all quests (<i>especially</i>
 	 * immediately).
@@ -459,9 +459,9 @@ public class QuestManagerPlugin extends JavaPlugin {
 	}
 	
 	/**
-	 * Performs a hard stop to all quests.<br />
+	 * Performs a hard stop to all quests.
 	 * Quests that are halted are not expected to perform any sort of save-state
-	 * procedure, not halt in a particularly pretty manner. <br />
+	 * procedure, not halt in a particularly pretty manner.
 	 * Halting a quest <i>guarantees</i> that it will stop immediately upon
 	 * receipt of the halt notice.
 	 */

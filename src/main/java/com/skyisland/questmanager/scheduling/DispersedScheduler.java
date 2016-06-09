@@ -52,10 +52,9 @@ public class DispersedScheduler extends Scheduler {
 	private static DispersedScheduler scheduler = null;
 	
 	/**
-	 * Return the current instanced DispersedScheduler.<br />
+	 * Return the current instanced DispersedScheduler.
 	 * If a scheduler has yet to be created, it will be created with default values
 	 * from this call.
-	 * @return
 	 */
 	public static DispersedScheduler getScheduler() {
 		if (scheduler == null) {

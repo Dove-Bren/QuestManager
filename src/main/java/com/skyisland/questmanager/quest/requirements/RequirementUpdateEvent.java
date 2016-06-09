@@ -22,8 +22,8 @@ public class RequirementUpdateEvent extends Event {
 	}
 	
 	/**
-	 * Creates an event with no requirement information.<br />
-	 * This is typically only used when an entire system-wide update is needed.<br />
+	 * Creates an event with no requirement information.
+	 * This is typically only used when an entire system-wide update is needed.
 	 * To only call the neccessary and involved quests to update their information,
 	 * use the {@link #RequirementUpdateEvent(Requirement)} constructor instead.
 	 */
@@ -32,19 +32,17 @@ public class RequirementUpdateEvent extends Event {
 	}
 	
 	/**
-	 * Constructs an event with given requirement information.<br />
+	 * Constructs an event with given requirement information.
 	 * This event triggers an update of quests involved with the given requirement only.
-	 * @param requirement
 	 */
 	public RequirementUpdateEvent(Requirement requirement) {
 		this.requirement = requirement;
 	}
 	
 	/**
-	 * Returns the involved requirement, or null if none was passed on creation.<br />
+	 * Returns the involved requirement, or null if none was passed on creation.
 	 * Events with <i>no requirement information</i> are expected to perform system-wide
 	 * updates and checks.
-	 * @return
 	 */
 	public Requirement getRequirement() {
 		return requirement;

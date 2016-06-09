@@ -15,7 +15,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Holds an abstract chest, with a list of items and a location.<br />
+ * Holds an abstract chest, with a list of items and a location.
  * The inventory has to be instantiated, so getInventory call was made
  */
 public class Chest implements ConfigurationSerializable {
