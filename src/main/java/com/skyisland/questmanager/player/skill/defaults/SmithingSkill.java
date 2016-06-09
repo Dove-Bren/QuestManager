@@ -810,7 +810,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			public void provideItems(ItemStack[] items) {
 				this.items = items;
 			}
-		}, max, null, "Select Metal Ingredients/Ores");
+		}, max, null, "Select Metal Ingredients/Ores", true);
 		InventoryMenu menu = new InventoryMenu(qp, inv);
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
 		
@@ -959,7 +959,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 				this.items = items;
 			}
 		}, 9, 
-				null, "Select Additional Ingredients");
+				null, "Select Additional Ingredients", true);
 		InventoryMenu menu = new InventoryMenu(player, inv);
 		
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(player.getPlayer().getPlayer(), menu);

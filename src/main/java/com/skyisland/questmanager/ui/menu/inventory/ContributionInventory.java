@@ -40,6 +40,8 @@ public class ContributionInventory extends GuiInventory {
 	
 	private int slots;
 	
+	private boolean wholeStacks;
+	
 	private String invName;
 	
 	private Player player;
@@ -57,7 +59,13 @@ public class ContributionInventory extends GuiInventory {
 	}
 	
 	public ContributionInventory(Player player, MenuAction finishAction, int maxItems, ItemFilter filter, String name) {
+		this(player, finishAction, maxItems, filter, name, false);
+	}
+	
+	public ContributionInventory(Player player, MenuAction finishAction, int maxItems, ItemFilter filter, String name,
+			boolean wholeStacks) {
 		this.player = player;
+		this.wholeStacks = wholeStacks;
 		this.filter = filter;
 		this.maxItems = maxItems;
 		this.invName = name;
@@ -154,15 +162,16 @@ public class ContributionInventory extends GuiInventory {
 			}
 		}
 		
-		//deduct one from inv, put it in slot
-		if (clicked.getAmount() > 1) {
-			clicked.setAmount(clicked.getAmount() - 1);
+		//take from inventory, as defined in 'wholestacks'
+		int amount = (wholeStacks ? clicked.getAmount() : 1);
+		if (clicked.getAmount() > amount) {
+			clicked.setAmount(clicked.getAmount() - amount);
 		} else {
 			player.getOpenInventory().setItem(pos, null);
 		}
 		
 		ItemStack newItem = clicked.clone();
-		newItem.setAmount(1);
+		newItem.setAmount(amount);
 		items.put(slot, newItem);
 		updateInventory();
 		
