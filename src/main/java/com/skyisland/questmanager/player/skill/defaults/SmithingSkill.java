@@ -41,6 +41,7 @@ import com.skyisland.questmanager.ui.actionsequence.ForgeSequence;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.action.FillableInventoryAction;
 import com.skyisland.questmanager.ui.menu.inventory.ContributionInventory;
+import com.skyisland.questmanager.ui.menu.inventory.minigames.SmeltingGui;
 
 public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	
@@ -776,6 +777,13 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	
 	private void onSmeltStart(PlayerInteractEvent e) {
 		//clicked with smelting type and the tool. Start a smelting action
+		SmeltingGui gui = new SmeltingGui(this, e.getPlayer(), 10, Lists.newArrayList(new ItemStack(Material.IRON_ORE)),
+				5, 6, .3, 2, 0, new QualityItem(new ItemStack(Material.IRON_INGOT)));
+		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(e.getPlayer());
+		InventoryMenu menu = new InventoryMenu(qp, gui);
+		
+		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
+		gui.start();
 	}
 	
 	private void onCraftStart(PlayerInteractEvent e) {
