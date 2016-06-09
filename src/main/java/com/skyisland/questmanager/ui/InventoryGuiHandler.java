@@ -31,7 +31,6 @@ public class InventoryGuiHandler implements Listener {
 	 */
 	public void showMenu(Player player, InventoryMenu menu) {
 
-		System.out.println("Inventory attempting registration: " + player.getUniqueId());
 		QuestManagerPlugin plugin = QuestManagerPlugin.questManagerPlugin;
 		
 		if (menus.containsKey(player.getUniqueId())) {
@@ -50,7 +49,6 @@ public class InventoryGuiHandler implements Listener {
 	}
 	
 	public void closeMenu(Player player) {
-		System.out.print("Inventory attempting unregistration: " + player.getUniqueId() + ": ");
-		System.out.println(menus.remove(player.getUniqueId()));
+		menus.remove(player.getUniqueId());
 	}
 }

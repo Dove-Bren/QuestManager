@@ -108,8 +108,6 @@ public class ContributionInventory extends GuiInventory {
 		 * Check slot. If in player's inventory, try to take. If in top inventory, try and put back.
 		 */
 
-		System.out.println("Inventory clicked");
-		
 		if (pos >= slots) {
 			//in player's inventory
 			doContribute(pos);
@@ -187,9 +185,6 @@ public class ContributionInventory extends GuiInventory {
 	}
 	
 	private void doSubmit() {
-
-		
-		System.out.println("Closing inventory");
 		player.closeInventory();
 		
 		if (action != null) {
@@ -201,7 +196,6 @@ public class ContributionInventory extends GuiInventory {
 				
 				((FillableInventoryAction) action).provideItems(ret);
 			}
-			
 			action.onAction();
 		}
 	}

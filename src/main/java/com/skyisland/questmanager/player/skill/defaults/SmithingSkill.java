@@ -824,13 +824,11 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 				null, "Select Additional Ingredients");
 		InventoryMenu menu = new InventoryMenu(player, inv);
 		
-		System.out.println("Creating Inventory");
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(player.getPlayer().getPlayer(), menu);
 	}
 	
 	private void submitForgeIngredients(QuestPlayer player, Metal base, ItemStack ...extraInputs) {
 		
-		System.out.println("Got to forge ingredients method");
 		//ready to start the game. Just gotta figure out some parameters first
 		
 		if (!player.getPlayer().isOnline()) {
