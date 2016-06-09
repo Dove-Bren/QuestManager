@@ -50,7 +50,7 @@ configurations.all {
 
 dependencies {
     compile 'org.spigotmc:spigot-api:1.9.4-R0.1-SNAPSHOT'
-    compile 'io.puharesource.mc:TitleManager:1.5.11'
+    compile files('lib/TitleManager-1.5.11.jar')
     compile 'com.onarandombox.multiverseportals:Multiverse-Portals:2.5'
 }
 
