@@ -602,27 +602,6 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
         
         getPlayer().getPlayer().playSound(getPlayer().getPlayer().getLocation(), Sound.ENTITY_FIREWORK_TWINKLE, 10, 1);
 	}
-	
-//	/**
-//	 * Returns the currently-stored information in a YamlConfiguration. <br />
-//	 * Output from this method should be expected to be used with {@link QuestPlayer#fromConfig(YamlConfiguration)}
-//	 * to produce an exact duplicate.
-//	 * @return
-//	 */
-//	public YamlConfiguration toConfig() {
-//		
-//		if (player == null) {
-//			return null;
-//		}
-//		
-//		YamlConfiguration config = new YamlConfiguration();
-//		
-//		config.set("Player", player.getUniqueId().toString());
-//		config.set("History", history.toConfig());
-//		config.set("Quests", currentQuests);
-//		
-//		return config;
-//	}
 
 	@Override
 	public Collection<QuestPlayer> getParticipants() {

@@ -91,7 +91,6 @@ public class RingEffect extends EntityEffect implements ConstantEffect, Alarmabl
 			for (int c = 0; c < centroids; c++) {
 				dx = (float) Math.cos(base + (offset * c));
 				dz = (float) Math.sin(base + (offset * c));
-				//tmp = anchor.clone().add(dx, 0, dz);
 				anchor.add(dx, 0, dz);
 				anchor.getWorld().spigot().playEffect(anchor, effect, 0, data, 0, 0, 0, 0, count, 16);
 				anchor.add(-dx, 0, -dz);

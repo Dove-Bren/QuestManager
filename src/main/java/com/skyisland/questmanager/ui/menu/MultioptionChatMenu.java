@@ -142,9 +142,4 @@ public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {
 		
 		return msg;
 	}
-	
-//	@Override
-//	public FancyMessage getMessage(){
-//		//return formatMessage(t);
-//	}
 }

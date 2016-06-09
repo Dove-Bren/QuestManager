@@ -120,7 +120,6 @@ public class SimpleQuestStartNPC extends SimpleStaticBioptionNPC implements Comp
 			tmp.createSection("key",  (Map<?, ?>) map.get("equipment"));
 			econ.load(tmp.getConfigurationSection("key"));
 		} catch (InvalidConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -274,8 +273,6 @@ public class SimpleQuestStartNPC extends SimpleStaticBioptionNPC implements Comp
 		}
 
 		messageChat.show(player);
-		//this.updateQuestHistory(qp, messageChat.getMessage().toOldMessageFormat()
-		//		.replaceAll(ChatColor.WHITE + "", ChatColor.BLACK + ""));
 	}
 	
 	@Override

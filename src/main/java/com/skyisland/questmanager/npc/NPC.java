@@ -142,19 +142,7 @@ public abstract class NPC implements ConfigurationSerializable, Listener, Tickab
 			return;
 		}
 			
-		//grab the damage. if it's gonna kill us, just take no damage? 
-		
 		e.setDamage(0);
-//		Entity ent = getEntity();
-//		if (!(ent instanceof LivingEntity)) {
-//			return;
-//		}
-//		
-//		LivingEntity l = (LivingEntity) ent;
-//		
-//		if (e.getDamage() >= l.getHealth()){
-//			e.setDamage(0.0);
-//		}
 	}
 	
 	public void removeEntity(boolean now) {

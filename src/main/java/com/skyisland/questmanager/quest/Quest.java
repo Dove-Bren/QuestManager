@@ -65,8 +65,6 @@ public class Quest implements Listener {
 	
 	private boolean running;
 //	
-//	private Set<QuestPlayer> players;
-	
 	private Participant participant;
 	
 	private List<Goal> goals;	
@@ -88,8 +86,6 @@ public class Quest implements Listener {
 	private boolean ready;
 	
 	private QuestConfiguration template;
-	
-	//private Set<NPC> npcs;
 	
 	/**
 	 * Whether or not this quest should be triggered on and then never evaluated again,
@@ -352,17 +348,6 @@ public class Quest implements Listener {
 			return;
 		}
 		
-		//do player stuff
-//		for (QuestPlayer player : players) {
-//			removePlayer(player);
-//		}
-		
-		//remove NPCs
-//		if (!npcs.isEmpty()) 
-//		for (NPC npc : npcs) {
-//			npc.getEntity().remove();
-//		}
-		
 	}
 	
 	/**
@@ -382,12 +367,6 @@ public class Quest implements Listener {
 		//just remove players
 		participant.getParticipants().forEach(this::removePlayer);
 		
-		//remove NPCs
-//		if (!npcs.isEmpty()) 
-//		for (NPC npc : npcs) {
-//			npc.getEntity().remove();
-//		}
-				
 		//stop goals
 		if (!goals.isEmpty()) {	
 			Goal goal = goals.get(Math.min(goals.size() - 1, goalIndex));
@@ -696,18 +675,11 @@ public class Quest implements Listener {
 		} else {
 			goal = goals.get(goalIndex);
 		}
-			//as soon as a single goal isn't ready, the quest is not ready
-//		if (!goal.isComplete()) {
-//			ready = false;
-//			return;
-//		}
 		
 		if (goal.isComplete()) {
 			nextGoal();			
 		}
 		
-		//set compass to the first objective
-		//TODO
 	}
 	
 	/**

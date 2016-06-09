@@ -106,7 +106,6 @@ public class SpellPylon implements Alarmable<Integer> {
 		double periodStep = (Math.PI * 2) / movementsPerCycle;
 		double offset = .4 * Math.sin(reference * periodStep);
 		entity.teleport(location.clone().add(0, offset, 0));
-		//System.out.println("offset: " + offset);
 		
 		Alarm.getScheduler().schedule(this, reference + 1, cycleDuration / movementsPerCycle); 
 	}

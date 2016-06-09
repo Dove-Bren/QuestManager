@@ -56,11 +56,9 @@ public class PluginConfiguration {
 		INVOKERNAME("interface.spellweaving.invokerName"),
 		INVOKERTYPE("interface.spellweaving.invokerType"),
 		ALTERTYPE("interface.magic.alterBlockType"),
-		//COMBINEQUALITY("interface.crafting.combineQuality"),
 		WORLDS("questWorlds"),
 		QUESTDIR("questDir"),
 		SAVEDIR("saveDir"),
-		//ENEMYDIR("enemyDir"),
 		REGIONDIR("regionDir"),
 		SPELLDIR("spellDir"),
 		SKILLDIR("skillDir"),
@@ -493,7 +491,6 @@ public class PluginConfiguration {
 		worlds.add("QuestWorld");
 		worlds.add("TutorialWorld");
 		config.set(PluginConfigurationKey.WORLDS.key, worlds);
-		//ConfigurationSection managers = config.createSection("managers");
 		
 		config.set(PluginConfigurationKey.QUESTDIR.key, "quests/");
 		config.set(PluginConfigurationKey.SAVEDIR.key, "savedata/");
@@ -510,7 +507,6 @@ public class PluginConfiguration {
 		try {
 			config.save(configFile);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

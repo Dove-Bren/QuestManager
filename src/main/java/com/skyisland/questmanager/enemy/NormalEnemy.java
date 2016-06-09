@@ -204,33 +204,4 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 					);
 		}
 	}
-	
-	//LEFT HERE CAUSE OMG WHAT LULZ THIS SUCKED
-	//but now there's an Attribute API <3
-//	@Override
-//	public void spawn(Location loc) {
-//		
-//		String cmd = "summon "
-//				+ this.type + " " + loc.getX() + " " + loc.getY() + " " + loc.getZ() + " "
-//				+ "{CustomName:" + name + ",CustomNameVisible:1,Attributes:["
-//				+ "{Name:generic.maxHealth,Base:" + hp + "},"
-//				+ "{Name:generic.attackDamage,Base:" + attack + "}]}";
-//		
-//		//Bukkit.dispatchCommand(Bukkit.getConsoleSender(), cmd);
-//		System.out.println("normal...");
-//		CommandBlock sender = QuestManagerPlugin.questManagerPlugin.getManager().getAnchor(loc.getWorld().getName());
-//		//Entity sender = Bukkit.getPlayer("dove_bren");
-//
-//		if (sender == null) {
-//			System.out.println("Null!");
-//		}
-//			
-//		Location ol = sender.getLocation().clone().add(0,1,0);
-//		sender.setCommand(cmd);
-//		ol.getBlock().setType(Material.REDSTONE_BLOCK);
-//		ol.getBlock().getState().update(true);
-//		sender.update(true);
-//		ol.getBlock().setType(Material.STONE);
-//		
-//	}
 }

@@ -123,11 +123,6 @@ import com.skyisland.questmanager.ui.menu.message.TreeMessage;
  * the user. <br />
  * 
  * @author Skyler
- * @todo Figure out where QuestManagers are going to be created. Through a
- * command? If so, how do you specify which quests for which manager? Do you
- * go through every single one and add it? Maybe instead through configs? 
- * What do the configs need? Maybe world name, list of quest names? How do
- * we look up quests by quest name? [next step]
  */
 public class QuestManagerPlugin extends JavaPlugin {
 	
@@ -565,24 +560,6 @@ public class QuestManagerPlugin extends JavaPlugin {
 			qp.addQuestBook();
 			qp.addJournal();
 			
-			
-			/////////////////////////
-//			SimpleTargetSpell FS = new SimpleTargetSpell(5, "Fireball", "inplace", 5.0, 15);
-//			FS.addSpellEffect(new DamageEffect(5.0));
-//			FS.setProjectileEffect(Effect.MOBSPAWNER_FLAMES);
-//			FS.setContactEffect(Effect.EXPLOSION_LARGE);
-//			FS.setCastSound(Sound.GHAST_FIREBALL);
-//			
-//			FS.cast(qp, qp.getPlayer().getPlayer().getLocation().getDirection());
-//			
-//			SimpleSelfSpell HS = new SimpleSelfSpell(4, "Heal", "temp");
-//			HS.addSpellEffect(new HealEffect(3.0));
-//			HS.setCastEffect(Effect.HAPPY_VILLAGER);
-//			HS.setCastSound(Sound.ORB_PICKUP);
-//			
-//			HS.cast(qp);
-			
-			/////////////////////////
 			return true;
 		}
 		

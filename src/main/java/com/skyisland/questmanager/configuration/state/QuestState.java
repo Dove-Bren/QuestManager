@@ -73,7 +73,6 @@ public class QuestState {
 		
 		config.set("goalstate", goalState.asConfig());
 		
-		//config.set("goals", goalList);
 		config.set("participants", participant.getIDString());
 		
 		if (history != null) {
