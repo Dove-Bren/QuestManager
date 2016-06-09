@@ -9,6 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.skyisland.questmanager.player.QuestPlayer;
 
@@ -19,6 +20,15 @@ import com.skyisland.questmanager.player.QuestPlayer;
  *
  */
 public class ContributionInventory extends ReturnGuiInventory {
+	
+	private static final ItemStack submitIcon = new ItemStack(Material.STAINED_GLASS_PANE);
+	
+	{
+		ItemMeta meta = submitIcon.getItemMeta();
+		meta.setDisplayName("Submit");
+		submitIcon.setItemMeta(meta);
+		submitIcon.setDurability((short) 13);
+	}
 	
 	private Map<Integer, ItemStack> items;
 	
@@ -87,6 +97,9 @@ public class ContributionInventory extends ReturnGuiInventory {
 		/*
 		 * Check slot. If in player's inventory, try to take. If in top inventory, try and put back.
 		 */
+
+		System.out.println("Inventory clicked");
+		
 		int size = 9 * ((int) Math.ceil((double) maxItems / 9.0));
 		
 		if (pos > size) {

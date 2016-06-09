@@ -66,6 +66,7 @@ public class InventoryMenu implements Listener {
 	public void onInventoryInteract(InventoryClickEvent e) {
 		if (e.isCancelled() || e.getInventory().getName() == null
 				|| !e.getInventory().getName().equals(inventory.getName())) {
+			System.out.println("1");
 			return;
 		}
 		
@@ -83,6 +84,7 @@ public class InventoryMenu implements Listener {
 	@EventHandler
 	public void onInventoryClose(InventoryCloseEvent e) {
 		if (e.getInventory().getName() == null || !e.getInventory().getName().equals(inventory.getName())) {
+			System.out.println("1");
 			return;
 		}
 		

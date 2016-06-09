@@ -19,13 +19,20 @@ public class ActiveInventoryMenu extends InventoryMenu implements RespondableMen
 	
 	private MenuAction action;
 	
-	public ActiveInventoryMenu(QuestPlayer player, ReturnGuiInventory inv, MenuAction closeAction) {
+	private boolean isSubmitted;
+	
+	public ActiveInventoryMenu(QuestPlayer player, ReturnGuiInventory inv, MenuAction finishAction) {
 		super(player, inv);
-		this.action = closeAction;		
+		this.action = finishAction;
+		this.isSubmitted = false;
 	}
 	
 	@EventHandler
 	public void onInventoryClose(InventoryCloseEvent e) {
+		if (isSubmitted) {
+			return;
+		}
+		
 		if (e.getInventory().getName() == null || !e.getInventory().getName().equals(inventory.getName())) {
 			return;
 		}
@@ -36,6 +43,10 @@ public class ActiveInventoryMenu extends InventoryMenu implements RespondableMen
 					+ " but not players! [" + e.getPlayer().getName() + "]");
 			return;
 		}
+		
+		System.out.println("Inventory closed! Reacting...");
+		
+		this.isSubmitted = true;
 		
 		super.onInventoryClose(e);
 		

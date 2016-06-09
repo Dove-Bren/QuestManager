@@ -35,6 +35,10 @@ import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.SkillRecipe;
 import com.skyisland.questmanager.ui.actionsequence.ForgeSequence;
+import com.skyisland.questmanager.ui.menu.ActiveInventoryMenu;
+import com.skyisland.questmanager.ui.menu.InventoryMenu;
+import com.skyisland.questmanager.ui.menu.action.FillableInventoryAction;
+import com.skyisland.questmanager.ui.menu.inventory.ContributionInventory;
 
 public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	
@@ -198,6 +202,8 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	
 	private static final class ForgeRecipe implements SkillRecipe {
 		
+		protected Metal base;
+		
 		protected List<ItemStack> inputs;
 		
 		protected ItemStack reward;
@@ -213,14 +219,15 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		private boolean needsQuelch;
 		
 		
-		public ForgeRecipe(String name, int difficulty, List<ItemStack> inputs, ItemStack reward, int hammerTimes,
-				boolean cut, boolean quelch) {
+		public ForgeRecipe(String name, int difficulty, Metal base, List<ItemStack> inputs, ItemStack reward,
+				int hammerTimes, boolean cut, boolean quelch) {
 			this.name = name;
 			this.reward = reward;
 			this.hammerTimes = hammerTimes;
 			this.needsCut = cut;
 			this.needsQuelch = quelch;
 			this.difficulty = difficulty;
+			this.base = base;
 			
 			//go through and ensure only 1 itemstack per item type
 			this.inputs = new LinkedList<ItemStack>();
@@ -298,8 +305,8 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		@Override
 		public String getDescription() {
 						
-			String builder = "Start by combining " + delistInputs() + ". Then, heat the metal near a forge. Take the hot "
-					+ "metal and hammer it " + hammerTimes + " times, keeping the metal hot.";
+			String builder = "Start by taking " + base.name + " and it with " + delistInputs() + ". Then, heat the metal "
+					+ "near a forge. Take the hot metal and hammer it " + hammerTimes + " times, keeping the metal hot.";
 			
 			if (needsCut)
 				builder += " Next, cut the metal using the forge's tools.";
@@ -512,7 +519,9 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 				/*
 				 * recipes:
 				 *   Iron_Sword:
-				 *     input: [Metal]
+				 *     base: [Metal]
+				 *     inputs: 
+				 *       - [ItemStack]
 				 *     output: [ItemStack]
 				 *     hammerTimes: [int]
 				 *     cut: [true/false]
@@ -529,9 +538,14 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 						//String name, int difficulty, Metal input, ItemStack reward, int hammerTimes, boolean cut, boolean quelch
 						@SuppressWarnings("unchecked")
 						List<ItemStack> inputs = (List<ItemStack>) subsex.getList("inputs");
+						if (!metals.containsKey(subsex.getString("base"))) {
+							QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find base metal "
+									+ subsex.getString("base") + " for craft " + key);
+							continue;
+						}
 						
-						forgeRecipes.add(new ForgeRecipe(key, subsex.getInt("difficulty"), inputs,
-								subsex.getItemStack("output"), subsex.getInt("hammerTimes"),
+						forgeRecipes.add(new ForgeRecipe(key, subsex.getInt("difficulty"), metals.get(subsex.getString("base")),
+								inputs, subsex.getItemStack("output"), subsex.getInt("hammerTimes"),
 								subsex.getBoolean("cut"), subsex.getBoolean("quelch")));
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -634,6 +648,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			/*
 			 * recipes:
 			 *   Iron_Sword:
+			 *     base: [Metal]
 			 *     inputs:
 			 *       - [ItemStack]
 			 *     output: [ItemStack]
@@ -643,17 +658,14 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			 *     difficulty: 12
 			 */
 			
+			map = new HashMap<>();
 			sub = new HashMap<>();
 			inputs = new LinkedList<>();
 			sub.put("difficulty", 8);
+			sub.put("base", "Copper");
 			sub.put("hammerTimes", 5);
 			sub.put("cut", true);
 			sub.put("quelch", true);
-			item = new ItemStack(Material.CLAY_BRICK, 3);
-			meta = item.getItemMeta();
-			meta.setDisplayName("Copper Ore");
-			item.setItemMeta(meta);
-			inputs.add(item);
 			item = new ItemStack(Material.END_ROD, 1);
 			meta = item.getItemMeta();
 			meta.setDisplayName("Blade Hilt");
@@ -674,13 +686,9 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			inputs = new LinkedList<>();
 			sub.put("difficulty", 12);
 			sub.put("hammerTimes", 8);
+			sub.put("base", "Copper");
 			sub.put("cut", true);
 			sub.put("quelch", true);
-			item = new ItemStack(Material.CLAY_BRICK, 4);
-			meta = item.getItemMeta();
-			meta.setDisplayName("Copper Ore");
-			item.setItemMeta(meta);
-			inputs.add(item);
 			item = new ItemStack(Material.END_ROD, 1);
 			meta = item.getItemMeta();
 			meta.setDisplayName("Blade Hilt");
@@ -757,34 +765,102 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		//clicked on anvil type with the tool
 		
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(e.getPlayer());
+		if (activePlayers.contains(e.getPlayer())) {
+			e.getPlayer().sendMessage("You're already in the middle of a craft");
+			return;
+		}
+		
+		ContributionInventory inv = new ContributionInventory(e.getPlayer(), 1, 
+				(item) -> {
+						for (Metal metal : metals.values()) {
+							if (metal.isMetal(item)) 
+								return true;
+						}
+						return false;
+				}, "Select Base Metal");
+		InventoryMenu menu = new ActiveInventoryMenu(qp, inv, new FillableInventoryAction() {
+			
+			private ItemStack[] items;
+			
+			public void onAction() {
+				if (items == null || items.length < 1) 
+					return;
+				
+				onMetalPick(qp, items[0]);
+			}
+			
+			public void provideItems(ItemStack[] items) {
+				this.items = items;;
+			}
+		});
+		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
+
+		
+	}
+	
+	private void onMetalPick(QuestPlayer player, ItemStack base) {
+		if (!player.getPlayer().isOnline() || base == null) {
+			return;
+		}
+		
+		
+		Metal material = null;
+		for (Metal metal : metals.values()) {
+			if (metal.isMetal(base)) {
+				material = metal;
+				break;
+			}
+		}
+		
+		final Metal baseMetal = material;
+		
+		player.getPlayer().getPlayer().closeInventory();
+		//now we have our base material, but still need the rest of the inputs. We need to pop another menu up
+		//to collect those
+		ContributionInventory inv = new ContributionInventory(player.getPlayer().getPlayer(), 9, 
+				null, "Select Additional Ingredients");
+		InventoryMenu menu = new ActiveInventoryMenu(player, inv, new FillableInventoryAction() {
+			
+			private ItemStack[] items;
+			
+			public void onAction() {
+				submitForgeIngredients(player, baseMetal, items);
+			}
+			
+			public void provideItems(ItemStack[] items) {
+				this.items = items;
+			}
+		});
+		
+		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(player.getPlayer().getPlayer(), menu);
+	}
+	
+	private void submitForgeIngredients(QuestPlayer player, Metal base, ItemStack ...extraInputs) {
+		
+		System.out.println("Got to forge ingredients method");
+		//ready to start the game. Just gotta figure out some parameters first
+		
+		if (!player.getPlayer().isOnline()) {
+			return;
+		}
 		
 		double heatTime, coolTime, hitChance;
 		
+		int skillLevel = player.getSkillLevel(this);
+		int levelDifference = Math.max(0, base.difficulty - skillLevel);
+		
+		heatTime = heatBase - (heatRate * base.difficulty);
+		coolTime = coolBase - (coolRate * base.difficulty);
+		hitChance = hitBase - (hitRate * levelDifference);
+		  hitChance += (hitBonus * skillLevel);
+		
 //		SmithingSkill skill, QuestPlayer player, String display, List<ItemStack> inputs,
 //		double heatTime, double coolTime, double hitChance
-		
-		//NEED TO OPEN INVENTORY, GET INGREDIENTS, PASS THOSE TO SEQUENCE.
-		//ALSO SOMEHOW FIGURE OUT THE BASE MATERIAL FOR STATS?
-		
-		
-//		heatTime = heatBase + (heatRate * )
-//		
-//		QualityItem reward = new QualityItem(record.reward.clone());
-//		reward.getUnderlyingItem().setAmount(amount);
-//		reward.setQuality(reward.getQuality() * event.getQualityModifier());
-//		
-//		//QuestPlayer player, Vector treeLocation, QualityItem input, double averageSwingTime,
-//		//double swingTimeDeviation, double reactionTime, int hits, String displayName
-//		LumberjackSequence sequence = new LumberjackSequence(qp, e.getClickedBlock().getLocation().toVector(),
-//				reward, averageSwing, swingDeviation, timing, hits, record.name, record.difficulty);
-//		activeSessions.put(e.getPlayer().getUniqueId(), sequence);
-//		sequence.start();
-		
-		ForgeSequence seq = new ForgeSequence(this, qp, "Iron Sword", Lists.newArrayList(new ItemStack(Material.IRON_INGOT)),
-				3.0, 5.0, .8);
-		activePlayers.add(e.getPlayer());
-		seq.start();
-		
+		  
+		  ForgeSequence seq = new ForgeSequence(this, player, base.name, Lists.newArrayList(extraInputs),
+				  heatTime, coolTime, hitChance);
+		  this.activePlayers.add(player.getPlayer().getPlayer());
+		  seq.start();
 	}
 
 	public void submitJob(List<ItemStack> inputs, int hammers, boolean cut, boolean quelch) {
