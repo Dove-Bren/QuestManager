@@ -9,16 +9,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.skill.event.MineEvent;
-import com.skyisland.questmanager.player.skill.LogSkill;
-import com.skyisland.questmanager.player.skill.QualityItem;
-import com.skyisland.questmanager.player.skill.Skill;
-import com.skyisland.questmanager.QuestManagerPlugin;
-import com.skyisland.questmanager.ui.menu.action.CollectOreAction;
-import com.skyisland.questmanager.ui.menu.ActiveInventoryMenu;
-import com.skyisland.questmanager.ui.menu.inventory.minigames.MiningGui;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -33,6 +23,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.common.collect.Lists;
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.LogSkill;
+import com.skyisland.questmanager.player.skill.QualityItem;
+import com.skyisland.questmanager.player.skill.Skill;
+import com.skyisland.questmanager.player.skill.event.MineEvent;
+import com.skyisland.questmanager.ui.menu.InventoryMenu;
+import com.skyisland.questmanager.ui.menu.inventory.minigames.MiningGui;
 
 public class MiningSkill extends LogSkill implements Listener {
 	
@@ -370,7 +369,7 @@ public class MiningSkill extends LogSkill implements Listener {
 		//double averageHardness,	double hardnessDeviation, int startingSpots, double bonusQuality, ItemStack oreIcon
 		MiningGui gui = new MiningGui(e.getPlayer(), reward, record.difficulty, iconCount, rows,
 				hits, averageHardness, hardnessDeviation, startingSlots, .2, record.icon);
-		ActiveInventoryMenu menu = new ActiveInventoryMenu(qp, gui, new CollectOreAction(qp));
+		InventoryMenu menu = new InventoryMenu(qp, gui);
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
 		gui.start();
 		

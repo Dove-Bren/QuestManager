@@ -30,6 +30,7 @@ public class InventoryGuiHandler implements Listener {
 	 * Shows an inventory menu to the player, registering it with the handler.
 	 */
 	public void showMenu(Player player, InventoryMenu menu) {
+
 		QuestManagerPlugin plugin = QuestManagerPlugin.questManagerPlugin;
 		
 		if (menus.containsKey(player.getUniqueId())) {

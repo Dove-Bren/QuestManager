@@ -1,6 +1,5 @@
 package com.skyisland.questmanager.ui.menu;
 
-import com.skyisland.questmanager.ui.menu.inventory.GuiInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
@@ -11,6 +10,8 @@ import org.bukkit.inventory.Inventory;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.ui.menu.inventory.CloseableGui;
+import com.skyisland.questmanager.ui.menu.inventory.GuiInventory;
 
 /**
  * A menu implemented as an inventory
@@ -93,9 +94,15 @@ public class InventoryMenu implements Listener {
 			return;
 		}
 		
+
+		if (gui instanceof CloseableGui)  {
+			((CloseableGui) gui).onClose();
+		}
+		
 		//our inventory is closing
 		//unregister ourselves, unregister with handler, end
 		HandlerList.unregisterAll(this);
+		
 		
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().closeMenu((Player) e.getPlayer());
 		

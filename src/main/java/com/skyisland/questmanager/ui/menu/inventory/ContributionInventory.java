@@ -9,8 +9,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.ui.menu.action.FillableInventoryAction;
+import com.skyisland.questmanager.ui.menu.action.MenuAction;
 
 /**
  * Gui used to 'receive items' from a player's inventory. Allows specification of a filter
@@ -18,7 +21,16 @@ import com.skyisland.questmanager.player.QuestPlayer;
  * @author Skyler
  *
  */
-public class ContributionInventory extends ReturnGuiInventory {
+public class ContributionInventory extends GuiInventory {
+	
+	private static final ItemStack submitIcon = new ItemStack(Material.STAINED_GLASS_PANE);
+	
+	{
+		ItemMeta meta = submitIcon.getItemMeta();
+		meta.setDisplayName("Submit");
+		submitIcon.setItemMeta(meta);
+		submitIcon.setDurability((short) 13);
+	}
 	
 	private Map<Integer, ItemStack> items;
 	
@@ -26,25 +38,30 @@ public class ContributionInventory extends ReturnGuiInventory {
 	
 	private int maxItems;
 	
+	private int slots;
+	
 	private String invName;
 	
 	private Player player;
 	
 	private Inventory inv;
 	
-	public ContributionInventory(Player player, int maxItems) {
-		this(player, maxItems, null, "Give Items");
+	private MenuAction action;
+	
+	public ContributionInventory(Player player, MenuAction finishAction, int maxItems) {
+		this(player, finishAction, maxItems, null, "Give Items");
 	}
 	
-	public ContributionInventory(Player player, int maxItems, ItemFilter filter) {
-		this(player, maxItems, filter, "Give Items");
+	public ContributionInventory(Player player, MenuAction finishAction, int maxItems, ItemFilter filter) {
+		this(player, finishAction, maxItems, filter, "Give Items");
 	}
 	
-	public ContributionInventory(Player player, int maxItems, ItemFilter filter, String name) {
+	public ContributionInventory(Player player, MenuAction finishAction, int maxItems, ItemFilter filter, String name) {
 		this.player = player;
 		this.filter = filter;
 		this.maxItems = maxItems;
 		this.invName = name;
+		this.action = finishAction;
 		
 		this.items = new HashMap<>();
 		
@@ -55,8 +72,9 @@ public class ContributionInventory extends ReturnGuiInventory {
 		
 		Player p = player.getPlayer().getPlayer();
 		
-		int size = 9 * ((int) Math.ceil((double) maxItems / 9.0));
-		this.inv = Bukkit.createInventory(p, size, invName);
+		slots = 9 * ((int) Math.ceil((double) (maxItems + 1) / 9.0));
+		
+		this.inv = Bukkit.createInventory(p, slots, invName);
 		if (!items.isEmpty()) {
 			for (Entry<Integer, ItemStack> e : items.entrySet()) {
 				int val = e.getKey();
@@ -65,9 +83,11 @@ public class ContributionInventory extends ReturnGuiInventory {
 		}
 		
 		//pad with barrier blocks for clarity
-		for (int i = maxItems; i < size; i++) {
+		for (int i = maxItems; i < slots - 1; i++) {
 			inv.setItem(i, new ItemStack(Material.BARRIER));
 		}
+		
+		inv.setItem(slots - 1, submitIcon);
 	}
 	
 	@Override
@@ -87,11 +107,12 @@ public class ContributionInventory extends ReturnGuiInventory {
 		/*
 		 * Check slot. If in player's inventory, try to take. If in top inventory, try and put back.
 		 */
-		int size = 9 * ((int) Math.ceil((double) maxItems / 9.0));
-		
-		if (pos > size) {
+
+		if (pos >= slots) {
 			//in player's inventory
 			doContribute(pos);
+		} else if (pos == slots - 1) {
+			doSubmit();
 		} else {
 			doReturn(pos);
 		}
@@ -163,19 +184,25 @@ public class ContributionInventory extends ReturnGuiInventory {
 		updateInventory();
 	}
 	
+	private void doSubmit() {
+		player.closeInventory();
+		
+		if (action != null) {
+			if (action instanceof FillableInventoryAction) {
+				ItemStack[] ret = new ItemStack[maxItems];
+				for (int i = 0; i < maxItems; i++) {
+					ret[i] = items.get(i);
+				}
+				
+				((FillableInventoryAction) action).provideItems(ret);
+			}
+			action.onAction();
+		}
+	}
+	
 	private void updateInventory() {
 		for (int i = 0; i < maxItems; i++) {
 			inv.setItem(i, items.get(i));
 		}
-	}
-
-	@Override
-	public ItemStack[] getResult() {
-		ItemStack[] ret = new ItemStack[maxItems];
-		for (int i = 0; i < maxItems; i++) {
-			ret[i] = items.get(i);
-		}
-		
-		return ret;
 	}
 }

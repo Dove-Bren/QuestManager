@@ -34,10 +34,11 @@ import com.skyisland.questmanager.player.skill.defaults.CookingSkill.OvenRecipe;
 import com.skyisland.questmanager.player.skill.event.CraftEvent;
 import com.skyisland.questmanager.scheduling.Alarm;
 import com.skyisland.questmanager.scheduling.Alarmable;
+import com.skyisland.questmanager.ui.menu.inventory.CloseableGui;
+import com.skyisland.questmanager.ui.menu.inventory.GuiInventory;
 import com.skyisland.questmanager.ui.menu.inventory.InventoryItem;
-import com.skyisland.questmanager.ui.menu.inventory.ReturnGuiInventory;
 
-public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>, Listener {
+public class CookingGui extends GuiInventory implements Alarmable<Integer>, Listener, CloseableGui {
 	
 	private enum State {
 		STOPPED,
@@ -504,14 +505,14 @@ public class CookingGui extends ReturnGuiInventory implements Alarmable<Integer>
 	}
 
 	@Override
-	public ItemStack[] getResult() {
+	public void onClose() {
 		//player closed the inventory is what this means
 		HandlerList.unregisterAll(this);
 		loseGame();
 		
 		if (skillLink != null)
 			skillLink.unregisterOven(furnace.getLocation());
-		return null;
+		return;
 	}
 	
 	@EventHandler
