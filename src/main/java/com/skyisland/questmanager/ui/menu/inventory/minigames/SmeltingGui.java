@@ -395,6 +395,10 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		
 		
 		msg.send(player);
+		if (!(player.getInventory().addItem(result.getItem())).isEmpty()) {
+			player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
+			player.getWorld().dropItem(player.getEyeLocation(), result.getItem());
+		}
 		player.getWorld().playSound(player.getEyeLocation(), winSound, 1, 1);
 		successEffect.play(player, player.getLocation());
 		

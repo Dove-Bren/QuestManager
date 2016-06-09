@@ -882,10 +882,9 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		outcome.setQuality(outcome.getQuality() * event.getQualityModifier());
 		outcome.getUnderlyingItem().setAmount((int) Math.round(outcome.getUnderlyingItem().getAmount() * event.getQuantityModifier()));
 		
-		
 		//clicked with smelting type and the tool. Start a smelting action
 		SmeltingGui gui = new SmeltingGui(this, player.getPlayer().getPlayer(), recipe.difficulty, 
-				ingredients, 5, 7, .3, 5, 0.20, new QualityItem(recipe.image.clone()));
+				ingredients, 5, 7, .3, 5, 0.20, outcome);
 		InventoryMenu menu = new InventoryMenu(player, gui);
 		
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(player.getPlayer().getPlayer(), menu);
