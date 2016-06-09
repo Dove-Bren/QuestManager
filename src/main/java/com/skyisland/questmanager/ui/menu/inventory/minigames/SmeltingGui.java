@@ -152,7 +152,6 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		this.skill = skill;
 		this.skillLevel = difficulty;
 		this.player = player;
-		this.inputs = metals;
 		this.clicksPerHeat = clicksPerHeat;
 		this.maxHeats = totalHeats;
 		this.metalRatio = metalRatio;
@@ -167,6 +166,13 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		this.inv = Bukkit.createInventory(null, size, invName);
 		
 		this.gameState = State.STOPPED;
+		
+
+		this.inputs = new LinkedList<>();
+		for (ItemStack input : metals) {
+			if (input != null)
+				inputs.add(input);
+		}
 		
 	}
 	

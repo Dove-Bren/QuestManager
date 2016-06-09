@@ -56,6 +56,9 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	private static final String failMessage = ChatColor.RED + "Despite your efforts, the craft ended in failure. Perhaps "
 			+ "with a little more skill..?";
 	
+	private static final String noSmeltingRecipeMessage = ChatColor.RED + "You don't know a recipe that uses those "
+			+ "ingredients";
+	
 	private static final String winMessage = ChatColor.GREEN + "You successfully forged ";
 	
 	private static final Sound loseSound = Sound.BLOCK_GLASS_BREAK;
@@ -106,6 +109,8 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		}
 		
 		public boolean isMetal(ItemStack sample) {
+			if (sample == null)
+				return false;
 			String sampleName = null, imageName = null;
 			if (sample.hasItemMeta() && sample.getItemMeta().hasDisplayName())
 				sampleName = sample.getItemMeta().getDisplayName();
@@ -132,10 +137,13 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			Iterator<ItemStack> in = inputs.iterator();
 			ItemStack input, match;
 			while (in.hasNext()) {
+				input = in.next();
+				if (input == null)
+					continue;
+				
 				if (matsLeft <= 0)
 					return -1; //ran out of recipe items but have more inputs
 
-				input = in.next();
 				match = null;
 				for (ItemStack item : this.inputs) {
 					if (matchMap.containsKey(item))
@@ -776,13 +784,111 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	}
 	
 	private void onSmeltStart(PlayerInteractEvent e) {
-		//clicked with smelting type and the tool. Start a smelting action
-		SmeltingGui gui = new SmeltingGui(this, e.getPlayer(), 10, Lists.newArrayList(new ItemStack(Material.IRON_ORE)),
-				5, 6, .3, 2, 0, new QualityItem(new ItemStack(Material.IRON_INGOT)));
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(e.getPlayer());
-		InventoryMenu menu = new InventoryMenu(qp, gui);
+		if (activePlayers.contains(e.getPlayer())) {
+			e.getPlayer().sendMessage("You're already in the middle of a craft");
+			return;
+		}
 		
+		int max = 0;
+		for (Metal metal : metals.values()) {
+			if (metal.inputs.size() > max)
+				max = metal.inputs.size();
+		}
+		
+		ContributionInventory inv = new ContributionInventory(e.getPlayer(), new FillableInventoryAction() {
+			
+			private ItemStack[] items;
+			
+			public void onAction() {
+				if (items == null || items.length < 1) 
+					return;
+				
+				onComponentPick(qp, items);
+			}
+			
+			public void provideItems(ItemStack[] items) {
+				this.items = items;
+			}
+		}, max, null, "Select Metal Ingredients/Ores");
+		InventoryMenu menu = new InventoryMenu(qp, inv);
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
+		
+	}
+	
+	private void onComponentPick(QuestPlayer player, ItemStack[] inputs) {
+		
+		if (!player.getPlayer().isOnline()) {
+			return;
+		}
+		
+		List<ItemStack> ingredients = Lists.newArrayList(inputs);
+		
+		//first, try and find a matching recipe
+		Metal recipe = null;
+		int yield = 0;
+		for (Metal metal : metals.values()) {
+			yield = metal.getMeterialCount(ingredients);
+			if (yield != -1) {
+				recipe = metal;
+				break;
+			}
+		}
+		
+		Player p = player.getPlayer().getPlayer();
+		
+		if (recipe == null) {
+			p.sendMessage(noSmeltingRecipeMessage);
+			
+			boolean trip = false;
+			for (ItemStack input : inputs) {
+				if (input != null && !(p.getInventory().addItem(input)).isEmpty()) {
+					if (!trip) {
+						p.sendMessage(ChatColor.RED + "There is no space left in your inventory");
+						trip = true;
+					}
+					p.getWorld().dropItem(p.getEyeLocation(), input);
+				}
+			}
+			return;
+		}
+		
+		int skillLevel = player.getSkillLevel(this);
+		ItemStack item = recipe.image.clone();
+		item.setAmount(yield);
+		QualityItem outcome = new QualityItem(item, 1.0);
+		
+		CraftEvent event = new CraftEvent(player, CraftEvent.CraftingType.SMITHING, recipe.difficulty, outcome);
+		event.setQualityModifier(event.getQualityModifier() + ((double) skillLevel * qualityRate));
+		Bukkit.getPluginManager().callEvent(event);
+		
+		if (event.isFail()) {
+			p.sendMessage(failMessage);
+			
+			boolean trip = false;
+			for (ItemStack input : inputs) {
+				if (input != null && !(p.getInventory().addItem(input)).isEmpty()) {
+					if (!trip) {
+						p.sendMessage(ChatColor.RED + "There is no space left in your inventory");
+						trip = true;
+					}
+					p.getWorld().dropItem(p.getEyeLocation(), input);
+				}
+			}
+			return;
+		}
+		
+		outcome = event.getOutcome();
+		outcome.setQuality(outcome.getQuality() * event.getQualityModifier());
+		outcome.getUnderlyingItem().setAmount((int) Math.round(outcome.getUnderlyingItem().getAmount() * event.getQuantityModifier()));
+		
+		
+		//clicked with smelting type and the tool. Start a smelting action
+		SmeltingGui gui = new SmeltingGui(this, player.getPlayer().getPlayer(), recipe.difficulty, 
+				ingredients, 5, 7, .3, 5, 0.20, new QualityItem(recipe.image.clone()));
+		InventoryMenu menu = new InventoryMenu(player, gui);
+		
+		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(player.getPlayer().getPlayer(), menu);
 		gui.start();
 	}
 	
