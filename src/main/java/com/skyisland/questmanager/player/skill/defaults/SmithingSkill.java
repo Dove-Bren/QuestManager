@@ -29,11 +29,14 @@ import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.effects.ChargeEffect;
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.CraftingSkill;
 import com.skyisland.questmanager.player.skill.LogSkill;
+import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.SkillRecipe;
+import com.skyisland.questmanager.player.skill.event.CraftEvent;
 import com.skyisland.questmanager.ui.actionsequence.ForgeSequence;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.action.FillableInventoryAction;
@@ -43,23 +46,26 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	
 	public static final String configName = "Smithing.yml";
 	
-	public static final String badRangeMessage = ChatColor.RED + "Despite your efforts, you were unable to find suitable wood";
+	private static final String badRangeMessage = ChatColor.RED + "You knew how to work the metal, but didn't possess "
+			+ "enough skill to truly see your creation live.";
 	
-	public static final String notOreMessage = ChatColor.DARK_GRAY + "There doesn't appear to be any good wood near that area";
+	private static final String noRecipeMessage = ChatColor.RED + "Your work with the metal was long, but the "
+			+ "result wasn't anything of use. The unused ingredients have been returned to your inventory.";
 	
-	public static final String tooSoonMessage = ChatColor.DARK_GRAY + "The wood has yet to regrow on this tree";
+	private static final String failMessage = ChatColor.RED + "Despite your efforts, the craft ended in failure. Perhaps "
+			+ "with a little more skill..?";
 	
 	private static final String winMessage = ChatColor.GREEN + "You successfully forged ";
 	
-	private static final Sound loseSound = Sound.BLOCK_FIRE_EXTINGUISH;
+	private static final Sound loseSound = Sound.BLOCK_GLASS_BREAK;
 	
-	private static final Sound winSound = Sound.ENTITY_PLAYER_LEVELUP;
+	private static final Sound winSound = Sound.BLOCK_ANVIL_USE;
 	
 	private static final ChargeEffect successEffect = new ChargeEffect(Effect.LAVA_POP);
 	
 	private static final ChargeEffect failEffect = new ChargeEffect(Effect.SMALL_SMOKE);
 	
-	private static final class Metal implements SkillRecipe {
+	public static final class Metal implements SkillRecipe {
 		
 		protected List<ItemStack> inputs;
 		
@@ -99,7 +105,15 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		}
 		
 		public boolean isMetal(ItemStack sample) {
-			return sample.getType() == image.getType() && sample.getDurability() == image.getDurability();
+			String sampleName = null, imageName = null;
+			if (sample.hasItemMeta() && sample.getItemMeta().hasDisplayName())
+				sampleName = sample.getItemMeta().getDisplayName();
+			
+			if (image.hasItemMeta() && image.getItemMeta().hasDisplayName())
+				imageName = image.getItemMeta().getDisplayName();
+			
+			return sample.getType() == image.getType() && sample.getDurability() == image.getDurability()
+					&& ((sampleName == null && imageName == null) || sampleName.equals(imageName));
 		}
 		
 		/**
@@ -206,7 +220,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		protected ItemStack reward;
 		
-		protected String name;
+		// String name;
 		
 		protected int hammerTimes;
 		
@@ -219,7 +233,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		public ForgeRecipe(String name, int difficulty, Metal base, List<ItemStack> inputs, ItemStack reward,
 				int hammerTimes, boolean cut, boolean quelch) {
-			this.name = name;
+			//this.name = name;
 			this.reward = reward;
 			this.hammerTimes = hammerTimes;
 			this.needsCut = cut;
@@ -254,9 +268,9 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		/**
 		 * Checks and returns whether the given combination matched this recipe
 		 */
-		public boolean isMatch(int hammerHits, boolean cut, boolean quelched, List<ItemStack> inputs) {
+		public boolean isMatch(int hammerHits, boolean cut, boolean quelched, Metal base, List<ItemStack> inputs) {
 			//easiest part first: check ints and bools
-			if (hammerHits != hammerTimes || cut != needsCut || quelched != needsQuelch)
+			if (hammerHits != hammerTimes || cut != needsCut || quelched != needsQuelch || !base.name.equals(this.base.name))
 				return false;
 			
 			//go through inputs, marking them off as we go
@@ -267,16 +281,22 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			Iterator<ItemStack> in = inputs.iterator();
 			ItemStack input, match;
 			while (in.hasNext()) {
+				input = in.next();
+				if (input == null)
+					continue;
+
 				if (matsLeft <= 0)
 					return false; //ran out of recipe items but have more inputs
-
-				input = in.next();
+				
 				match = null;
 				for (ItemStack item : this.inputs) {
 					if (matchMap.containsKey(item))
 						continue; //already matched
 					
-					if (item.getType() == input.getType() && item.getDurability() == input.getDurability()) {
+					if (item.getType() == input.getType() && item.getDurability() == input.getDurability())
+					if ((!item.hasItemMeta() && !input.hasItemMeta()) 
+						|| (!item.getItemMeta().hasDisplayName() && !input.getItemMeta().hasDisplayName())
+						|| (item.getItemMeta().getDisplayName().equals(input.getItemMeta().getDisplayName()))) {
 						match = item;
 						break;
 					}
@@ -298,7 +318,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		@Override
 		public String getDescription() {
 						
-			String builder = "Start by taking " + base.name + " and it with " + delistInputs() + ". Then, heat the metal "
+			String builder = "Start by taking " + base.name + " and combine it with " + delistInputs() + ". Then, heat the metal "
 					+ "near a forge. Take the hot metal and hammer it " + hammerTimes + " times, keeping the metal hot.";
 			
 			if (needsCut)
@@ -421,6 +441,8 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	
 	private double qualityRate;
 	
+	//private double damageQualityRate;
+	
 	private List<ForgeRecipe> forgeRecipes;
 	
 	private Map<String, Metal> metals;
@@ -461,6 +483,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		this.masteryOffset = config.getInt("masteryOffset", 5);
 		this.maxDifficultyRange = config.getInt("maxDifficultyRange", 20);
 		this.qualityRate = config.getDouble("qualityRate", 0.01);
+		//this.damageQualityRate = config.getDouble("damageQualityRate", .25);
 		
 		this.metals = new HashMap<>();
 		if (!config.contains("metals")) {
@@ -574,7 +597,8 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 				.addLine("difficultyRate", .05, Lists.newArrayList("Chance that a craft will succeed taken away", "per point in craft difficulty over the", "player's adjusted mastery level", "[double] .05 is 5%"))
 				.addLine("masteryOffset", 5, Lists.newArrayList("Levels over a craft difficulty a player must", "be to achieve a 100% chance of performing the craft", "[int] skill levels"))
 				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and craft difficulty", "that will be allowed to even be attempted", "[int] larger than 0"))
-				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per mining skill level", "[double] .01 is 1%"));
+				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per mining skill level", "[double] .01 is 1%"))
+				;//.addLine("damageQualityRate", .25, Lists.newArrayList("Per 1.0 point in quality away from 1 (default),", "how much should damage be multiplied by?", "for example, .25 means at quality 2.0, a", "forged weapon will do 125% damage", "[double] percent per 1.0 difference from normal"));
 			
 
 			
@@ -845,66 +869,103 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		hitChance = hitBase - (hitRate * levelDifference);
 		  hitChance += (hitBonus * skillLevel);
 		
-//		SmithingSkill skill, QuestPlayer player, String display, List<ItemStack> inputs,
-//		double heatTime, double coolTime, double hitChance
-		  
-		  ForgeSequence seq = new ForgeSequence(this, player, base.name, Lists.newArrayList(extraInputs),
+		  ForgeSequence seq = new ForgeSequence(this, player, base.name, base, Lists.newArrayList(extraInputs),
 				  heatTime, coolTime, hitChance);
 		  this.activePlayers.add(player.getPlayer().getPlayer());
 		  seq.start();
 	}
 
-	public void submitJob(List<ItemStack> inputs, int hammers, boolean cut, boolean quelch) {
+	public void submitJob(QuestPlayer player, Metal base, List<ItemStack> inputs, int hammers, boolean cut, boolean quelch) {
+		Player p = player.getPlayer().getPlayer();
 		
-		System.out.println("inputs: " + inputs.toString());
-		System.out.println("hammers: " + hammers + " : cut: " + cut + " : quelch: " + quelch);
-		//TODO
-		/*
-		 * 
-		
-			int range = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillCutoff();
-			skill.playerFinish(player);
-			skill.performMajor(player, Math.max(player.getSkillLevel(skill) - range, Math.min(player.getSkillLevel(skill) + range, skill)), false);
-		
-		if (!player.getPlayer().isOnline()) {
+		ForgeRecipe recipe = getForgeRecipe(base, inputs, hammers, cut, quelch);
+		if (recipe == null) {
+			p.sendMessage(noRecipeMessage);
+			p.getWorld().playSound(p.getLocation(), loseSound, 1, 1);
+			
+			boolean trip = false;
+			for (ItemStack input : inputs) {
+				if (input != null && !(p.getInventory().addItem(input)).isEmpty()) {
+					if (!trip) {
+						p.sendMessage(ChatColor.RED + "There is no space left in your inventory");
+						trip = true;
+					}
+					p.getWorld().dropItem(p.getEyeLocation(), input);
+				}
+			}
+			
+			failEffect.play(p, p.getLocation());
+			this.performMinor(player, base.difficulty, true);
 			return;
 		}
 		
-		Player p = player.getPlayer().getPlayer();
+		int skillLevel = player.getSkillLevel(this);
 		
-		p.sendMessage(winMessage);
+		if (recipe.difficulty > skillLevel + maxDifficultyRange) {
+			p.sendMessage(badRangeMessage);
+			p.getWorld().playSound(p.getLocation(), loseSound, 1, 1);
+
+			this.performMinor(player, recipe.difficulty, true);
+			failEffect.play(p, p.getLocation());
+			return;
+		}
+		
+		int adjustedOffset = Math.max(0, recipe.difficulty - (skillLevel - masteryOffset));
+		double successChance = 1 - (difficultyRate * adjustedOffset);
+		if (random.nextDouble() >= successChance) {
+			p.sendMessage(failMessage);
+			p.getWorld().playSound(p.getLocation(), loseSound, 1, 1);
+
+			this.perform(player, recipe.difficulty, true);
+			failEffect.play(p, p.getLocation());
+			return;
+		}
+
+		CraftEvent event = new CraftEvent(player, CraftEvent.CraftingType.SMITHING, recipe.difficulty, 
+				new QualityItem(addSignature(recipe.reward.clone(), player), 1.0));
+		Bukkit.getPluginManager().callEvent(event);
+		
+		if (event.isFail()) {
+			p.sendMessage(failMessage);
+			p.getWorld().playSound(p.getLocation(), loseSound, 1, 1);
+
+			this.perform(player, recipe.difficulty, true);
+			failEffect.play(p, p.getLocation());
+			return;
+		}
+		
+		perform(player, recipe.difficulty, false);
 		p.getWorld().playSound(p.getLocation(), winSound, 1, 1);
 		successEffect.play(p, p.getLocation());
 		
-		double qratio;
-		if (offByIndex == 0)
-			qratio = 1 + perfectBonus;
-		else {
-			qratio = 1.0 / (1.0 + (offByIndex / 5.0));
-		}
-		input.setQuality(input.getQuality() * qratio);
+		event.setQualityModifier(event.getQualityModifier() + skillLevel * qualityRate);
+		
+		QualityItem result = event.getOutcome();
+		
+		result.setQuality(result.getQuality() * event.getQualityModifier());
+		result.getUnderlyingItem().setAmount((int) Math.round(result.getUnderlyingItem().getAmount() * event.getQuantityModifier()));
 		
 		String name;
-		if (input.getItem().getItemMeta() == null || input.getItem().getItemMeta().getDisplayName() == null) {
-			name = YamlWriter.toStandardFormat(input.getItem().getType().toString());
+		if (result.getItem().getItemMeta() == null || result.getItem().getItemMeta().getDisplayName() == null) {
+			name = YamlWriter.toStandardFormat(result.getItem().getType().toString());
 		} else {
-			name = input.getItem().getItemMeta().getDisplayName();
+			name = result.getItem().getItemMeta().getDisplayName();
 		}
 		
 		FancyMessage msg = new FancyMessage(winMessage)
 				.color(ChatColor.GREEN)
-			.then(input.getItem().getAmount() > 1 ? input.getItem().getAmount() + "x " : "a ")
+			.then(result.getItem().getAmount() > 1 ? result.getItem().getAmount() + "x " : "a ")
 			.then("[" + name + "]")
 				.color(ChatColor.DARK_PURPLE)
-				.itemTooltip(input.getItem());
+				.itemTooltip(result.getItem());
 		
 		
 		msg.send(p);
-		if (!(p.getInventory().addItem(input.getItem())).isEmpty()) {
+		if (!(p.getInventory().addItem(result.getItem())).isEmpty()) {
 			p.sendMessage(ChatColor.RED + "There is no space left in your inventory");
-			p.getWorld().dropItem(p.getEyeLocation(), input.getItem());
+			p.getWorld().dropItem(p.getEyeLocation(), result.getItem());
 		}
-		 */
+		
 	}
 	
 	public void playerFinish(QuestPlayer player) {
@@ -939,5 +1000,31 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		List<SkillRecipe> list = new ArrayList<>(metals.values());
 		list.addAll(forgeRecipes);
 		return list;
+	}
+	
+	private ForgeRecipe getForgeRecipe(Metal base, List<ItemStack> inputs, int hits, boolean cut, boolean quelch) {
+		if (forgeRecipes.isEmpty()) 
+			return null;
+		
+		for (ForgeRecipe recipe : forgeRecipes) {
+			if (recipe.isMatch(hits, cut, quelch, base, inputs))
+				return recipe;
+		}
+		
+		return null;
+	}
+	
+	private ItemStack addSignature(ItemStack item, QuestPlayer player) {
+		ItemMeta meta = item.getItemMeta();
+		List<String> lore = meta.getLore();
+		if (lore == null)
+			lore = new LinkedList<>();
+		
+		lore.add(" ");
+		lore.add(ChatColor.DARK_AQUA + "Forged by " + player.getPlayer().getName());
+		meta.setLore(lore);
+		item.setItemMeta(meta);
+		
+		return item;
 	}
 }
