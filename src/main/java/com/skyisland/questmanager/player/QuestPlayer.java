@@ -79,7 +79,6 @@ import com.skyisland.questmanager.quest.history.History;
 import com.skyisland.questmanager.quest.history.HistoryEvent;
 import com.skyisland.questmanager.quest.requirements.Requirement;
 import com.skyisland.questmanager.ui.ChatMenu;
-import com.skyisland.questmanager.ui.menu.ActiveInventoryMenu;
 import com.skyisland.questmanager.ui.menu.ChatMenuOption;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.MultioptionChatMenu;
@@ -1398,11 +1397,11 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			return;
 		}
 		
-		InventoryMenu menu = new ActiveInventoryMenu(
-				this, new ContributionInventory(getPlayer().getPlayer(),
+		InventoryMenu menu = new InventoryMenu(
+				this, new ContributionInventory(getPlayer().getPlayer(), new CreateImbuementAction(this, holder),
 						QuestManagerPlugin.questManagerPlugin.getImbuementHandler().getImbuementSlots(this),
-						null, "Imbuement Table"),
-				new CreateImbuementAction(this, holder));
+						null, "Imbuement Table")
+				);
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(getPlayer().getPlayer(), menu);
 	}
 	

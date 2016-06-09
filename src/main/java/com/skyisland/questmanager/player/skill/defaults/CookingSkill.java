@@ -34,9 +34,7 @@ import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.SkillRecipe;
 import com.skyisland.questmanager.player.skill.event.CraftEvent;
-import com.skyisland.questmanager.ui.menu.ActiveInventoryMenu;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
-import com.skyisland.questmanager.ui.menu.action.CollectFishAction;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.CombiningGui;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.CookingGui;
 
@@ -500,7 +498,7 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		CookingGui gui = new CookingGui(e.getPlayer(), (Furnace) e.getClickedBlock().getState(),
 				bonusQuality, useItemQuality
 				);
-		InventoryMenu menu = new ActiveInventoryMenu(qp, gui, new CollectFishAction(qp));
+		InventoryMenu menu = new InventoryMenu(qp, gui);
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
 		
 		e.setCancelled(true);

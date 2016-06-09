@@ -7,7 +7,7 @@ import org.bukkit.inventory.ItemStack;
  * @author Skyler
  *
  */
-public abstract class ReturnGuiInventory extends GuiInventory {
+public abstract class __ReturnGuiInventory extends GuiInventory {
 	
 	public abstract ItemStack[] getResult();
 }

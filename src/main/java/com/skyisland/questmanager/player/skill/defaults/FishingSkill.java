@@ -7,9 +7,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
-import com.skyisland.questmanager.player.skill.event.FishEvent;
-import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,15 +18,16 @@ import org.bukkit.event.player.PlayerFishEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
-import com.skyisland.questmanager.ui.menu.ActiveInventoryMenu;
-import com.skyisland.questmanager.ui.menu.action.CollectFishAction;
+import com.skyisland.questmanager.player.skill.event.FishEvent;
+import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.FishingGui;
-import com.google.common.collect.Lists;
 
 public class FishingSkill extends LogSkill implements Listener {
 	
@@ -309,7 +307,7 @@ public class FishingSkill extends LogSkill implements Listener {
 		
 		FishingGui gui = new FishingGui(e.getPlayer(), reward, record.difficulty, rows,
 				reelDifficulty, reelDeviation, obstacleTime, obstacleDeviation, completionTime);
-		InventoryMenu menu = new ActiveInventoryMenu(qp, gui, new CollectFishAction(qp));
+		InventoryMenu menu = new InventoryMenu(qp, gui);
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
 		gui.start();
 		

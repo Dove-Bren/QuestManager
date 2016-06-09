@@ -35,7 +35,6 @@ import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.SkillRecipe;
 import com.skyisland.questmanager.ui.actionsequence.ForgeSequence;
-import com.skyisland.questmanager.ui.menu.ActiveInventoryMenu;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.action.FillableInventoryAction;
 import com.skyisland.questmanager.ui.menu.inventory.ContributionInventory;
@@ -770,15 +769,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			return;
 		}
 		
-		ContributionInventory inv = new ContributionInventory(e.getPlayer(), 1, 
-				(item) -> {
-						for (Metal metal : metals.values()) {
-							if (metal.isMetal(item)) 
-								return true;
-						}
-						return false;
-				}, "Select Base Metal");
-		InventoryMenu menu = new ActiveInventoryMenu(qp, inv, new FillableInventoryAction() {
+		ContributionInventory inv = new ContributionInventory(e.getPlayer(), new FillableInventoryAction() {
 			
 			private ItemStack[] items;
 			
@@ -792,7 +783,15 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			public void provideItems(ItemStack[] items) {
 				this.items = items;;
 			}
-		});
+		}, 1, 
+				(item) -> {
+						for (Metal metal : metals.values()) {
+							if (metal.isMetal(item)) 
+								return true;
+						}
+						return false;
+				}, "Select Base Metal");
+		InventoryMenu menu = new InventoryMenu(qp, inv);
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
 
 		
@@ -814,12 +813,9 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		final Metal baseMetal = material;
 		
-		player.getPlayer().getPlayer().closeInventory();
 		//now we have our base material, but still need the rest of the inputs. We need to pop another menu up
 		//to collect those
-		ContributionInventory inv = new ContributionInventory(player.getPlayer().getPlayer(), 9, 
-				null, "Select Additional Ingredients");
-		InventoryMenu menu = new ActiveInventoryMenu(player, inv, new FillableInventoryAction() {
+		ContributionInventory inv = new ContributionInventory(player.getPlayer().getPlayer(), new FillableInventoryAction() {
 			
 			private ItemStack[] items;
 			
@@ -830,8 +826,11 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			public void provideItems(ItemStack[] items) {
 				this.items = items;
 			}
-		});
+		}, 9, 
+				null, "Select Additional Ingredients");
+		InventoryMenu menu = new InventoryMenu(player, inv);
 		
+		System.out.println("Creating Inventory");
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(player.getPlayer().getPlayer(), menu);
 	}
 	

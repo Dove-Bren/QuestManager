@@ -4,16 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.skill.defaults.FishingSkill;
-import com.skyisland.questmanager.player.skill.QualityItem;
-import com.skyisland.questmanager.scheduling.Alarm;
-import com.skyisland.questmanager.scheduling.Alarmable;
-import com.skyisland.questmanager.ui.menu.inventory.ReturnGuiInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
@@ -26,9 +19,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
+import com.skyisland.questmanager.effects.ChargeEffect;
+import com.skyisland.questmanager.fanciful.FancyMessage;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.QualityItem;
+import com.skyisland.questmanager.player.skill.defaults.FishingSkill;
+import com.skyisland.questmanager.scheduling.Alarm;
+import com.skyisland.questmanager.scheduling.Alarmable;
+import com.skyisland.questmanager.ui.menu.inventory.CloseableGui;
+import com.skyisland.questmanager.ui.menu.inventory.GuiInventory;
 import com.skyisland.questmanager.ui.menu.inventory.InventoryItem;
 
-public class FishingGui extends ReturnGuiInventory implements Alarmable<Integer> {
+public class FishingGui extends GuiInventory implements Alarmable<Integer>, CloseableGui {
 	
 	public static FishingSkill skillLink = null;
 	
@@ -84,6 +87,10 @@ public class FishingGui extends ReturnGuiInventory implements Alarmable<Integer>
 	public static final String loseMessage = ChatColor.RED + "You failed to land the fish";
 	
 	public static final String winMessage = "Success!" + ChatColor.RESET + " You caught ";
+	
+	private static final ChargeEffect successEffect = new ChargeEffect(Effect.SPLASH);
+	
+	private static final ChargeEffect failEffect = new ChargeEffect(Effect.SMALL_SMOKE);
 	
 	private static final class ObstacleSetter implements Alarmable<Integer> {
 		
@@ -547,15 +554,20 @@ public class FishingGui extends ReturnGuiInventory implements Alarmable<Integer>
 	 * successful, or null was passed in to begin with
 	 */
 	@Override
-	public ItemStack[] getResult() {
+	public void onClose() {
 		//return result. If null, already was given
 		ItemStack[] ret = (result == null ? null : new ItemStack[]{result.getItem()});
 		Alarm.getScheduler().unregister(this);
 		
+		if (ret == null) {
+			successEffect.play(player, null);
+		} else {
+			player.sendMessage(loseMessage);
+			failEffect.play(player, null);
+		}
+		
 		loseGame();
 		clean();
-		
-		return ret;
 	}
 
 	public void setObstacleIcon(ItemStack obstacleIcon) {
