@@ -5,7 +5,7 @@
 # Create new release
 GROUP="com/skyisland/questmanager"
 PROJECT_NAME="QuestManager"
-VERSION=(ls ${HOME}/.m2/repository/$GROUP/$PROJECT_NAME)
+VERSION=$(ls ${HOME}/.m2/repository/$GROUP/$PROJECT_NAME)
 if [ "$(echo $VERSION | grep -o SNAPHOT)" == "SNAPSHOT" ]; then
     IS_PRE_RELEASE='true'
 else
