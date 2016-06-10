@@ -2,8 +2,10 @@
 
 GROUP="com/skyisland/questmanager"
 PROJECT_NAME="QuestManager"
-VERSION=$(ls ${HOME}/.m2/repository/$GROUP/$PROJECT_NAME)
+VERSION=$(ls ${HOME}/.m2/repository/${GROUP}/${PROJECT_NAME} | sed 's/maven-metadata-local.xml//' | xargs)
 if [ "$(echo $VERSION | grep -o SNAPHOT)" != "SNAPSHOT" ]; then
+
+    echo "VERSION: $VERSION"
 
     # Delete old release
     curl -X DELETE https://api.github.com/repos/Dove-Bren/QuestManager/releases/${VERSION}
@@ -16,6 +18,7 @@ if [ "$(echo $VERSION | grep -o SNAPHOT)" != "SNAPSHOT" ]; then
 
     # Upload assets to release
     JAR_NAME="${PROJECT_NAME}-${VERSION}.jar"
+    ls ${HOME}/build/libs/
     curl --data "$(cat ${HOME}/build/libs/${JAR_NAME})" https://uploads.github.com/repos/dove-bren/QuestManager/releases/${VERSION}/assets?name=${JAR_NAME}&access_token=${GH_TOKEN}
 fi
 
