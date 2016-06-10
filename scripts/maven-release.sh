@@ -8,8 +8,8 @@ git clone --branch=gh-pages https://${GH_TOKEN}@github.com/Dove-Bren/QuestManage
 cd repository
 
 DIR='com/skyisland/questmanager/QuestManager/'
-mkdir $DIR
-cp -rf ${HOME}/.m2/repository/${DIR}* $DIR
+mkdir -p $DIR
+cp -rf ${HOME}/.m2/repository/${DIR}* ${DIR}
 git add -f .
 git commit -m "Lastest maven dependency on successful travis build ${TRAVIS_BUILD_NUMBER} auto-pushed to repository"
 git push -f origin repository

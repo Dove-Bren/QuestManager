@@ -1,19 +1,21 @@
 #!/usr/bin/env bash
 
-# Delete old release
-
-# Create new release
 GROUP="com/skyisland/questmanager"
 PROJECT_NAME="QuestManager"
 VERSION=$(ls ${HOME}/.m2/repository/$GROUP/$PROJECT_NAME)
-if [ "$(echo $VERSION | grep -o SNAPHOT)" == "SNAPSHOT" ]; then
-    IS_PRE_RELEASE='true'
-else
-    IS_PRE_RELEASE='false'
-fi
-TAG_NAME="v$VERSION"
-NAME="$PROJECT_NAME v$VERSION"
-API_JSON="{\"tag_name\": \"$TAG_NAME\",\"target_commitish\": \"master\",\"name\": \"$NAME\",\"body\": \"Plugin release of version $VERSION from Travis build ${TRAVIS_BUILD_NUMBER}\",\"draft\": false,\"prerelease\": $IS_PRE_RELEASE}"
-curl --data "$API_JSON" https://api.github.com/repos/Dove-Bren/QuestManager/releases?access_token=${GH_TOKEN}
+if [ "$(echo $VERSION | grep -o SNAPHOT)" != "SNAPSHOT" ]; then
 
-# Upload assets to release
+    # Delete old release
+    curl -X DELETE https://api.github.com/repos/Dove-Bren/QuestManager/releases/${VERSION}
+
+    # Create new release
+    TAG_NAME="v$VERSION"
+    NAME="$PROJECT_NAME v$VERSION"
+    API_JSON="{\"tag_name\": \"$TAG_NAME\",\"target_commitish\": \"master\",\"name\": \"$NAME\",\"body\": \"Plugin release of version $VERSION from Travis build ${TRAVIS_BUILD_NUMBER}\",\"draft\": false,\"prerelease\": false}"
+    curl --data "$API_JSON" https://api.github.com/repos/Dove-Bren/QuestManager/releases?access_token=${GH_TOKEN}
+
+    # Upload assets to release
+    JAR_NAME="${PROJECT_NAME}-${VERSION}.jar"
+    curl --data "$(cat ${HOME}/build/libs/${JAR_NAME})" https://uploads.github.com/repos/dove-bren/QuestManager/releases/${VERSION}/assets?name=${JAR_NAME}&access_token=${GH_TOKEN}
+fi
+
