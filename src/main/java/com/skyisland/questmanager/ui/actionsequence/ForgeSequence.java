@@ -25,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.defaults.SmithingSkill;
+import com.skyisland.questmanager.player.skill.defaults.SmithingSkill.Metal;
 import com.skyisland.questmanager.scheduling.Alarm;
 import com.skyisland.questmanager.scheduling.Alarmable;
 
@@ -107,7 +108,9 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 	
 	private SmithingSkill skill;
 	
-	public ForgeSequence(SmithingSkill skill, QuestPlayer player, String display, List<ItemStack> inputs,
+	private Metal base;
+	
+	public ForgeSequence(SmithingSkill skill, QuestPlayer player, String display, Metal base, List<ItemStack> inputs,
 			double heatTime, double coolTime, double hitChance) {
 		this.skill = skill;
 		this.player = player;
@@ -116,6 +119,7 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 		this.heatTime = heatTime;
 		this.coolTime = coolTime;
 		this.hitChance = hitChance;
+		this.base = base;
 		
 		this.state = State.STOPPED;
 		
@@ -221,7 +225,7 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 		
 		displayBar.removeAll();
 		
-		skill.submitJob(inputs, hammerHits, cut, quelch);
+		skill.submitJob(player, base, inputs, hammerHits, cut, quelch);
 		skill.playerFinish(player);
 		
 		HandlerList.unregisterAll(this);

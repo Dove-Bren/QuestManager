@@ -8,7 +8,8 @@ git clone --branch=gh-pages https://${GH_TOKEN}@github.com/Dove-Bren/QuestManage
 # Commit and Push the Changes
 cd gh-pages
 git rm -rf ./docs
-cp -rf ../build/docs/javadoc/* ./docs
+mkdir ./docs
+cp -rf ../build/docs/javadoc/* ./docs/
 git add -f .
 git commit -m "Lastest javadoc on successful travis build ${TRAVIS_BUILD_NUMBER} auto-pushed to gh-pages"
 git push -f origin gh-pages
