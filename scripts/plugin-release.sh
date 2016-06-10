@@ -7,9 +7,6 @@ if [ "$(echo $VERSION | grep -o SNAPHOT)" != "SNAPSHOT" ]; then
 
     echo "VERSION: $VERSION"
 
-    # Delete old release
-    curl -X DELETE https://api.github.com/repos/Dove-Bren/QuestManager/releases/v${VERSION}
-
     # Create new release
     TAG_NAME="v$VERSION"
     NAME="$PROJECT_NAME v$VERSION"
