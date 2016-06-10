@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-pwd
 git config --global user.email "travis@travis-ci.org"
 git config --global user.name "travis-ci"
 git clone --branch=gh-pages https://${GH_TOKEN}@github.com/Dove-Bren/QuestManager gh-pages
