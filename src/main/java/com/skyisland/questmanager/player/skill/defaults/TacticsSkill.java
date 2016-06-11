@@ -104,9 +104,9 @@ public class TacticsSkill extends LogReducedSkill implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onCombat(CombatEvent e) {
-		if (e.isMiss()) {
+
+		if (e.isMiss() || e.getFinalDamage() <= 0)
 			return;
-		}
 		
 		int lvl = e.getPlayer().getSkillLevel(this);
 				

@@ -26,6 +26,10 @@ public class CombatEvent extends Event {
 	
 	public static final String noDamageMessage = ChatColor.YELLOW + "Your attack had no effect!" + ChatColor.RESET;
 	
+	public static final Sound missSound = Sound.ENTITY_ENDERDRAGON_FLAP;
+	
+	public static final Sound noDamage = Sound.ITEM_SHIELD_BLOCK;
+	
 	public static final String damageMessage = ChatColor.DARK_GRAY + "Your attack did "
 			+ ChatColor.RED + "%.2f damage" + ChatColor.DARK_GRAY + " to "
 			+ ChatColor.GRAY + "%s" + ChatColor.RESET;
@@ -34,14 +38,14 @@ public class CombatEvent extends Event {
 		if (misser.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_RESULT))
 			misser.getPlayer().getPlayer().sendMessage(missMessage);
 		targetLocation.getWorld().spigot().playEffect(targetLocation, Effect.SMOKE);
-		targetLocation.getWorld().playSound(targetLocation, Sound.ENTITY_ENDERDRAGON_FLAP, 1f, 1.85f);
+		targetLocation.getWorld().playSound(targetLocation, missSound, 1f, 1.85f);
 	}
 
 	public static void doNoDamage(QuestPlayer misser, Location targetLocation) {
 		if (misser.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_RESULT))
 			misser.getPlayer().getPlayer().sendMessage(noDamageMessage);
 		targetLocation.getWorld().spigot().playEffect(targetLocation, Effect.VILLAGER_THUNDERCLOUD);
-		targetLocation.getWorld().playSound(targetLocation, Sound.ITEM_SHIELD_BLOCK, 1f, 1f);
+		targetLocation.getWorld().playSound(targetLocation, noDamage, 1f, 1f);
 	}
 	
 	public static void doHit(QuestPlayer misser, Location targetLocation, double damage, String target) {

@@ -126,7 +126,7 @@ public class SwordsmanshipSkill extends LogSkill implements Listener {
 			Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), modifierName, 0);
 			return;
 		}
-		
+
 		int lvl = e.getPlayer().getSkillLevel(this);
 		
 		//reduce chance to hit if level under apprentice level
@@ -139,7 +139,10 @@ public class SwordsmanshipSkill extends LogSkill implements Listener {
 				e.setMiss(true);
 				causeMiss = true;
 			}
-		}
+		}		
+		
+		if (e.isMiss() || e.getFinalDamage() <= 0)
+			return;
 		
 		double rate = Math.max(lvl - apprenticeLevel, 0) * levelRate;
 		Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), modifierName, rate);

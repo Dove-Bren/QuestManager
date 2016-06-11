@@ -230,7 +230,6 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 		}
 		Player p = player.getPlayer().getPlayer();
 		
-		p.sendMessage(winMessage);
 		p.getWorld().playSound(p.getLocation(), winSound, 1, 1);
 		successEffect.play(p, p.getLocation());
 		

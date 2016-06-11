@@ -26,6 +26,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -111,6 +112,11 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	public static final String damageMessage = ChatColor.GRAY + "%s "
 			+ ChatColor.DARK_GRAY + "did " + ChatColor.DARK_RED + "%.2f damage"
 			+ ChatColor.DARK_GRAY + " to you" + ChatColor.RESET;
+	
+	public static final String missMessage = ChatColor.GRAY + "%s " + ChatColor.DARK_GRAY + "missed you with their blow";
+	
+	public static final String noDamageMessage = ChatColor.GRAY + "%s" + ChatColor.DARK_GRAY + "'s attack had "
+			+ "no effect";
 	
 	public static final String damageBlockMessage = ChatColor.DARK_GRAY + "You received " 
 			+ ChatColor.RED + "%.2f damage" + ChatColor.RESET;
@@ -1849,6 +1855,9 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		}
 		
 		LivingEntity target = (LivingEntity) e.getEntity();
+		if (target instanceof Villager ) {
+			return;
+		}
 		
 		//our player just damaged something. who knows what. Don't matter
 		CombatEvent event = new CombatEvent(this, target, weapon, other, e.getFinalDamage());
@@ -1878,7 +1887,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	private void onPlayerHurt(EntityDamageByEntityEvent e) {
-		if (getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_DAMAGE)) {
+		if (getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_DAMAGE)) { 
 			String name;
 			Entity damager = e.getDamager();
 			
@@ -1893,12 +1902,37 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				}
 			}
 			
+			if (damager instanceof Player) 
+				return; //handled on combat event instead
+			
 			if (damager.getCustomName() != null) {
 				name = damager.getCustomName();
 			} else {
 				name = damager.getType().toString();
 			}
 			getPlayer().getPlayer().sendMessage(String.format(damageMessage, name, e.getFinalDamage()));
+		}
+	}
+	
+	@EventHandler
+	public void onCombatEvent(CombatEvent e) {
+		if (e.getTarget() instanceof Player)
+		if (((Player) e.getTarget()).getUniqueId().equals(playerID)) {
+			
+			Player p = (Player) e.getTarget();
+			
+			//we just got hit by a player.
+			if (e.isMiss()) {
+				p.sendMessage(String.format(missMessage, e.getPlayer().getPlayer().getName()));
+				return;
+			}
+			
+			if (e.getFinalDamage() <= 0) {
+				p.sendMessage(String.format(noDamageMessage, e.getPlayer().getPlayer().getName()));
+				return;
+			}
+			
+			p.sendMessage(String.format(damageMessage, e.getPlayer().getPlayer().getName(), e.getFinalDamage()));
 		}
 	}
 	

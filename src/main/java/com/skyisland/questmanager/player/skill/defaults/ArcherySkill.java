@@ -131,9 +131,8 @@ public class ArcherySkill extends LogSkill implements Listener {
 			return;
 		}
 		
-		if (e.isMiss()) {
+		if (e.isMiss() || e.getFinalDamage() <= 0)
 			return;
-		}
 		
 		this.perform(e.getPlayer());
 	}

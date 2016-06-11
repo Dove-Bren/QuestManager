@@ -104,7 +104,7 @@ public class TwoHandedSkill extends LogSkill implements Listener {
 		return config;
 	}
 	
-	@EventHandler
+	@EventHandler()
 	public void onCombat(CombatEvent e) {
 		Player p = e.getPlayer().getPlayer().getPlayer();
 		
@@ -112,6 +112,9 @@ public class TwoHandedSkill extends LogSkill implements Listener {
 				|| (p.getInventory().getItemInOffHand() != null && e.getOtherItem().getType() != Material.AIR)) {
 			return;
 		}
+		
+		if (e.isMiss() || e.getFinalDamage() <= 0)
+			return;
 		
 		int lvl = e.getPlayer().getSkillLevel(this);
 		

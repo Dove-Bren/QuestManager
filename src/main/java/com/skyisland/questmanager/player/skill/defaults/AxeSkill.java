@@ -135,9 +135,13 @@ public class AxeSkill extends LogSkill implements Listener {
 			}
 		}
 		
+		
 		//just increase damage based on level
 		//every n levels, one more damage
 		e.setModifiedDamage(e.getModifiedDamage() + (Math.max(0, lvl - apprenticeLevel) / levelRate));
+		
+		if (e.getFinalDamage() <= 0)
+			return;
 		
 		this.perform(e.getPlayer(), causeMiss); //only get a 'cause miss' if this skill caused it 
 		

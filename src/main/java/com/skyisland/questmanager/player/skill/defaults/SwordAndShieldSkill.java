@@ -113,6 +113,9 @@ public class SwordAndShieldSkill extends Skill implements Listener {
 			return;
 		}
 		
+		if (e.isMiss() || e.getFinalDamage() <= 0)
+			return;
+		
 		int lvl = e.getPlayer().getSkillLevel(this);
 		
 		//just increase defense based on level
