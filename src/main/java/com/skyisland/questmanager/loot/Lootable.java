@@ -18,17 +18,15 @@
 
 package com.skyisland.questmanager.loot;
 
-import java.util.List;
-
 /**
- * Specifies a given object keeps a list of loot you can get from it.
+ * Specifies a given object can be looted.
  * Example application are enemies (which have loot on drop) or random chests.
- * @author Skyler
- *
  */
 public interface Lootable {
-	
-	List<Loot> getLoot();
 
+	/**
+	 * Retrieve a {@link Loot}.
+	 * @return a {@link Loot}.
+	 */
 	Loot loot();
 }

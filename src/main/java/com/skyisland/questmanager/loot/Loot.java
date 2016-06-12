@@ -185,7 +185,7 @@ public class Loot implements ConfigurationSerializable {
 	 * &nbsp;&nbsp;&nbsp;&nbsp;(<i>weight</i>) / (<i>Pool weight total</i>)
 	 * </p>
 	 */
-	public static Loot pickLoot(List<Loot> loot) {
+	public static Loot getRandomLoot(List<Loot> loot) {
 		if (loot == null || loot.isEmpty()) {
 			return null;
 		}
