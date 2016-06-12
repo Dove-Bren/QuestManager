@@ -6,6 +6,7 @@ com.skyisland.questmanager.effects
 com.skyisland.questmanager.enemy
 com.skyisland.questmanager.fanciful
 com.skyisland.questmanager.loot
+com.skyisland.questmanager.loot.dynamic
 com.skyisland.questmanager.magic
 com.skyisland.questmanager.magic.spell
 com.skyisland.questmanager.magic.spell.effect
