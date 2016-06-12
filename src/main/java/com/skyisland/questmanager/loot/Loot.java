@@ -18,8 +18,11 @@
 
 package com.skyisland.questmanager.loot;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -169,15 +172,43 @@ public class Loot implements ConfigurationSerializable {
 		return weight;
 	}
 
-	public void setWeight(double weight) {
-		this.weight = weight;
-	}
-
 	public ItemStack getItem() {
 		return item;
 	}
 
-	public void setItem(ItemStack item) {
-		this.item = item;
+	/**
+	 * Standard method of selecting a piece of loot from a list of loot items.
+	 * This method will return null if the argument list is either null or empty.
+	 * <p>
+	 * The algorithm this method follows the definition of {@link Loot}'s weight member; the chance a piece
+	 * of loot is selected is equal to
+	 * &nbsp;&nbsp;&nbsp;&nbsp;(<i>weight</i>) / (<i>Pool weight total</i>)
+	 * </p>
+	 */
+	public static Loot pickLoot(List<Loot> loot) {
+		if (loot == null || loot.isEmpty()) {
+			return null;
+		}
+
+		Random rand = new Random();
+		Collections.shuffle(loot, rand);
+
+		double max = 0;
+		for (Loot l : loot) {
+			max += l.getWeight();
+		}
+
+		double index = rand.nextDouble() * max;
+		for (Loot l : loot) {
+			index -= l.getWeight();
+			if (index <= 0) {
+				//reached piece of loot to select
+				return l;
+			}
+		}
+
+		//we reached end with a positive index. Something went wrong (probably double precious error)
+		//return end of list.
+		return loot.get(loot.size() - 1);
 	}
 }
