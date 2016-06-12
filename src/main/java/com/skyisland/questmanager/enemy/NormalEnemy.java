@@ -176,11 +176,6 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		
 	}
 	
-	@Override
-	public List<Loot> getLoot() {
-		return loot;
-	}
-	
 	public void addLoot(Loot loot) {
 		this.loot.add(loot);
 	}
@@ -222,6 +217,6 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 
 	@Override
 	public Loot loot(){
-		return Loot.pickLoot(loot);
+		return Loot.getRandomLoot(loot);
 	}
 }
