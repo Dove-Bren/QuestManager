@@ -43,9 +43,9 @@ import com.skyisland.questmanager.player.skill.event.CombatEvent;
  */
 public class Imbuement implements Listener {
 	
-	public static final Sound defaultSlashSound = Sound.BLOCK_FENCE_GATE_CLOSE;
+	public static final Sound DEFAULT_SLASH_SOUND = Sound.BLOCK_FENCE_GATE_CLOSE;
 	
-	public static final String fadeMessage = ChatColor.DARK_GRAY + "Your imbuement fades as you swap items";
+	public static final String FADE_MESSAGE = ChatColor.DARK_GRAY + "Your imbuement fades as you swap items";
 	
 	private Set<ImbuementEffect> effects;
 	
@@ -72,7 +72,7 @@ public class Imbuement implements Listener {
 	}
 	
 	public Imbuement(QuestPlayer player, Set<ImbuementEffect> effects, double cost) {
-		this(player, effects, cost, defaultSlashSound);
+		this(player, effects, cost, DEFAULT_SLASH_SOUND);
 	}
 	
 	/**
@@ -135,6 +135,6 @@ public class Imbuement implements Listener {
 		
 		//not allowed to switch weapons, cheater!
 		this.cancel();
-		e.getPlayer().sendMessage(fadeMessage);
+		e.getPlayer().sendMessage(FADE_MESSAGE);
 	}
 }

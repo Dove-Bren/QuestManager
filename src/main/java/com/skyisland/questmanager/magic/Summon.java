@@ -44,7 +44,7 @@ import com.skyisland.questmanager.player.PlayerOptions;
 
 public class Summon extends QuestMonsterNPC implements Alarmable<Integer>, Listener {
 	
-	public static final String deathMessage = ChatColor.DARK_GRAY + "Your summon has been dismissed" 
+	public static final String DEATH_MESSAGE = ChatColor.DARK_GRAY + "Your summon has been dismissed"
 	+ ChatColor.RESET;
 	
 	private UUID entityID;
@@ -86,7 +86,7 @@ public class Summon extends QuestMonsterNPC implements Alarmable<Integer>, Liste
 					QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(
 							(Player) tamer);
 					if (qp.getOptions().getOption(PlayerOptions.Key.CHAT_PET_DISMISSAL)) {
-						((Player) tamer).sendMessage(deathMessage);
+						((Player) tamer).sendMessage(DEATH_MESSAGE);
 					}
 				}
 			}
@@ -183,7 +183,7 @@ public class Summon extends QuestMonsterNPC implements Alarmable<Integer>, Liste
 						QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(
 								(Player) tamer);
 						if (qp.getOptions().getOption(PlayerOptions.Key.CHAT_PET_DISMISSAL)) {
-							((Player) tamer).sendMessage(deathMessage);
+							((Player) tamer).sendMessage(DEATH_MESSAGE);
 						}
 					}
 				}

@@ -46,7 +46,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
  */
 public class SpellWeavingManager {
 
-	public static final String badRecipeMessage = ChatColor.YELLOW + "Your woven spell energies failed to create"
+	public static final String BAD_RECIPE_MESSAGE = ChatColor.YELLOW + "Your woven spell energies failed to create"
 			+ " any meaningful effects" + ChatColor.RESET;
 	
 	private List<SpellWeavingSpell> spells;
@@ -97,7 +97,7 @@ public class SpellWeavingManager {
 			config.save(outfile);
 		} catch (Exception e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Ditch message: [" 
+			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Ditch message: ["
 					+ config.saveToString() + "]");
 		}
 			

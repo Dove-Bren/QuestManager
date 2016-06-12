@@ -39,7 +39,7 @@ import com.skyisland.questmanager.player.QuestPlayer;
  */
 public class Compass {
 	
-	private static final Vector resetVector = new Vector(0,0,-99999);
+	private static final Vector RESET_VECTOR = new Vector(0,0,-99999);
 	
 	public static class CompassDefinition {
 		
@@ -92,7 +92,7 @@ public class Compass {
 		
 		Location targ = qp.getCompassTarget();
 		if (targ == null) {
-			player.setCompassTarget(player.getWorld().getBlockAt(0, 0, 0).getLocation().add(resetVector));
+			player.setCompassTarget(player.getWorld().getBlockAt(0, 0, 0).getLocation().add(RESET_VECTOR));
 		} else {
 			player.setCompassTarget(qp.getCompassTarget());
 		}

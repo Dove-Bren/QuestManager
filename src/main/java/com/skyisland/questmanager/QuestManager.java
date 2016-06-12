@@ -125,7 +125,7 @@ public class QuestManager implements Listener {
 		
 		makeAnchors();
 
-		QuestManagerPlugin.questManagerPlugin.getLogger().info("Quest Manager created!");	
+		QuestManagerPlugin.questManagerPlugin.getLogger().info("Quest Manager created!");
 
 	}
 	
@@ -317,7 +317,7 @@ public class QuestManager implements Listener {
 	/**
 	 * Registers the quest, providing no frequency information.
 	 * Quests without frequency information are given equal chances of being
-	 * produced when requesting a random quest.
+	 * produced when requesting a RANDOM quest.
 	 */
 	public void registerQuest(Quest quest) {
 		if (quest == null) {
@@ -427,7 +427,7 @@ public class QuestManager implements Listener {
 //			for (final Entity e : w.getEntities()) 
 //			if (e.getType().equals(EntityType.VILLAGER)) {
 //				e.getLocation().getChunk().load(); //load chunk
-//				Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, 
+//				Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin,
 //						new Runnable(){
 //
 //							@Override

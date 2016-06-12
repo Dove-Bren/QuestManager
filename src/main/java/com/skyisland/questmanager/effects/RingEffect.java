@@ -32,7 +32,7 @@ import org.bukkit.entity.Entity;
  */
 public class RingEffect extends EntityEffect implements ConstantEffect, Alarmable<Integer> {
 
-	public static Random rand = new Random();
+	public final static Random RANDOM = new Random();
 	
 	/**
 	 * The particle to create

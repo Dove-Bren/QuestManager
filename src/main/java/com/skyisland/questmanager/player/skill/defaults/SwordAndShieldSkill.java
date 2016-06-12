@@ -42,7 +42,7 @@ import com.google.common.collect.Lists;
  */
 public class SwordAndShieldSkill extends Skill implements Listener {
 	
-	public static final String configName = "SwordAndShield.yml";
+	public static final String CONFIG_NAME = "SwordAndShield.yml";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -88,8 +88,8 @@ public class SwordAndShieldSkill extends Skill implements Listener {
 	private int levelRate;
 	
 	public SwordAndShieldSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {

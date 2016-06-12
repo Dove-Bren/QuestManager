@@ -40,7 +40,7 @@ import com.skyisland.questmanager.effects.AuraEffect;
  */
 public class SpellPylon implements Alarmable<Integer> {
 	
-	private static final String headYaml = 
+	private static final String HEAD_YAML =
 "skull:\n" 
 +"  ==: org.bukkit.inventory.ItemStack\n" 
 +"  type: SKULL_ITEM\n"
@@ -86,7 +86,7 @@ public class SpellPylon implements Alarmable<Integer> {
 		if (icon == null) {
 			YamlConfiguration yc = new YamlConfiguration();
 			try {
-				yc.loadFromString(headYaml);
+				yc.loadFromString(HEAD_YAML);
 				icon = yc.getItemStack("skull");
 			} catch (InvalidConfigurationException e) {
 				// TODO Auto-generated catch block

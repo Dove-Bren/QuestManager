@@ -26,15 +26,15 @@ import org.bukkit.event.HandlerList;
 
 public class MineEvent extends Event implements Cancellable {
 
-	private static final HandlerList handlers = new HandlerList();
+	private static final HandlerList HANDLERS = new HandlerList();
 	
 	@Override
 	public HandlerList getHandlers() {
-		return handlers;
+		return HANDLERS;
 	}
 	
 	public static HandlerList getHandlerList() {
-		return handlers;
+		return HANDLERS;
 	}
 	
 	private QuestPlayer player;

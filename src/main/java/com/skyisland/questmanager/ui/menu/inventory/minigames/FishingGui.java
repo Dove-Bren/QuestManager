@@ -53,62 +53,62 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 	
 	public static FishingSkill skillLink = null;
 	
-	public static final Random random = new Random();
+	public static final Random RANDOM = new Random();
 	
-	public static final ItemStack defaultObstacleIcon = new ItemStack(Material.WATER_LILY);
+	public static final ItemStack DEFAULT_OBSTACLE_ICON = new ItemStack(Material.WATER_LILY);
 	
-	public static final ItemStack defaultMeterOffIcon = new ItemStack(Material.WOOL, 1, (short) 4);
+	public static final ItemStack DEFAULT_METER_OFF_ICON = new ItemStack(Material.WOOL, 1, (short) 4);
 	
-	public static final ItemStack defaultMeterOnIcon = new ItemStack(Material.WOOL, 1, (short) 14);
+	public static final ItemStack DEFAULT_METER_ON_ICON = new ItemStack(Material.WOOL, 1, (short) 14);
 	
-	public static final ItemStack defaultReelOffIcon = new ItemStack(Material.STRING);
+	public static final ItemStack DEFAULT_REEL_OFF_ICON = new ItemStack(Material.STRING);
 	
-	public static final ItemStack defaultReelOnIcon = new ItemStack(Material.FISHING_ROD);
+	public static final ItemStack DEFAULT_REEL_ON_ICON = new ItemStack(Material.FISHING_ROD);
 	
-	public static final ItemStack defaultWaterIcon = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 11);
+	public static final ItemStack DEFAULT_WATER_ICON = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 11);
 	
 	{
 		ItemMeta meta;
 		
-		meta = defaultObstacleIcon.getItemMeta();
+		meta = DEFAULT_OBSTACLE_ICON.getItemMeta();
 		meta.setDisplayName("Lilypad");
-		defaultObstacleIcon.setItemMeta(meta);
-		meta = defaultWaterIcon.getItemMeta();
+		DEFAULT_OBSTACLE_ICON.setItemMeta(meta);
+		meta = DEFAULT_WATER_ICON.getItemMeta();
 		meta.setDisplayName("Water");
-		defaultWaterIcon.setItemMeta(meta);
-		meta = defaultReelOffIcon.getItemMeta();
+		DEFAULT_WATER_ICON.setItemMeta(meta);
+		meta = DEFAULT_REEL_OFF_ICON.getItemMeta();
 		meta.setDisplayName("Stop Reeling");
-		defaultReelOffIcon.setItemMeta(meta);
-		meta = defaultReelOnIcon.getItemMeta();
+		DEFAULT_REEL_OFF_ICON.setItemMeta(meta);
+		meta = DEFAULT_REEL_ON_ICON.getItemMeta();
 		meta.setDisplayName("Start Reeling");
-		defaultReelOnIcon.setItemMeta(meta);
-		meta = defaultMeterOnIcon.getItemMeta();
+		DEFAULT_REEL_ON_ICON.setItemMeta(meta);
+		meta = DEFAULT_METER_ON_ICON.getItemMeta();
 		meta.setDisplayName("Line Stress");
-		defaultMeterOnIcon.setItemMeta(meta);
-		meta = defaultMeterOnIcon.getItemMeta();
+		DEFAULT_METER_ON_ICON.setItemMeta(meta);
+		meta = DEFAULT_METER_ON_ICON.getItemMeta();
 		meta.setDisplayName("Line Stress");
-		defaultMeterOnIcon.setItemMeta(meta);
+		DEFAULT_METER_ON_ICON.setItemMeta(meta);
 	}
 	
-	public static final Sound waterSound = Sound.BLOCK_WATERLILY_PLACE;
+	public static final Sound WATER_SOUND = Sound.BLOCK_WATERLILY_PLACE;
 	
-	public static final Sound countdownSound = Sound.BLOCK_NOTE_PLING;
+	public static final Sound COUNTDOWN_SOUND = Sound.BLOCK_NOTE_PLING;
 	
-	public static final Sound startSound = Sound.ENTITY_BOBBER_SPLASH;
+	public static final Sound START_SOUND = Sound.ENTITY_BOBBER_SPLASH;
 	
-	public static final Sound loseSound = Sound.ENTITY_CAT_DEATH;
+	public static final Sound LOSE_SOUND = Sound.ENTITY_CAT_DEATH;
 	
-	public static final Sound winSound = Sound.ENTITY_PLAYER_LEVELUP;
+	public static final Sound WIN_SOUND = Sound.ENTITY_PLAYER_LEVELUP;
 	
-	public static final Sound clickSound = Sound.UI_BUTTON_CLICK;
+	public static final Sound CLICK_SOUND = Sound.UI_BUTTON_CLICK;
 	
-	public static final String loseMessage = ChatColor.RED + "You failed to land the fish";
+	public static final String LOSE_MESSAGE = ChatColor.RED + "You failed to land the fish";
 	
-	public static final String winMessage = "Success!" + ChatColor.RESET + " You caught ";
+	public static final String WIN_MESSAGE = "Success!" + ChatColor.RESET + " You caught ";
 	
-	private static final ChargeEffect successEffect = new ChargeEffect(Effect.SPLASH);
+	private static final ChargeEffect SUCCESS_EFFECT = new ChargeEffect(Effect.SPLASH);
 	
-	private static final ChargeEffect failEffect = new ChargeEffect(Effect.SMALL_SMOKE);
+	private static final ChargeEffect FAIL_EFFECT = new ChargeEffect(Effect.SMALL_SMOKE);
 	
 	private static final class ObstacleSetter implements Alarmable<Integer> {
 		
@@ -119,7 +119,7 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		public ObstacleSetter(FishingGui gui, double time) {
 			Alarm.getScheduler().schedule(this, 0, time);
 			this.gui = gui;
-			id = random.nextInt(Integer.MAX_VALUE);
+			id = RANDOM.nextInt(Integer.MAX_VALUE);
 		}
 		
 		@Override
@@ -148,7 +148,7 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		
 		public ReelTimer(FishingGui gui) {
 			Alarm.getScheduler().schedule(this, 0, .5);
-			this.id = random.nextInt(Integer.MAX_VALUE);
+			this.id = RANDOM.nextInt(Integer.MAX_VALUE);
 			this.gui = gui;
 		}
 		
@@ -261,12 +261,12 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		this.isReeling = false;
 		this.obstacles = new HashMap<>();
 		
-		this.meterOffIcon = defaultMeterOffIcon;
-		this.meterOnIcon = defaultMeterOnIcon;
-		this.reelOffIcon = defaultReelOffIcon;
-		this.reelOnIcon = defaultReelOnIcon;
-		this.obstacleIcon = defaultObstacleIcon;
-		this.waterIcon = defaultWaterIcon;
+		this.meterOffIcon = DEFAULT_METER_OFF_ICON;
+		this.meterOnIcon = DEFAULT_METER_ON_ICON;
+		this.reelOffIcon = DEFAULT_REEL_OFF_ICON;
+		this.reelOnIcon = DEFAULT_REEL_ON_ICON;
+		this.obstacleIcon = DEFAULT_OBSTACLE_ICON;
+		this.waterIcon = DEFAULT_WATER_ICON;
 		
 		this.stressCache = 3;
 		this.phase = GamePhase.SETTINGUP;
@@ -310,19 +310,19 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 			if (pos == 0) {
 				//stop reeling
 				this.isReeling = false;
-				player.playSound(player.getLocation(), clickSound, 1, 1);
+				player.playSound(player.getLocation(), CLICK_SOUND, 1, 1);
 				return null;
 			}
 			if (pos == 8) {
 				this.isReeling = true;
-				player.playSound(player.getLocation(), clickSound, 1, 1);
+				player.playSound(player.getLocation(), CLICK_SOUND, 1, 1);
 				return null;
 			}
 		}
 		
 		//somewhere in the water
 		if (obstacles.containsKey(pos)) {
-			player.playSound(player.getLocation(), waterSound, 1, 1);
+			player.playSound(player.getLocation(), WATER_SOUND, 1, 1);
 			obstacles.remove(pos);
 			inv.setItem(pos, waterIcon);
 			
@@ -368,7 +368,7 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		if (phase == GamePhase.SETTINGUP) {
 			//populating 'sea'
 			inv.setItem(reminder + 9, this.waterIcon);
-			player.playSound(player.getEyeLocation(), waterSound, 1, 1);
+			player.playSound(player.getEyeLocation(), WATER_SOUND, 1, 1);
 			
 			if (reminder >= (9 * this.waterRows) -1) {
 				startCountdown();
@@ -383,13 +383,13 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 			//countdown
 			if (reminder == 0) {
 				player.sendMessage(ChatColor.RED + "Go!");
-				player.playSound(player.getEyeLocation(), startSound, 1, 1);
+				player.playSound(player.getEyeLocation(), START_SOUND, 1, 1);
 				startGame();
 				return;
 			}
 			
 			player.sendMessage(ChatColor.YELLOW + "" + reminder);
-			player.playSound(player.getEyeLocation(), countdownSound, 1, 1);
+			player.playSound(player.getEyeLocation(), COUNTDOWN_SOUND, 1, 1);
 			Alarm.getScheduler().schedule(this, reminder - 1, 1);
 			return;
 		}
@@ -424,7 +424,7 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		this.isReeling = true;
 		this.lineStress = ((float) 3 / (float) 7);
 		
-		double oTime = Math.max(.5, random.nextGaussian() * this.obstacleDeviation + this.obstacleTime);
+		double oTime = Math.max(.5, RANDOM.nextGaussian() * this.obstacleDeviation + this.obstacleTime);
 		new ObstacleSetter(this, oTime);
 		reel = new ReelTimer(this);
 		
@@ -435,20 +435,20 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		if (phase != GamePhase.RUNNING) {
 			return;
 		}
-		//set up obstacle at random spot
-		double oTime = Math.max(.5, random.nextGaussian() * this.obstacleDeviation + this.obstacleTime);
+		//set up obstacle at RANDOM spot
+		double oTime = Math.max(.5, RANDOM.nextGaussian() * this.obstacleDeviation + this.obstacleTime);
 		new ObstacleSetter(this, oTime);
 		
 		if (obstacles.size() >= 9 * waterRows) {
 			return; //no place to put one
 		}
 		
-		int slot = random.nextInt(9 * waterRows) + 9;
+		int slot = RANDOM.nextInt(9 * waterRows) + 9;
 		while (inv.getItem(slot).isSimilar(this.obstacleIcon)) {
-			slot = random.nextInt(9 * waterRows) + 9;
+			slot = RANDOM.nextInt(9 * waterRows) + 9;
 		}
 		
-		player.playSound(player.getLocation(), waterSound, 1, 1);
+		player.playSound(player.getLocation(), WATER_SOUND, 1, 1);
 		obstacles.put(slot, true);
 		inv.setItem(slot, obstacleIcon);
 		this.isStuck = true;
@@ -460,7 +460,7 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		}
 		
 		//calculate reel + or -
-		float diff = ((float) random.nextGaussian() * reelDeviation) + reelDifficulty;
+		float diff = ((float) RANDOM.nextGaussian() * reelDeviation) + reelDifficulty;
 		
 		if (!isReeling && !isStuck) {
 			this.lineStress -= diff * 5;
@@ -514,8 +514,8 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 			skillLink.perform(qp, Math.max(qp.getSkillLevel(skillLink) - range, Math.min(qp.getSkillLevel(skillLink) + range, skillLevel)), true);
 		}
 		
-		//player.sendMessage(loseMessage);
-		player.getWorld().playSound(player.getLocation(), loseSound, 1, 1);
+		//player.sendMessage(LOSE_MESSAGE);
+		player.getWorld().playSound(player.getLocation(), LOSE_SOUND, 1, 1);
 		
 		clean();
 		
@@ -548,7 +548,7 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 				name = result.getItem().getItemMeta().getDisplayName();
 			}
 			
-			msg = new FancyMessage(winMessage)
+			msg = new FancyMessage(WIN_MESSAGE)
 					.color(ChatColor.GREEN)
 				.then(result.getItem().getAmount() > 1 ? result.getItem().getAmount() + "x " : "a ")
 				.then("[" + name + "]")
@@ -557,7 +557,7 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		}
 		
 		msg.send(player);
-		player.getWorld().playSound(player.getEyeLocation(), winSound, 1, 1);
+		player.getWorld().playSound(player.getEyeLocation(), WIN_SOUND, 1, 1);
 		player.getInventory().addItem(this.result.getItem());
 		
 		this.result = null;
@@ -578,10 +578,10 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		Alarm.getScheduler().unregister(this);
 		
 		if (ret == null) {
-			successEffect.play(player, null);
+			SUCCESS_EFFECT.play(player, null);
 		} else {
-			player.sendMessage(loseMessage);
-			failEffect.play(player, null);
+			player.sendMessage(LOSE_MESSAGE);
+			FAIL_EFFECT.play(player, null);
 		}
 		
 		loseGame();

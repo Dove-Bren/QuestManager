@@ -35,10 +35,10 @@ public class UIScheduler implements Runnable {
 	/**
 	 * How precise this scheduler runs. The value here represents how often the scheduler
 	 * appraises its scheduled tasks and runs things.
-	 * This value is in second. In other words, the scheduler cycles every 1 / <i>resolution</i>
+	 * This value is in second. In other words, the scheduler cycles every 1 / <i>RESOLUTION</i>
 	 * seconds.
 	 */
-	public static final float resolution = .5f;
+	public static final float RESOLUTION = .5f;
 	
 	private static UIScheduler scheduler;
 	
@@ -89,14 +89,14 @@ public class UIScheduler implements Runnable {
 		cycle = 0;
 		
 		//schedule ourselves
-		Bukkit.getScheduler().runTaskTimer(QuestManagerPlugin.questManagerPlugin, this, 
-				(long) Math.round(20 * UIScheduler.resolution) , 
-				(long) Math.round(20 * UIScheduler.resolution));
+		Bukkit.getScheduler().runTaskTimer(QuestManagerPlugin.questManagerPlugin, this,
+				(long) Math.round(20 * UIScheduler.RESOLUTION) ,
+				(long) Math.round(20 * UIScheduler.RESOLUTION));
 	}
 	
 	/**
 	 * Registers the task to be executed once over <i>n</i> cycles.
-	 * Once cycle is defined as 1 / {@link #resolution resolution} seconds.
+	 * Once cycle is defined as 1 / {@link #RESOLUTION RESOLUTION} seconds.
 	 */
 	public int schedule(UITickable task, int n) {
 		Record record = new Record(task, n);
@@ -113,7 +113,7 @@ public class UIScheduler implements Runnable {
 	
 	/**
 	 * Registers the task to be executed every <i>n</i> seconds.
-	 * The precision of the scheduling is limited by the {@link #resolution resolution}.
+	 * The precision of the scheduling is limited by the {@link #RESOLUTION RESOLUTION}.
 	 * This method will round to the nearest number of cycles, and instead only serves as a
 	 * convenience method to allow scheduling for a target amount of time instead of an abstract
 	 * number of cycles.
@@ -121,7 +121,7 @@ public class UIScheduler implements Runnable {
 	 */
 	public int schedule(UITickable task, float n) {
 		
-		int cycles = Math.max(1, Math.round(n / UIScheduler.resolution));
+		int cycles = Math.max(1, Math.round(n / UIScheduler.RESOLUTION));
 		return schedule(task, cycles);
 		
 	}

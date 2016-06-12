@@ -39,9 +39,9 @@ public final class Reflection {
 	}
 	
 	/**
-	 * Gets the version string from the package name of the CraftBukkit server implementation.
+	 * Gets the VERSION string from the package name of the CraftBukkit server implementation.
 	 * This is needed to bypass the JAR package name changing on each update.
-	 * @return The version string of the OBC and NMS packages, <em>including the trailing dot</em>.
+	 * @return The VERSION string of the OBC and NMS packages, <em>including the trailing dot</em>.
 	 */
 	public synchronized static String getVersion() {
 		if(_versionString == null){

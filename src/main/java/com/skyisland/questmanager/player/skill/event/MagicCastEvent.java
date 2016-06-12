@@ -36,15 +36,15 @@ public class MagicCastEvent extends Event {
 		UTILITY;
 	}
 
-	private static final HandlerList handlers = new HandlerList();
+	private static final HandlerList HANDLERS = new HandlerList();
 		
 	@Override
 	public HandlerList getHandlers() {
-		return handlers;
+		return HANDLERS;
 	}
 	
 	public static HandlerList getHandlerList() {
-		return handlers;
+		return HANDLERS;
 	}
 	
 	private QuestPlayer player;

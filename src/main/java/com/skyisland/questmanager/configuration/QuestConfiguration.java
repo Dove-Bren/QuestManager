@@ -51,7 +51,7 @@ public class QuestConfiguration {
 		NOTURNIN;
 	}
 	
-	public static final double configVersion = 1.00;
+	public static final double CONFIG_VERSION = 1.00;
 	
 	private YamlConfiguration config;
 		
@@ -83,10 +83,10 @@ public class QuestConfiguration {
 	 */
 	private void checkConfig() {
 		
-		if (config.getDouble("configversion", 0.0) - configVersion > .001) {
+		if (config.getDouble("configversion", 0.0) - CONFIG_VERSION > .001) {
 			String name = config.getString(QuestConfigurationField.NAME.getKey(), "NO NAME");
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("The quest [" + name + "] has an invalid version!\n"
-					+ "QuestManager Configuration Version: " + configVersion + " doesn't match quest's: " 
+			QuestManagerPlugin.questManagerPlugin.getLogger().warning("The quest [" + name + "] has an invalid VERSION!\n"
+					+ "QuestManager Configuration Version: " + CONFIG_VERSION + " doesn't match quest's: "
 					+ config.getDouble("configversion", 0.0));
 			
 		}

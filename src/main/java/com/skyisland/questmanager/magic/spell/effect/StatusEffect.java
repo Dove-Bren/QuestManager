@@ -140,10 +140,10 @@ public class StatusEffect extends ImbuementEffect {
 				//non player
 				//damage them for 0 if it's negative effect? 
 				if (isEffectHarmful(effect.getType())) {
-					targ.setMetadata(DamageEffect.damageMetaKey, new FixedMetadataValue
+					targ.setMetadata(DamageEffect.DAMAGE_META_KEY, new FixedMetadataValue
 							(QuestManagerPlugin.questManagerPlugin, true));
 					targ.damage(0.0, cause.getEntity());
-					targ.setMetadata(DamageEffect.damageMetaKey, new FixedMetadataValue
+					targ.setMetadata(DamageEffect.DAMAGE_META_KEY, new FixedMetadataValue
 							(QuestManagerPlugin.questManagerPlugin, true));
 				}
 				

@@ -44,7 +44,7 @@ import com.skyisland.questmanager.quest.history.HistoryEvent;
  */
 public class QuestJournal {
 	
-	public static final String escq = "\\\"";
+	public static final String ESCQ = "\\\"";
 	
 	public static void addQuestJournal(QuestPlayer qp) {
 		if (!qp.getPlayer().isOnline()) {

@@ -341,7 +341,7 @@ public class Quest implements Listener {
 			
 			QuestState state = getState();
 
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("Saving quest state: " + 
+			QuestManagerPlugin.questManagerPlugin.getLogger().info("Saving quest state: " +
 					saveLoc.getAbsolutePath());
 			try {
 				state.save(saveLoc);

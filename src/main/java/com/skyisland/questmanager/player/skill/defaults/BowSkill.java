@@ -40,9 +40,9 @@ import com.google.common.collect.Lists;
 
 public class BowSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "Bow.yml";
+	public static final String CONFIG_NAME = "Bow.yml";
 	
-	public static final String criticalMessage = ChatColor.DARK_GREEN + "You landed a critical hit" + ChatColor.RESET;
+	public static final String CRITICAL_MESSAGE = ChatColor.DARK_GREEN + "You landed a critical hit" + ChatColor.RESET;
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -99,8 +99,8 @@ public class BowSkill extends LogSkill implements Listener {
 	private double critDamage;
 	
 	public BowSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {
@@ -158,7 +158,7 @@ public class BowSkill extends LogSkill implements Listener {
 		if (lvl < apprenticeLevel) {
 			//3% per level under apprentice -- up to 45%
 			int miss = (int) (rateDecrease * (apprenticeLevel - lvl)); 
-			int roll = Skill.random.nextInt(100);
+			int roll = Skill.RANDOM.nextInt(100);
 			if (roll <= miss) {
 				e.setMiss(true);
 				causeMiss = true;
@@ -168,11 +168,11 @@ public class BowSkill extends LogSkill implements Listener {
 		//if it's a hit, try for a crit
 		if (doCrits) {
 			int land = Math.max(0, (int) levelRate * (lvl - apprenticeLevel));
-			int roll = Skill.random.nextInt(100);
+			int roll = Skill.RANDOM.nextInt(100);
 			if (roll <= land) {
 				if (QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(p)
 						.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_RESULT)) {
-					p.sendMessage(criticalMessage);
+					p.sendMessage(CRITICAL_MESSAGE);
 				}
 				
 				e.setEfficiency(e.getEfficiency() + critDamage);

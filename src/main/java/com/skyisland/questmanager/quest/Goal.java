@@ -140,7 +140,7 @@ public class Goal {
 					((StatekeepingRequirement) req).loadState(states.next());
 				}
 			} catch (NoSuchElementException e) {
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Error when loading state for quest" 
+				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Error when loading state for quest"
 						+ this.getQuest().getName() + "; Not enough requirement states!");
 			}
 		}

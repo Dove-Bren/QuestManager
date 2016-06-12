@@ -39,7 +39,7 @@ import com.skyisland.questmanager.player.skill.event.MagicApplyEvent;
 
 public class DamageEffect extends ImbuementEffect {
 	
-	public static final String damageMetaKey = "QM_magic_damage";
+	public static final String DAMAGE_META_KEY = "QM_magic_damage";
 	
 	/**
 	 * Registers this class as configuration serializable with all defined 
@@ -109,10 +109,10 @@ public class DamageEffect extends ImbuementEffect {
 			}			
 			
 			LivingEntity targ = (LivingEntity) e;
-			targ.setMetadata(damageMetaKey, new FixedMetadataValue
+			targ.setMetadata(DAMAGE_META_KEY, new FixedMetadataValue
 					(QuestManagerPlugin.questManagerPlugin, true));
 			targ.damage(curDamage, cause.getEntity());
-			targ.setMetadata(damageMetaKey, new FixedMetadataValue
+			targ.setMetadata(DAMAGE_META_KEY, new FixedMetadataValue
 					(QuestManagerPlugin.questManagerPlugin, true));
 			
 			if (cause instanceof QuestPlayer) {

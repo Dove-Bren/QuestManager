@@ -38,7 +38,7 @@ import com.skyisland.questmanager.player.skill.event.CraftEvent;
 
 public class DexteritySkill extends LogReducedSkill implements Listener {
 	
-	public static final String configName = "Dexterity.yml";
+	public static final String CONFIG_NAME = "Dexterity.yml";
 
 	public Type getType() {
 		return Skill.Type.OTHER;
@@ -82,8 +82,8 @@ public class DexteritySkill extends LogReducedSkill implements Listener {
 	private double levelRate;
 	
 	public DexteritySkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {

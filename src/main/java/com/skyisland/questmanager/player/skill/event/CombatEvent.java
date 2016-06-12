@@ -39,31 +39,31 @@ import com.skyisland.questmanager.player.PlayerOptions;
  */
 public class CombatEvent extends Event {
 	
-	public static final String missMessage = ChatColor.YELLOW + "You missed!" + ChatColor.RESET;
+	public static final String MISS_MESSAGE = ChatColor.YELLOW + "You missed!" + ChatColor.RESET;
 	
-	public static final String noDamageMessage = ChatColor.YELLOW + "Your attack had no effect!" + ChatColor.RESET;
+	public static final String NO_DAMAGE_MESSAGE = ChatColor.YELLOW + "Your attack had no effect!" + ChatColor.RESET;
 	
-	public static final String damageMessage = ChatColor.DARK_GRAY + "Your attack did "
+	public static final String DAMAGE_MESSAGE = ChatColor.DARK_GRAY + "Your attack did "
 			+ ChatColor.RED + "%.2f damage" + ChatColor.DARK_GRAY + " to "
 			+ ChatColor.GRAY + "%s" + ChatColor.RESET;
 	
 	public static void doMiss(QuestPlayer misser, Location targetLocation) {
 		if (misser.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_RESULT))
-			misser.getPlayer().getPlayer().sendMessage(missMessage);
+			misser.getPlayer().getPlayer().sendMessage(MISS_MESSAGE);
 		targetLocation.getWorld().spigot().playEffect(targetLocation, Effect.SMOKE);
 		targetLocation.getWorld().playSound(targetLocation, Sound.ENTITY_ENDERDRAGON_FLAP, 1f, 1.85f);
 	}
 
 	public static void doNoDamage(QuestPlayer misser, Location targetLocation) {
 		if (misser.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_RESULT))
-			misser.getPlayer().getPlayer().sendMessage(noDamageMessage);
+			misser.getPlayer().getPlayer().sendMessage(NO_DAMAGE_MESSAGE);
 		targetLocation.getWorld().spigot().playEffect(targetLocation, Effect.VILLAGER_THUNDERCLOUD);
 		targetLocation.getWorld().playSound(targetLocation, Sound.ITEM_SHIELD_BLOCK, 1f, 1f);
 	}
 	
 	public static void doHit(QuestPlayer misser, Location targetLocation, double damage, String target) {
 		if (misser.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_DAMAGE)) {
-			String modmsg = String.format(damageMessage, damage, target);
+			String modmsg = String.format(DAMAGE_MESSAGE, damage, target);
 			
 			misser.getPlayer().getPlayer().sendMessage(modmsg);
 		}
@@ -71,15 +71,15 @@ public class CombatEvent extends Event {
 		//TODO effects?
 	}
 
-	private static final HandlerList handlers = new HandlerList();
+	private static final HandlerList HANDLERS = new HandlerList();
 		
 	@Override
 	public HandlerList getHandlers() {
-		return handlers;
+		return HANDLERS;
 	}
 	
 	public static HandlerList getHandlerList() {
-		return handlers;
+		return HANDLERS;
 	}
 	
 	private QuestPlayer player;

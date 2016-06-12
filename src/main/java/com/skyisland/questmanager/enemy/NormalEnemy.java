@@ -123,7 +123,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		try {
 			type = EntityType.valueOf(((String) map.get("type")).toUpperCase());
 		} catch (Exception e) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to get EntityType " + 
+			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to get EntityType " +
 					(String) map.get("type") + ", so defaulting to ZOMBIE");
 			type = EntityType.ZOMBIE;
 		}
@@ -168,7 +168,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		
 		entity.getEquipment().setItemInMainHandDropChance(0f);
 		
-		entity.setMetadata(Enemy.classMetaKey, new FixedMetadataValue(
+		entity.setMetadata(Enemy.CLASS_META_KEY, new FixedMetadataValue(
 				QuestManagerPlugin.questManagerPlugin,
 				this.enemyClassID
 				));
@@ -187,7 +187,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 	
 	@EventHandler
 	public void onEnemyDeath(EntityDeathEvent e) {
-		List<MetadataValue> metas = e.getEntity().getMetadata(classMetaKey);
+		List<MetadataValue> metas = e.getEntity().getMetadata(CLASS_META_KEY);
 		if (metas == null || metas.isEmpty()) {
 			return;
 		}

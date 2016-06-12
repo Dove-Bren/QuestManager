@@ -35,7 +35,7 @@ public abstract class SimpleNPC extends NPC {
 	 * Defines how far an NPC can be when they are ticked before being teleported
 	 * back to their original location
 	 */
-	private static final double range = 20.0;
+	private static final double RANGE = 20.0;
 	
 	protected SimpleNPC(Location startingLoc) {
 		super();
@@ -62,8 +62,8 @@ public abstract class SimpleNPC extends NPC {
 		
 		if (!e.getLocation().getWorld().getName().equals(
 				startingLoc.getWorld().getName()) 
-				|| e.getLocation().distance(startingLoc) > range) {
-			//if we're in a different world (whut?) or range is too big,
+				|| e.getLocation().distance(startingLoc) > RANGE) {
+			//if we're in a different world (whut?) or RANGE is too big,
 			//teleport them back!
 			e.getLocation().getChunk().load();
 			startingLoc.getChunk().load();

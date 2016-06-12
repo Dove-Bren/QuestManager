@@ -38,7 +38,7 @@ import com.google.common.collect.Lists;
 
 public class ConcentrationSkill extends LogReducedSkill implements Listener {
 	
-	public static final String configName = "Concentration.yml";
+	public static final String CONFIG_NAME = "Concentration.yml";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -83,8 +83,8 @@ public class ConcentrationSkill extends LogReducedSkill implements Listener {
 	private double levelRate;
 	
 	public ConcentrationSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {

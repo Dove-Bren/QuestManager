@@ -72,7 +72,7 @@ public class SpellWeavingInvoker implements Listener {
 	}
 	
 	public SpellWeavingInvoker() {
-		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getAllowSpellWeaving() 
+		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getAllowSpellWeaving()
 				&& QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getUseWeavingInvoker()) {
 			Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 		}

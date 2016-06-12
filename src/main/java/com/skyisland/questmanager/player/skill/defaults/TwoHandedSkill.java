@@ -40,7 +40,7 @@ import com.skyisland.questmanager.ui.menu.action.ForgeAction;
 
 public class TwoHandedSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "TwoHanded.yml";
+	public static final String CONFIG_NAME = "TwoHanded.yml";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -86,8 +86,8 @@ public class TwoHandedSkill extends LogSkill implements Listener {
 	private int levelRate;
 	
 	public TwoHandedSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {

@@ -110,7 +110,7 @@ public class DynamicLoot extends Loot {
 			return null;
 		}
 		
-		double weight = defaultWeight;
+		double weight = DEFAULT_WEIGHT;
 		
 		if (map.containsKey("weight")) {
 			weight = (Double) map.get("weight");
@@ -148,13 +148,13 @@ public class DynamicLoot extends Loot {
 				type = Material.matchMaterial(tName);
 			} catch (Exception e) {
 				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to match material to "
-						+ tName + ". Defaulting to " + defaultMaterial.name());
-				type = defaultMaterial;
+						+ tName + ". Defaulting to " + DEFAULT_MATERIAL.name());
+				type = DEFAULT_MATERIAL;
 			}
 		} else {
 			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find type key in dynamicloot. "
-					+ "Defaulting to " + defaultMaterial.name());
-			type = defaultMaterial;
+					+ "Defaulting to " + DEFAULT_MATERIAL.name());
+			type = DEFAULT_MATERIAL;
 		}
 		
 		return new DynamicLoot(gen, type, weight);

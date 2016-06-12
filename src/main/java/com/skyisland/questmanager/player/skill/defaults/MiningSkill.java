@@ -53,11 +53,11 @@ import com.skyisland.questmanager.ui.menu.inventory.minigames.MiningGui;
 
 public class MiningSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "Mining.yml";
+	public static final String CONFIG_NAME = "Mining.yml";
 	
-	public static final String badRangeMessage = ChatColor.RED + "Despite your efforts, you were unable to find suitable ore";
+	public static final String BAD_RANGE_MESSAGE = ChatColor.RED + "Despite your efforts, you were unable to find suitable ore";
 	
-	public static final String notOreMessage = ChatColor.DARK_GRAY + "There doesn't appear to be any ore near that area";
+	public static final String NOT_ORE_MESSAGE = ChatColor.DARK_GRAY + "There doesn't appear to be any ore near that area";
 	
 	private static final class OreRecord {
 		
@@ -159,7 +159,7 @@ public class MiningSkill extends LogSkill implements Listener {
 	
 	public MiningSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 
 		
@@ -243,7 +243,7 @@ public class MiningSkill extends LogSkill implements Listener {
 				.addLine("hitRate", .0675, Lists.newArrayList("Number of hits deducted per difficulty", "over the player's level", "[double] hits per difficulty"))
 				.addLine("hitBonus", .25, Lists.newArrayList("Extra hits given per skill level", "[double] hits per level"))
 				.addLine("extraOrePerLevel", 0.05, Lists.newArrayList("Extra pieces of ore given to a player", "per level over difficulty level", "[double] 1.0 is a whole extra piece"))
-				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and ore difficulty", "that will be allowed through random ore", "algorithm", "[int] larger than 0"))
+				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and ore difficulty", "that will be allowed through RANDOM ore", "algorithm", "[int] larger than 0"))
 				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per mining skill level", "[double] .01 is 1%"))
 				.addLine("smeltingEnabled", true, Lists.newArrayList("Can players use ores on lava to combine it with another", "and get a single item stack of average quality", "[true|false]"))
 				.addLine("smeltPenalty", 0.05, Lists.newArrayList("If smelting two items, how much of the sum quality", "is lost in the process?", "[double] .01 is 1%"));
@@ -327,7 +327,7 @@ public class MiningSkill extends LogSkill implements Listener {
 		}
 		
 		if (!oreRecords.containsKey(e.getClickedBlock().getType())) {
-			e.getPlayer().sendMessage(notOreMessage);
+			e.getPlayer().sendMessage(NOT_ORE_MESSAGE);
 			return;
 		}
 
@@ -338,7 +338,7 @@ public class MiningSkill extends LogSkill implements Listener {
 		
 		OreRecord record = getOre(e.getClickedBlock().getType(), level);
 		if (record == null) {
-			e.getPlayer().sendMessage(badRangeMessage);
+			e.getPlayer().sendMessage(BAD_RANGE_MESSAGE);
 			return;
 		}
 		

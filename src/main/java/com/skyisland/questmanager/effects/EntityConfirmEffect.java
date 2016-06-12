@@ -26,16 +26,16 @@ import org.bukkit.entity.Player;
 
 /**
  * Effect signaling to the player that the entity they just interacted with was correct.
- * This effect was made with the 'slay' requirement in mind, where it'll display effects when you kill
+ * This EFFECT was made with the 'slay' requirement in mind, where it'll display effects when you kill
  * the right kind of enemy.
  *
  */
 public class EntityConfirmEffect extends QuestEffect {
 	
-	private static final Effect effect = Effect.STEP_SOUND;
+	private static final Effect EFFECT = Effect.STEP_SOUND;
 	
 	@SuppressWarnings("deprecation")
-	private static final int blockType = Material.EMERALD_BLOCK.getId();
+	private static final int BLOCK_TYPE = Material.EMERALD_BLOCK.getId();
 	
 	/**
 	 * The number of particals
@@ -59,6 +59,6 @@ public class EntityConfirmEffect extends QuestEffect {
 		}
 		
 		for (int i = 0; i < magnitude; i++)
-		((Player) player ) .playEffect(effectLocation, effect, blockType);
+		((Player) player ) .playEffect(effectLocation, EFFECT, BLOCK_TYPE);
 	}
 }

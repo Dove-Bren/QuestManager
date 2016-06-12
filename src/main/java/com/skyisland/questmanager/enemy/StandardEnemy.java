@@ -132,7 +132,7 @@ public class StandardEnemy extends NormalEnemy {
 		try {
 			type = EntityType.valueOf(((String) map.get("type")).toUpperCase());
 		} catch (Exception e) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to get EntityType " + 
+			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to get EntityType " +
 					(String) map.get("type") + ", so defaulting to ZOMBIE");
 			type = EntityType.ZOMBIE;
 		}

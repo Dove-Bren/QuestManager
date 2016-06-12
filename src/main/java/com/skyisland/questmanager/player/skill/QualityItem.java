@@ -33,7 +33,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
  */
 public class QualityItem {
 
-	public static final double normalQuality = 1.0;
+	public static final double NORMAL_QUALITY = 1.0;
 	
 	private ItemStack item;
 	
@@ -43,18 +43,18 @@ public class QualityItem {
 		if (!item.hasItemMeta() || !item.getItemMeta().hasLore()
 				|| !item.getItemMeta().getLore().get(0).toLowerCase().contains("quality: ")) {
 			this.item = item;
-			this.quality = normalQuality;
+			this.quality = NORMAL_QUALITY;
 			return;
 		}
 		
 		String line = ChatColor.stripColor(item.getItemMeta().getLore().get(0));
 		line = line.toLowerCase().substring(line.indexOf("quality: ") + 9).trim();
-		double quality = normalQuality;
+		double quality = NORMAL_QUALITY;
 		try {
 			quality = Double.parseDouble(line);
 		} catch (Exception e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("Just pretending it said " + normalQuality);
+			QuestManagerPlugin.questManagerPlugin.getLogger().info("Just pretending it said " + NORMAL_QUALITY);
 		}
 		this.item = item;
 		ItemMeta meta = item.getItemMeta();

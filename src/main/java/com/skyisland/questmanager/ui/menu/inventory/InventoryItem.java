@@ -38,7 +38,7 @@ public abstract class InventoryItem {
 	}
 	
 	/**
-	 * Returns the display item without any modification to the lore, etc. This is like the unformatted version
+	 * Returns the display item without any modification to the lore, etc. This is like the unformatted VERSION
 	 */
 	public ItemStack getRawDisplayItem() {
 		return displayItem;

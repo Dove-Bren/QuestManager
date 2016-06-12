@@ -39,7 +39,7 @@ import com.skyisland.questmanager.ui.menu.message.PlainMessage;
  */
 public class ServiceOfferItem extends ServiceItem {
 	
-	private static final Message denialMessage = new PlainMessage(ChatColor.RED + "You were missing some components of the craft");
+	private static final Message DENIAL_MESSAGE = new PlainMessage(ChatColor.RED + "You were missing some components of the craft");
 	
 	private ServiceOffer offer;
 	
@@ -90,7 +90,7 @@ public class ServiceOfferItem extends ServiceItem {
 	
 	@Override
 	public MenuAction getAction(QuestPlayer player) {
-		return new OfferServiceAction(offer, player, denialMessage);
+		return new OfferServiceAction(offer, player, DENIAL_MESSAGE);
 	}
 
 	/**

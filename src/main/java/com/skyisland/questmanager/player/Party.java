@@ -52,8 +52,7 @@ import com.skyisland.questmanager.fanciful.FancyMessage;
  *
  */
 public class Party implements Participant, Listener {
-	
-	
+
 	public static int maxSize = 4;
 	
 	private List<QuestPlayer> members;

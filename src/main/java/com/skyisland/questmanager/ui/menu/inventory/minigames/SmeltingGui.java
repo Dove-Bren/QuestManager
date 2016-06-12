@@ -62,62 +62,62 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		ENDED;
 	}
 	
-	public static final Random random = new Random();
+	public static final Random RANDOM = new Random();
 	
-	public static final ItemStack defaultHotIcon = new ItemStack(Material.FIREBALL);
+	public static final ItemStack DEFAULT_HOT_ICON = new ItemStack(Material.FIREBALL);
 	
-	public static final ItemStack smeltButtonIcon = new ItemStack(Material.IRON_FENCE);
+	public static final ItemStack SMELT_BUTTON_ICON = new ItemStack(Material.IRON_FENCE);
 	
-	public static final ItemStack slagIcon = new ItemStack(Material.COBBLESTONE);
+	public static final ItemStack SLAG_ICON = new ItemStack(Material.COBBLESTONE);
 	
 	{
 		ItemMeta meta;
 		
-		meta = defaultHotIcon.getItemMeta();
+		meta = DEFAULT_HOT_ICON.getItemMeta();
 		meta.setDisplayName("???");
-		defaultHotIcon.setItemMeta(meta);
+		DEFAULT_HOT_ICON.setItemMeta(meta);
 		
-		meta = smeltButtonIcon.getItemMeta();
+		meta = SMELT_BUTTON_ICON.getItemMeta();
 		meta.setDisplayName("Heat");
 		meta.addEnchant(Enchantment.FIRE_ASPECT, 88, true);
-		smeltButtonIcon.setItemMeta(meta);
+		SMELT_BUTTON_ICON.setItemMeta(meta);
 		
-		meta = slagIcon.getItemMeta();
+		meta = SLAG_ICON.getItemMeta();
 		meta.setDisplayName("Slag");
-		slagIcon.setItemMeta(meta);
+		SLAG_ICON.setItemMeta(meta);
 	}
 	
-	private static final Sound dismissSound = Sound.BLOCK_GRAVEL_BREAK;
+	private static final Sound DISMISS_SOUND = Sound.BLOCK_GRAVEL_BREAK;
 	
-	private static final Sound burnSound = Sound.BLOCK_FIRE_EXTINGUISH;
+	private static final Sound BURN_SOUND = Sound.BLOCK_FIRE_EXTINGUISH;
 	
-	private static final Sound loseSound = Sound.ENTITY_CAT_DEATH;
+	private static final Sound LOSE_SOUND = Sound.ENTITY_CAT_DEATH;
 	
-	private static final Sound winSound = Sound.ENTITY_PLAYER_LEVELUP;
+	private static final Sound WIN_SOUND = Sound.ENTITY_PLAYER_LEVELUP;
 	
-	private static final Sound clickSound = Sound.UI_BUTTON_CLICK;
+	private static final Sound CLICK_SOUND = Sound.UI_BUTTON_CLICK;
 	
-	private static final Sound liquifySound = Sound.BLOCK_LAVA_AMBIENT;
+	private static final Sound LIQUIFY_SOUND = Sound.BLOCK_LAVA_AMBIENT;
 	
-	private static final Sound smeltSound = Sound.BLOCK_FURNACE_FIRE_CRACKLE;
+	private static final Sound SMELT_SOUND = Sound.BLOCK_FURNACE_FIRE_CRACKLE;
 	
-	private static final Sound solidifySound = Sound.BLOCK_STONE_PLACE;
+	private static final Sound SOLIDIFY_SOUND = Sound.BLOCK_STONE_PLACE;
 	
-	private static final String tooManyHeats = ChatColor.GRAY + "You melted the metal too many times, and it has become brittle and worthless";
+	private static final String TOO_MANY_HEATS = ChatColor.GRAY + "You melted the metal too many times, and it has become brittle and worthless";
 	
-	private static final String loseMessage = ChatColor.RED + "You failed to find anything useable";
+	private static final String LOSE_MESSAGE = ChatColor.RED + "You failed to find anything useable";
 	
-	private static final String tooLittleMessage = ChatColor.RED + "You didn't salvage enough material to be worth anything";
+	private static final String TOO_LITTLE_MESSAGE = ChatColor.RED + "You didn't salvage enough material to be worth anything";
 	
-	private static final String winMessage = "Success!" + ChatColor.RESET + " You successfully smelted ";
+	private static final String WIN_MESSAGE = "Success!" + ChatColor.RESET + " You successfully smelted ";
 	
-	private static final Sound startSound = Sound.ITEM_ARMOR_EQUIP_IRON;
+	private static final Sound START_SOUND = Sound.ITEM_ARMOR_EQUIP_IRON;
 	
-	private static final String tooHardMessage = ChatColor.YELLOW + "The material is too hard to be dealt with. It must be liquified first.";
+	private static final String TOO_HARD_MESSAGE = ChatColor.YELLOW + "The material is too hard to be dealt with. It must be liquified first.";
 	
-	private static final ChargeEffect successEffect = new ChargeEffect(Effect.LAVA_POP);
+	private static final ChargeEffect SUCCESS_EFFECT = new ChargeEffect(Effect.LAVA_POP);
 	
-	private static final ChargeEffect failEffect = new ChargeEffect(Effect.SMALL_SMOKE);
+	private static final ChargeEffect FAIL_EFFECT = new ChargeEffect(Effect.SMALL_SMOKE);
 	
 	private int smeltingTime = 3;
 	
@@ -221,14 +221,14 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 			return null;
 		
 		if (pos == 0) {
-			player.playSound(player.getLocation(), clickSound, 1, 1);
+			player.playSound(player.getLocation(), CLICK_SOUND, 1, 1);
 			if (gameState != State.SOLID)
 				return null;
 			gameState = State.SMELTING;
 			currentHeats++;
 			currentClicks = 0;
 			Alarm.getScheduler().schedule(this, 0, 1);
-			player.playSound(player.getLocation(), smeltSound, 1, 1);
+			player.playSound(player.getLocation(), SMELT_SOUND, 1, 1);
 			return null;
 			
 		}
@@ -240,7 +240,7 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		}
 		
 		if (this.gameState != State.LIQUID) {
-			player.sendMessage(tooHardMessage);
+			player.sendMessage(TOO_HARD_MESSAGE);
 			return null;
 		}
 		
@@ -251,10 +251,10 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		if (!slot && back != null) {
 			//they discarded some metal!
 			discardedMetals++;
-			player.playSound(player.getLocation(), burnSound, 1, 1);
+			player.playSound(player.getLocation(), BURN_SOUND, 1, 1);
 		}
 		
-		player.playSound(player.getLocation(), dismissSound, 1, 1);
+		player.playSound(player.getLocation(), DISMISS_SOUND, 1, 1);
 		currentClicks++;
 		update();
 		
@@ -268,16 +268,16 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 
 		//generate blocks.
 		//first block is the button
-		inv.setItem(0, smeltButtonIcon);
+		inv.setItem(0, SMELT_BUTTON_ICON);
 		
 		ItemStack slot;
 		for (int i = 1; i < 9 * rows; i++) {
-			if (random.nextDouble() < metalRatio) {
+			if (RANDOM.nextDouble() < metalRatio) {
 				//it's metal. pick one
-				slot = inputs.get(random.nextInt(inputs.size()));
+				slot = inputs.get(RANDOM.nextInt(inputs.size()));
 				generatedMetals++;
 			} else {
-				slot = slagIcon;
+				slot = SLAG_ICON;
 				this.slagSlots.add(i);
 			}
 			
@@ -291,7 +291,7 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		displayBar.addPlayer(player);
 		
 		player.getPlayer().sendMessage(ChatColor.GREEN + "Begin");
-		player.playSound(player.getLocation(), startSound, 1, 1);
+		player.playSound(player.getLocation(), START_SOUND, 1, 1);
 		
 		this.gameState = State.SOLID;
 		currentClicks = 0;
@@ -321,7 +321,7 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		for (int i = 1; i < 9 * rows; i++) {
 			inv.setItem(i, backend.get(i));
 		}
-		player.playSound(player.getLocation(), solidifySound, 1, 1);
+		player.playSound(player.getLocation(), SOLIDIFY_SOUND, 1, 1);
 		gameState = State.SOLID;
 	}
 	
@@ -329,9 +329,9 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		//turn all blocks into hidden block stuff
 		for (int i = 1; i < 9 * rows; i++) {
 			if (backend.containsKey(i))
-			inv.setItem(i, defaultHotIcon);
+			inv.setItem(i, DEFAULT_HOT_ICON);
 		}
-		player.playSound(player.getLocation(), liquifySound, 1, 1);
+		player.playSound(player.getLocation(), LIQUIFY_SOUND, 1, 1);
 		gameState = State.LIQUID;
 	}
 	
@@ -359,15 +359,15 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		this.gameState = State.STOPPED;
 		
 		if (currentHeats >= maxHeats)
-			player.sendMessage(tooManyHeats);
+			player.sendMessage(TOO_MANY_HEATS);
 		else
-			player.sendMessage(loseMessage);
+			player.sendMessage(LOSE_MESSAGE);
 		
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
 		skill.perform(qp, skillLevel, true);
 		
-		player.getWorld().playSound(player.getLocation(), loseSound, 1, 1);
-		failEffect.play(player, player.getLocation());
+		player.getWorld().playSound(player.getLocation(), LOSE_SOUND, 1, 1);
+		FAIL_EFFECT.play(player, player.getLocation());
 
 		player.closeInventory();
 	}
@@ -394,7 +394,7 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 		FancyMessage msg;
 		
 		if (result.getUnderlyingItem().getAmount() <= 0)
-			msg = new FancyMessage(tooLittleMessage);
+			msg = new FancyMessage(TOO_LITTLE_MESSAGE);
 		else {
 			String name;
 			if (result.getItem().getItemMeta() == null || result.getItem().getItemMeta().getDisplayName() == null) {
@@ -403,7 +403,7 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 				name = result.getItem().getItemMeta().getDisplayName();
 			}
 			
-			msg = new FancyMessage(winMessage)
+			msg = new FancyMessage(WIN_MESSAGE)
 					.color(ChatColor.GREEN)
 				.then(result.getItem().getAmount() > 1 ? result.getItem().getAmount() + "x " : "a ")
 				.then("[" + name + "]")
@@ -417,8 +417,8 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 			player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
 			player.getWorld().dropItem(player.getEyeLocation(), result.getItem());
 		}
-		player.getWorld().playSound(player.getEyeLocation(), winSound, 1, 1);
-		successEffect.play(player, player.getLocation());
+		player.getWorld().playSound(player.getEyeLocation(), WIN_SOUND, 1, 1);
+		SUCCESS_EFFECT.play(player, player.getLocation());
 		
 		player.closeInventory();
 		

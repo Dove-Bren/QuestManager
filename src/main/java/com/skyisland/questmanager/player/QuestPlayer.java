@@ -125,17 +125,17 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
  */
 public class QuestPlayer implements Participant, Listener, MagicUser, Comparable<QuestPlayer> {
 	
-	public static final String damageMessage = ChatColor.GRAY + "%s "
+	public static final String DAMAGE_MESSAGE = ChatColor.GRAY + "%s "
 			+ ChatColor.DARK_GRAY + "did " + ChatColor.DARK_RED + "%.2f damage"
 			+ ChatColor.DARK_GRAY + " to you" + ChatColor.RESET;
 	
-	public static final String damageBlockMessage = ChatColor.DARK_GRAY + "You received " 
+	public static final String DAMAGE_BLOCK_MESSAGE = ChatColor.DARK_GRAY + "You received "
 			+ ChatColor.RED + "%.2f damage" + ChatColor.RESET;
 	
-	public static final String pylonsResetMessage = ChatColor.DARK_GRAY + "Your spell pylons have been cleared"
+	public static final String PYLONS_RESET_MESSAGE = ChatColor.DARK_GRAY + "Your spell pylons have been cleared"
 			+ ChatColor.RESET;
 	
-	public static final String spellWeavingManaMesage = ChatColor.DARK_GRAY + "Your energies were properly"
+	public static final String SPELL_WEAVING_MANA_MESAGE = ChatColor.DARK_GRAY + "Your energies were properly"
 			+ " attuned, but you " + ChatColor.GRAY + "lacked the mana" + ChatColor.DARK_GRAY 
 			+ " to properly invoke your spell" + ChatColor.RESET;
 	
@@ -846,7 +846,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		
 		if (!e.getFrom().getWorld().equals(e.getDestination().getLocation(getPlayer().getPlayer()).getWorld())) {
 			this.clearSpellPylons();
-			getPlayer().getPlayer().sendMessage(pylonsResetMessage);
+			getPlayer().getPlayer().sendMessage(PYLONS_RESET_MESSAGE);
 		}
 			
 		if (e.getTeleportee().equals(getPlayer())) {
@@ -1859,7 +1859,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			return;
 		}
 		
-		List<MetadataValue> meta = e.getEntity().getMetadata(DamageEffect.damageMetaKey);
+		List<MetadataValue> meta = e.getEntity().getMetadata(DamageEffect.DAMAGE_META_KEY);
 		
 		if (meta != null && !meta.isEmpty() && meta.get(0).asBoolean()) {
 			return;
@@ -1905,7 +1905,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 					damager = (Entity) p.getShooter();
 				} else {
 					//custom message for arrows and crap from non-entities
-					getPlayer().getPlayer().sendMessage(String.format(damageBlockMessage, e.getFinalDamage()));
+					getPlayer().getPlayer().sendMessage(String.format(DAMAGE_BLOCK_MESSAGE, e.getFinalDamage()));
 					return;
 				}
 			}
@@ -1915,7 +1915,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			} else {
 				name = damager.getType().toString();
 			}
-			getPlayer().getPlayer().sendMessage(String.format(damageMessage, name, e.getFinalDamage()));
+			getPlayer().getPlayer().sendMessage(String.format(DAMAGE_MESSAGE, name, e.getFinalDamage()));
 		}
 	}
 	
@@ -2009,13 +2009,13 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				.getSpell(typeList);
 				
 		if (spell == null) {
-			getPlayer().getPlayer().sendMessage(SpellWeavingManager.badRecipeMessage);
+			getPlayer().getPlayer().sendMessage(SpellWeavingManager.BAD_RECIPE_MESSAGE);
 			return;
 		}
 		
 		if (!getPlayer().getPlayer().getGameMode().equals(GameMode.CREATIVE) && 
 				mp < spell.getCost()) {
-			getPlayer().getPlayer().sendMessage(spellWeavingManaMesage);
+			getPlayer().getPlayer().sendMessage(SPELL_WEAVING_MANA_MESAGE);
 			getPlayer().getPlayer().playSound(getPlayer().getPlayer().getLocation(), Sound.BLOCK_WATERLILY_PLACE, 1.0f, 0.5f);
 			return;
 		}

@@ -118,7 +118,7 @@ public class SummonTamedEffect extends SpellEffect {
 		}
 	}
 	
-	public static final String summonDenial = ChatColor.YELLOW + "You cannot summon this, as you already have too many summons!";
+	public static final String SUMMON_DENIAL = ChatColor.YELLOW + "You cannot summon this, as you already have too many summons!";
 	
 	private int duration;
 	
@@ -174,7 +174,7 @@ public class SummonTamedEffect extends SpellEffect {
 		if (cause instanceof Player) {
 			if (!manager.registerSummon((Player) cause, s)) {
 				s.remove();
-				cause.getEntity().sendMessage(summonDenial);
+				cause.getEntity().sendMessage(SUMMON_DENIAL);
 				return;
 			}
 		} else {

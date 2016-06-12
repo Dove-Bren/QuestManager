@@ -51,9 +51,9 @@ import com.skyisland.questmanager.QuestManagerPlugin;
  */
 public class Loot implements ConfigurationSerializable {
 	
-	public static final Material defaultMaterial = Material.STONE;
+	public static final Material DEFAULT_MATERIAL = Material.STONE;
 	
-	public static final double defaultWeight = 1.0;
+	public static final double DEFAULT_WEIGHT = 1.0;
 	
 	/**
 	 * Registers this class as configuration serializable with all defined 
@@ -105,7 +105,7 @@ public class Loot implements ConfigurationSerializable {
 			return null;
 		}
 		
-		double weight = defaultWeight;
+		double weight = DEFAULT_WEIGHT;
 		ItemStack item;
 		
 		if (map.containsKey("weight")) {
@@ -121,8 +121,8 @@ public class Loot implements ConfigurationSerializable {
 					type = Material.matchMaterial((String) o);
 				} catch (Exception e) {
 					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to match material to "
-							+ (String) o + ". Defaulting to " + defaultMaterial.name());
-					type = defaultMaterial;
+							+ (String) o + ". Defaulting to " + DEFAULT_MATERIAL.name());
+					type = DEFAULT_MATERIAL;
 				}
 				
 				item = new ItemStack(type);
@@ -132,14 +132,14 @@ public class Loot implements ConfigurationSerializable {
 				} catch (Exception e) {
 					e.printStackTrace();
 					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to get item from the "
-							+ "provided object: "+ o.toString() + ". Defaulting to " + defaultMaterial.name());
-					item = new ItemStack(defaultMaterial);
+							+ "provided object: "+ o.toString() + ". Defaulting to " + DEFAULT_MATERIAL.name());
+					item = new ItemStack(DEFAULT_MATERIAL);
 				}
 			}
 		} else {
 			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find item key in loot. "
-					+ "Defaulting to " + defaultMaterial.name());
-			item = new ItemStack(defaultMaterial);
+					+ "Defaulting to " + DEFAULT_MATERIAL.name());
+			item = new ItemStack(DEFAULT_MATERIAL);
 		}
 		
 		return new Loot(item, weight);

@@ -51,7 +51,7 @@ public abstract class Enemy implements ConfigurationSerializable {
 		enemyClassIDIndex = ((new Random()).nextInt(4000));
 	}
 	
-	public static final String classMetaKey = "QMEnemySpawnClass";
+	public static final String CLASS_META_KEY = "QMEnemySpawnClass";
 	
 	public Enemy(String name, EntityType type) {
 		this.enemyClassID = generateNewEnemyClassID();
@@ -61,7 +61,7 @@ public abstract class Enemy implements ConfigurationSerializable {
 	
 	public void spawn(Location loc) {
 		Entity e = loc.getWorld().spawnEntity(loc, type);
-		e.setMetadata(Enemy.classMetaKey, new FixedMetadataValue(
+		e.setMetadata(Enemy.CLASS_META_KEY, new FixedMetadataValue(
 				QuestManagerPlugin.questManagerPlugin,
 				this.enemyClassID
 				));

@@ -52,9 +52,9 @@ import com.skyisland.questmanager.ui.menu.inventory.minigames.FashioningGui;
 
 public class FashioningSkill extends LogSkill implements Listener, CraftingSkill {
 	
-	private static final String inUseMessage = ChatColor.GRAY + "That fashioning bench is already in use by another player";
+	private static final String IN_USE_MESSAGE = ChatColor.GRAY + "That fashioning bench is already in use by another player";
 	
-	public static final String configName = "Fashioning.yml";
+	public static final String CONFIG_NAME = "Fashioning.yml";
 
 	public static final class FashioningRecipe implements SkillRecipe {
 		
@@ -159,8 +159,8 @@ public class FashioningSkill extends LogSkill implements Listener, CraftingSkill
 	private List<FashioningRecipe> recipes;
 	
 	public FashioningSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 
 		
@@ -290,7 +290,7 @@ public class FashioningSkill extends LogSkill implements Listener, CraftingSkill
 		}
 		
 		if (tableMap.containsKey(e.getClickedBlock().getLocation())) {
-			e.getPlayer().sendMessage(inUseMessage);
+			e.getPlayer().sendMessage(IN_USE_MESSAGE);
 			return;
 		}
 		

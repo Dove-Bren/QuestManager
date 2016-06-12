@@ -24,7 +24,7 @@ import java.util.Random;
 
 /**
  * Specifies a given object keeps a list of loot you can get from it.
- * Example application are enemies (which have loot on drop) or random chests.
+ * Example application are enemies (which have loot on drop) or RANDOM chests.
  *
  */
 public interface Lootable {

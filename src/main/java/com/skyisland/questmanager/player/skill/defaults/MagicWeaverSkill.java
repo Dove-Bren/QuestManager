@@ -48,9 +48,9 @@ import com.google.common.collect.Lists;
  */
 public class MagicWeaverSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "MagicWeaver.yml";
+	public static final String CONFIG_NAME = "MagicWeaver.yml";
 	
-	public static final String modifierName = "QuestManager SpellWeaver bonus";
+	public static final String MODIFIER_NAME = "QuestManager SpellWeaver bonus";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -111,8 +111,8 @@ public class MagicWeaverSkill extends LogSkill implements Listener {
 	private int levelPenalty;
 	
 	public MagicWeaverSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {
@@ -156,7 +156,7 @@ public class MagicWeaverSkill extends LogSkill implements Listener {
 		
 		if (!ForgeAction.Repairable.isRepairable(e.getWeapon().getType())
 				|| (e.getWeapon() == null || !SpellHolder.SpellHolderDefinition.isHolder(e.getOtherItem()))) {
-			Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), modifierName, 0);
+			Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), MODIFIER_NAME, 0);
 			return;
 		}
 		
@@ -165,7 +165,7 @@ public class MagicWeaverSkill extends LogSkill implements Listener {
 		//all we do is modify swing speed (so reduce cooldown) when swinging
 		double rate = (lvl * meleeRate); //we'll subtract this.
 		//bonus attack damage
-		Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), modifierName, rate);
+		Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), MODIFIER_NAME, rate);
 		
 		//System.out.println("reported attack speed: " + p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getBaseValue() + " -> " + p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getValue());
 		

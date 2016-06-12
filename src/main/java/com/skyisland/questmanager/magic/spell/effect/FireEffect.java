@@ -96,10 +96,10 @@ public class FireEffect extends ImbuementEffect {
 		if (e instanceof LivingEntity) {
 			LivingEntity targ = (LivingEntity) e;
 			targ.setFireTicks(duration); 
-			targ.setMetadata(DamageEffect.damageMetaKey, new FixedMetadataValue
+			targ.setMetadata(DamageEffect.DAMAGE_META_KEY, new FixedMetadataValue
 					(QuestManagerPlugin.questManagerPlugin, true));
 			targ.damage(0.0, cause.getEntity());
-			targ.setMetadata(DamageEffect.damageMetaKey, new FixedMetadataValue
+			targ.setMetadata(DamageEffect.DAMAGE_META_KEY, new FixedMetadataValue
 					(QuestManagerPlugin.questManagerPlugin, true));
 		}
 	}

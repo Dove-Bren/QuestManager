@@ -38,7 +38,7 @@ import com.google.common.collect.Lists;
 
 public class AxeSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "Axe.yml";
+	public static final String CONFIG_NAME = "Axe.yml";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -91,8 +91,8 @@ public class AxeSkill extends LogSkill implements Listener {
 	private double rateDecrease;
 	
 	public AxeSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {
@@ -146,7 +146,7 @@ public class AxeSkill extends LogSkill implements Listener {
 		if (lvl < apprenticeLevel) {
 			//3% per level under apprentice -- up to 45%
 			int miss = (int) (rateDecrease * (apprenticeLevel - lvl)); 
-			int roll = Skill.random.nextInt(100);
+			int roll = Skill.RANDOM.nextInt(100);
 			if (roll <= miss) {
 				e.setMiss(true);
 				causeMiss = true;

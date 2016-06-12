@@ -49,7 +49,7 @@ import com.skyisland.questmanager.ui.menu.message.Message;
 
 /**
  * NPC that starts a quest :D
- * This simple starting version mounts atop a {@link SimpleBioptionNPC}, and has all the capability
+ * This simple starting VERSION mounts atop a {@link SimpleBioptionNPC}, and has all the capability
  * and limits defined therein.
  *
  */

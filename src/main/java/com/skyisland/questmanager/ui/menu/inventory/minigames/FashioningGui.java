@@ -47,23 +47,23 @@ import com.skyisland.questmanager.ui.menu.inventory.InventoryItem;
 
 public class FashioningGui extends GuiInventory {
 	
-	public static final Random random = new Random();
+	public static final Random RANDOM = new Random();
 	
-	public static final Sound fashionSound = Sound.ITEM_ARMOR_EQUIP_LEATHER;
+	public static final Sound FASHION_SOUND = Sound.ITEM_ARMOR_EQUIP_LEATHER;
 	/////
-	public static final Sound failSound = Sound.ENTITY_CAT_DEATH;
+	public static final Sound FAIL_SOUND = Sound.ENTITY_CAT_DEATH;
 	
-	public static final Sound clickSound = Sound.UI_BUTTON_CLICK;
+	public static final Sound CLICK_SOUND = Sound.UI_BUTTON_CLICK;
 	
-	public static final String failMessage = ChatColor.RED + "The recipe was good, but you lack the skill for that craft";
+	public static final String FAIL_MESSAGE = ChatColor.RED + "The recipe was good, but you lack the skill for that craft";
 	
-	public static final String noRecipeMessage = ChatColor.RED + "The combination didn't result in anything useful";
+	public static final String NO_RECIPE_MESSAGE = ChatColor.RED + "The combination didn't result in anything useful";
 	
-	public static final String winMessage = "You created ";
+	public static final String WIN_MESSAGE = "You created ";
 	
-	private static final ChargeEffect succeedEffect = new ChargeEffect(Effect.HAPPY_VILLAGER);
+	private static final ChargeEffect SUCCEED_EFFECT = new ChargeEffect(Effect.HAPPY_VILLAGER);
 	
-	private static final ChargeEffect failEffect = new ChargeEffect(Effect.VILLAGER_THUNDERCLOUD);
+	private static final ChargeEffect FAIL_EFFECT = new ChargeEffect(Effect.VILLAGER_THUNDERCLOUD);
 	
 	private Player player;
 	
@@ -151,7 +151,7 @@ public class FashioningGui extends GuiInventory {
 			inv.setItem(0, null);
 			inv.setItem(1, null);
 			inv.setItem(2, null);
-			player.sendMessage(noRecipeMessage);
+			player.sendMessage(NO_RECIPE_MESSAGE);
 			return;
 		}
 		
@@ -168,20 +168,20 @@ public class FashioningGui extends GuiInventory {
 		
 		double chance = skillLink.getFashioningChance(qp, recipe);
 		boolean fail = false;
-		if (random.nextDouble() >= chance) {
+		if (RANDOM.nextDouble() >= chance) {
 			fail = true;
 		}
 		
 		if (fail) {
-			player.sendMessage(failMessage);
-			failEffect.play(player, player.getLocation());
-			player.getWorld().playSound(player.getLocation(), failSound, 1, 1);
+			player.sendMessage(FAIL_MESSAGE);
+			FAIL_EFFECT.play(player, player.getLocation());
+			player.getWorld().playSound(player.getLocation(), FAIL_SOUND, 1, 1);
 			skillLink.performMinor(qp, recipe.difficulty, true);
 			return;
 		}
 		
 		//skillLink.perform(qp, recipe.difficulty, false);
-		succeedEffect.play(player, player.getLocation());
+		SUCCEED_EFFECT.play(player, player.getLocation());
 		skillLink.performMinor(qp, recipe.difficulty, false);
 		
 		
@@ -192,7 +192,7 @@ public class FashioningGui extends GuiInventory {
 			name = result.getItem().getItemMeta().getDisplayName();
 		}
 		
-		FancyMessage msg = new FancyMessage(winMessage)
+		FancyMessage msg = new FancyMessage(WIN_MESSAGE)
 				.color(ChatColor.GREEN)
 			.then(result.getItem().getAmount() > 1 ? result.getItem().getAmount() + "x " : "a ")
 			.then("[" + name + "]")
@@ -201,7 +201,7 @@ public class FashioningGui extends GuiInventory {
 		
 		
 		msg.send(player);
-		player.getWorld().playSound(player.getEyeLocation(), fashionSound, 1, 1);
+		player.getWorld().playSound(player.getEyeLocation(), FASHION_SOUND, 1, 1);
 		if (!(player.getInventory().addItem(result.getItem())).isEmpty()) {
 			player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
 			player.getWorld().dropItem(player.getEyeLocation(), result.getItem());

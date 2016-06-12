@@ -40,7 +40,7 @@ public interface Participant extends ConfigurationSerializable {
 	Collection<QuestPlayer> getParticipants();
 	
 	/**
-	 * Get a string-version of the ID that can be used to identify this Participant.
+	 * Get a string-VERSION of the ID that can be used to identify this Participant.
 	 */
 	String getIDString();
 }

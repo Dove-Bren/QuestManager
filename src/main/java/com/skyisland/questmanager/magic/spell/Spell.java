@@ -34,7 +34,7 @@ import com.skyisland.questmanager.player.QuestPlayer;
 
 public abstract class Spell implements ConfigurationSerializable {
 	
-	public static final String failMessage = ChatColor.RED + "You failed to cast the spell!" + ChatColor.RESET;
+	public static final String FAIL_MESSAGE = ChatColor.RED + "You failed to cast the spell!" + ChatColor.RESET;
 	
 	private int cost;
 	
@@ -87,7 +87,7 @@ public abstract class Spell implements ConfigurationSerializable {
 			if (player.getPlayer().isOnline()) {
 				Player p = player.getPlayer().getPlayer();
 				if (player.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_RESULT))
-					p.sendMessage(Spell.failMessage);
+					p.sendMessage(Spell.FAIL_MESSAGE);
 				p.getWorld().spigot().playEffect(p.getEyeLocation(), Effect.SMOKE);
 				p.getWorld().playSound(p.getLocation(), Sound.ENTITY_CREEPER_PRIMED, 1.0f, 2.0f);
 				p.getWorld().playSound(p.getLocation(), Sound.BLOCK_WATERLILY_PLACE, 1.0f, 0.5f);

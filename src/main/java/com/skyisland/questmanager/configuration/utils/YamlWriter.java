@@ -33,9 +33,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
  */
 public class YamlWriter {
 	
-	public static final String commentPrefix = "#";
+	public static final String COMMENT_PREFIX = "#";
 	
-	public static final int prefixRepeat = 10;
+	public static final int PREFIX_REPEAT = 10;
 	
 	/**
 	 * Takes a string and changes the first letter to be capital, and the rest lowercase
@@ -128,16 +128,16 @@ public class YamlWriter {
 		for (Entry entry : entries) {
 			
 			if (entry.getComments() != null && !entry.getComments().isEmpty()) {
-				for (int i = 0; i < prefixRepeat; i++)
-					writer.print(commentPrefix);
+				for (int i = 0; i < PREFIX_REPEAT; i++)
+					writer.print(COMMENT_PREFIX);
 				
 				writer.println();
 				
 				for (String comment : entry.getComments()) 
-					writer.println(commentPrefix + comment); 
+					writer.println(COMMENT_PREFIX + comment);
 				
-				for (int i = 0; i < prefixRepeat; i++)
-					writer.print(commentPrefix);
+				for (int i = 0; i < PREFIX_REPEAT; i++)
+					writer.print(COMMENT_PREFIX);
 				
 				writer.println();
 			}
