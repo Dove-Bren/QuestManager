@@ -30,7 +30,6 @@ import org.bukkit.configuration.ConfigurationSection;
  * <li>A time limit requirement, which needs to store how much time is left</li>
  * </ul>
  * 
- * @author Skyler
  *
  */
 public class RequirementState {

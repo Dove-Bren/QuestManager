@@ -38,7 +38,6 @@ import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 /**
  * Requirement specification that requires the user to have some quantity of a specific item
  * This requirement can also check whether or not the name of the item matches one given to it
- * @author Skyler
  *
  */
 public class PossessRequirement extends Requirement implements Listener {

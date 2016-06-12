@@ -40,7 +40,6 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * Requirement specification that checks for an itemstack and removes it when it's there
- * @author Skyler
  *
  */
 public class DeliverRequirement extends Requirement implements Listener, StatekeepingRequirement {

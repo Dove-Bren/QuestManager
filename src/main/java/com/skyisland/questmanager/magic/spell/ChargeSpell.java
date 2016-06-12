@@ -44,7 +44,6 @@ import com.skyisland.questmanager.player.skill.event.MagicCastEvent.MagicType;
 
 /**
  * A spell that must charge for a while, and then releases a spell
- * @author Skyler
  *
  */
 public class ChargeSpell extends SimpleSelfSpell implements Listener {

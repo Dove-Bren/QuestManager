@@ -41,7 +41,6 @@ import com.skyisland.questmanager.ui.menu.message.Message;
 
 /**
  * Wrapper for quest configuration
- * @author Skyler
  *
  */
 public class QuestConfiguration {

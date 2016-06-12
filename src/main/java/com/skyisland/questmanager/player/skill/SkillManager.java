@@ -24,7 +24,6 @@ import java.util.TreeSet;
 
 /**
  * Holds registered skills, configuration for skills in general, and some basic skill types.
- * @author Skyler
  *
  */
 public class SkillManager {

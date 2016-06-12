@@ -32,7 +32,6 @@ import com.skyisland.questmanager.scheduling.Tickable;
 /**
  * Requirement that a specific time range be current. This is not a stateful requirement, and can be used
  * to great effect with other requirements (kill 10 things at night, etc)
- * @author Skyler
  *
  */
 public class TimeRequirement extends Requirement implements Tickable {

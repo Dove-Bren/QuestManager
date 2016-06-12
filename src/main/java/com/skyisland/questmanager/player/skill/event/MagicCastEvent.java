@@ -26,7 +26,6 @@ import org.bukkit.event.HandlerList;
 /**
  * Thrown when a {@link QuestPlayer QuestPlayer}
  * is casting a spell.
- * @author Skyler
  *
  */
 public class MagicCastEvent extends Event {

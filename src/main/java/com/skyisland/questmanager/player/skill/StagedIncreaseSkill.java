@@ -23,7 +23,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 /**
  * A skill that doesn't just have one way to perform it -- and therefore, requires
  * more than one way to calculate xp gains.
- * @author Skyler
  *
  */
 public interface StagedIncreaseSkill {

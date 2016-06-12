@@ -27,7 +27,6 @@ import org.bukkit.entity.Entity;
  * Regions are defined to be the range of blocks that mobs can spawn ON TOP OF;
  * When finding safe spawning locations, a region will try to look upwards to see if it's
  * safe and travel upwards to find a suitable location.
- * @author Skyler
  * TODO: Overlapping regions are a problem, and enemies spawn ANYWHERE in the region
  * instead of near the player
  */

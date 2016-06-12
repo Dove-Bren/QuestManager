@@ -37,7 +37,6 @@ import com.skyisland.questmanager.ui.menu.RespondableMenu;
 
 /**
  * Organizes, catches, and dispatches chat click events to the responsible menus
- * @author Skyler
  *
  */
 public class ChatGuiHandler implements CommandExecutor, UITickable {
@@ -62,8 +61,7 @@ public class ChatGuiHandler implements CommandExecutor, UITickable {
 	
 	/**
 	 * Internal record class for bringing together all required information about a menu.
-	 * @author Skyler
-	 *
+		 *
 	 */
 	private static class MenuRecord {
 		

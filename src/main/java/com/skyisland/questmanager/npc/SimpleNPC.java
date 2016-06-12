@@ -25,7 +25,6 @@ import org.bukkit.entity.Entity;
 /**
  * Describes NPCs with simple movement pattern: they occasionally attempt to
  * move back to their original spot
- * @author Skyler
  *
  */
 public abstract class SimpleNPC extends NPC {

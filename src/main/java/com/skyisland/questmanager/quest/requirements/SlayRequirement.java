@@ -43,7 +43,6 @@ import org.bukkit.event.entity.EntityDeathEvent;
  * This requirement also will check to make sure the name of the entities slaid matches 
  * what is provided. If no name is provided, any entity of the same entity type
  * will be considered valid.
- * @author Skyler
  * @see PositionRequirement
  */
 public class SlayRequirement extends Requirement implements Listener, StatekeepingRequirement {

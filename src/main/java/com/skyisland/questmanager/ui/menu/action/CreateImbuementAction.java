@@ -37,7 +37,6 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Takes items (presumably from the imbuement table menu) and makes them into an imbuement, and registers
  * such to the player
- * @author Skyler
  *
  */
 public class CreateImbuementAction implements MenuAction, FillableInventoryAction {

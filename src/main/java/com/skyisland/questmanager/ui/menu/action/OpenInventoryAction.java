@@ -26,7 +26,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 /**
  * Opens a simple inventory. Does no syncing or saving of data, or managing
  * of the inventory. Just shows it to a player
- * @author Skyler
  *
  */
 public class OpenInventoryAction implements MenuAction {

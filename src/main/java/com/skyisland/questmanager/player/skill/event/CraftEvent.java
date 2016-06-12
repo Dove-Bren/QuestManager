@@ -27,7 +27,6 @@ import com.skyisland.questmanager.player.skill.QualityItem;
 /**
  * Called when a {@link QuestPlayer QuestPlayer} is crafting
  * an object. Specifically, called when the player is using a non-standard crafting interface.
- * @author Skyler
  *
  */
 public class CraftEvent extends Event {

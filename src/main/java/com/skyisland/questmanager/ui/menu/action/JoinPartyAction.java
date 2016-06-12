@@ -28,7 +28,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Adds a player to another player's party, creating it if it doesn't exist
- * @author Skyler
  *
  */
 public class JoinPartyAction implements MenuAction {

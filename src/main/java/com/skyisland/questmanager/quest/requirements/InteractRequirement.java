@@ -41,7 +41,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Requirement that a participant must interact (right click or left click or both) a certain block.
- * @author Skyler
  *
  */
 public class InteractRequirement extends Requirement implements Listener, StatekeepingRequirement, CompassTrackable {

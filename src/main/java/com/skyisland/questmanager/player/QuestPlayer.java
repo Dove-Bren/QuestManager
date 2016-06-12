@@ -121,7 +121,6 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
 /**
  * Player wrapper to store questing information and make saving player quest status
  * easier
- * @author Skyler
  *
  */
 public class QuestPlayer implements Participant, Listener, MagicUser, Comparable<QuestPlayer> {

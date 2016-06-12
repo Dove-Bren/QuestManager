@@ -36,7 +36,6 @@ import com.skyisland.questmanager.player.utils.SpellWeavingInvoker;
 /**
  * Wrapper class for configuration files needed by the plugin.
  * This does not include configuration files for individual quests.
- * @author Skyler
  *
  */
 public class PluginConfiguration {

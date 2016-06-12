@@ -29,7 +29,6 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
 
 /**
  * Levels up a player, awarding them some amount of mana
- * @author Skyler
  *
  */
 public class LevelupManaAction implements MenuAction {

@@ -58,7 +58,6 @@ import com.skyisland.questmanager.ui.menu.message.Message;
  * The amount given in the level up's is also determined in the configuration, including options
  * for rate and base amounts.
  * If both the base and rate amounts for any attribute, the option to increase it will not be included.
- * @author Skyler
  *
  */
 public class LevelupNPC extends SimpleNPC {

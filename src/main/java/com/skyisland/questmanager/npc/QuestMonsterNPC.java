@@ -26,7 +26,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 /**
  * An NPC that is a monster for a quest.
- * @author Skyler
  *
  */
 public class QuestMonsterNPC extends NPC {

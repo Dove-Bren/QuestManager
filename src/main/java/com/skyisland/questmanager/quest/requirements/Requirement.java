@@ -34,7 +34,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
  * </ul>
  * Requirements are <b>required</b> to perform their own event checking and are required to update
  * their containing goal when upon state change. In addition, requirements must 
- * @author Skyler
  *
  */
 public abstract class Requirement {

@@ -37,7 +37,6 @@ import com.skyisland.questmanager.quest.requirements.Requirement;
 /**
  * Tracks objectives in a quest.
  * Goals have specific requirements that must be met before they are considered clear.
- * @author Skyler
  *
  */
 public class Goal {

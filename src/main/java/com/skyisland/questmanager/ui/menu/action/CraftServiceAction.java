@@ -33,7 +33,6 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
 
 /**
  * Takes a list of requirements and a fee and produces results
- * @author Skyler
  *
  */
 public class CraftServiceAction implements MenuAction {

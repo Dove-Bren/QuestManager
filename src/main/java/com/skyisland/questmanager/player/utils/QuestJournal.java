@@ -40,7 +40,6 @@ import com.skyisland.questmanager.quest.history.HistoryEvent;
 /**
  * A quest journal keeps track of the current target quest's history
  * This class provides nice helper functions for making that happen
- * @author Skyler
  * @see QuestLog
  */
 public class QuestJournal {

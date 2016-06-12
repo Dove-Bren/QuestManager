@@ -41,7 +41,6 @@ import com.google.common.collect.Lists;
 
 /**
  * Stores imbuements and the items they come from, and handle
- * @author Skyler
  *
  */
 public class ImbuementHandler {

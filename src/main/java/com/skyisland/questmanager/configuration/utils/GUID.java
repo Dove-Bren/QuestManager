@@ -20,7 +20,6 @@ package com.skyisland.questmanager.configuration.utils;
 
 /**
  * Group unique ID's! For ID'ing partys
- * @author Skyler
  *
  */
 public class GUID {

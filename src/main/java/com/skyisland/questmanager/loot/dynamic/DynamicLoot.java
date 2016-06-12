@@ -30,7 +30,6 @@ import org.bukkit.inventory.ItemStack;
 /**
  * Loot class which holds a dynamic item rather than a static one. In other words, specifics about the
  * item are generated fresh each time (like enchantments, name, etc)
- * @author Skyler
  *
  */
 public class DynamicLoot extends Loot {

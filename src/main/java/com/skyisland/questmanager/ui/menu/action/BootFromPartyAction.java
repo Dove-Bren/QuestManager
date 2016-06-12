@@ -25,7 +25,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Boots a player from a party
- * @author Skyler
  *
  */
 public class BootFromPartyAction implements MenuAction {

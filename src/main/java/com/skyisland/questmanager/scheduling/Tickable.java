@@ -24,7 +24,6 @@ package com.skyisland.questmanager.scheduling;
  * ticks.
  * <p>
  * Some easy applications of ticks are movement patterns, regular regeneration, etc
- * @author Skyler
  *
  */
 public interface Tickable {

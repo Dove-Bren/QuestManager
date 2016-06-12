@@ -26,7 +26,6 @@ import com.skyisland.questmanager.player.PlayerOptions;
 
 /**
  * Toggles a specific player option
- * @author Skyler
  *
  */
 public class TogglePlayerOptionAction implements MenuAction {

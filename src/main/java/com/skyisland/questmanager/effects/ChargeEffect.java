@@ -28,7 +28,6 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 /**
  * Charging-like effect.
  * A circle of particles appears around the target, then moves up quickly
- * @author Skyler
  *
  */
 public class ChargeEffect extends QuestEffect implements Runnable {

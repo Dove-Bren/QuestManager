@@ -37,7 +37,6 @@ import com.skyisland.questmanager.npc.utils.ServiceOffer;
 /**
  * Inventory that has service deals.
  * The inventory can hold only service items, and not regular purchases.
- * @author Skyler
  *
  */
 public class ServiceInventory extends GuiInventory {

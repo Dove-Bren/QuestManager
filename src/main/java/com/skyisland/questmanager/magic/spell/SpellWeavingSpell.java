@@ -41,7 +41,6 @@ import com.skyisland.questmanager.player.skill.event.MagicCastEvent;
 
 /**
  * Holds on to both the invocation recipe and the result of a spell weaving spell
- * @author Skyler
  *
  */
 public class SpellWeavingSpell extends Spell implements ConfigurationSerializable {

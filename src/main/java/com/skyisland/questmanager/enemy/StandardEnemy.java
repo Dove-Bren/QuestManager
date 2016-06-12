@@ -38,7 +38,6 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 
 /**
  * Enemy type with equipment customization in addition to NormalMob stuff
- * @author Skyler
  *
  */
 public class StandardEnemy extends NormalEnemy {

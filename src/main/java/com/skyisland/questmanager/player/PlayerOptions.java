@@ -32,7 +32,6 @@ import com.google.common.collect.Lists;
 
 /**
  * Stores player options for easier access and modification
- * @author Skyler
  * @see QuestPlayer
  */
 public class PlayerOptions implements ConfigurationSerializable {

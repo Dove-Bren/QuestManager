@@ -27,7 +27,6 @@ import org.bukkit.entity.EntityType;
 /**
  * Default enemy type for default mobs in minecraft.
  * Wrapper for QM enemies
- * @author Skyler
  *
  */
 public class DefaultEnemy extends Enemy {

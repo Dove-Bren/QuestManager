@@ -42,7 +42,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
  * Specifically, stores bank inventories against IDs intended to be unique per bank
  * NPC. This is not enforced -- which allows for global-type banks or aligned banks --
  * but is supported.
- * @author Skyler
  *
  */
 public class BankStorageManager {

@@ -35,7 +35,6 @@ import com.skyisland.questmanager.ui.menu.action.MenuAction;
 
 /**
  * Represents a craft the service NPC can perform.
- * @author Skyler
  *
  */
 public class ServiceCraftItem extends ServiceItem {

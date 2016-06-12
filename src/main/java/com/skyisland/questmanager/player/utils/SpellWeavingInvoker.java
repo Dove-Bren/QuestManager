@@ -33,7 +33,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Used to trigger invocation of spell weaving spells
- * @author Skyler
  *
  */
 public class SpellWeavingInvoker implements Listener {

@@ -33,7 +33,6 @@ import com.skyisland.questmanager.ui.menu.inventory.GuiInventory;
 
 /**
  * A menu implemented as an inventory
- * @author Skyler
  *
  */
 public class InventoryMenu implements Listener {

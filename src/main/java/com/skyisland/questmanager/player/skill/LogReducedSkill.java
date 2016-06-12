@@ -25,7 +25,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 /**
  * Same as a log Skill, except the xp gain is further decreased. The idea is that common skills
  * that apply all over the place should level up less.
- * @author Skyler
  * @see com.skyisland.questmanager.player.skill.Skill
  * @see LogReducedSkill#perform(QuestPlayer, int, boolean)
  */

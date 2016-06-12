@@ -25,7 +25,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 /**
  * Same as a regular Skill, except the xp gain is done on a log scale;
  * The higher level you are, the less xp you get for doing an 'at-level' skill.
- * @author Skyler
  * @see Skill
  * @see LogSkill#perform(QuestPlayer, int)
  */

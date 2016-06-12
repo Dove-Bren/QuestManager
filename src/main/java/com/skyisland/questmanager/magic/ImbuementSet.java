@@ -28,7 +28,6 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 /**
  * Holds the effects of an imbuement and their potencies together for easier use everywhere
- * @author Skyler
  *
  */
 public class ImbuementSet implements ConfigurationSerializable {

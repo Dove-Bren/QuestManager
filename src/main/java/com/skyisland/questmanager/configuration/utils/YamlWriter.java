@@ -29,7 +29,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 /**
  * Utility class used to make an actual good looking YAML file with comments and crap
- * @author Skyler
  *
  */
 public class YamlWriter {

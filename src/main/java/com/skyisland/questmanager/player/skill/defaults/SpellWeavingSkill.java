@@ -39,7 +39,6 @@ import com.google.common.collect.Lists;
 
 /**
  * Dictates the difficulty and potential of spell weaving spells
- * @author Skyler
  *
  */
 public class SpellWeavingSkill extends Skill implements Listener {

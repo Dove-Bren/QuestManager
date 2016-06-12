@@ -29,7 +29,6 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 
 /**
  * Item with some sort of given quality
- * @author Skyler
  *
  */
 public class QualityItem {

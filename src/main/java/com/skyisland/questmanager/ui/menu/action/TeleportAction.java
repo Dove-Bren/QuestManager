@@ -30,7 +30,6 @@ import org.bukkit.potion.PotionEffectType;
 
 /**
  * Ferries a player
- * @author Skyler
  *
  */
 public class TeleportAction implements MenuAction {

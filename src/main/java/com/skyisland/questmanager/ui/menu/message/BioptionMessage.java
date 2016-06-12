@@ -29,7 +29,6 @@ import com.skyisland.questmanager.ui.ChatGuiHandler;
 
 /**
  * Wrapping/formatting class for a message with two options.
- * @author Skyler
  *
  */
 public class BioptionMessage extends Message {

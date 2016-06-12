@@ -37,7 +37,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 /**
  * An action that must charge for a while, and then happens
- * @author Skyler
  *
  */
 public class ChargeAction implements Listener, Alarmable<Integer> {

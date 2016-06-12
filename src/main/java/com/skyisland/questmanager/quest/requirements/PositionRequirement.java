@@ -39,7 +39,6 @@ import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
  * Unlike the {@link ArriveRequirement} this requirement is that someone be located there
  * for this to be completed. That means if they leave, the requirement will no longer
  * be satisfied!
- * @author Skyler
  * @see ArriveRequirement
  */
 public class PositionRequirement extends Requirement implements Listener, CompassTrackable {

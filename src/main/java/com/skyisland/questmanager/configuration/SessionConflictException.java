@@ -20,7 +20,6 @@ package com.skyisland.questmanager.configuration;
 
 /**
  * Session conflict exceptions indicate that there is a conflict with creating a new session. 
- * @author Skyler
  *
  */
 public class SessionConflictException extends Exception {

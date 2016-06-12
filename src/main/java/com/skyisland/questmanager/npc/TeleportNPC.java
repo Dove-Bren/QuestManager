@@ -46,7 +46,6 @@ import com.skyisland.questmanager.ui.menu.message.SimpleMessage;
 
 /**
  * NPC which offers to take a player and move them, for a fee?
- * @author Skyler
  *
  */
 public class TeleportNPC extends SimpleStaticBioptionNPC {

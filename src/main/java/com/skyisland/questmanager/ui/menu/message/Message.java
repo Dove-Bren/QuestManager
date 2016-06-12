@@ -23,7 +23,6 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 /**
  * Holds a messaged used with a menu.
- * @author Skyler
  *
  */
 public abstract class Message implements ConfigurationSerializable {

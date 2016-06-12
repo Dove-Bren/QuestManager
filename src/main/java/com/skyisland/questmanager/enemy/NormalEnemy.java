@@ -44,7 +44,6 @@ import com.skyisland.questmanager.loot.Lootable;
 /**
  * Enemy type with very limited, straightforward customization; namely attributes.
  * Also supports loot specification
- * @author Skyler
  *
  */
 public class NormalEnemy extends Enemy implements Lootable, Listener {

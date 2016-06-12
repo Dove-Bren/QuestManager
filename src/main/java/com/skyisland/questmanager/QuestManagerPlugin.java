@@ -141,7 +141,6 @@ import com.skyisland.questmanager.ui.menu.message.TreeMessage;
  * Provided API and Command Line interaction between enlisted quest managers and
  * the user.
  * 
- * @author Skyler
  */
 public class QuestManagerPlugin extends JavaPlugin {
 	

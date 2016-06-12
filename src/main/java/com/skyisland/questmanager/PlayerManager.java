@@ -42,7 +42,6 @@ import com.skyisland.questmanager.scheduling.Tickable;
 
 /**
  * Stores a database of QuestPlayers for lookup and loading
- * @author Skyler
  *
  */
 public class PlayerManager implements Tickable {

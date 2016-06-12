@@ -42,7 +42,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Wrapper class for potion effects put into spells
- * @author Skyler
  *
  */
 public class StatusEffect extends ImbuementEffect {

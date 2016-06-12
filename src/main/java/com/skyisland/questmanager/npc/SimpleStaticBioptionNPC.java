@@ -26,7 +26,6 @@ import org.bukkit.potion.PotionEffectType;
 
 /**
  * An npc that doesn't move rather then being reset
- * @author Skyler
  *
  */
 public abstract class SimpleStaticBioptionNPC extends SimpleBioptionNPC {

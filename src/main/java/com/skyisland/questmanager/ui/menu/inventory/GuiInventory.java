@@ -27,7 +27,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
  * An inventory used with inventory gui's. Contains everything the rendered inventory needs.
  * Implementations should provide a way to load and save their information, as well as how to format the inventory for
  * display.
- * @author Skyler
  *
  */
 public abstract class GuiInventory implements ConfigurationSerializable {

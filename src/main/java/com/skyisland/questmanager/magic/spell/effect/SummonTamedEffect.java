@@ -39,7 +39,6 @@ import net.md_5.bungee.api.ChatColor;
 
 /**
  * Summons a tamed creature for the caster 
- * @author Skyler
  *
  */
 public class SummonTamedEffect extends SpellEffect {

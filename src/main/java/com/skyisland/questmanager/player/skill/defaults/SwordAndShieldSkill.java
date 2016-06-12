@@ -38,7 +38,6 @@ import com.google.common.collect.Lists;
 
 /**
  * Skill governing combat with a weapon in main hand, shield in offhand
- * @author Skyler
  *
  */
 public class SwordAndShieldSkill extends Skill implements Listener {

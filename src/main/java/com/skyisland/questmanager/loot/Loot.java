@@ -47,7 +47,6 @@ import com.skyisland.questmanager.QuestManagerPlugin;
  * The exact probability per loot generation is given as
  * &nbsp;&nbsp;&nbsp;&nbsp;(<i>weight</i>) / (<i>Pool weight total</i>)
  * </p>
- * @author Skyler
  *
  */
 public class Loot implements ConfigurationSerializable {

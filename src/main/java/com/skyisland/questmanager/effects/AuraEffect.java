@@ -28,7 +28,6 @@ import org.bukkit.entity.Entity;
 
 /**
  * Effect where particles are constantly created around a player, as if an aura.
- * @author Skyler
  *
  */
 public class AuraEffect extends EntityEffect implements ConstantEffect, Alarmable<Integer> {

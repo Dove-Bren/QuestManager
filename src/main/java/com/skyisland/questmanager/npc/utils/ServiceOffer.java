@@ -26,7 +26,6 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * An offer made by a service npc to purchase something.
- * @author Skyler
  *
  */
 public class ServiceOffer extends Service {

@@ -49,7 +49,6 @@ import org.bukkit.inventory.ItemStack;
  * <li> SPELLREWARD | spellreward | <i>null</i></li>
  * <li> ENDHINT | turninhint | "Turn In"</li>
  * </ul>
- * @author Skyler
  *
  */
 public enum QuestConfigurationField {

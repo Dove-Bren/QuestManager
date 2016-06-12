@@ -28,7 +28,6 @@ import org.bukkit.configuration.ConfigurationSection;
 
 /**
  * Keeps track of requirement keys and registered factories
- * @author Skyler
  *
  */
 public class RequirementManager {

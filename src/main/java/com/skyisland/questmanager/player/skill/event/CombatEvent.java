@@ -35,7 +35,6 @@ import com.skyisland.questmanager.player.PlayerOptions;
  * Event called when some sort of combat action is happening in a 
  * {@link PluginConfiguration#getWorlds() QuestWorld}
  * by a {@link QuestPlayer QuestPlayer}
- * @author Skyler
  *
  */
 public class CombatEvent extends Event {

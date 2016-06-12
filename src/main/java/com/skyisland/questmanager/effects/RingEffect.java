@@ -28,7 +28,6 @@ import org.bukkit.entity.Entity;
 
 /**
  * Effect where particles circle the player constantly.
- * @author Skyler
  *
  */
 public class RingEffect extends EntityEffect implements ConstantEffect, Alarmable<Integer> {

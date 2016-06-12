@@ -27,7 +27,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
  * The action of purchasing an item or service from an NPC.
  * This event specifically details purchases done from within an InventoryMenu, where it has
  * an ItemStack to give to the player
- * @author Skyler
  *
  */
 public class PurchaseAction implements MenuAction {

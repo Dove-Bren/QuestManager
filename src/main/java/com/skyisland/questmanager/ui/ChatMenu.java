@@ -34,7 +34,6 @@ import com.skyisland.questmanager.ui.menu.message.Message;
 
 /**
  * A menu represented in chat buttons and links
- * @author Skyler
  *
  * register it with the handler, give it a unique ID and then do specific things based on argument
  * to command received!

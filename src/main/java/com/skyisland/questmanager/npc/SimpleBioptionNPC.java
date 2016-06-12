@@ -42,7 +42,6 @@ import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
  * Provides a simple two-option menu when interacted with. This NPC also supports simple response
  * menus in response to each option.
  * This NPC does <b>not</b> support performing actions based on the response.
- * @author Skyler
  *
  */
 public class SimpleBioptionNPC extends SimpleNPC {

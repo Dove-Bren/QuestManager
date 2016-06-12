@@ -35,7 +35,6 @@ import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Holds methods to interface with a quest player's compass.
- * @author Skyler
  *
  */
 public class Compass {

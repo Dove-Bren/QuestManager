@@ -32,7 +32,6 @@ import com.skyisland.questmanager.ui.menu.action.MenuAction;
  * An item used in an inventory menu.
  * This is composed of an actual item stack, a display item type, and the cost and fame requirement
  * of the item.
- * @author Skyler
  *
  */
 public class ShopItem extends InventoryItem {

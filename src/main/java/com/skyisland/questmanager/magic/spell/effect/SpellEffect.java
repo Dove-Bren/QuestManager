@@ -25,7 +25,6 @@ import org.bukkit.entity.Entity;
 
 /**
  * An effect a spell might have.
- * @author Skyler
  *
  */
 public abstract class SpellEffect implements ConfigurationSerializable {

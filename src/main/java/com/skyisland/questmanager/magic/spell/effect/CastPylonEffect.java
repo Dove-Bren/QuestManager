@@ -31,7 +31,6 @@ import com.skyisland.questmanager.magic.SpellPylon;
 
 /**
  * Creates in the world a pylon ties to the given player of a certain type
- * @author Skyler
  *
  */
 public class CastPylonEffect extends SpellEffect {

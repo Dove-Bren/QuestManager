@@ -44,7 +44,6 @@ import com.google.common.collect.Lists;
 
 /**
  * Skill governing combat with a weapon in main hand, magic in offhand
- * @author Skyler
  *
  */
 public class MagicWeaverSkill extends LogSkill implements Listener {

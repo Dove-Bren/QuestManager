@@ -41,7 +41,6 @@ import com.skyisland.questmanager.QuestManagerPlugin;
  * The manager keeps records of recipes and deals with configuration of spells. 
  * </p>
  * 
- * @author Skyler
  * @see SpellWeavingSpell
  *
  */

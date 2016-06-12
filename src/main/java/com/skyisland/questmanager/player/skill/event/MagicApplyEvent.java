@@ -26,7 +26,6 @@ import org.bukkit.event.HandlerList;
 /**
  * Thrown when a {@link QuestPlayer QuestPlayer}'s spell
  * is applying a {@link SpellEffect SpellEffect}
- * @author Skyler
  *
  */
 public class MagicApplyEvent extends Event {

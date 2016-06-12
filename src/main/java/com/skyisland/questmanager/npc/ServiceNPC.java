@@ -43,7 +43,6 @@ import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
 
 /**
  * NPC which offers to and repairs a players equipment, for a fee
- * @author Skyler
  *
  */
 public class ServiceNPC extends SimpleStaticBioptionNPC {

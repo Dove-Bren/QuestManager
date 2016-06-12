@@ -25,7 +25,6 @@ import com.skyisland.questmanager.ui.ChatMenu;
 
 /**
  * A basic text-only menu.
- * @author Skyler
  *
  */
 public class SimpleChatMenu extends ChatMenu {

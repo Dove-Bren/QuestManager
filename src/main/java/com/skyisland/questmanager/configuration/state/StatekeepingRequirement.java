@@ -22,7 +22,6 @@ import org.bukkit.configuration.InvalidConfigurationException;
 
 /**
  * Keeps state information
- * @author Skyler
  *
  */
 public interface StatekeepingRequirement {

@@ -38,7 +38,6 @@ import com.google.common.collect.Lists;
 
 /**
  * An inventory used with inventory gui's. Contains everything the rendered inventory needs
- * @author Skyler
  *
  */
 public class BasicInventory extends GuiInventory {

@@ -38,7 +38,6 @@ import com.google.common.collect.Lists;
 
 /**
  * Dictates the difficulty and potential of spell weaving spells
- * @author Skyler
  *
  */
 public class ImbuementSkill extends LogSkill implements Listener {

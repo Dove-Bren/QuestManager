@@ -29,7 +29,6 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 /**
  * Convenience class for saving and loading location data from config 
- * @author Skyler
  *
  */
 public class LocationState implements ConfigurationSerializable {
@@ -75,8 +74,7 @@ public class LocationState implements ConfigurationSerializable {
 	
 	/**
 	 * Stores fields and their config keys
-	 * @author Skyler
-	 *
+		 *
 	 */
 	private enum fields {
 		X("x"),

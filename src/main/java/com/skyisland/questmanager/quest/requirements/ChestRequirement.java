@@ -40,7 +40,6 @@ import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 
 /**
  * Requirement that a participant must interact (right click or left click or both) a certain block.
- * @author Skyler
  *
  */
 public class ChestRequirement extends Requirement implements Listener, StatekeepingRequirement, CompassTrackable {

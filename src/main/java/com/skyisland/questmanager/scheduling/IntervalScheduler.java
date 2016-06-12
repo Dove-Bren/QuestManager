@@ -27,7 +27,6 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 
 /**
  * Waits a prescribed amount of time, and then ticks all registered Tickables
- * @author Skyler
  *
  */
 public class IntervalScheduler extends Scheduler {

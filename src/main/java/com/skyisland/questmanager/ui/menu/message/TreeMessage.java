@@ -33,7 +33,6 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
  * Message that has multiple options and multiple messages that happen because of that option.
  * Messages spawn new menus to display them. This means this tree can have a cascading tree flow
  * and branch into other trees.
- * @author Skyler
  *
  */
 public class TreeMessage extends Message {

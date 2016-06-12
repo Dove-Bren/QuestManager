@@ -26,7 +26,6 @@ import com.skyisland.questmanager.ui.menu.message.Message;
  * An 'option' for a chat menu.
  * This includes a label for the option and a corresponding action to be executed upon selection of that
  * option.
- * @author Skyler
  *
  */
 public class ChatMenuOption {

@@ -31,7 +31,6 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 
 /**
  * Gui handler for inventory menus
- * @author Skyler
  *
  */
 public class InventoryGuiHandler implements Listener {

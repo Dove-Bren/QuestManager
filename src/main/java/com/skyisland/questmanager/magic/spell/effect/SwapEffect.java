@@ -29,7 +29,6 @@ import com.skyisland.questmanager.magic.MagicUser;
 
 /**
  * Swaps location of the caster and an entity target. Does nothing on contact with a solid. 
- * @author Skyler
  *
  */
 public class SwapEffect extends SpellEffect {

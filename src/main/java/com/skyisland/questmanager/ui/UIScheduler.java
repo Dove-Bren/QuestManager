@@ -28,7 +28,6 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 
 /**
  * Schedule and timing handler for UI elements
- * @author Skyler
  *
  */
 public class UIScheduler implements Runnable {

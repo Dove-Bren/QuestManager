@@ -20,7 +20,6 @@ package com.skyisland.questmanager.quest.history;
 
 /**
  * Keeps track of a single event in a history.
- * @author Skyler
  *
  */
 public class HistoryEvent {

@@ -44,7 +44,6 @@ import com.skyisland.questmanager.ui.menu.message.SimpleMessage;
  * NPC that offers a simple message to those that interact with it.
  * SimpleChatNPCs do <b>not</b> support menus (they don't do anything if you click chat menu
  * buttons) 
- * @author Skyler
  *
  */
 public class SimpleChatNPC extends SimpleNPC {

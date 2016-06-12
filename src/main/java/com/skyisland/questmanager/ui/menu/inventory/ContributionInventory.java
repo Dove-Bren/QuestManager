@@ -36,7 +36,6 @@ import com.skyisland.questmanager.ui.menu.action.MenuAction;
 /**
  * Gui used to 'receive items' from a player's inventory. Allows specification of a filter
  * for runtime awesomeness
- * @author Skyler
  *
  */
 public class ContributionInventory extends GuiInventory {

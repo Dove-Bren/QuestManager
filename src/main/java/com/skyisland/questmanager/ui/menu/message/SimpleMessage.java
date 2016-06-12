@@ -27,7 +27,6 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
 /**
  * Wraps arounds a simple, single -use- message.
- * @author Skyler
  *
  */
 public class SimpleMessage extends Message {

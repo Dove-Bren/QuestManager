@@ -42,7 +42,6 @@ import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
 
 /**
  * NPC which allows players access to their bank storage
- * @author Skyler
  *
  */
 public class BankNPC extends SimpleStaticBioptionNPC {

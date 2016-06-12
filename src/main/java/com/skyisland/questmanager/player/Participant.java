@@ -26,7 +26,6 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
  * An entity involved in a quest.
  * Specifically, a participant can either be a single player or a collection of players. It's
  * up to specific implementations of quests and requirements to specify which are allowed.
- * @author Skyler
  *
  */
 public interface Participant extends ConfigurationSerializable {

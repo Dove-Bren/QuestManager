@@ -39,7 +39,6 @@ import com.skyisland.questmanager.configuration.utils.LocationState;
 
 /**
  * Basic NPC with no interactivity and no movement.
- * @author Skyler
  * config:
  * <i>name</i>: "name"
  * <i>type</i>: "EntityType.VALUE.toString"

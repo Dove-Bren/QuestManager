@@ -36,7 +36,6 @@ import com.skyisland.questmanager.effects.AuraEffect;
 
 /**
  * A designated rune for a rune caster spell.
- * @author Skyler
  *
  */
 public class SpellPylon implements Alarmable<Integer> {

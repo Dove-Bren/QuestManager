@@ -23,7 +23,6 @@ package com.skyisland.questmanager.magic.spell.effect;
  * Compatable effects are able to be scaled up or down on a whim -- as is expected for combining
  * effects with some generic scale. These effects are expected to scale up or down based on their given
  * potency -- A value where 1 signifies a normal, 100% effective effect. 
- * @author Skyler
  *
  */
 public abstract class ImbuementEffect extends SpellEffect {

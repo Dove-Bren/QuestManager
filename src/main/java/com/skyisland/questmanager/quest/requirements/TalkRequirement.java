@@ -38,7 +38,6 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 
 /**
  * Requirement that a participant must talk to an npc.
- * @author Skyler
  *
  */
 public class TalkRequirement extends Requirement implements Listener, CompassTrackable {

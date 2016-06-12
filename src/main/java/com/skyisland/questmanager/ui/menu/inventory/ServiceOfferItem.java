@@ -35,7 +35,6 @@ import com.skyisland.questmanager.ui.menu.message.PlainMessage;
 
 /**
  * Represents a craft the service NPC can perform.
- * @author Skyler
  *
  */
 public class ServiceOfferItem extends ServiceItem {

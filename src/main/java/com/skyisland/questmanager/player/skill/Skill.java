@@ -39,7 +39,6 @@ import com.skyisland.questmanager.player.skill.defaults.TwoHandedSkill;
  * While an implementation may override the level-up and experience-gain mechanics of a skill, prebuilt ones
  * are included in this class to allow a uniform config-specified skill experience. For more information, see
  * the {@link #perform(QuestPlayer, int, boolean)} method.
- * @author Skyler
  *
  */
 public abstract class Skill implements Comparable<Skill> {

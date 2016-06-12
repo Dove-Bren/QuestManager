@@ -30,7 +30,6 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
 
 /**
  * Levels up a player, awarding them some amount of health
- * @author Skyler
  *
  */
 public class LevelupHealthAction implements MenuAction {

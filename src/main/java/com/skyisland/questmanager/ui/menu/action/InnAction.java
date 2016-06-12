@@ -36,7 +36,6 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
 
 /**
  * Rests a player, restoring health and hunger
- * @author Skyler
  *
  */
 public class InnAction implements MenuAction {

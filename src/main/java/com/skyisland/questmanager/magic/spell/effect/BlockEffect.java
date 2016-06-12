@@ -30,7 +30,6 @@ import com.skyisland.questmanager.magic.MagicUser;
 
 /**
  * Manipulates blocks. This effect replaces one type of block with another
- * @author Skyler
  *
  */
 public class BlockEffect extends SpellEffect {

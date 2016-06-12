@@ -37,7 +37,6 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
 
 /**
  * Repairs a player's equipment
- * @author Skyler
  *
  */
 public class ForgeAction implements MenuAction {

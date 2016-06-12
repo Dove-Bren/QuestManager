@@ -35,7 +35,6 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
 
 /**
  * Trades an itemstack for some currency
- * @author Skyler
  *
  */
 public class OfferServiceAction implements MenuAction {

@@ -34,7 +34,6 @@ import com.skyisland.questmanager.ui.menu.message.TreeMessage.Option;
 
 /**
  * Menu with multiple options that can lead to other menus.
- * @author Skyler
  *
  */
 public class TreeChatMenu extends ChatMenu implements RespondableMenu {

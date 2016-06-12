@@ -42,8 +42,7 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	
 	/**
 	 * Holds the enemy list and the music to play for the region
-	 * @author Skyler
-	 *
+		 *
 	 */
 	private static class RegionRecord {
 		

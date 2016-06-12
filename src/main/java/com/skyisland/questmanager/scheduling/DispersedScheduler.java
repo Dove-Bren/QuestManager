@@ -30,7 +30,6 @@ import com.skyisland.questmanager.QuestManagerPlugin;
  * Gathers a list of scheduled Tickable entities and goes through ticking each
  * after the others. Each registered Tickable entity causes a measured wait
  * before the next creature is ticked, causing a spread out tick chain.
- * @author Skyler
  *
  */
 public class DispersedScheduler extends Scheduler {

@@ -49,7 +49,6 @@ import com.skyisland.questmanager.fanciful.FancyMessage;
 
 /**
  * A group of players who work together on 
- * @author Skyler
  *
  */
 public class Party implements Participant, Listener {

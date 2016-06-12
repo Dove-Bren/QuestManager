@@ -45,7 +45,6 @@ import com.skyisland.questmanager.ui.menu.message.SimpleMessage;
 /**
  * NPC that offers a safe night to players
  * Stores the amount to charge players?
- * @author Skyler
  *
  */
 public class InnNPC extends SimpleStaticBioptionNPC {

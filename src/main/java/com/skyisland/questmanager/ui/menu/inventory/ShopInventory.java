@@ -33,7 +33,6 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * An inventory used with inventory gui's. Contains everything the rendered inventory needs
- * @author Skyler
  *
  */
 public class ShopInventory extends GuiInventory {

@@ -24,7 +24,6 @@ import com.skyisland.questmanager.ui.ChatMenu;
 
 /**
  * Actions that causes a chat menu to be shown to a player
- * @author Skyler
  *
  */
 public class ShowChatMenuAction implements MenuAction {

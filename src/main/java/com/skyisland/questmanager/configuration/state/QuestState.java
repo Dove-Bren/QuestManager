@@ -31,7 +31,6 @@ import com.skyisland.questmanager.quest.history.History;
 
 /**
  * Wrapper for state info config
- * @author Skyler
  *
  */
 public class QuestState {

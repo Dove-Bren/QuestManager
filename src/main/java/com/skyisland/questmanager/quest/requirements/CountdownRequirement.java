@@ -35,7 +35,6 @@ import com.skyisland.questmanager.scheduling.Tickable;
 
 /**
  * Requires a certain amount of time to pass before satisfied
- * @author Skyler
  *
  */
 public class CountdownRequirement extends Requirement implements Tickable, StatekeepingRequirement {

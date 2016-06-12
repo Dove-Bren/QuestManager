@@ -32,7 +32,6 @@ import com.skyisland.questmanager.magic.MagicUser;
 
 /**
  * Catches entities on fire
- * @author Skyler
  *
  */
 public class FireEffect extends ImbuementEffect {
