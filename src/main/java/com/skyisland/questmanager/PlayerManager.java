@@ -32,7 +32,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.skyisland.questmanager.configuration.PluginConfiguration;
-import com.skyisland.questmanager.configuration.utils.GUID;
 import com.skyisland.questmanager.player.Participant;
 import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -48,7 +47,7 @@ public class PlayerManager implements Tickable {
 	
 	private Map<UUID, QuestPlayer> players;
 	
-	private Map<GUID, Party> parties;
+	private Map<UUID, Party> parties;
 	
 	private TitleEffect titleEffect;
 	
@@ -77,7 +76,7 @@ public class PlayerManager implements Tickable {
 		if (!gSex.getKeys(false).isEmpty())
 		for (String key : gSex.getKeys(false)) {
 			parties.put(
-					GUID.valueOf(key), (Party) gSex.get(key));
+					UUID.fromString(key), (Party) gSex.get(key));
 		}
 		
 		//check if we need to do day/night regen
@@ -121,7 +120,7 @@ public class PlayerManager implements Tickable {
 	 * Returns the party paired with the given ID.
 	 * if the party doesn't exist, null is returned instead
 	 */
-	public Party getParty(GUID id) {
+	public Party getParty(UUID id) {
 		if (!parties.containsKey(id)) {
 			return null;
 		}
@@ -136,13 +135,15 @@ public class PlayerManager implements Tickable {
 	public void removeParty(Party party) {
 		parties.remove(party.getID());
 	}
-	
+
 	public Participant getParticipant(String idString) {
-		
-		if (GUID.valueOf(idString) != null) {
-			return parties.get(GUID.valueOf(idString));
+
+		Participant participant = parties.get(UUID.fromString(idString));
+
+		if (participant != null) {
+			return participant;
 		}
-		
+
 		//assume it's a player string
 		return getPlayer(UUID.fromString(idString));
 	}
@@ -174,7 +175,7 @@ public class PlayerManager implements Tickable {
 		
 		ConfigurationSection gSex = config.createSection("parties");
 		if (!parties.isEmpty()) {
-			for (GUID key : parties.keySet()) {
+			for (UUID key : parties.keySet()) {
 				if (key == null) {
 					continue;
 				}
