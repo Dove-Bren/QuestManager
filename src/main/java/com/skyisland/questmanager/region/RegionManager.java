@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,6 +20,8 @@ import com.skyisland.questmanager.enemy.EnemyAlarms;
 import com.skyisland.questmanager.scheduling.Alarm;
 import com.skyisland.questmanager.scheduling.Alarmable;
 import com.skyisland.questmanager.util.WeightedList;
+
+import io.puharesource.mc.titlemanager.api.TitleObject;
 
 public final class RegionManager implements Alarmable<EnemyAlarms> {
 	
@@ -35,7 +38,14 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		
 		private WeightedList<Enemy> enemies;
 		
+		private String displayName;
+		
 		public RegionRecord(Sound music, WeightedList<Enemy> enemies) {
+			this(null, music, enemies);
+		}
+		
+		public RegionRecord(String name, Sound music, WeightedList<Enemy> enemies) {
+			this.displayName = name;
 			this.music = music;
 			this.enemies = enemies;
 		}
@@ -48,6 +58,10 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		public WeightedList<Enemy> getEnemies() {
 			return enemies;
 		}
+		
+		public String getDisplayName() {
+			return displayName;
+		}
 	}
 	
 	private Map<Region, RegionRecord> regionMap;
@@ -59,6 +73,8 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	private Map<UUID, Sound> currentSound;
 	
 	private Map<UUID, Double> secondsLeft;
+	
+	private Map<UUID, String> lastDisplay;
 	
 	/**
 	 * Creates an empty enemy manager with a default spawnrate of 3 seconds
@@ -75,6 +91,7 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		musicDurations = soundDurations;
 		currentSound = new HashMap<>();
 		secondsLeft = new HashMap<>();
+		lastDisplay = new HashMap<>();
 		this.spawnrate = spawnrate;
 		
 		Alarm.getScheduler().schedule(this, EnemyAlarms.SPAWN, spawnrate);
@@ -214,6 +231,16 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 							
 							currentSound.put(player.getUniqueId(), music);
 						}
+						
+						String title = regionMap.get(r).getDisplayName();
+						if (title != null)
+						if (!lastDisplay.containsKey(player.getUniqueId()) || !lastDisplay.get(player.getUniqueId()).equals(title)) {
+							new TitleObject("",
+									ChatColor.DARK_AQUA + title)
+									.setFadeIn(20).setFadeOut(20).setStay(60).send(player);
+							lastDisplay.put(player.getUniqueId(), title);
+						}
+						
 						break;
 					}
 				}
@@ -307,6 +334,10 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to match sound " + regionSection.getString("music"));
 				}
 				
+			}
+			
+			if (regionSection.contains("title")) {
+				regionMap.get(region).displayName = regionSection.getString("title");
 			}
 			//TODO add enemy weights?
 		}
