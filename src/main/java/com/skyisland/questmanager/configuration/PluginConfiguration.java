@@ -3,10 +3,13 @@ package com.skyisland.questmanager.configuration;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -60,6 +63,7 @@ public class PluginConfiguration {
 		QUESTDIR("questDir"),
 		SAVEDIR("saveDir"),
 		REGIONDIR("regionDir"),
+		MUSICDURATIONS("musicDurations"),
 		SPELLDIR("spellDir"),
 		SKILLDIR("skillDir"),
 		SKILLCAP("skill.cap"),
@@ -403,6 +407,18 @@ public class PluginConfiguration {
 	 */
 	public Material getInvokerType() {
 		return Material.valueOf(config.getString(PluginConfigurationKey.INVOKERTYPE.key));
+	}
+	
+	public Map<Sound, Double> getMusicDurations() {
+		Map<Sound, Double> map = new HashMap<>();
+		for (String key : config.getConfigurationSection(PluginConfigurationKey.MUSICDURATIONS.key).getKeys(false)) {
+			try {
+				map.put(Sound.valueOf(key), config.getDouble(PluginConfigurationKey.MUSICDURATIONS.key + "." + key));
+			} catch (Exception e) {
+				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to determine sound from " + key);
+			}
+		}
+		return map;
 	}
 	
 	/**

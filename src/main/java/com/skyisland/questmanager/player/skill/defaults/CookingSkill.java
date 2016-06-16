@@ -490,10 +490,13 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		if (furnaceMap.containsKey(e.getClickedBlock().getLocation())) {
 			e.getPlayer().sendMessage(inUseMessage);
+			e.setCancelled(true);
 			return;
 		}
 		
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(e.getPlayer());
+		furnaceMap.put(e.getClickedBlock().getLocation(), qp);
+		
 		
 		CookingGui gui = new CookingGui(e.getPlayer(), (Furnace) e.getClickedBlock().getState(),
 				bonusQuality, useItemQuality

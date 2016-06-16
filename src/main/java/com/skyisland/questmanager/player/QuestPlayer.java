@@ -1879,6 +1879,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		String name;
 		if (target.getCustomName() != null) {
 			name = target.getCustomName();
+		} else if (target instanceof Player) {
+			name = ((Player) target).getName();
 		} else {
 			name = target.getType().toString();
 		}

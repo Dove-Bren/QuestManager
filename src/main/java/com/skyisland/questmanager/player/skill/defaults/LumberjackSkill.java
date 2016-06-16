@@ -47,6 +47,8 @@ public class LumberjackSkill extends LogSkill implements Listener {
 	
 	public static final String notOreMessage = ChatColor.DARK_GRAY + "There doesn't appear to be any good wood near that area";
 	
+	public static final String tooSoonMessage = ChatColor.DARK_GRAY + "The wood has not regrown on this tree yet. Try another";
+	
 	private static final class TreeRecord {
 		
 		private int difficulty;
@@ -162,6 +164,8 @@ public class LumberjackSkill extends LogSkill implements Listener {
 	
 	private Map<UUID, LumberjackSequence> activeSessions;
 	
+	private Map<UUID, Location> lastLocations;
+	
 	public LumberjackSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
 				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
@@ -187,6 +191,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 		this.millPenalty = config.getDouble("millPenalty", 0.05);
 		
 		this.activeSessions = new HashMap<>();
+		this.lastLocations = new HashMap<>();
 		this.treeRecords = new LinkedList<>();
 		if (!config.contains("trees")) {
 			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Didn't find any tree table"
@@ -320,6 +325,15 @@ public class LumberjackSkill extends LogSkill implements Listener {
 			//e.getPlayer().sendMessage(ChatColor.YELLOW + "You're already involved in a wood chopping sequence");
 			return;
 		}
+		
+		if (lastLocations.get(e.getPlayer().getUniqueId()) != null) {
+			Location l = lastLocations.get(e.getPlayer().getUniqueId());
+			if (l.getBlockX() == e.getClickedBlock().getX() && 
+				l.getBlockZ() == e.getClickedBlock().getZ()) {
+				e.getPlayer().sendMessage(tooSoonMessage);
+				return;
+			}
+		}
 
 		if (!QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds()
 				.contains(e.getPlayer().getWorld().getName())) {
@@ -387,6 +401,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 		LumberjackSequence sequence = new LumberjackSequence(qp, e.getClickedBlock().getLocation().toVector(),
 				reward, averageSwing, swingDeviation, timing, hits, record.name, record.difficulty);
 		activeSessions.put(e.getPlayer().getUniqueId(), sequence);
+		lastLocations.put(e.getPlayer().getUniqueId(), e.getClickedBlock().getLocation());
 		sequence.start();
 		
 	}

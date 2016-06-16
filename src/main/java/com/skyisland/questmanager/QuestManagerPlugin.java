@@ -307,7 +307,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 
 		imbuementHandler = new ImbuementHandler(new File(getDataFolder(), imbuementFileName));
 		
-		regionManager = new RegionManager(regionDirectory, 3);
+		regionManager = new RegionManager(regionDirectory, config.getMusicDurations(), 3);
 		
 		registerDefaultSkills();
 		

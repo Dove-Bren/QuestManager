@@ -4,13 +4,11 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
-import com.skyisland.questmanager.scheduling.Alarm;
-import com.skyisland.questmanager.scheduling.Alarmable;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -18,9 +16,13 @@ import org.bukkit.entity.Player;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.enemy.Enemy;
 import com.skyisland.questmanager.enemy.EnemyAlarms;
+import com.skyisland.questmanager.scheduling.Alarm;
+import com.skyisland.questmanager.scheduling.Alarmable;
 import com.skyisland.questmanager.util.WeightedList;
 
 public final class RegionManager implements Alarmable<EnemyAlarms> {
+	
+	public static final double DEFAULT_DURATION = 30.0;
 	
 	/**
 	 * Holds the enemy list and the music to play for the region
@@ -29,17 +31,17 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	 */
 	private static class RegionRecord {
 		
-		private Material record;
+		private Sound music;
 		
 		private WeightedList<Enemy> enemies;
 		
-		public RegionRecord(Material sound, WeightedList<Enemy> enemies) {
-			this.record = sound;
+		public RegionRecord(Sound music, WeightedList<Enemy> enemies) {
+			this.music = music;
 			this.enemies = enemies;
 		}
 		
-		public Material getSound() {
-			return record;
+		public Sound getMusic() {
+			return music;
 			
 		}
 		
@@ -52,18 +54,27 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	
 	private double spawnrate;
 	
+	private Map<Sound, Double> musicDurations;
+	
+	private Map<UUID, Sound> currentSound;
+	
+	private Map<UUID, Double> secondsLeft;
+	
 	/**
 	 * Creates an empty enemy manager with a default spawnrate of 3 seconds
 	 */
-	public RegionManager() {
-		this(3.0);
+	public RegionManager(Map<Sound, Double> soundDurations) {
+		this(soundDurations, 3.0);
 	}
 	
 	/**
 	 * Creates an enemy manager with the provided spawn rate
 	 */
-	public RegionManager(double spawnrate) {
+	public RegionManager(Map<Sound, Double> soundDurations, double spawnrate) {
 		regionMap = new HashMap<>();
+		musicDurations = soundDurations;
+		currentSound = new HashMap<>();
+		secondsLeft = new HashMap<>();
 		this.spawnrate = spawnrate;
 		
 		Alarm.getScheduler().schedule(this, EnemyAlarms.SPAWN, spawnrate);
@@ -74,16 +85,16 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	 * Spawnrate defaults to 3.0
 	 * @param target The file to load or the directory to search for files to load
 	 */
-	public RegionManager(File target) {
-		this(target, 3.0);
+	public RegionManager(File target, Map<Sound, Double> soundDurations) {
+		this(target, soundDurations, 3.0);
 	}
 	
 	/**
 	 * Creates a new Enemy Manager using the provided file or files in the provided directory.
 	 * @param target The file to load or the directory to search for files to load
 	 */
-	public RegionManager(File target, double spawnrate) {
-		this(spawnrate);
+	public RegionManager(File target, Map<Sound, Double> soundDurations, double spawnrate) {
+		this(soundDurations, spawnrate);
 		load(target);
 	}
 	
@@ -151,9 +162,25 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	public void alarm(EnemyAlarms reference) {
 		switch (reference) {
 		case SPAWN:
+			adjustTimers();
 			spawnEnemies();
 			Alarm.getScheduler().schedule(this, EnemyAlarms.SPAWN, spawnrate);
 			break;
+		}
+	}
+	
+	/**
+	 * Cycle through players, reducing the time they have left by <i>spawnrate</i>
+	 * @return
+	 */
+	private void adjustTimers() {
+		double cache;
+		for (UUID id : secondsLeft.keySet()) {
+			cache = secondsLeft.get(id);
+			if (cache - spawnrate <= 0)
+				secondsLeft.remove(id);
+			else
+				secondsLeft.put(id, cache - spawnrate);
 		}
 	}
 	
@@ -169,9 +196,23 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 					if (r.isIn(player)) {
 						spawnInRegion(r);
 						
-						if (regionMap.get(r).getSound() != null) {
-							player.playEffect(player.getLocation(), Effect.RECORD_PLAY,
-									regionMap.get(r).getSound());
+						Sound music = regionMap.get(r).getMusic();
+						if (music != null)
+						if (!currentSound.containsKey(player.getUniqueId()) || currentSound.get(player.getUniqueId()) != music
+							|| !secondsLeft.containsKey(player.getUniqueId())) {
+							//player.playEffect(player.getLocation(), Effect.RECORD_PLAY,
+							//		regionMap.get(r).getSound());
+							
+							//UPDATE //TODO
+							//player.stopSound();
+							
+							player.playSound(player.getLocation(), music, 1000f, 1f);
+							if (musicDurations.containsKey(music))
+								secondsLeft.put(player.getUniqueId(), musicDurations.get(music));
+							else
+								secondsLeft.put(player.getUniqueId(), DEFAULT_DURATION);
+							
+							currentSound.put(player.getUniqueId(), music);
 						}
 						break;
 					}
@@ -259,9 +300,12 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 				addEnemy(region, e);
 			}
 			
-
 			if (regionSection.contains("music")) {
-				regionMap.get(region).record = Material.valueOf((String) regionSection.get("music"));
+				try {
+				regionMap.get(region).music = Sound.valueOf(regionSection.getString("music"));
+				} catch (Exception e) {
+					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to match sound " + regionSection.getString("music"));
+				}
 				
 			}
 			//TODO add enemy weights?
