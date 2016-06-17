@@ -661,6 +661,7 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		newLevel = event.getFoodLevel();
 		
+		e.getPlayer().setSaturation(e.getPlayer().getSaturation() + food.getFoodLevel());
 		e.getPlayer().setFoodLevel(newLevel);
 		e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), Sound.ENTITY_PLAYER_BURP, 1,1);
 		
