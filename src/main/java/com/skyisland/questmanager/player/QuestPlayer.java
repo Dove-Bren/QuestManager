@@ -1830,11 +1830,13 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		
 		
 		
-		if (player == null) {
+		if (player == null)
+		if (e.getDamager() instanceof Player) {
 			player = (Player) e.getDamager();
 			weapon = player.getInventory().getItemInMainHand();
 			other = player.getInventory().getItemInOffHand();
-		}
+		} else
+			return;
 		
 		if (!this.playerID.equals(player.getUniqueId())) {
 			return;
