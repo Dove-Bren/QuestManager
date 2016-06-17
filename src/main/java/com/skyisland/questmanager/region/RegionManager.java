@@ -1,6 +1,7 @@
 package com.skyisland.questmanager.region;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,20 +13,28 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.enemy.Enemy;
 import com.skyisland.questmanager.enemy.EnemyAlarms;
+import com.skyisland.questmanager.enemy.events.EnemyDeathEvent;
 import com.skyisland.questmanager.scheduling.Alarm;
 import com.skyisland.questmanager.scheduling.Alarmable;
 import com.skyisland.questmanager.util.WeightedList;
 
 import io.puharesource.mc.titlemanager.api.TitleObject;
 
-public final class RegionManager implements Alarmable<EnemyAlarms> {
+public final class RegionManager implements Alarmable<EnemyAlarms>, Listener {
 	
 	public static final double DEFAULT_DURATION = 30.0;
+	
+	public static final int DEFAULT_ENEMY_COUNT = 10;
 	
 	/**
 	 * Holds the enemy list and the music to play for the region
@@ -40,14 +49,20 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		
 		private String displayName;
 		
-		public RegionRecord(Sound music, WeightedList<Enemy> enemies) {
-			this(null, music, enemies);
+		private int currentEnemies;
+		
+		private int maxEnemies;
+		
+		public RegionRecord(int maxEnemies, Sound music, WeightedList<Enemy> enemies) {
+			this(null, maxEnemies, music, enemies);
 		}
 		
-		public RegionRecord(String name, Sound music, WeightedList<Enemy> enemies) {
+		public RegionRecord(String name, int maxEnemies, Sound music, WeightedList<Enemy> enemies) {
 			this.displayName = name;
 			this.music = music;
 			this.enemies = enemies;
+			currentEnemies = 0;
+			this.maxEnemies = maxEnemies;
 		}
 		
 		public Sound getMusic() {
@@ -61,6 +76,25 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		
 		public String getDisplayName() {
 			return displayName;
+		}
+		
+		/**
+		 * Attempts to add an enemy to their count of enemies. If the region is already at it's cap,
+		 * returns false. Otherwise the count is incremented and this returns true.
+		 * @return
+		 */
+		public boolean incrementEnemies() {
+			if (currentEnemies < maxEnemies) {
+				currentEnemies++;
+				return true;
+			}
+			
+			return false;
+		}
+		
+		public void decrementEnemies() {
+			if (currentEnemies > 0)
+				currentEnemies--;
 		}
 	}
 	
@@ -95,6 +129,7 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		this.spawnrate = spawnrate;
 		
 		Alarm.getScheduler().schedule(this, EnemyAlarms.SPAWN, spawnrate);
+		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}
 	
 	/**
@@ -120,12 +155,12 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	 * Regions must be registered before they can start being associated with enemy types.
 	 * @return false if the region is null or already in the map, true otherwise
 	 */
-	public boolean registerRegion(Region region) {
+	public boolean registerRegion(Region region, int maxEnemies) {
 		if (region == null || regionMap.containsKey(region)) {
 			return false;
 		}
 		
-		regionMap.put(region, new RegionRecord(null, new WeightedList<>()));
+		regionMap.put(region, new RegionRecord(maxEnemies, null, new WeightedList<>()));
 		
 		return true;
 	}
@@ -143,6 +178,7 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		
 		WeightedList<Enemy> list = (regionMap.get(key)).enemies;
 		list.add(enemy, weight);
+		enemy.setSpawningRegion(key);
 		
 		return true;
 	}
@@ -205,14 +241,13 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	 * Goes through all players in a quest world and spawns enemies if they are in a region.
 	 */
 	private void spawnEnemies() {
-		for (Player player : Bukkit.getOnlinePlayers()) {
-			if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds().contains(
-					player.getWorld().getName())) {
-				//is in a quest world
-				for (Region r : regionMap.keySet()) {
+		for (Region r : regionMap.keySet()) {
+			spawnInRegion(r);
+		
+			for (Player player : Bukkit.getOnlinePlayers()) {
+				if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds().contains(
+						player.getWorld().getName())) {
 					if (r.isIn(player)) {
-						spawnInRegion(r);
-						
 						Sound music = regionMap.get(r).getMusic();
 						if (music != null)
 						if (!currentSound.containsKey(player.getUniqueId()) || currentSound.get(player.getUniqueId()) != music
@@ -254,12 +289,19 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 	private void spawnInRegion(Region region) {
 		if (regionMap.get(region).enemies == null || regionMap.get(region).enemies.isEmpty()) 
 			return;
+		Location loc = region.randomLocation(true);
+		if (!loc.getWorld().isChunkLoaded(loc.getBlockX() / 16, loc.getBlockZ() / 16))
+			return;
+		if (!regionMap.get(region).incrementEnemies())
+			return;
+		
 		Enemy e;
 		WeightedList<Enemy> l = (regionMap.get(region)).enemies;
 		
 		e = l.getRandom();
 		
-		e.spawn(region.randomLocation(true));
+		//loc.getChunk()
+		e.spawn(loc);
 	}
 	
 	/**
@@ -300,6 +342,9 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		 * 			etc
 		 *  enemies:
 		 *    - ==: enemy
+		 *  title: [string]
+		 *  music: RECORD_11
+		 *  maxEnemies: 10
 		 */
 		
 		YamlConfiguration config = new YamlConfiguration();
@@ -315,13 +360,15 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 			Region region = (Region) regionSection.get("region");
 			
 			List<Enemy> enemies = null;
-
+			int maxEnemies = 0;
+			
 			if (regionSection.contains("enemies")) {
 				//load enemies
 				enemies = (List<Enemy>) regionSection.getList("enemies");
+				maxEnemies = regionSection.getInt("maxEnemies", DEFAULT_ENEMY_COUNT);
 			}
 			
-			registerRegion(region);
+			registerRegion(region, maxEnemies);
 			if (enemies != null && !enemies.isEmpty())
 			for (Enemy e : enemies) {
 				addEnemy(region, e);
@@ -362,5 +409,27 @@ public final class RegionManager implements Alarmable<EnemyAlarms> {
 		}
 		
 		return null;
+	}
+	
+	@EventHandler
+	public void onEnemyDeath(EnemyDeathEvent e) {
+		if (e.getRegion() == null)
+			return;
+		RegionRecord rec = regionMap.get(e.getRegion());
+		if (rec == null)
+			return;
+		
+		rec.decrementEnemies();
+	}
+	
+	public void removeEntity(Entity e) {
+		if (!(e instanceof LivingEntity)) {
+			return;
+		}
+		EntityDeathEvent event = new EntityDeathEvent((LivingEntity) e, new ArrayList<>(), 0);
+		
+		for (RegionRecord rec : regionMap.values())
+		for (Enemy enemy : rec.enemies.getElements())
+			enemy.onEnemyDeath(event);
 	}
 }

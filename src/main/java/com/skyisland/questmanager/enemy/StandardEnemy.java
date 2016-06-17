@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.skyisland.questmanager.loot.Loot;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -17,6 +15,7 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.loot.Loot;
 
 /**
  * Enemy type with equipment customization in addition to NormalMob stuff
@@ -169,18 +168,12 @@ public class StandardEnemy extends NormalEnemy {
 	}
 	
 	@Override
-	public void spawn(Location loc) {
-			
-
-		Entity e = loc.getWorld().spawnEntity(loc, type);
-		e.setCustomName(name);
-		e.setCustomNameVisible(true);
-		
-		if (!(e instanceof LivingEntity)) {
+	public void spawnEntity(Entity base) {
+		if (!(base instanceof LivingEntity)) {
 			return;
 		}
 		
-		LivingEntity entity = (LivingEntity) e;
+		LivingEntity entity = (LivingEntity) base;
 		entity.setMaxHealth(hp);
 		entity.setHealth(hp);
 		entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(attack);
@@ -198,7 +191,5 @@ public class StandardEnemy extends NormalEnemy {
 		eq.setBootsDropChance(0f);
 		eq.setItemInMainHandDropChance(0f);
 		eq.setItemInOffHandDropChance(0f);
-		
-		
 	}
 }

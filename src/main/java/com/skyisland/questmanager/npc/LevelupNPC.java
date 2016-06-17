@@ -262,8 +262,8 @@ public class LevelupNPC extends SimpleNPC {
 			return;
 		}
 		
-
-		if (!e.getLocation().getChunk().isLoaded()) {
+		Location loc = e.getLocation();
+		if (!loc.getWorld().isChunkLoaded(loc.getBlockX() / 16, loc.getBlockZ() / 16)) {
 			return;
 		}
 		

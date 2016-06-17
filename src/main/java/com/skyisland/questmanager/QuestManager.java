@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.skyisland.questmanager.configuration.state.QuestState;
-import com.skyisland.questmanager.player.Party;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -23,6 +21,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -43,7 +42,9 @@ import org.bukkit.scoreboard.Scoreboard;
 
 import com.skyisland.questmanager.configuration.QuestConfiguration;
 import com.skyisland.questmanager.configuration.SessionConflictException;
+import com.skyisland.questmanager.configuration.state.QuestState;
 import com.skyisland.questmanager.npc.NPC;
+import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.quest.Quest;
 
@@ -637,7 +638,7 @@ public class QuestManager implements Listener {
 	@EventHandler
 	public void onChunkLoad(ChunkLoadEvent e) {
 		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds().contains(e.getWorld().getName())) {
-			boolean trip;
+			boolean trip, match;
 			if (questNPCs == null || questNPCs.isEmpty() || e.getChunk().getEntities().length == 0) {
 				return;
 			}
@@ -647,10 +648,16 @@ public class QuestManager implements Listener {
 				}
 				
 				trip = false;
+				match = false;
 				for (NPC npc : questNPCs) {
 					if (npc.getEntity() == null) {
 						return;
 					}
+					
+					if (npc.getEntity().getCustomName() != null &&
+							npc.getEntity().getCustomName().equals(entity.getCustomName()))
+						match = true;
+					
 					if (npc.getEntity().getUniqueId().equals(entity.getUniqueId())) {
 						trip = true;
 						break;
@@ -658,9 +665,14 @@ public class QuestManager implements Listener {
 				}
 				
 				
-				if (trip != true) {
+				if (match == true) {
+				if (trip != true)
+					entity.remove(); 
+				} else if (entity instanceof LivingEntity) {
+					QuestManagerPlugin.questManagerPlugin.getEnemyManager().removeEntity(entity);
 					entity.remove();
-				}
+				} else
+					entity.remove();
 			}
 		}
 	}

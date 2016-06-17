@@ -6,21 +6,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.skyisland.questmanager.loot.Loot;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.loot.Loot;
 import com.skyisland.questmanager.loot.Lootable;
 
 /**
@@ -132,33 +129,6 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		return new NormalEnemy(name, type, hp, attack);
 	}
 	
-
-	@Override
-	public void spawn(Location loc) {
-				
-		Entity e = loc.getWorld().spawnEntity(loc, type);
-		e.setCustomName(name);
-		e.setCustomNameVisible(true);
-		
-		if (!(e instanceof LivingEntity)) {
-			return;
-		}
-		
-		LivingEntity entity = (LivingEntity) e;
-		entity.setMaxHealth(hp);
-		entity.setHealth(hp);
-		entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(attack);
-		
-		entity.getEquipment().setItemInMainHandDropChance(0f);
-		
-		entity.setMetadata(Enemy.classMetaKey, new FixedMetadataValue(
-				QuestManagerPlugin.questManagerPlugin,
-				this.enemyClassID
-				));
-		
-		
-	}
-	
 	@Override
 	public List<Loot> getLoot() {
 		return loot;
@@ -168,34 +138,8 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		this.loot.add(loot);
 	}
 	
-	@EventHandler
-	public void onEnemyDeath(EntityDeathEvent e) {
-		List<MetadataValue> metas = e.getEntity().getMetadata(classMetaKey);
-		if (metas == null || metas.isEmpty()) {
-			return;
-		}
-		
-		//eliminate those that have a different EntityType right away, for performance
-		if (e.getEntityType() != this.type) {
-			return;
-		}
-		
-		for (MetadataValue meta : metas) {
-			if (!meta.getOwningPlugin().getName().equals(QuestManagerPlugin.questManagerPlugin.getName())) {
-				continue;
-			}
-			
-			
-			//same plugin and same key. Use it.
-			if (meta.asString().equals(enemyClassID)) {
-				handleDeath(e);
-				return;
-			}
-		}
-
-	}
-	
-	private void handleDeath(EntityDeathEvent event) {
+	@Override
+	protected void handleDeath(EntityDeathEvent event) {
 		//on death, drop loot (if we have any). otherwise, don't
 		if (loot != null && !loot.isEmpty()) {
 			event.getDrops().clear();
@@ -203,5 +147,24 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 					Lootable.pickLoot(loot).getItem()
 					);
 		}
+	}
+
+	@Override
+	protected void spawnEntity(Entity base) {
+		if (!(base instanceof LivingEntity)) {
+			return;
+		}
+		
+		LivingEntity entity = (LivingEntity) base;
+		entity.setMaxHealth(hp);
+		entity.setHealth(hp);
+		AttributeInstance attribute = entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+				
+		if (attribute != null)
+			attribute.setBaseValue(attack);
+		else
+			System.out.println("no GENERIC ATTACK for entity " + base.getType());
+		
+		entity.getEquipment().setItemInMainHandDropChance(0f);
 	}
 }

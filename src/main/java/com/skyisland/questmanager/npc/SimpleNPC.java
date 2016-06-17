@@ -39,7 +39,8 @@ public abstract class SimpleNPC extends NPC {
 		}
 		
 
-		if (!e.getLocation().getChunk().isLoaded() || !startingLoc.getChunk().isLoaded()) {
+		if (!e.getLocation().getWorld().isChunkLoaded(e.getLocation().getBlockX() / 16, e.getLocation().getBlockZ() / 16) 
+			|| !startingLoc.getWorld().isChunkLoaded(startingLoc.getBlockX() / 16, startingLoc.getBlockZ() / 16)) {
 			return;
 		}
 		

@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.entity.EntityDeathEvent;
 
 /**
  * Default enemy type for default mobs in minecraft.
@@ -76,5 +78,15 @@ public class DefaultEnemy extends Enemy {
 		String name = (String) map.get("name");
 		
 		return new DefaultEnemy(name, et);
+	}
+
+	@Override
+	protected void spawnEntity(Entity base) {
+		; //nothing
+	}
+
+	@Override
+	protected void handleDeath(EntityDeathEvent e) {
+		; //nothing
 	}
 }
