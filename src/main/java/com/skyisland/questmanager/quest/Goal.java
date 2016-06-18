@@ -58,6 +58,8 @@ public class Goal {
 		 */
 		
 		if (!config.contains("type") || !config.getString("type").equals("goalcnf")) {
+			if (config.getString("type").equals("juncnf"))
+				return Junction.fromConfig(quest, index, config);
 			throw new InvalidConfigurationException();
 		}
 		
