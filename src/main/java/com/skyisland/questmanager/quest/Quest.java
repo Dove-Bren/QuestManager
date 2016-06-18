@@ -572,7 +572,6 @@ public class Quest implements Listener {
 				p.updateQuestBook(false);
 			}
 		}
-		System.out.println();
 	}
 	
 	@EventHandler
