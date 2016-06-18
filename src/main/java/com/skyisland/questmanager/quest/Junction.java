@@ -1,10 +1,12 @@
 package com.skyisland.questmanager.quest;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.event.HandlerList;
@@ -14,6 +16,8 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.state.GoalState;
 import com.skyisland.questmanager.configuration.state.RequirementState;
 import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
+import com.skyisland.questmanager.fanciful.FancyMessage;
+import com.skyisland.questmanager.player.utils.CompassTrackable;
 import com.skyisland.questmanager.quest.requirements.Requirement;
 
 /**
@@ -188,6 +192,47 @@ public class Junction extends Goal {
 		for (Path p : paths)
 			reqs.addAll(p.requirements);
 		return reqs;
+	}
+	
+	@Override
+	public String getRequirementBreakdown() {
+		String builder = "";
+		Iterator<Path> it = paths.iterator();
+		Path path;
+		while (it.hasNext()) {
+			path = it.next();
+			for (Requirement req : path.requirements) {
+				builder += req.isCompleted() ? ChatColor.GREEN + "  " : ChatColor.DARK_RED + "  ";
+				builder += req instanceof CompassTrackable ? "@" : "-";
+				builder += req.getDescription() + "\n";
+			}
+			
+			if (it.hasNext())
+				builder += "   --OR--\n";
+			
+		}
+		return builder;
+	}
+	
+	@Override
+	public FancyMessage getFancyRequirementBreakdown() {
+		FancyMessage builder = new FancyMessage("");
+		Iterator<Path> it = paths.iterator();
+		Path path;
+		while (it.hasNext()) {
+			path = it.next();
+			for (Requirement req : path.requirements) {
+				builder.then((req.isCompleted() ? "  " : "  ")+ (req instanceof CompassTrackable ? "@" : "-") 
+						+ req.getDescription() + "\n")
+					.color(req.isCompleted() ? ChatColor.GREEN : ChatColor.DARK_RED);
+			}
+			
+			if (it.hasNext())
+				builder.then("   --OR--\n")
+					.color(ChatColor.BLACK);
+		}
+		return builder;
+		
 	}
 	
 	/**

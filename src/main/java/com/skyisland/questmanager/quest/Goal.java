@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.event.HandlerList;
@@ -14,6 +15,8 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.state.GoalState;
 import com.skyisland.questmanager.configuration.state.RequirementState;
 import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
+import com.skyisland.questmanager.fanciful.FancyMessage;
+import com.skyisland.questmanager.player.utils.CompassTrackable;
 import com.skyisland.questmanager.quest.requirements.Requirement;
 
 /**
@@ -183,6 +186,35 @@ public class Goal {
 	
 	public List<Requirement> getRequirements() {
 		return requirements;
+	}
+	
+	/**
+	 * Returns a string expected to be used in the QuestLog. It's a rundown of the requirements.
+	 * @return
+	 */
+	public String getRequirementBreakdown() {
+		String builder = "";
+		for (Requirement req : getRequirements()) {
+			builder += req.isCompleted() ? ChatColor.GREEN + "  " : ChatColor.DARK_RED + "  ";
+			builder += req instanceof CompassTrackable ? "@" : "-";
+			builder += req.getDescription() + "\n";
+		}
+		return builder;
+	}
+	
+	/**
+	 * Does what {@link #getRequirementBreakdown()} does, but in a FancyMessage
+	 * @return
+	 */
+	public FancyMessage getFancyRequirementBreakdown() {
+		FancyMessage builder = new FancyMessage("");
+		for (Requirement req : getRequirements()) {
+			builder.then((req.isCompleted() ? "  " : "  ")+ (req instanceof CompassTrackable ? "@" : "-") 
+					+ req.getDescription() + "\n")
+				.color(req.isCompleted() ? ChatColor.GREEN : ChatColor.DARK_RED);
+		}
+		return builder;
+		
 	}
 	
 	/**

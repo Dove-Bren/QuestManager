@@ -24,7 +24,6 @@ import com.skyisland.questmanager.player.Participant;
 import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.PartyDisbandEvent;
 import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.utils.CompassTrackable;
 import com.skyisland.questmanager.quest.history.History;
 import com.skyisland.questmanager.quest.history.HistoryEvent;
 import com.skyisland.questmanager.quest.requirements.Requirement;
@@ -426,11 +425,13 @@ public class Quest implements Listener {
 		
 		builder += "Objective:\n";
 		
-		for (Requirement req : currentGoal.getRequirements()) {
-			builder += req.isCompleted() ? ChatColor.GREEN + "  " : ChatColor.DARK_RED + "  ";
-			builder += req instanceof CompassTrackable ? "@" : "-";
-			builder += req.getDescription() + "\n";
-		}
+		builder += currentGoal.getRequirementBreakdown();
+		
+//		for (Requirement req : currentGoal.getRequirements()) {
+//			builder += req.isCompleted() ? ChatColor.GREEN + "  " : ChatColor.DARK_RED + "  ";
+//			builder += req instanceof CompassTrackable ? "@" : "-";
+//			builder += req.getDescription() + "\n";
+//		}
 		
 		if (isReady()) {
 			builder += ChatColor.DARK_PURPLE + "\n  =" + template.getEndHint();
@@ -456,11 +457,7 @@ public class Quest implements Listener {
 				.color(ChatColor.BLACK);
 		
 		if (currentGoal != null)
-		for (Requirement req : currentGoal.getRequirements()) {
-			builder.then((req.isCompleted() ? "  " : "  ")+ (req instanceof CompassTrackable ? "@" : "-") 
-					+ req.getDescription() + "\n")
-				.color(req.isCompleted() ? ChatColor.GREEN : ChatColor.DARK_RED);
-		}
+			builder.then(currentGoal.getFancyRequirementBreakdown());
 		
 		if (isReady()) {
 			builder.then("\n  =" + template.getEndHint())
@@ -564,7 +561,6 @@ public class Quest implements Listener {
 			if (keepState && ready) {
 				return;
 			}
-			
 			
 			update();
 
