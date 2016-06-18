@@ -26,11 +26,15 @@ public class Goal {
 	
 	private List<Requirement> requirements;
 	
+	private Integer nextGoalIndex; 
+	
 	private String name;
 	
 	private String description;
 	
 	private Quest quest;
+	
+	private int index;
 	
 	//private List<Chest> chests;
 	
@@ -43,7 +47,7 @@ public class Goal {
 	 * Creates a goal from the provided goal configuration
 	 * @throws InvalidConfigurationException 
 	 */
-	public static Goal fromConfig(Quest quest, ConfigurationSection config) throws InvalidConfigurationException {
+	public static Goal fromConfig(Quest quest, int index, ConfigurationSection config) throws InvalidConfigurationException {
 		/* goal construction configuration involves:
 		 * Goal name, description
 		 * The requirements that are in it
@@ -58,12 +62,14 @@ public class Goal {
 		}
 		
 		String name, description;
+		Integer nextIndex;
 		
 		name = config.getString("name");
 		description = config.getString("description");
+		nextIndex = (config.contains("next") ? config.getInt("next") : null);
 		
 
-		Goal goal = new Goal(quest, name, description);
+		Goal goal = new Goal(quest, index, nextIndex, name, description);
 		
 		List<ConfigurationSection> reqs = new LinkedList<>();
 		for (String requirementKey : config.getConfigurationSection("requirements").getKeys(false)) {
@@ -92,17 +98,19 @@ public class Goal {
 		
 	}
 	
-	public Goal(Quest quest, String name, String description) {
+	public Goal(Quest quest, int index, Integer nextGoal, String name, String description) {
 		this.quest = quest;
 		this.name = name;
 		this.description = description;
+		this.index = index;
+		this.nextGoalIndex = nextGoal;
 		
 		this.requirements = new LinkedList<>();
 		//this.chests = new LinkedList<Chest>();
 	}
 	
-	public Goal(Quest quest, String name) {
-		this(quest, name, "");
+	public Goal(Quest quest, int index, Integer nextGoal, String name) {
+		this(quest, index, nextGoal, name, "");
 	}
 	
 	public void loadState(GoalState state) throws InvalidConfigurationException {
@@ -213,5 +221,22 @@ public class Goal {
 				HandlerList.unregisterAll((Listener) req);
 			}
 		}
+	}
+	
+	public Goal fetchNextGoal() {
+		try {
+			if (nextGoalIndex == null)
+				return quest.getTemplate().fetchGoal(quest, index+1);
+			else
+				return quest.getTemplate().fetchGoal(quest, nextGoalIndex);
+		} catch (InvalidConfigurationException e) {
+			e.printStackTrace();
+			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Failed to get goal data from configuration!");
+			return null;
+		}
+	}
+	
+	public int getIndex() {
+		return index;
 	}
 }

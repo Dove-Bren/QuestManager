@@ -6,18 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.QuestConfiguration;
-import com.skyisland.questmanager.configuration.state.QuestState;
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.player.Participant;
-import com.skyisland.questmanager.player.Party;
-import com.skyisland.questmanager.player.PartyDisbandEvent;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.utils.CompassTrackable;
-import com.skyisland.questmanager.quest.history.History;
-import com.skyisland.questmanager.quest.history.HistoryEvent;
-import com.skyisland.questmanager.ui.ChatMenu;
-import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -29,8 +17,20 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.QuestConfiguration;
+import com.skyisland.questmanager.configuration.state.QuestState;
+import com.skyisland.questmanager.fanciful.FancyMessage;
+import com.skyisland.questmanager.player.Participant;
+import com.skyisland.questmanager.player.Party;
+import com.skyisland.questmanager.player.PartyDisbandEvent;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.utils.CompassTrackable;
+import com.skyisland.questmanager.quest.history.History;
+import com.skyisland.questmanager.quest.history.HistoryEvent;
 import com.skyisland.questmanager.quest.requirements.Requirement;
 import com.skyisland.questmanager.quest.requirements.RequirementUpdateEvent;
+import com.skyisland.questmanager.ui.ChatMenu;
+import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 
 /**
  * Quest Interface!
@@ -64,9 +64,11 @@ public class Quest implements Listener {
 //	
 	private Participant participant;
 	
-	private List<Goal> goals;	
+	//private List<Goal> goals;
 	
-	private int goalIndex;
+	private Goal currentGoal;
+	
+	//private int goalIndex;
 	
 	private int fame;
 	
@@ -107,8 +109,8 @@ public class Quest implements Listener {
 		this.template = template;
 		
 		this.running = false;
-		this.goals = new LinkedList<>();
-		this.goalIndex = 0;
+		//this.goals = new LinkedList<>();
+		//this.goalIndex = 0;
 		
 		this.history = new History();
 		ready = false;
@@ -163,20 +165,19 @@ public class Quest implements Listener {
 		}
 		
 		//quickly stop the requirements that were started because we were created, instanced, etc
-		goals.get(goalIndex).stop();
+		currentGoal.stop();
+		currentGoal = null;
 		
-		this.goalIndex = state.getGoalIndex();
-
-		Goal goal;
-		if (goalIndex >= goals.size()) {
-			goal = goals.get(goals.size() - 1);
-		} else {
-			goal = goals.get(goalIndex);
+		int goalIndex = state.getGoalIndex();
+		
+		if (goalIndex != QuestState.NO_STATE) { 
+			currentGoal = template.fetchGoal(this, goalIndex);
+			if (currentGoal != null) {
+				currentGoal.loadState(state.getGoalState());
+				currentGoal.getRequirements().forEach(Requirement::activate);
+			}
 		}
-		goal.loadState(state.getGoalState());
 
-		goal.getRequirements().forEach(Requirement::activate);
-		
 		history = state.getHistory();
 		
 		
@@ -187,25 +188,21 @@ public class Quest implements Listener {
 		//and... that's kind of it actually
 		QuestState state = new QuestState();
 		state.setName(template.getName());
-		state.setGoalIndex(goalIndex);
 		
-		if (goals.isEmpty()) {
-			return state;
-		}
-		
-		Goal goal;
-		if (goalIndex >= goals.size()) {
-			goal = goals.get(goals.size() - 1);
-		} else {
-			goal = goals.get(goalIndex);
-		}
-		state.setGoalState(goal.getState());
-				
 		state.setParticipant(getParticipants());
 		
 		if (history != null && !history.events().isEmpty()) {
 			state.setHistory(history);
 		}
+		
+		if (currentGoal == null) {
+			state.setGoalIndex(QuestState.NO_STATE);
+			return state;
+		}
+		
+		state.setGoalIndex(currentGoal.getIndex());
+		state.setGoalState(currentGoal.getState());
+		
 		
 		return state;
 	}
@@ -333,9 +330,8 @@ public class Quest implements Listener {
 			}
 		}
 		
-		if (!goals.isEmpty()) {	
-			Goal goal = goals.get(Math.min(goals.size() - 1, goalIndex));
-			goal.stop();
+		if (currentGoal != null) {	
+			currentGoal.stop();
 		}
 		
 		if (participant.getParticipants().isEmpty()) {
@@ -362,9 +358,8 @@ public class Quest implements Listener {
 		participant.getParticipants().forEach(this::removePlayer);
 		
 		//stop goals
-		if (!goals.isEmpty()) {	
-			Goal goal = goals.get(Math.min(goals.size() - 1, goalIndex));
-			goal.stop();
+		if (currentGoal != null) {	
+			currentGoal.stop();
 		}
 		
 	}
@@ -389,19 +384,17 @@ public class Quest implements Listener {
 	/**
 	 * Returns a list of enlisted goals
 	 */
-	public List<Goal> getGoals() {
-		return goals;
-	}
-	
 	public Goal getCurrentGoal() {
-		return goals.get(Math.min(goalIndex, goals.size() - 1));
+		return currentGoal;
 	}
 	
 	/**
-	 * Appends the provided goal to the current list of goals
+	 * Sets the new current goal, stopping the old one if it exists
 	 */
-	public void addGoal(Goal goal) {
-		goals.add(goal);
+	public void setGoal(Goal goal) {
+		if (currentGoal != null)
+			currentGoal.stop();
+		currentGoal = goal;
 	}
 	
 	/**
@@ -411,13 +404,6 @@ public class Quest implements Listener {
 	 */
 	public String getDescription() {
 		String builder = ChatColor.GOLD + template.getName();
-		Goal goal;
-		
-		if (goalIndex >= goals.size()) {
-			goal = goals.get(goals.size() - 1); //get the last one
-		} else {
-			goal = goals.get(goalIndex);
-		}
 		
 		builder += "\n" + ChatColor.DARK_BLUE + template.getDescription();
 		
@@ -440,7 +426,7 @@ public class Quest implements Listener {
 		
 		builder += "Objective:\n";
 		
-		for (Requirement req : goal.getRequirements()) {
+		for (Requirement req : currentGoal.getRequirements()) {
 			builder += req.isCompleted() ? ChatColor.GREEN + "  " : ChatColor.DARK_RED + "  ";
 			builder += req instanceof CompassTrackable ? "@" : "-";
 			builder += req.getDescription() + "\n";
@@ -449,7 +435,6 @@ public class Quest implements Listener {
 		if (isReady()) {
 			builder += ChatColor.DARK_PURPLE + "\n  =" + template.getEndHint();
 		}
-		
 		
 		return builder;
 	}
@@ -469,14 +454,9 @@ public class Quest implements Listener {
 				.color(template.getRequireParty() ? ChatColor.DARK_GREEN : ChatColor.GRAY)
 			.then("Objective:\n")
 				.color(ChatColor.BLACK);
-		Goal goal;
 		
-		if (goalIndex >= goals.size()) {
-			goal = goals.get(goals.size() - 1); //get the last one
-		} else {
-			goal = goals.get(goalIndex);
-		}
-		for (Requirement req : goal.getRequirements()) {
+		if (currentGoal != null)
+		for (Requirement req : currentGoal.getRequirements()) {
 			builder.then((req.isCompleted() ? "  " : "  ")+ (req instanceof CompassTrackable ? "@" : "-") 
 					+ req.getDescription() + "\n")
 				.color(req.isCompleted() ? ChatColor.GREEN : ChatColor.DARK_RED);
@@ -653,55 +633,39 @@ public class Quest implements Listener {
 		}
 		
 		//if there are no goals, default to ready to turn in
-		if (goals.isEmpty()) {
+		if (currentGoal == null) {
 			ready = true;
 			return;
 		}
 		
-		Goal goal;
-		if (goalIndex >= goals.size()) {
-			goal = goals.get(goals.size() - 1);
-		} else {
-			goal = goals.get(goalIndex);
-		}
-		
-		if (goal.isComplete()) {
+		if (currentGoal.isComplete()) {
 			nextGoal();			
 		}
-		
 	}
 	
 	/**
 	 * Loads the next goal and starts its requirements for listening
 	 */
 	private void nextGoal() {
-		goalIndex++;
+		currentGoal.stop();
 		
-		//did we just move a goal? Should the old one be deactivated?
-		if (goals.size() > goalIndex) {
-			//yes, because we are still under size. This means we don't stop on the last one
-			goals.get(goalIndex - 1).stop();
-		}
+		currentGoal = currentGoal.fetchNextGoal();
 		
-		if (goals.size() <= goalIndex) {
+		if (currentGoal == null) {
 			this.ready = true;
 			
-			if (goals.size() == goalIndex) {
-
-				//check if end is to just finish
-				if (template.getEndType() == QuestConfiguration.EndType.NOTURNIN) {
-					this.completeQuest(true);
-					return;
-				}
-			
-				tellParticipants("The quest " + ChatColor.GOLD + getName() + ChatColor.RESET + " is ready to turn in!");
+			//check if end is to just finish
+			if (template.getEndType() == QuestConfiguration.EndType.NOTURNIN) {
+				this.completeQuest(true);
+				return;
 			}
+		
+			tellParticipants("The quest " + ChatColor.GOLD + getName() + ChatColor.RESET + " is ready to turn in!");
 			return;
 			
 		}
 		
-		Goal goal = goals.get(goalIndex);
-		goal.getRequirements().forEach(Requirement::activate);
+		currentGoal.getRequirements().forEach(Requirement::activate);
 		
 		tellParticipants("You've completed your current objective for the quest " + ChatColor.GOLD + this.getName() + ChatColor.RESET);
 	}

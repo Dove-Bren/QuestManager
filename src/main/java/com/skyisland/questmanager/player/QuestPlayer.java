@@ -1467,7 +1467,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		}
 		
 		Goal goal = quest.getCurrentGoal();
-		if (goal.getRequirements().isEmpty()) {
+		if (goal == null || goal.getRequirements().isEmpty()) {
 			this.compassTarget = null;
 			return;
 		}

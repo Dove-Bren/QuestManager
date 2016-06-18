@@ -18,6 +18,8 @@ import com.skyisland.questmanager.quest.history.History;
  */
 public class QuestState {
 	
+	public static final int NO_STATE = -999;
+	
 	private String name;
 	
 	private int goalIndex;
@@ -37,7 +39,7 @@ public class QuestState {
 	public void load(YamlConfiguration config) throws InvalidConfigurationException {
 		
 		if (!config.contains("saveTime") || !config.contains("participants") || !config.contains("name") 
-				|| !config.contains("goalstate") || !config.contains("goalstate")) {
+				|| !config.contains("goalindex")) {
 			throw new InvalidConfigurationException("Some keys were missing in a quest state! "
 					+ (config.contains("name") ? config.getString("name") : ""));
 		}
@@ -47,7 +49,9 @@ public class QuestState {
 		this.goalIndex = config.getInt("goalindex");
 		
 		this.goalState =  new GoalState();
-		this.goalState.load(config.getConfigurationSection("goalstate"));
+		
+		if (config.contains("goalstate"))
+			this.goalState.load(config.getConfigurationSection("goalstate"));
 
 		history = null;
 		if (config.contains("history")) {
@@ -71,7 +75,8 @@ public class QuestState {
 		
 		config.set("goalindex", goalIndex);
 		
-		config.set("goalstate", goalState.asConfig());
+		if (goalState != null)
+			config.set("goalstate", goalState.asConfig());
 		
 		config.set("participants", participant.getIDString());
 		

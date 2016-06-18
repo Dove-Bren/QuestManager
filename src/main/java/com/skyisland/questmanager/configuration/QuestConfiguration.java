@@ -1,13 +1,11 @@
 package com.skyisland.questmanager.configuration;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import com.skyisland.questmanager.npc.NPC;
-import com.skyisland.questmanager.npc.SimpleQuestStartNPC;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.quest.Goal;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -16,7 +14,11 @@ import org.bukkit.inventory.ItemStack;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.LocationState;
+import com.skyisland.questmanager.npc.NPC;
+import com.skyisland.questmanager.npc.SimpleQuestStartNPC;
 import com.skyisland.questmanager.player.Participant;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.quest.Goal;
 import com.skyisland.questmanager.quest.Quest;
 import com.skyisland.questmanager.quest.requirements.Requirement;
 import com.skyisland.questmanager.ui.menu.message.Message;
@@ -37,6 +39,10 @@ public class QuestConfiguration {
 	public static final double configVersion = 1.00;
 	
 	private YamlConfiguration config;
+	
+	private Map<Integer, ConfigurationSection> goalCache;
+	
+	private int firstKey;
 		
 	public QuestConfiguration(YamlConfiguration config) throws InvalidConfigurationException {
 		
@@ -275,23 +281,16 @@ public class QuestConfiguration {
 			throw new SessionConflictException();
 		}
 		
-		ConfigurationSection questSection = config.getConfigurationSection(
-				QuestConfigurationField.GOALS.getKey());
-		
-		List<ConfigurationSection> goalList = new LinkedList<>();
-		for (String key : questSection.getKeys(false)) {
-			goalList.add(questSection.getConfigurationSection(key));
+		if (goalCache == null) {
+			fetchGoalCache();
 		}
 			
 		Quest quest = new Quest(this, participant);
 		
-		for (ConfigurationSection section : goalList) {
-			Goal goal = Goal.fromConfig(quest, section);
-			quest.addGoal(goal);
-		}
+		quest.setGoal(fetchFirstGoal(quest));
 		
 		//activate first goal
-		quest.getGoals().get(0).getRequirements().forEach(Requirement::activate);
+		quest.getCurrentGoal().getRequirements().forEach(Requirement::activate);
 		
 		//get fame and reward info
 		quest.setFame(config.getInt(QuestConfigurationField.FAME.getKey()));
@@ -314,5 +313,55 @@ public class QuestConfiguration {
 		
 		
 		return quest;
+	}
+	
+	/**
+	 * Fetches (and instantiates) a goal by it's index. This key represents the unique identifier for the
+	 * goal in the Quest. Unless the underlying quest is changed, this key is static per goal, and can be used
+	 * between server restarts.
+	 * <p>
+	 * To get the first goal (regardless of it's index) in this quest, use {@link #fetchFirstGoal()} instead.
+	 * </p>
+	 * @param key
+	 * @return
+	 * @throws InvalidConfigurationException 
+	 */
+	public Goal fetchGoal(Quest hostQuest, int key) throws InvalidConfigurationException {
+		if (goalCache == null)
+			fetchGoalCache();
+		if (!goalCache.containsKey(key))
+			return null;
+	
+		return Goal.fromConfig(hostQuest, key, goalCache.get(key));
+	}
+	
+	public Goal fetchFirstGoal(Quest hostQuest) throws InvalidConfigurationException {
+		return fetchGoal(hostQuest, firstKey);
+	}
+	
+	private void fetchGoalCache() {
+		ConfigurationSection questSection = config.getConfigurationSection(
+				QuestConfigurationField.GOALS.getKey());
+		goalCache = new HashMap<>();
+		boolean first = true;
+		
+		if (questSection == null)
+			return;
+		
+		Integer mapKey;
+		for (String key : questSection.getKeys(false)) {
+			try {
+				mapKey = Integer.parseInt(key);
+			} catch (NumberFormatException e) {
+				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Failed to parse integer key in quest: " + key);
+				continue;
+			}
+			
+			goalCache.put(mapKey, questSection.getConfigurationSection(key));
+			if (first || firstKey > mapKey) {
+				firstKey = mapKey;
+				first = false;
+			}
+		}
 	}
 }
