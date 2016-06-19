@@ -199,6 +199,7 @@ public class QuestConfiguration {
 					npc = (NPC) npcSection.get(key);
 					npc.setQuestName(this.getName());
 					npcs.add(npc);
+					npc.listen();
 				}
 			}
 		}
@@ -220,6 +221,7 @@ public class QuestConfiguration {
 					  "Quest has no starting npc specified: " + getName());
 		} else {
 			startingNPC = (SimpleQuestStartNPC) config.get(QuestConfigurationField.START.getKey());
+			startingNPC.listen();
 			startingNPC.setQuestTemplate(this);
 			startingNPC.setQuestName(getName());
 			

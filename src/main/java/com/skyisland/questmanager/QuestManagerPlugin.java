@@ -249,58 +249,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		//register our Location util!
-		LocationState.registerWithAliases();
-		QuestPlayer.registerWithAliases();
-		Party.registerWithAliases();
-		MuteNPC.registerWithAliases();
-		SimpleChatNPC.registerWithAliases();
-		SimpleBioptionNPC.registerWithAliases();
-		SimpleQuestStartNPC.registerWithAliases();
-		InnNPC.registerWithAliases();
-		ForgeNPC.registerWithAliases();
-		ShopNPC.registerWithAliases();
-		TeleportNPC.registerWithAliases();
-		SimpleMessage.registerWithAliases();
-		BioptionMessage.registerWithAliases();
-		TreeMessage.registerWithAliases();
-		ShopInventory.registerWithAliases();
-		ServiceInventory.registerWithAliases();
-		ServiceCraft.registerWithAliases();
-		ServiceOffer.registerWithAliases();
-		ServiceNPC.registerWithAliases();
-		LevelupNPC.registerWithAliases();
-		DummyNPC.registerWithAliases();
-		ConfigurationSerialization.registerClass(MessagePart.class);
-		ConfigurationSerialization.registerClass(TextualComponent.ArbitraryTextTypeComponent.class);
-		ConfigurationSerialization.registerClass(TextualComponent.ComplexTextTypeComponent.class);
-		ConfigurationSerialization.registerClass(FancyMessage.class);
-		Chest.registerWithAliases();
-		CuboidRegion.registerWithAliases();
-		SphericalRegion.registerWithAliases();
-		DefaultEnemy.registerWithAliases();
-		NormalEnemy.registerWithAliases();
-		StandardEnemy.registerWithAliases();
-		SimpleSelfSpell.registerWithAliases();
-		SimpleTargetSpell.registerWithAliases();
-		ChargeSpell.registerWithAliases();
-		HealEffect.registerWithAliases();
-		DamageEffect.registerWithAliases();
-		StatusEffect.registerWithAliases();
-		BlockEffect.registerWithAliases();
-		AreaEffect.registerWithAliases();
-		DamageMPEffect.registerWithAliases();
-		SwapEffect.registerWithAliases();
-		SummonTamedEffect.registerWithAliases();
-		FireEffect.registerWithAliases();
-		InvokeSpellWeavingEffect.registerWithAliases();
-		DamageUndeadEffect.registerWithAliases();
-		CastPylonEffect.registerWithAliases();
-		SpellWeavingSpell.registerWithAliases();
-		Loot.registerWithAliases();
-		ConfigurationSerialization.registerClass(PlayerOptions.class);
-		BankStorageManager.registerSerialization();
-		BankNPC.registerWithAliases();
-		ImbuementSet.registerWithAliases();
+		registerConfigurationClasses();
 
 		chatGuiHandler = new ChatGuiHandler(this, config.getMenuVerbose());
 		inventoryGuiHandler = new InventoryGuiHandler();
@@ -444,6 +393,61 @@ public class QuestManagerPlugin extends JavaPlugin {
 		skillManager.registerSkill(new SmithingSkill());
 		skillManager.registerSkill(new DexteritySkill());
 		skillManager.registerSkill(new PatienceSkill());
+	}
+	
+	public static void registerConfigurationClasses() {
+		LocationState.registerWithAliases();
+		QuestPlayer.registerWithAliases();
+		Party.registerWithAliases();
+		MuteNPC.registerWithAliases();
+		SimpleChatNPC.registerWithAliases();
+		SimpleBioptionNPC.registerWithAliases();
+		SimpleQuestStartNPC.registerWithAliases();
+		InnNPC.registerWithAliases();
+		ForgeNPC.registerWithAliases();
+		ShopNPC.registerWithAliases();
+		TeleportNPC.registerWithAliases();
+		SimpleMessage.registerWithAliases();
+		BioptionMessage.registerWithAliases();
+		TreeMessage.registerWithAliases();
+		ShopInventory.registerWithAliases();
+		ServiceInventory.registerWithAliases();
+		ServiceCraft.registerWithAliases();
+		ServiceOffer.registerWithAliases();
+		ServiceNPC.registerWithAliases();
+		LevelupNPC.registerWithAliases();
+		DummyNPC.registerWithAliases();
+		ConfigurationSerialization.registerClass(MessagePart.class);
+		ConfigurationSerialization.registerClass(TextualComponent.ArbitraryTextTypeComponent.class);
+		ConfigurationSerialization.registerClass(TextualComponent.ComplexTextTypeComponent.class);
+		ConfigurationSerialization.registerClass(FancyMessage.class);
+		Chest.registerWithAliases();
+		CuboidRegion.registerWithAliases();
+		SphericalRegion.registerWithAliases();
+		DefaultEnemy.registerWithAliases();
+		NormalEnemy.registerWithAliases();
+		StandardEnemy.registerWithAliases();
+		SimpleSelfSpell.registerWithAliases();
+		SimpleTargetSpell.registerWithAliases();
+		ChargeSpell.registerWithAliases();
+		HealEffect.registerWithAliases();
+		DamageEffect.registerWithAliases();
+		StatusEffect.registerWithAliases();
+		BlockEffect.registerWithAliases();
+		AreaEffect.registerWithAliases();
+		DamageMPEffect.registerWithAliases();
+		SwapEffect.registerWithAliases();
+		SummonTamedEffect.registerWithAliases();
+		FireEffect.registerWithAliases();
+		InvokeSpellWeavingEffect.registerWithAliases();
+		DamageUndeadEffect.registerWithAliases();
+		CastPylonEffect.registerWithAliases();
+		SpellWeavingSpell.registerWithAliases();
+		Loot.registerWithAliases();
+		ConfigurationSerialization.registerClass(PlayerOptions.class);
+		BankStorageManager.registerSerialization();
+		BankNPC.registerWithAliases();
+		ImbuementSet.registerWithAliases();
 	}
 	
 	

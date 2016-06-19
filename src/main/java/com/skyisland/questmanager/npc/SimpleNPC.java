@@ -24,7 +24,11 @@ public abstract class SimpleNPC extends NPC {
 	protected SimpleNPC(Location startingLoc) {
 		super();
 		this.startingLoc = startingLoc;
-		
+	}
+	
+	@Override
+	public void listen() {
+		super.listen();
 		DispersedScheduler.getScheduler().register(this);
 	}
 	

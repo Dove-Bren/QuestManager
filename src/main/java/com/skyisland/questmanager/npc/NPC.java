@@ -43,6 +43,13 @@ public abstract class NPC implements ConfigurationSerializable, Listener, Tickab
 	protected String questName;
 	
 	protected NPC() {
+		;
+	}
+	
+	/**
+	 * Starts the NPC class listening for events and reacting
+	 */
+	public void listen() {
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}
 	
