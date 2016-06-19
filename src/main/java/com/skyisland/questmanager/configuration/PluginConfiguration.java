@@ -26,7 +26,9 @@ import com.skyisland.questmanager.player.utils.SpellWeavingInvoker;
  */
 public class PluginConfiguration {
 	
-	private YamlConfiguration config;
+	protected YamlConfiguration config;
+	
+	protected boolean conservative;
 	
 	public enum PluginConfigurationKey {
 		
@@ -87,6 +89,8 @@ public class PluginConfiguration {
 	
 	public PluginConfiguration(File configFile) {
 		config = new YamlConfiguration();
+		this.conservative = false;
+		
 		if (!configFile.exists() || configFile.isDirectory()) {
 			QuestManagerPlugin.logger.warning(ChatColor.YELLOW + "Unable to find Quest Manager config file!" + ChatColor.RESET);
 			config = createDefaultConfig(configFile);
@@ -98,6 +102,7 @@ public class PluginConfiguration {
 		}
 
 		if (config.getBoolean(PluginConfigurationKey.CONSERVATIVE.key, true)) {
+			this.conservative = true;
 			QuestManagerPlugin.logger.info("Conservative mode is on,"
 					+ " so invalid configs will simply be ignored instead of destroyed.");
 		}
@@ -114,6 +119,10 @@ public class PluginConfiguration {
 		
 		SpellHolder.SpellHolderDefinition.setDisplayName(getSpellHolderName());
 		SpellHolder.SpellAlterTableDefinition.setBlockType(getAlterType());
+	}
+	
+	public boolean getConservative() {
+		return this.conservative;
 	}
 	
 	/**
