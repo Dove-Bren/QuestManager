@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.logging.Logger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -180,9 +181,12 @@ public class QuestManagerPlugin extends JavaPlugin {
 	
 	public static final double version = 1.00;
 	
+	public static Logger logger;
+	
 	@Override
 	public void onLoad() {
 		QuestManagerPlugin.questManagerPlugin = this;
+		QuestManagerPlugin.logger = getLogger();
 		reqManager = new RequirementManager();
 		
 		//load up config
@@ -332,7 +336,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-				getLogger().warning("Unable to make backup file!");
+				logger.warning("Unable to make backup file!");
 			}
 			
 			YamlConfiguration playerConfig = new YamlConfiguration();
@@ -482,10 +486,10 @@ public class QuestManagerPlugin extends JavaPlugin {
 			
 			if (args[0].equals("reload")) {
 				if (args.length == 1) {
-					getLogger().info("Reloading QuestManager...");
+					logger.info("Reloading QuestManager...");
 					sender.sendMessage(ChatColor.DARK_BLUE + "Reloading QuestManager..." + ChatColor.RESET);
 					onReload();
-					getLogger().info("Done");
+					logger.info("Done");
 					sender.sendMessage(ChatColor.DARK_BLUE + "Done" + ChatColor.RESET);
 					return true;
 				}

@@ -1,18 +1,18 @@
 package com.skyisland.questmanager.ui;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.ui.menu.BioptionChatMenu;
-import com.skyisland.questmanager.ui.menu.message.TreeMessage;
-import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
-import com.skyisland.questmanager.ui.menu.TreeChatMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.quest.Quest;
 import com.skyisland.questmanager.quest.history.HistoryEvent;
+import com.skyisland.questmanager.ui.menu.BioptionChatMenu;
+import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
+import com.skyisland.questmanager.ui.menu.TreeChatMenu;
 import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
 import com.skyisland.questmanager.ui.menu.message.Message;
+import com.skyisland.questmanager.ui.menu.message.TreeMessage;
 
 /**
  * A menu represented in chat buttons and links

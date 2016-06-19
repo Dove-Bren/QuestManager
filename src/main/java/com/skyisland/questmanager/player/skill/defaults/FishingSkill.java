@@ -154,7 +154,7 @@ public class FishingSkill extends LogSkill implements Listener {
 		
 		this.fishRecords = new LinkedList<>();
 		if (!config.contains("fish")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Didn't find any fish table"
+			QuestManagerPlugin.logger.warning("Didn't find any fish table"
 					+ "for FishingSkill even though it's enabled!");
 			return;
 		} else {
@@ -170,7 +170,7 @@ public class FishingSkill extends LogSkill implements Listener {
 							));
 				} catch (Exception e) {
 					e.printStackTrace();
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Skipping that one! ^");
+					QuestManagerPlugin.logger.warning("Skipping that one! ^");
 				}
 			}
 		}

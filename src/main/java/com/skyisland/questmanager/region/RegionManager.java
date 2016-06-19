@@ -378,7 +378,7 @@ public final class RegionManager implements Alarmable<EnemyAlarms>, Listener {
 				try {
 				regionMap.get(region).music = Sound.valueOf(regionSection.getString("music"));
 				} catch (Exception e) {
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to match sound " + regionSection.getString("music"));
+					QuestManagerPlugin.logger.warning("Unable to match sound " + regionSection.getString("music"));
 				}
 				
 			}

@@ -1,8 +1,9 @@
 package com.skyisland.questmanager.magic.spell;
 
-import com.skyisland.questmanager.magic.MagicUser;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
+
+import com.skyisland.questmanager.magic.MagicUser;
 
 public abstract class TargetSpell extends Spell {
 	

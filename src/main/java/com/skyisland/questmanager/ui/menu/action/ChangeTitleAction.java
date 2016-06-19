@@ -1,8 +1,8 @@
 package com.skyisland.questmanager.ui.menu.action;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 

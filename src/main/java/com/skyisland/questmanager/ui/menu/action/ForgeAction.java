@@ -3,10 +3,6 @@ package com.skyisland.questmanager.ui.menu.action;
 
 import java.util.ListIterator;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.ui.ChatMenu;
-import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -14,6 +10,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.skyisland.questmanager.fanciful.FancyMessage;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.ui.ChatMenu;
+import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import com.skyisland.questmanager.ui.menu.message.Message;
 
 import io.puharesource.mc.titlemanager.api.TitleObject;

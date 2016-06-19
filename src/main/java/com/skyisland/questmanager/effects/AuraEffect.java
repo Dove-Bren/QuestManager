@@ -2,11 +2,12 @@ package com.skyisland.questmanager.effects;
 
 import java.util.Random;
 
-import com.skyisland.questmanager.scheduling.Alarm;
-import com.skyisland.questmanager.scheduling.Alarmable;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+
+import com.skyisland.questmanager.scheduling.Alarm;
+import com.skyisland.questmanager.scheduling.Alarmable;
 
 /**
  * Effect where particles are constantly created around a player, as if an aura.

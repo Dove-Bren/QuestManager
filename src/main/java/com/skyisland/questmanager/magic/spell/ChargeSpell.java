@@ -3,8 +3,6 @@ package com.skyisland.questmanager.magic.spell;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.scheduling.Alarm;
-import com.skyisland.questmanager.scheduling.Alarmable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -23,6 +21,8 @@ import com.skyisland.questmanager.magic.MagicUser;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.event.MagicCastEvent;
 import com.skyisland.questmanager.player.skill.event.MagicCastEvent.MagicType;
+import com.skyisland.questmanager.scheduling.Alarm;
+import com.skyisland.questmanager.scheduling.Alarmable;
 
 /**
  * A spell that must charge for a while, and then releases a spell
@@ -158,7 +158,7 @@ public class ChargeSpell extends SimpleSelfSpell implements Listener {
 		if (!map.containsKey("cost") || !map.containsKey("name") || !map.containsKey("description")
 				|| !map.containsKey("difficulty") || !map.containsKey("castingTime")
 				|| !map.containsKey("canMove") || !map.containsKey("canGetHit") || !map.containsKey("spell")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+			QuestManagerPlugin.logger.warning(
 					"Unable to load spell " 
 						+ (map.containsKey("name") ? (String) map.get("name") : "")
 						+ ": Missing some keys!"

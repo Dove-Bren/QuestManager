@@ -2,10 +2,6 @@ package com.skyisland.questmanager.ui.actionsequence;
 
 import java.util.Random;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.scheduling.Alarm;
-import com.skyisland.questmanager.scheduling.Alarmable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -22,10 +18,14 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.effects.ChargeEffect;
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.defaults.LumberjackSkill;
+import com.skyisland.questmanager.scheduling.Alarm;
+import com.skyisland.questmanager.scheduling.Alarmable;
 
 public class LumberjackSequence implements Listener, Alarmable<Integer> {
 	

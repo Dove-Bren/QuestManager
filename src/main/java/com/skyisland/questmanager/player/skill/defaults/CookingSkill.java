@@ -290,7 +290,7 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		this.oRecipes = new LinkedList<>();
 		if (!config.contains("oven")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Didn't find any oven recipe table"
+			QuestManagerPlugin.logger.warning("Didn't find any oven recipe table"
 					+ "for CookingSkill even though it's enabled!");
 			return;
 		} else {
@@ -307,14 +307,14 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 							));
 				} catch (Exception e) {
 					e.printStackTrace();
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Skipping that one! ^");
+					QuestManagerPlugin.logger.warning("Skipping that one! ^");
 				}
 			}
 		}
 		
 		this.cRecipes = new LinkedList<>();
 		if (!config.contains("mixing")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Didn't find any mixing recipe table"
+			QuestManagerPlugin.logger.warning("Didn't find any mixing recipe table"
 					+ "for CookingSkill even though it's enabled!");
 			return;
 		} else {
@@ -333,7 +333,7 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 							));
 				} catch (Exception e) {
 					e.printStackTrace();
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Skipping that one! ^");
+					QuestManagerPlugin.logger.warning("Skipping that one! ^");
 				}
 			}
 		}
@@ -345,7 +345,7 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 				try {
 					foodBlacklist.add(Material.valueOf(b.toUpperCase()));
 				} catch (Exception e) {
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Could not find Material: "
+					QuestManagerPlugin.logger.warning("Could not find Material: "
 							+ b);
 				}
 			}

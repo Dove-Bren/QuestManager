@@ -1,17 +1,18 @@
 package com.skyisland.questmanager.ui.menu.action;
 
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.entity.Player;
+
+import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.QuestConfiguration;
 import com.skyisland.questmanager.configuration.SessionConflictException;
 import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.Participant;
 import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.quest.history.HistoryEvent;
 import com.skyisland.questmanager.quest.Quest;
-import com.skyisland.questmanager.QuestManagerPlugin;
-import org.bukkit.ChatColor;
-import org.bukkit.Sound;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.entity.Player;
+import com.skyisland.questmanager.quest.history.HistoryEvent;
 
 import io.puharesource.mc.titlemanager.api.TitleObject;
 
@@ -64,7 +65,7 @@ public class QuestStartAction implements MenuAction {
 		try {
 			quest = template.instanceQuest(participant);
 		} catch (InvalidConfigurationException e) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+			QuestManagerPlugin.logger.warning(
 					"Could not instance quest for player " + player.getName());
 			player.sendMessage("An error occured. Please notify your administrator with what you " +
 					"did to get this message, and the following message:\n Invalid Quest Template!");

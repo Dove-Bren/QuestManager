@@ -1,11 +1,11 @@
 package com.skyisland.questmanager.player.utils;
 
-import com.skyisland.questmanager.magic.ImbuementSet;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 
+import com.skyisland.questmanager.magic.ImbuementSet;
 import com.skyisland.questmanager.player.QuestPlayer;
 
 public class ImbuementHolder {

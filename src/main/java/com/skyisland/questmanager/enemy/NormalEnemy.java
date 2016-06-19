@@ -103,7 +103,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		try {
 			type = EntityType.valueOf(((String) map.get("type")).toUpperCase());
 		} catch (Exception e) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to get EntityType " + 
+			QuestManagerPlugin.logger.warning("Unable to get EntityType " + 
 					(String) map.get("type") + ", so defaulting to ZOMBIE");
 			type = EntityType.ZOMBIE;
 		}
@@ -117,7 +117,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 				loot = (List<Loot>) map.get("loot");
 			} catch (Exception e) {
 				e.printStackTrace();
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Failed to get loot list from "
+				QuestManagerPlugin.logger.warning("Failed to get loot list from "
 						+ "config for NormalEnemy " + type.name() + " - " + name + ". Resorting to default loot.");
 			}
 		}

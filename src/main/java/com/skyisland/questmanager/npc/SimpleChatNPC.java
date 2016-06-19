@@ -3,8 +3,6 @@ package com.skyisland.questmanager.npc;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.EquipmentConfiguration;
-import com.skyisland.questmanager.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -16,7 +14,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.EquipmentConfiguration;
 import com.skyisland.questmanager.configuration.utils.LocationState;
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.ui.ChatMenu;
 import com.skyisland.questmanager.ui.menu.message.Message;
@@ -102,7 +102,7 @@ public class SimpleChatNPC extends SimpleNPC {
 		if (map == null || !map.containsKey("name") || !map.containsKey("type") 
 				 || !map.containsKey("location") || !map.containsKey("equipment")
 				  || !map.containsKey("message")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Invalid NPC info! "
+			QuestManagerPlugin.logger.warning("Invalid NPC info! "
 					+ (map.containsKey("name") ? ": " + map.get("name") : ""));
 			return null;
 		}
@@ -151,7 +151,7 @@ public class SimpleChatNPC extends SimpleNPC {
 		} else if (msgObj instanceof String){
 			npc.chat = new SimpleMessage((String) msgObj);
 		} else {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+			QuestManagerPlugin.logger.warning(
 					"Invalid message type for Simple Chat NPC: " + npc.name);
 		}
 		

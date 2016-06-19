@@ -2,8 +2,9 @@ package com.skyisland.questmanager.configuration;
 
 import java.util.LinkedList;
 
-import com.skyisland.questmanager.quest.Goal;
 import org.bukkit.inventory.ItemStack;
+
+import com.skyisland.questmanager.quest.Goal;
 
 /**
  * Holds key and default information for defined quest config fields.

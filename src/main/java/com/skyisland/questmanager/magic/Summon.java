@@ -2,12 +2,6 @@ package com.skyisland.questmanager.magic;
 
 import java.util.UUID;
 
-import com.skyisland.questmanager.effects.AuraEffect;
-import com.skyisland.questmanager.npc.QuestMonsterNPC;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.QuestManagerPlugin;
-import com.skyisland.questmanager.scheduling.Alarm;
-import com.skyisland.questmanager.scheduling.Alarmable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -22,7 +16,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.effects.AuraEffect;
+import com.skyisland.questmanager.npc.QuestMonsterNPC;
 import com.skyisland.questmanager.player.PlayerOptions;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.scheduling.Alarm;
+import com.skyisland.questmanager.scheduling.Alarmable;
 
 public class Summon extends QuestMonsterNPC implements Alarmable<Integer>, Listener {
 	
@@ -56,7 +56,7 @@ public class Summon extends QuestMonsterNPC implements Alarmable<Integer>, Liste
 		Entity e = getEntity();
 		
 		if (e == null) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to locate and remove "
+			QuestManagerPlugin.logger.warning("Unable to locate and remove "
 				+ "summon!");
 		} else {
 			
@@ -126,7 +126,7 @@ public class Summon extends QuestMonsterNPC implements Alarmable<Integer>, Liste
 		
 		getEntity();
 		if (entity == null) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to locate and remove "
+			QuestManagerPlugin.logger.warning("Unable to locate and remove "
 					+ "summon!");
 			return;
 		}

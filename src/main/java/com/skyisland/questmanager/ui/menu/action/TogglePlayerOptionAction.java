@@ -1,10 +1,10 @@
 package com.skyisland.questmanager.ui.menu.action;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
-import com.skyisland.questmanager.player.QuestPlayer;
 import org.bukkit.ChatColor;
 
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.PlayerOptions;
+import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Toggles a specific player option

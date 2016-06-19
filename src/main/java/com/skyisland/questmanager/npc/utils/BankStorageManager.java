@@ -172,7 +172,7 @@ public class BankStorageManager {
 			config.save(file);
 		} catch (IOException e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Ditch string: ["
+			QuestManagerPlugin.logger.warning("Ditch string: ["
 					+ config.saveToString() + "]");
 		}
 	}

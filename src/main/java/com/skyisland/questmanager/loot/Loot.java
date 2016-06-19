@@ -103,7 +103,7 @@ public class Loot implements ConfigurationSerializable {
 				try {
 					type = Material.matchMaterial((String) o);
 				} catch (Exception e) {
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to match material to "
+					QuestManagerPlugin.logger.warning("Unable to match material to "
 							+ (String) o + ". Defaulting to " + defaultMaterial.name());
 					type = defaultMaterial;
 				}
@@ -114,13 +114,13 @@ public class Loot implements ConfigurationSerializable {
 					item = (ItemStack) o;
 				} catch (Exception e) {
 					e.printStackTrace();
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to get item from the "
+					QuestManagerPlugin.logger.warning("Unable to get item from the "
 							+ "provided object: "+ o.toString() + ". Defaulting to " + defaultMaterial.name());
 					item = new ItemStack(defaultMaterial);
 				}
 			}
 		} else {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find item key in loot. "
+			QuestManagerPlugin.logger.warning("Unable to find item key in loot. "
 					+ "Defaulting to " + defaultMaterial.name());
 			item = new ItemStack(defaultMaterial);
 		}

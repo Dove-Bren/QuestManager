@@ -1,8 +1,8 @@
 package com.skyisland.questmanager.ui.menu.inventory;
 
-import com.skyisland.questmanager.player.QuestPlayer;
 import org.bukkit.inventory.ItemStack;
 
+import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.ui.menu.action.MenuAction;
 
 /**

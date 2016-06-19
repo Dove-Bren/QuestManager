@@ -3,10 +3,11 @@ package com.skyisland.questmanager;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.quest.Goal;
-import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
-import com.skyisland.questmanager.quest.requirements.Requirement;
 import org.bukkit.configuration.ConfigurationSection;
+
+import com.skyisland.questmanager.quest.Goal;
+import com.skyisland.questmanager.quest.requirements.Requirement;
+import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 
 /**
  * Keeps track of requirement keys and registered factories
@@ -33,7 +34,7 @@ public class RequirementManager {
 	 */
 	public boolean registerFactory(String uniqueKey, RequirementFactory<?> factory) {
 		if (factories.containsKey(uniqueKey)) {
-			QuestManagerPlugin.questManagerPlugin.getLogger()
+			QuestManagerPlugin.logger
 				.warning("Unable to register requirement factory: key already exists [" + uniqueKey + "]");
 			return false;
 		}
@@ -52,7 +53,7 @@ public class RequirementManager {
 	 */
 	public Requirement instanceRequirement(String uniqueKey, Goal goal, ConfigurationSection conf) {
 		if (!factories.containsKey(uniqueKey)) {
-			QuestManagerPlugin.questManagerPlugin.getLogger()
+			QuestManagerPlugin.logger
 			.warning("Unable to find registered requirement factory for key: [" + uniqueKey + "]");
 			return null;
 		}

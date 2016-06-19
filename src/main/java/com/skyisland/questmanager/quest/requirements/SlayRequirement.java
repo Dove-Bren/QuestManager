@@ -1,12 +1,5 @@
 package com.skyisland.questmanager.quest.requirements;
 
-import com.skyisland.questmanager.configuration.state.RequirementState;
-import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
-import com.skyisland.questmanager.player.Participant;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.quest.Goal;
-import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
-import com.skyisland.questmanager.QuestManagerPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -18,6 +11,14 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.state.RequirementState;
+import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
+import com.skyisland.questmanager.player.Participant;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.quest.Goal;
+import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 
 /**
  * Requires the participants to defeat (kill) some number of a type of entity.

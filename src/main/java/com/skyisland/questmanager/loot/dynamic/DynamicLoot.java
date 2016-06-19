@@ -3,11 +3,12 @@ package com.skyisland.questmanager.loot.dynamic;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.loot.Loot;
-import com.skyisland.questmanager.QuestManagerPlugin;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.inventory.ItemStack;
+
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.loot.Loot;
 
 /**
  * Loot class which holds a dynamic item rather than a static one. In other words, specifics about the
@@ -100,7 +101,7 @@ public class DynamicLoot extends Loot {
 		}
 		
 		if (generators == null || generators.isEmpty()) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("EXTREME: no generators are loaded for "
+			QuestManagerPlugin.logger.warning("EXTREME: no generators are loaded for "
 					+ "dynamic loot generation!");
 			return null;
 		}
@@ -112,13 +113,13 @@ public class DynamicLoot extends Loot {
 			gen = generators.get(gName);
 			
 			if (gen == null) {
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find generator key in dynamicloot. "
+				QuestManagerPlugin.logger.warning("Unable to find generator key in dynamicloot. "
 						+ "Defaulting to " + generators.values().iterator().next());
 				gen = generators.values().iterator().next();
 			}
 			
 		} else {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find generator key in dynamicloot. "
+			QuestManagerPlugin.logger.warning("Unable to find generator key in dynamicloot. "
 					+ "Defaulting to " + generators.values().iterator().next());
 			gen = generators.values().iterator().next();
 		}
@@ -130,12 +131,12 @@ public class DynamicLoot extends Loot {
 			try {
 				type = Material.matchMaterial(tName);
 			} catch (Exception e) {
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to match material to "
+				QuestManagerPlugin.logger.warning("Unable to match material to "
 						+ tName + ". Defaulting to " + defaultMaterial.name());
 				type = defaultMaterial;
 			}
 		} else {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find type key in dynamicloot. "
+			QuestManagerPlugin.logger.warning("Unable to find type key in dynamicloot. "
 					+ "Defaulting to " + defaultMaterial.name());
 			type = defaultMaterial;
 		}

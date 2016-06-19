@@ -3,14 +3,15 @@ package com.skyisland.questmanager.magic.spell;
 import java.util.Collection;
 import java.util.Iterator;
 
-import com.skyisland.questmanager.magic.MagicUser;
-import com.skyisland.questmanager.QuestManagerPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
+
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.magic.MagicUser;
 
 public class SpellProjectile implements Runnable {
 	

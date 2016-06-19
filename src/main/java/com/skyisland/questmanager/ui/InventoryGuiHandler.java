@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.ui.menu.InventoryMenu;
 
 /**
  * Gui handler for inventory menus
@@ -35,7 +35,7 @@ public class InventoryGuiHandler implements Listener {
 		
 		if (menus.containsKey(player.getUniqueId())) {
 			//menu already registered!
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Duplicate inventory menu attempting"
+			QuestManagerPlugin.logger.warning("Duplicate inventory menu attempting"
 					+ " to be shown to player: [" + player.getName() + "]");
 			return;
 		}

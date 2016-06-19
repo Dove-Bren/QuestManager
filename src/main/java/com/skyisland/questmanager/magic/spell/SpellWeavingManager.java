@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.skyisland.questmanager.magic.spell.effect.CastPylonEffect;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.magic.spell.effect.CastPylonEffect;
 
 /**
  * <p>Spell weaving, in the scope of this framework, refers to the use of pylons in specific orders or
@@ -50,7 +50,7 @@ public class SpellWeavingManager {
 		for (SpellWeavingSpell spell : (List<SpellWeavingSpell>) config.getList("spells")) {
 			if (spell == null || spell.getSpellRecipe() == null
 					|| spell.getSpellRecipe().getComponents().size() < 3) {
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+				QuestManagerPlugin.logger.warning(
 						"Unable to register spell-weaving spell " + spell.getName()
 						+ " (does it have 3 or more recipe components?)");
 				continue;
@@ -80,7 +80,7 @@ public class SpellWeavingManager {
 			config.save(outfile);
 		} catch (Exception e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Ditch message: [" 
+			QuestManagerPlugin.logger.warning("Ditch message: [" 
 					+ config.saveToString() + "]");
 		}
 			

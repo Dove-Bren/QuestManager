@@ -1,10 +1,11 @@
 package com.skyisland.questmanager.player.skill.event;
 
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.skill.QualityItem;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.QualityItem;
 
 public class MineEvent extends Event implements Cancellable {
 

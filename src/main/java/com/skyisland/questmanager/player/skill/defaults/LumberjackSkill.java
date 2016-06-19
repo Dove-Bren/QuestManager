@@ -9,17 +9,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-import com.skyisland.questmanager.configuration.utils.LocationState;
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.skill.event.WoodChopEvent;
-import com.skyisland.questmanager.player.skill.LogSkill;
-import com.skyisland.questmanager.player.skill.QualityItem;
-import com.skyisland.questmanager.player.skill.Skill;
-import com.skyisland.questmanager.QuestManagerPlugin;
-import com.skyisland.questmanager.region.Region;
-import com.skyisland.questmanager.region.RegionManager;
-import com.skyisland.questmanager.ui.actionsequence.LumberjackSequence;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,6 +27,17 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.material.Wood;
 
 import com.google.common.collect.Lists;
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.LocationState;
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.LogSkill;
+import com.skyisland.questmanager.player.skill.QualityItem;
+import com.skyisland.questmanager.player.skill.Skill;
+import com.skyisland.questmanager.player.skill.event.WoodChopEvent;
+import com.skyisland.questmanager.region.Region;
+import com.skyisland.questmanager.region.RegionManager;
+import com.skyisland.questmanager.ui.actionsequence.LumberjackSequence;
 
 public class LumberjackSkill extends LogSkill implements Listener {
 	
@@ -194,7 +194,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 		this.lastLocations = new HashMap<>();
 		this.treeRecords = new LinkedList<>();
 		if (!config.contains("trees")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Didn't find any tree table"
+			QuestManagerPlugin.logger.warning("Didn't find any tree table"
 					+ "for LumberjackSkill even though it's enabled!");
 			return;
 		} else {
@@ -226,7 +226,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 							));
 				} catch (Exception e) {
 					e.printStackTrace();
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Skipping that one! ^");
+					QuestManagerPlugin.logger.warning("Skipping that one! ^");
 				}
 				
 			}

@@ -4,9 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.skyisland.questmanager.magic.spell.effect.ImbuementEffect;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+
+import com.skyisland.questmanager.magic.spell.effect.ImbuementEffect;
 
 /**
  * Holds the effects of an imbuement and their potencies together for easier use everywhere

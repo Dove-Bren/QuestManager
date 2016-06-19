@@ -1,15 +1,15 @@
 package com.skyisland.questmanager.ui.menu.action;
 
 
-import com.skyisland.questmanager.npc.utils.ServiceCraft;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.skyisland.questmanager.npc.utils.ServiceCraft;
+import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.ui.ChatMenu;
+import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import com.skyisland.questmanager.ui.menu.message.Message;
 
 import io.puharesource.mc.titlemanager.api.TitleObject;

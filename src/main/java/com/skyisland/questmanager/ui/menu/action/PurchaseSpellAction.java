@@ -1,7 +1,8 @@
 package com.skyisland.questmanager.ui.menu.action;
 
-import com.skyisland.questmanager.player.QuestPlayer;
 import org.bukkit.entity.Player;
+
+import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * The action of purchasing an item or service from an NPC.

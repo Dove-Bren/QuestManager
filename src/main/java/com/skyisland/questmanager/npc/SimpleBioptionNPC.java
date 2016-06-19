@@ -3,7 +3,6 @@ package com.skyisland.questmanager.npc;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.EquipmentConfiguration;
 import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -14,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.EquipmentConfiguration;
 import com.skyisland.questmanager.configuration.utils.LocationState;
 import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.ui.ChatMenu;
@@ -100,7 +100,7 @@ public class SimpleBioptionNPC extends SimpleNPC {
 		if (map == null || !map.containsKey("name") || !map.containsKey("type") 
 				 || !map.containsKey("location") || !map.containsKey("equipment")
 				  || !map.containsKey("message")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Invalid NPC info! "
+			QuestManagerPlugin.logger.warning("Invalid NPC info! "
 					+ (map.containsKey("name") ? ": " + map.get("name") : ""));
 			return null;
 		}

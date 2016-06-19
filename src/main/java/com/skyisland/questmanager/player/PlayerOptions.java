@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.skyisland.questmanager.QuestManagerPlugin;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 
 import com.google.common.collect.Lists;
+import com.skyisland.questmanager.QuestManagerPlugin;
 
 /**
  * Stores player options for easier access and modification
@@ -128,7 +128,7 @@ public class PlayerOptions implements ConfigurationSerializable {
 				Object o = map.get(key.getKey());
 				
 				if (!(o instanceof Boolean)) {
-					QuestManagerPlugin.questManagerPlugin.getLogger().info("Wrong data type for player"
+					QuestManagerPlugin.logger.info("Wrong data type for player"
 							+ " options: " + o);
 					continue;
 				}

@@ -167,7 +167,7 @@ public class MiningSkill extends LogSkill implements Listener {
 		
 		this.oreRecords = new HashMap<>();
 		if (!config.contains("ore")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Didn't find any ore table"
+			QuestManagerPlugin.logger.warning("Didn't find any ore table"
 					+ "for MiningSkill even though it's enabled!");
 			return;
 		} else {
@@ -196,7 +196,7 @@ public class MiningSkill extends LogSkill implements Listener {
 								));
 					} catch (Exception e) {
 						e.printStackTrace();
-						QuestManagerPlugin.questManagerPlugin.getLogger().warning("Skipping that one! ^");
+						QuestManagerPlugin.logger.warning("Skipping that one! ^");
 					}
 				}
 				

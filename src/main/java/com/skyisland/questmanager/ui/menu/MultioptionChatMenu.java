@@ -4,12 +4,12 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.ui.ChatMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.ui.ChatGuiHandler;
+import com.skyisland.questmanager.ui.ChatMenu;
 import com.skyisland.questmanager.ui.menu.message.Message;
 
 public class MultioptionChatMenu extends ChatMenu implements RespondableMenu {

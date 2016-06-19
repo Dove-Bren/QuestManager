@@ -6,11 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.skyisland.questmanager.effects.AuraEffect;
-import com.skyisland.questmanager.magic.MagicUser;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
+
+import com.skyisland.questmanager.effects.AuraEffect;
+import com.skyisland.questmanager.magic.MagicUser;
 
 public class AreaEffect extends SpellEffect {
 	

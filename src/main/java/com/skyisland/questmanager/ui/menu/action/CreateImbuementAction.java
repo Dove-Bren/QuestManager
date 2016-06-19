@@ -4,17 +4,18 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.skyisland.questmanager.effects.ChargeEffect;
-import com.skyisland.questmanager.magic.ImbuementSet;
-import com.skyisland.questmanager.magic.spell.effect.ImbuementEffect;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.QuestManagerPlugin;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.effects.ChargeEffect;
+import com.skyisland.questmanager.magic.ImbuementSet;
+import com.skyisland.questmanager.magic.spell.effect.ImbuementEffect;
+import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Takes items (presumably from the imbuement table menu) and makes them into an imbuement, and registers

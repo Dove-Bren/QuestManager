@@ -10,13 +10,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
+import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.magic.MagicRegenEvent;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.LogReducedSkill;
 import com.skyisland.questmanager.player.skill.Skill;
-import com.google.common.collect.Lists;
 
 public class ConcentrationSkill extends LogReducedSkill implements Listener {
 	

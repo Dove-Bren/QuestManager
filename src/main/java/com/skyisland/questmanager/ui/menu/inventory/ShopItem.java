@@ -2,13 +2,13 @@ package com.skyisland.questmanager.ui.menu.inventory;
 
 import java.util.Arrays;
 
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.ui.menu.action.PurchaseAction;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.ui.menu.action.MenuAction;
+import com.skyisland.questmanager.ui.menu.action.PurchaseAction;
 
 /**
  * An item used in an inventory menu.

@@ -4,10 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.EquipmentConfiguration;
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.player.utils.CompassTrackable;
-import com.skyisland.questmanager.ui.menu.BioptionChatMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -20,11 +16,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.EquipmentConfiguration;
 import com.skyisland.questmanager.configuration.QuestConfiguration;
 import com.skyisland.questmanager.configuration.utils.LocationState;
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.utils.CompassTrackable;
 import com.skyisland.questmanager.quest.Quest;
 import com.skyisland.questmanager.ui.ChatMenu;
+import com.skyisland.questmanager.ui.menu.BioptionChatMenu;
 import com.skyisland.questmanager.ui.menu.action.QuestStartAction;
 import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
 import com.skyisland.questmanager.ui.menu.message.Message;
@@ -110,7 +110,7 @@ public class SimpleQuestStartNPC extends SimpleStaticBioptionNPC implements Comp
 				 || !map.containsKey("location") || !map.containsKey("equipment")
 				  || !map.containsKey("firstmessage") || !map.containsKey("duringmessage")
 				  || !map.containsKey("postmessage") || !map.containsKey("badrequirementmessage")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Invalid NPC info! "
+			QuestManagerPlugin.logger.warning("Invalid NPC info! "
 					+ (map.containsKey("name") ? ": " + map.get("name") : ""));
 			return null;
 		}
@@ -241,7 +241,7 @@ public class SimpleQuestStartNPC extends SimpleStaticBioptionNPC implements Comp
 				
 				if (qInst == null) {
 					//something went wrong!
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+					QuestManagerPlugin.logger.warning(
 							"Unable to find matching quest in SimpleQuestStartNPC!!!!!!!");
 					return;
 				}

@@ -3,11 +3,11 @@ package com.skyisland.questmanager.ui.menu.inventory;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.skyisland.questmanager.npc.utils.Service;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.skyisland.questmanager.npc.utils.Service;
 import com.skyisland.questmanager.npc.utils.ServiceOffer;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.ui.menu.action.MenuAction;

@@ -2,13 +2,6 @@ package com.skyisland.questmanager.quest.requirements;
 
 import java.util.UUID;
 
-import com.skyisland.questmanager.configuration.EquipmentConfiguration;
-import com.skyisland.questmanager.configuration.state.RequirementState;
-import com.skyisland.questmanager.npc.NPC;
-import com.skyisland.questmanager.npc.QuestMonsterNPC;
-import com.skyisland.questmanager.player.utils.CompassTrackable;
-import com.skyisland.questmanager.quest.Goal;
-import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -30,8 +23,15 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.EntityEquipment;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.EquipmentConfiguration;
+import com.skyisland.questmanager.configuration.state.RequirementState;
 import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
 import com.skyisland.questmanager.configuration.utils.LocationState;
+import com.skyisland.questmanager.npc.NPC;
+import com.skyisland.questmanager.npc.QuestMonsterNPC;
+import com.skyisland.questmanager.player.utils.CompassTrackable;
+import com.skyisland.questmanager.quest.Goal;
+import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 
 /**
  * Requirement that a given entity must be slain.

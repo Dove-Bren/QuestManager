@@ -1,9 +1,10 @@
 package com.skyisland.questmanager.magic.spell.effect;
 
-import com.skyisland.questmanager.magic.MagicUser;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Entity;
+
+import com.skyisland.questmanager.magic.MagicUser;
 
 /**
  * An effect a spell might have.

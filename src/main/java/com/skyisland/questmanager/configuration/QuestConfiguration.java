@@ -49,7 +49,7 @@ public class QuestConfiguration {
 		this.config = config;
 		
 		if (!config.contains("configversion")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Invalid quest "
+			QuestManagerPlugin.logger.warning("Invalid quest "
 					+ "configuration!");
 			
 			//just null out the config
@@ -74,7 +74,7 @@ public class QuestConfiguration {
 		
 		if (config.getDouble("configversion", 0.0) - configVersion > .001) {
 			String name = config.getString(QuestConfigurationField.NAME.getKey(), "NO NAME");
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("The quest [" + name + "] has an invalid version!\n"
+			QuestManagerPlugin.logger.warning("The quest [" + name + "] has an invalid version!\n"
 					+ "QuestManager Configuration Version: " + configVersion + " doesn't match quest's: " 
 					+ config.getDouble("configversion", 0.0));
 			
@@ -83,9 +83,9 @@ public class QuestConfiguration {
 		//Check each field and put in defaults if they aren't there (niave approach)
 		for (QuestConfigurationField field : QuestConfigurationField.values()) {
 			if (!config.contains(field.getKey())) {
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning("[" + getName() + "] "
+				QuestManagerPlugin.logger.warning("[" + getName() + "] "
 						+ "Failed to find field information: " + field.name());
-				QuestManagerPlugin.questManagerPlugin.getLogger().info("Adding default value...");
+				QuestManagerPlugin.logger.info("Adding default value...");
 				config.set(field.getKey(), field.getDefault());
 			}
 		}
@@ -216,7 +216,7 @@ public class QuestConfiguration {
 		//load up starting NPC information
 		SimpleQuestStartNPC startingNPC = null;
 		if (!config.contains(QuestConfigurationField.START.getKey())) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().info(
+			QuestManagerPlugin.logger.info(
 					  "Quest has no starting npc specified: " + getName());
 		} else {
 			startingNPC = (SimpleQuestStartNPC) config.get(QuestConfigurationField.START.getKey());
@@ -231,7 +231,7 @@ public class QuestConfiguration {
 					Message msg = (Message) config.get(QuestConfigurationField.END.getKey() + ".value");
 					
 					if (msg == null) {
-						QuestManagerPlugin.questManagerPlugin.getLogger().info(
+						QuestManagerPlugin.logger.info(
 								  "Quest has no end action value specified: " + getName());
 					} else {
 						startingNPC.markAsEnd(msg);
@@ -241,7 +241,7 @@ public class QuestConfiguration {
 					
 				}
 			} else {
-				QuestManagerPlugin.questManagerPlugin.getLogger().info(
+				QuestManagerPlugin.logger.info(
 						  "Quest has no end action specified: " + getName());
 			}
 		}
@@ -353,7 +353,7 @@ public class QuestConfiguration {
 			try {
 				mapKey = Integer.parseInt(key);
 			} catch (NumberFormatException e) {
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Failed to parse integer key in quest: " + key);
+				QuestManagerPlugin.logger.warning("Failed to parse integer key in quest: " + key);
 				continue;
 			}
 			

@@ -1,9 +1,6 @@
 package com.skyisland.questmanager.ui.menu.action;
 
 
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.ui.ChatMenu;
-import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -13,6 +10,9 @@ import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.ui.ChatMenu;
+import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import com.skyisland.questmanager.ui.menu.message.Message;
 
 import io.puharesource.mc.titlemanager.api.TitleObject;

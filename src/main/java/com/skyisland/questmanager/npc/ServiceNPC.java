@@ -100,7 +100,7 @@ public class ServiceNPC extends SimpleStaticBioptionNPC {
 		if (map == null || !map.containsKey("name") || !map.containsKey("type") 
 				 || !map.containsKey("location") || !map.containsKey("equipment")
 				  || !map.containsKey("message") || !map.containsKey("services")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Invalid NPC info! "
+			QuestManagerPlugin.logger.warning("Invalid NPC info! "
 					+ (map.containsKey("name") ? ": " + map.get("name") : ""));
 			return null;
 		}

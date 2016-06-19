@@ -36,7 +36,7 @@ public class FoodItem extends QualityItem {
 			foodLevel = Integer.parseInt(line);
 		} catch (Exception e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("Just pretending it said " + defaultFoodLevel);
+			QuestManagerPlugin.logger.info("Just pretending it said " + defaultFoodLevel);
 		}
 		
 		ItemMeta meta = item.getItemMeta();

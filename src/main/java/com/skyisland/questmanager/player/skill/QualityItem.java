@@ -37,7 +37,7 @@ public class QualityItem {
 			quality = Double.parseDouble(line);
 		} catch (Exception e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("Just pretending it said " + normalQuality);
+			QuestManagerPlugin.logger.info("Just pretending it said " + normalQuality);
 		}
 		this.item = item;
 		ItemMeta meta = item.getItemMeta();

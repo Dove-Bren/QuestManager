@@ -1,8 +1,8 @@
 package com.skyisland.questmanager.ui.menu.action;
 
-import com.skyisland.questmanager.player.Party;
 import org.bukkit.ChatColor;
 
+import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.QuestPlayer;
 
 /**

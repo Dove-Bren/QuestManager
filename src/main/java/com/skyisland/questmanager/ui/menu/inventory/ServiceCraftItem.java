@@ -3,17 +3,17 @@ package com.skyisland.questmanager.ui.menu.inventory;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.skyisland.questmanager.npc.utils.Service;
-import com.skyisland.questmanager.npc.utils.ServiceCraft;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.ui.menu.action.CraftServiceAction;
-import com.skyisland.questmanager.ui.menu.message.Message;
-import com.skyisland.questmanager.ui.menu.message.PlainMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.skyisland.questmanager.npc.utils.Service;
+import com.skyisland.questmanager.npc.utils.ServiceCraft;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.ui.menu.action.CraftServiceAction;
 import com.skyisland.questmanager.ui.menu.action.MenuAction;
+import com.skyisland.questmanager.ui.menu.message.Message;
+import com.skyisland.questmanager.ui.menu.message.PlainMessage;
 
 /**
  * Represents a craft the service NPC can perform.

@@ -3,9 +3,6 @@ package com.skyisland.questmanager.ui.menu.action;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.magic.spell.Spell;
-import com.skyisland.questmanager.player.utils.SpellHolder;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -13,7 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.fanciful.FancyMessage;
+import com.skyisland.questmanager.magic.spell.Spell;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.utils.SpellHolder;
 import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 
 public class ChangeSpellHolderAction implements MenuAction {

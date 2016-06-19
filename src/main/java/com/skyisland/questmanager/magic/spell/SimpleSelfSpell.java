@@ -57,7 +57,7 @@ public class SimpleSelfSpell extends SelfSpell {
 	public static SimpleSelfSpell valueOf(Map<String, Object> map) {
 		if (!map.containsKey("cost") || !map.containsKey("name") || !map.containsKey("description")
 				|| !map.containsKey("effects") || !map.containsKey("difficulty")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+			QuestManagerPlugin.logger.warning(
 					"Unable to load spell " 
 						+ (map.containsKey("name") ? (String) map.get("name") : "")
 						+ ": Missing some keys!"

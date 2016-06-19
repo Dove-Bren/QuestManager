@@ -2,14 +2,14 @@ package com.skyisland.questmanager.player.special;
 
 import java.util.Random;
 
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.scheduling.Alarm;
-import com.skyisland.questmanager.scheduling.Alarmable;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Slime;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.scheduling.Alarm;
+import com.skyisland.questmanager.scheduling.Alarmable;
 
 public class TitleEffect implements Alarmable<Integer> {
 	

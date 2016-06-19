@@ -124,7 +124,7 @@ public class SummonTamedEffect extends SpellEffect {
 		this.hp = hp;
 		this.name = name;
 		if (!isTameable(type)) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+			QuestManagerPlugin.logger.warning(
 					"WARNING! Summon'ed type [" + type + "] may not be tameable, and could "
 					+ "result in exceptions further on. Please review tameable mobs and "
 					+ "use one of those instead!");
@@ -135,7 +135,7 @@ public class SummonTamedEffect extends SpellEffect {
 	@Override
 	public void apply(Entity e, MagicUser cause) {
 		if (!(cause.getEntity() instanceof AnimalTamer)) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to summon tamed "
+			QuestManagerPlugin.logger.warning("Unable to summon tamed "
 					+ "entity to caster, because they aren't an AnimalTamer: " + cause.getEntity().getCustomName());
 			return;
 		}
@@ -147,7 +147,7 @@ public class SummonTamedEffect extends SpellEffect {
 		tmp.add(e.getLocation().getDirection().normalize().multiply(2));
 		Entity ent = tmp.getWorld().spawnEntity(tmp, type);
 		if (!(ent instanceof Tameable)) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to summon tamed"
+			QuestManagerPlugin.logger.warning("Unable to summon tamed"
 					+ " entity, as entity type is not tameable: [" + type + "]");
 			ent.remove();
 			return;

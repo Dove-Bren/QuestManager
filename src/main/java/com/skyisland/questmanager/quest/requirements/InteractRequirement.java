@@ -1,9 +1,5 @@
 package com.skyisland.questmanager.quest.requirements;
 
-import com.skyisland.questmanager.configuration.state.RequirementState;
-import com.skyisland.questmanager.player.utils.CompassTrackable;
-import com.skyisland.questmanager.quest.Goal;
-import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
@@ -17,9 +13,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.state.RequirementState;
 import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
 import com.skyisland.questmanager.configuration.utils.LocationState;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.utils.CompassTrackable;
+import com.skyisland.questmanager.quest.Goal;
+import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 
 /**
  * Requirement that a participant must interact (right click or left click or both) a certain block.

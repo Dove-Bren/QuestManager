@@ -1,7 +1,8 @@
 package com.skyisland.questmanager.ui.menu.message;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+
+import com.skyisland.questmanager.fanciful.FancyMessage;
 
 /**
  * Holds a messaged used with a menu.

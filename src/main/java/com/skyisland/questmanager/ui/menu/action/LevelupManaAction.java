@@ -1,11 +1,12 @@
 package com.skyisland.questmanager.ui.menu.action;
 
-import com.skyisland.questmanager.effects.ChargeEffect;
-import com.skyisland.questmanager.player.QuestPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+
+import com.skyisland.questmanager.effects.ChargeEffect;
+import com.skyisland.questmanager.player.QuestPlayer;
 
 import io.puharesource.mc.titlemanager.api.TitleObject;
 

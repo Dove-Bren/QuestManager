@@ -1,14 +1,5 @@
 package com.skyisland.questmanager.quest.requirements;
 
-import com.skyisland.questmanager.configuration.state.RequirementState;
-import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
-import com.skyisland.questmanager.configuration.utils.LocationState;
-import com.skyisland.questmanager.player.Participant;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.utils.CompassTrackable;
-import com.skyisland.questmanager.quest.Goal;
-import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
-import com.skyisland.questmanager.QuestManagerPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -18,6 +9,16 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.state.RequirementState;
+import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
+import com.skyisland.questmanager.configuration.utils.LocationState;
+import com.skyisland.questmanager.player.Participant;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.utils.CompassTrackable;
+import com.skyisland.questmanager.quest.Goal;
+import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 
 /**
  * Requirement that a participant must arrive at a location (or be within some radius of it)

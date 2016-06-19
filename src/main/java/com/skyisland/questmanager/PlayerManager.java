@@ -43,7 +43,7 @@ public class PlayerManager implements Tickable {
 		players = new HashMap<>();
 		parties = new HashMap<>();
 		
-		QuestManagerPlugin.questManagerPlugin.getLogger().info("Loading player database...");
+		QuestManagerPlugin.logger.info("Loading player database...");
 		
 		ConfigurationSection pSex = config.getConfigurationSection("players");
 		
@@ -140,7 +140,7 @@ public class PlayerManager implements Tickable {
 	
 	public void save(File saveFile) {
 		
-		QuestManagerPlugin.questManagerPlugin.getLogger().info(
+		QuestManagerPlugin.logger.info(
 				"Saving player database...");
 		
 		YamlConfiguration config = new YamlConfiguration();

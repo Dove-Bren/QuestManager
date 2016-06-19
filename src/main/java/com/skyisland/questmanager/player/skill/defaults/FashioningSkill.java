@@ -157,7 +157,7 @@ public class FashioningSkill extends LogSkill implements Listener, CraftingSkill
 		
 		this.recipes = new LinkedList<>();
 		if (!config.contains("recipes")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Didn't find any oven recipe table"
+			QuestManagerPlugin.logger.warning("Didn't find any oven recipe table"
 					+ "for FashioningSkill even though it's enabled!");
 			return;
 		} else {
@@ -174,7 +174,7 @@ public class FashioningSkill extends LogSkill implements Listener, CraftingSkill
 							));
 				} catch (Exception e) {
 					e.printStackTrace();
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Skipping that one! ^");
+					QuestManagerPlugin.logger.warning("Skipping that one! ^");
 				}
 			}
 		}

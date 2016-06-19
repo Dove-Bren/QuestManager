@@ -89,7 +89,7 @@ public class InventoryMenu implements Listener {
 		
 		if (!(e.getPlayer() instanceof Player) || !(((Player) e.getPlayer()).getUniqueId().equals(
 				player.getPlayer().getUniqueId()))) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Inventory menu event matched names,"
+			QuestManagerPlugin.logger.warning("Inventory menu event matched names,"
 					+ " but not players! [" + e.getPlayer().getName() + "]");
 			return;
 		}

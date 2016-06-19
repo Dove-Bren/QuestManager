@@ -3,8 +3,9 @@ package com.skyisland.questmanager.ui.menu.message;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+
+import com.skyisland.questmanager.fanciful.FancyMessage;
 
 /**
  * Wraps arounds a simple, single -use- message.

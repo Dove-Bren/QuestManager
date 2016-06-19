@@ -1,7 +1,8 @@
 package com.skyisland.questmanager.ui.menu.inventory;
 
-import com.skyisland.questmanager.npc.utils.Service;
 import org.bukkit.inventory.ItemStack;
+
+import com.skyisland.questmanager.npc.utils.Service;
 
 public abstract class ServiceItem extends InventoryItem {
 

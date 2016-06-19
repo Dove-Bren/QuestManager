@@ -1,6 +1,5 @@
 package com.skyisland.questmanager.quest.requirements;
 
-import com.skyisland.questmanager.player.utils.CompassTrackable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -17,6 +16,7 @@ import com.skyisland.questmanager.configuration.state.RequirementState;
 import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
 import com.skyisland.questmanager.configuration.utils.Chest;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.utils.CompassTrackable;
 import com.skyisland.questmanager.quest.Goal;
 import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 

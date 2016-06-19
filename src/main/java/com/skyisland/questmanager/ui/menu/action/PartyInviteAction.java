@@ -1,18 +1,18 @@
 package com.skyisland.questmanager.ui.menu.action;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.ui.menu.ChatMenuOption;
-import com.skyisland.questmanager.ui.menu.message.PlainMessage;
-import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Instrument;
 import org.bukkit.Note;
 import org.bukkit.Note.Tone;
 import org.bukkit.entity.Player;
 
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.ui.ChatMenu;
+import com.skyisland.questmanager.ui.menu.ChatMenuOption;
 import com.skyisland.questmanager.ui.menu.MultioptionChatMenu;
+import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
+import com.skyisland.questmanager.ui.menu.message.PlainMessage;
 
 public class PartyInviteAction implements MenuAction {
 	

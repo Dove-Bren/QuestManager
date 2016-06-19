@@ -1,12 +1,5 @@
 package com.skyisland.questmanager.quest.requirements;
 
-import com.skyisland.questmanager.configuration.state.RequirementState;
-import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
-import com.skyisland.questmanager.player.Participant;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.quest.Goal;
-import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
-import com.skyisland.questmanager.QuestManagerPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
@@ -19,6 +12,14 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.state.RequirementState;
+import com.skyisland.questmanager.configuration.state.StatekeepingRequirement;
+import com.skyisland.questmanager.player.Participant;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.quest.Goal;
+import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 
 /**
  * Requirement specification that checks for an itemstack and removes it when it's there

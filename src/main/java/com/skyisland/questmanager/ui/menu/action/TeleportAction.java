@@ -1,15 +1,16 @@
 package com.skyisland.questmanager.ui.menu.action;
 
 
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.ui.ChatMenu;
-import com.skyisland.questmanager.ui.menu.message.Message;
-import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.ui.ChatMenu;
+import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
+import com.skyisland.questmanager.ui.menu.message.Message;
 
 /**
  * Ferries a player

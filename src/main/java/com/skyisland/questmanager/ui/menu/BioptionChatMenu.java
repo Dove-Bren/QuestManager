@@ -1,8 +1,8 @@
 package com.skyisland.questmanager.ui.menu;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
 import org.bukkit.entity.Player;
 
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.ui.ChatMenu;
 import com.skyisland.questmanager.ui.menu.action.MenuAction;
 import com.skyisland.questmanager.ui.menu.message.BioptionMessage;

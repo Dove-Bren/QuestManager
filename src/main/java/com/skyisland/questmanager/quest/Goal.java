@@ -92,7 +92,7 @@ public class Goal {
 					.instanceRequirement(type, goal, conf);
 			
 			if (r == null) {
-				QuestManagerPlugin.questManagerPlugin.getLogger()
+				QuestManagerPlugin.logger
 					.warning("    Invalid requirement type for goal: " + goal.name);
 			}
 			
@@ -121,7 +121,7 @@ public class Goal {
 	public void loadState(GoalState state) throws InvalidConfigurationException {
 		
 		if (!state.getName().equals(name)) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Loading state information"
+			QuestManagerPlugin.logger.warning("Loading state information"
 					+ "from a file that has a mismatched goal name!");
 		}
 		
@@ -136,7 +136,7 @@ public class Goal {
 					((StatekeepingRequirement) req).loadState(states.next());
 				}
 			} catch (NoSuchElementException e) {
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Error when loading state for quest" 
+				QuestManagerPlugin.logger.warning("Error when loading state for quest" 
 						+ this.getQuest().getName() + "; Not enough requirement states!");
 			}
 		}
@@ -265,7 +265,7 @@ public class Goal {
 				return quest.getTemplate().fetchGoal(quest, nextGoalIndex);
 		} catch (InvalidConfigurationException e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Failed to get goal data from configuration!");
+			QuestManagerPlugin.logger.warning("Failed to get goal data from configuration!");
 			return null;
 		}
 	}

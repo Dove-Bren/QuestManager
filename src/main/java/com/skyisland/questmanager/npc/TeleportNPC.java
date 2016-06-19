@@ -4,11 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.EquipmentConfiguration;
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.ui.ChatMenu;
-import com.skyisland.questmanager.ui.menu.BioptionChatMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -20,7 +15,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EntityEquipment;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.EquipmentConfiguration;
 import com.skyisland.questmanager.configuration.utils.LocationState;
+import com.skyisland.questmanager.fanciful.FancyMessage;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.ui.ChatMenu;
+import com.skyisland.questmanager.ui.menu.BioptionChatMenu;
 import com.skyisland.questmanager.ui.menu.action.TeleportAction;
 import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
 import com.skyisland.questmanager.ui.menu.message.Message;
@@ -113,7 +113,7 @@ public class TeleportNPC extends SimpleStaticBioptionNPC {
 				  || !map.containsKey("message") || !map.containsKey("cost") 
 				|| !map.containsKey("destination") || !map.containsKey("requiredquests")
 				|| !map.containsKey("badrequirementmessage")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Invalid NPC info! "
+			QuestManagerPlugin.logger.warning("Invalid NPC info! "
 					+ (map.containsKey("name") ? ": " + map.get("name") : ""));
 			return null;
 		}

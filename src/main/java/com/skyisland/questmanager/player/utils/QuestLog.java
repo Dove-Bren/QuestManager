@@ -4,11 +4,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.skill.CraftingSkill;
-import com.skyisland.questmanager.player.skill.Skill;
-import com.skyisland.questmanager.quest.Quest;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Instrument;
@@ -23,7 +18,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.PlayerOptions;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.CraftingSkill;
+import com.skyisland.questmanager.player.skill.Skill;
+import com.skyisland.questmanager.quest.Quest;
 
 /**
  * Utility class for the quest log.

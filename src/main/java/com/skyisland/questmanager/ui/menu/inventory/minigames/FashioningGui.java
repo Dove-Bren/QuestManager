@@ -55,7 +55,7 @@ public class FashioningGui extends GuiInventory {
 	
 	public FashioningGui(FashioningSkill skill, Player player, String name) {
 		if (skill == null) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Fashioning Guis without skills "
+			QuestManagerPlugin.logger.warning("Fashioning Guis without skills "
 					+ "do nothing. This fasioning gui is refusing to start");
 			return;
 		}

@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import com.skyisland.questmanager.fanciful.FancyMessage;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+
+import com.skyisland.questmanager.fanciful.FancyMessage;
 
 /**
  * Message that has multiple options and multiple messages that happen because of that option.

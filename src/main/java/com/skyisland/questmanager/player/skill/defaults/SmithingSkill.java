@@ -496,7 +496,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		this.metals = new HashMap<>();
 		if (!config.contains("metals")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Didn't find any metal table"
+			QuestManagerPlugin.logger.warning("Didn't find any metal table"
 					+ "for SmithingSkill even though it's enabled!");
 			return;
 		} else {
@@ -525,7 +525,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 					metals.put(key, new Metal(key, subsex.getInt("difficulty"), subsex.getItemStack("output"), inputs));
 				} catch (Exception e) {
 					e.printStackTrace();
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning("Skipping that one! ^");
+					QuestManagerPlugin.logger.warning("Skipping that one! ^");
 				}
 				
 			}
@@ -533,11 +533,11 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		this.forgeRecipes = new LinkedList<>();
 		if (metals.isEmpty()) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Since there are no defined metals, recipes are "
+			QuestManagerPlugin.logger.warning("Since there are no defined metals, recipes are "
 					+ "not being read in.");
 		} else {
 			if (!config.contains("recipes")) {
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Didn't find any recipe table"
+				QuestManagerPlugin.logger.warning("Didn't find any recipe table"
 						+ "for SmithingSkill even though it's enabled!");
 				return;
 			} else {
@@ -564,7 +564,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 						@SuppressWarnings("unchecked")
 						List<ItemStack> inputs = (List<ItemStack>) subsex.getList("inputs");
 						if (!metals.containsKey(subsex.getString("base"))) {
-							QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find base metal "
+							QuestManagerPlugin.logger.warning("Unable to find base metal "
 									+ subsex.getString("base") + " for craft " + key);
 							continue;
 						}
@@ -574,7 +574,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 								subsex.getBoolean("cut"), subsex.getBoolean("quelch")));
 					} catch (Exception e) {
 						e.printStackTrace();
-						QuestManagerPlugin.questManagerPlugin.getLogger().warning("Skipping that one! ^");
+						QuestManagerPlugin.logger.warning("Skipping that one! ^");
 					}
 					
 				}

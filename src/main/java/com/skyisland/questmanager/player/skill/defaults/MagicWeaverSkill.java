@@ -2,9 +2,6 @@ package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
-import com.skyisland.questmanager.magic.MagicRegenEvent;
-import com.skyisland.questmanager.player.utils.SpellHolder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -15,14 +12,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 
+import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
+import com.skyisland.questmanager.magic.MagicRegenEvent;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.CombatEvent;
 import com.skyisland.questmanager.player.skill.event.MagicCastEvent;
+import com.skyisland.questmanager.player.utils.SpellHolder;
 import com.skyisland.questmanager.ui.menu.action.ForgeAction;
-import com.google.common.collect.Lists;
 
 /**
  * Skill governing combat with a weapon in main hand, magic in offhand

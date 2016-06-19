@@ -149,9 +149,9 @@ public class Quest implements Listener {
 	public void loadState(QuestState state) throws InvalidConfigurationException {
 		
 		if (!template.getName().equals(state.getName())) {
-			QuestManagerPlugin.questManagerPlugin.getLogger()
+			QuestManagerPlugin.logger
 				.warning("Attempting to load state information from a mismatched quest!");
-			QuestManagerPlugin.questManagerPlugin.getLogger()
+			QuestManagerPlugin.logger
 			.info("[" + template.getName() + "] <-/-> [" + state.getName() + "]");
 		
 		}
@@ -319,7 +319,7 @@ public class Quest implements Listener {
 			
 			QuestState state = getState();
 
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("Saving quest state: " + 
+			QuestManagerPlugin.logger.info("Saving quest state: " + 
 					saveLoc.getAbsolutePath());
 			try {
 				state.save(saveLoc);

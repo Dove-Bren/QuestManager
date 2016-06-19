@@ -97,7 +97,7 @@ public class QuestManager implements Listener {
 				System.out.println("purged " + worldName);
 			}
 			
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("Purged villagers!");
+			QuestManagerPlugin.logger.info("Purged villagers!");
 		}
 		
 		Party.maxSize = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getMaxPartySize();
@@ -108,25 +108,25 @@ public class QuestManager implements Listener {
 		
 		makeAnchors();
 
-		QuestManagerPlugin.questManagerPlugin.getLogger().info("Quest Manager created!");	
+		QuestManagerPlugin.logger.info("Quest Manager created!");	
 
 	}
 	
 	public void init() {
 		if (questDirectory == null || !questDirectory.exists()) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to locate quest template directory: "
+			QuestManagerPlugin.logger.warning("Unable to locate quest template directory: "
 					+ questDirectory.getAbsolutePath());
 			return;
 		}
 		
 		if (!questDirectory.isDirectory()) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Quest template directory points to a file, not a directory: "
+			QuestManagerPlugin.logger.warning("Quest template directory points to a file, not a directory: "
 					+ questDirectory.getAbsolutePath());
 			return;
 		}
 
 		if (questDirectory.listFiles().length == 0) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().info(
+			QuestManagerPlugin.logger.info(
 					"There were no quest templates to load!\n  "
 					+ "To add quests, place the proper configuration files in "
 					+ questDirectory.getAbsolutePath());
@@ -140,12 +140,12 @@ public class QuestManager implements Listener {
 			count += loadTemplateFile(templateFile);			
 		}
 		
-		QuestManagerPlugin.questManagerPlugin.getLogger().info(
+		QuestManagerPlugin.logger.info(
 				"Loaded " + count + " quest template(s)!");
 		
 		//check if there is any state information for this manager
 		if (saveDirectory.listFiles().length != 0) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("Quest Manager fetching state "
+			QuestManagerPlugin.logger.info("Quest Manager fetching state "
 					+ "information...");	
 			
 			
@@ -155,11 +155,11 @@ public class QuestManager implements Listener {
 				count += loadStateFile(stateFile);
 			}
 
-			QuestManagerPlugin.questManagerPlugin.getLogger().info(
+			QuestManagerPlugin.logger.info(
 					"Successfully loaded state information for " + count + " quest(s)!");
 		}
 		
-		QuestManagerPlugin.questManagerPlugin.getLogger().info("Quest Manager Initialized!");
+		QuestManagerPlugin.logger.info("Quest Manager Initialized!");
 	}
 	
 	private int loadTemplateFile(File templateFile) {
@@ -188,7 +188,7 @@ public class QuestManager implements Listener {
 			questConfig.load(templateFile);
 		} catch (IOException | InvalidConfigurationException e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+			QuestManagerPlugin.logger.warning(
 					"Unable to load quest from file: " + templateFile.getAbsolutePath());
 			return 0;
 		}
@@ -198,7 +198,7 @@ public class QuestManager implements Listener {
 			questTemplate = new QuestConfiguration(questConfig);
 		} catch (InvalidConfigurationException e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+			QuestManagerPlugin.logger.warning(
 					"Error when parsing quest configuration file: " 
 					+ templateFile.getAbsolutePath());
 			return 0;
@@ -251,17 +251,17 @@ public class QuestManager implements Listener {
 			if (!QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getKeepOnError()) {
 				stateFile.delete();
 			} else {
-				QuestManagerPlugin.questManagerPlugin.getLogger().info("Ignoring invalid config.");
+				QuestManagerPlugin.logger.info("Ignoring invalid config.");
 			}
 			
 			return 0;
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Missing quest template for save data: "
+			QuestManagerPlugin.logger.warning("Missing quest template for save data: "
 					+ questName);
 			return 0;
 		} catch (SessionConflictException e) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to restore "
+			QuestManagerPlugin.logger.warning("Unable to restore "
 					+ "quest state due to session conflict!");
 			return 0;
 		}
@@ -326,13 +326,13 @@ public class QuestManager implements Listener {
 		
 		if (runningQuests != null && !runningQuests.isEmpty()) {
 			
-			QuestManagerPlugin.questManagerPlugin.getLogger().info(
+			QuestManagerPlugin.logger.info(
 					"Stopping quests and saving state information for " + runningQuests.size() +
 					" quests...");
 
 			runningQuests.forEach(Quest::stop);
 			
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("done!");
+			QuestManagerPlugin.logger.info("done!");
 		}
 		
 		//remove starting NPCs

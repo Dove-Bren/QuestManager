@@ -673,7 +673,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				 || !map.containsKey("title") || !map.containsKey("completedquests")
 				 || !map.containsKey("portalloc") || !map.containsKey("money")
 				 || !map.containsKey("unlockedtitles")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Invalid Quest Player! "
+			QuestManagerPlugin.logger.warning("Invalid Quest Player! "
 					+ (map.containsKey("id") ? ": " + map.get("id") : ""));
 			return null;
 		}
@@ -730,7 +730,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				try {
 					stored.put(Material.valueOf(name), act.get(name));
 				} catch (Exception e) {
-					QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+					QuestManagerPlugin.logger.warning(
 						"Failed to find material [" + name + "] when restoring player ["
 						+ qp.getIDString() + "]'s spells!");
 					continue;
@@ -756,7 +756,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 							}
 						} catch (Exception e) {
 							e.printStackTrace();
-							QuestManagerPlugin.questManagerPlugin.getLogger().warning("Failed to load skill configuration for skill " + skillName);
+							QuestManagerPlugin.logger.warning("Failed to load skill configuration for skill " + skillName);
 						}
 						
 						break;

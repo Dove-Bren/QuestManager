@@ -5,19 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import com.skyisland.questmanager.configuration.EquipmentConfiguration;
-import com.skyisland.questmanager.fanciful.FancyMessage;
-import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.QuestManagerPlugin;
-import com.skyisland.questmanager.ui.ChatMenu;
-import com.skyisland.questmanager.ui.menu.action.LevelupHealthAction;
-import com.skyisland.questmanager.ui.menu.action.ShowChatMenuAction;
-import com.skyisland.questmanager.ui.menu.BioptionChatMenu;
-import com.skyisland.questmanager.ui.menu.ChatMenuOption;
-import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
-import com.skyisland.questmanager.ui.menu.message.PlainMessage;
-import com.skyisland.questmanager.ui.menu.MultioptionChatMenu;
-import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -31,9 +18,22 @@ import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.EquipmentConfiguration;
 import com.skyisland.questmanager.configuration.utils.LocationState;
+import com.skyisland.questmanager.fanciful.FancyMessage;
+import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.ui.ChatMenu;
+import com.skyisland.questmanager.ui.menu.BioptionChatMenu;
+import com.skyisland.questmanager.ui.menu.ChatMenuOption;
+import com.skyisland.questmanager.ui.menu.MultioptionChatMenu;
+import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
+import com.skyisland.questmanager.ui.menu.action.LevelupHealthAction;
 import com.skyisland.questmanager.ui.menu.action.LevelupManaAction;
+import com.skyisland.questmanager.ui.menu.action.ShowChatMenuAction;
+import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
 import com.skyisland.questmanager.ui.menu.message.Message;
+import com.skyisland.questmanager.ui.menu.message.PlainMessage;
 
 /**
  * Prompts the player with some amount of text and gives them the option to level up.
@@ -135,7 +135,7 @@ public class LevelupNPC extends SimpleNPC {
 				 || !map.containsKey("location") || !map.containsKey("equipment")
 				  || !map.containsKey("message") || !map.containsKey("famerate") 
 				  || !map.containsKey("famebase")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Invalid NPC info! "
+			QuestManagerPlugin.logger.warning("Invalid NPC info! "
 					+ (map.containsKey("name") ? ": " + map.get("name") : ""));
 			return null;
 		}

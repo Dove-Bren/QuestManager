@@ -1,7 +1,5 @@
 package com.skyisland.questmanager.player.skill.event;
 
-import com.skyisland.questmanager.configuration.PluginConfiguration;
-import com.skyisland.questmanager.player.QuestPlayer;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -11,7 +9,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.ItemStack;
 
+import com.skyisland.questmanager.configuration.PluginConfiguration;
 import com.skyisland.questmanager.player.PlayerOptions;
+import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Event called when some sort of combat action is happening in a 

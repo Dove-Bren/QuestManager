@@ -1,9 +1,10 @@
 package com.skyisland.questmanager.player.skill.event;
 
-import com.skyisland.questmanager.magic.spell.effect.SpellEffect;
-import com.skyisland.questmanager.player.QuestPlayer;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+
+import com.skyisland.questmanager.magic.spell.effect.SpellEffect;
+import com.skyisland.questmanager.player.QuestPlayer;
 
 /**
  * Thrown when a {@link QuestPlayer QuestPlayer}'s spell

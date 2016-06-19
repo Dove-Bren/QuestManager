@@ -1,8 +1,5 @@
 package com.skyisland.questmanager.magic;
 
-import com.skyisland.questmanager.configuration.utils.YamlWriter;
-import com.skyisland.questmanager.scheduling.Alarm;
-import com.skyisland.questmanager.scheduling.Alarmable;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Location;
@@ -14,7 +11,10 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.EulerAngle;
 
+import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.effects.AuraEffect;
+import com.skyisland.questmanager.scheduling.Alarm;
+import com.skyisland.questmanager.scheduling.Alarmable;
 
 /**
  * A designated rune for a rune caster spell.

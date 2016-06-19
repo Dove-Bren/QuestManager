@@ -8,18 +8,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
+
+import com.google.common.collect.Lists;
+import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.magic.spell.effect.FireEffect;
 import com.skyisland.questmanager.magic.spell.effect.HealEffect;
 import com.skyisland.questmanager.magic.spell.effect.ImbuementEffect;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.defaults.ImbuementSkill;
-import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
-
-import com.skyisland.questmanager.QuestManagerPlugin;
-import com.google.common.collect.Lists;
 
 /**
  * Stores imbuements and the items they come from, and handle
@@ -75,9 +75,9 @@ public class ImbuementHandler {
 					effectMap.put(key, (ImbuementEffect) sex.get(key));
 					effectMap.get(key).setDisplayName(YamlWriter.toStandardFormat(key));
 				} catch (ClassCastException e) {
-					QuestManagerPlugin.questManagerPlugin.getLogger()
+					QuestManagerPlugin.logger
 						.warning("Failed to register effect " + key + " due to a bad cast");
-					QuestManagerPlugin.questManagerPlugin.getLogger()
+					QuestManagerPlugin.logger
 						.warning(" > Is this class a member of the ImbuementEffect's?");
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -96,7 +96,7 @@ public class ImbuementHandler {
 					mat = Material.valueOf(key);
 				} catch (Exception e) {
 					e.printStackTrace();
-					QuestManagerPlugin.questManagerPlugin.getLogger()
+					QuestManagerPlugin.logger
 						.warning("Couldn't match Material: " + key);
 					continue;
 				}

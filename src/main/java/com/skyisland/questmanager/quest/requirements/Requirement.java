@@ -1,10 +1,11 @@
 package com.skyisland.questmanager.quest.requirements;
 
-import com.skyisland.questmanager.player.Participant;
-import com.skyisland.questmanager.quest.Goal;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
+
+import com.skyisland.questmanager.player.Participant;
+import com.skyisland.questmanager.quest.Goal;
 
 /**
  * Represents a specific requirement needed to achieve a goal in a quest.

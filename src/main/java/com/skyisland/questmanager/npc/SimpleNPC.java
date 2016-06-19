@@ -1,8 +1,9 @@
 package com.skyisland.questmanager.npc;
 
-import com.skyisland.questmanager.scheduling.DispersedScheduler;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+
+import com.skyisland.questmanager.scheduling.DispersedScheduler;
 
 /**
  * Describes NPCs with simple movement pattern: they occasionally attempt to

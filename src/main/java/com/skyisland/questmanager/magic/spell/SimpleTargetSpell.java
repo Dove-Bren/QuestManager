@@ -57,7 +57,7 @@ public class SimpleTargetSpell extends TargetSpell {
 		if (!map.containsKey("cost") || !map.containsKey("name") || !map.containsKey("description")
 				|| !map.containsKey("speed") || !map.containsKey("maxdistance") 
 				|| !map.containsKey("effects") || !map.containsKey("difficulty")) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(
+			QuestManagerPlugin.logger.warning(
 					"Unable to load spell " 
 						+ (map.containsKey("name") ? (String) map.get("name") : "")
 						+ ": Missing some keys!"

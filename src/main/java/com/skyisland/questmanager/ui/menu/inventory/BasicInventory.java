@@ -14,9 +14,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.google.common.collect.Lists;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.ui.menu.action.MenuAction;
-import com.google.common.collect.Lists;
 
 /**
  * An inventory used with inventory gui's. Contains everything the rendered inventory needs

@@ -88,7 +88,7 @@ public class PluginConfiguration {
 	public PluginConfiguration(File configFile) {
 		config = new YamlConfiguration();
 		if (!configFile.exists() || configFile.isDirectory()) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(ChatColor.YELLOW + "Unable to find Quest Manager config file!" + ChatColor.RESET);
+			QuestManagerPlugin.logger.warning(ChatColor.YELLOW + "Unable to find Quest Manager config file!" + ChatColor.RESET);
 			config = createDefaultConfig(configFile);
 		} else 	try {
 			config.load(configFile);
@@ -98,7 +98,7 @@ public class PluginConfiguration {
 		}
 
 		if (config.getBoolean(PluginConfigurationKey.CONSERVATIVE.key, true)) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("Conservative mode is on,"
+			QuestManagerPlugin.logger.info("Conservative mode is on,"
 					+ " so invalid configs will simply be ignored instead of destroyed.");
 		}
 		
@@ -300,7 +300,7 @@ public class PluginConfiguration {
 		try {
 			return Material.valueOf(config.getString(PluginConfigurationKey.COMPASSTYPE.key, "COMPASS"));
 		} catch (IllegalArgumentException e) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find the compass material: " 
+			QuestManagerPlugin.logger.warning("Unable to find the compass material: " 
 		+ config.getString(PluginConfigurationKey.COMPASSTYPE.key, "COMPASS"));
 			return Material.COMPASS;
 		}
@@ -415,7 +415,7 @@ public class PluginConfiguration {
 			try {
 				map.put(Sound.valueOf(key), config.getDouble(PluginConfigurationKey.MUSICDURATIONS.key + "." + key));
 			} catch (Exception e) {
-				QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to determine sound from " + key);
+				QuestManagerPlugin.logger.warning("Unable to determine sound from " + key);
 			}
 		}
 		return map;
@@ -426,7 +426,7 @@ public class PluginConfiguration {
 	 */
 	private YamlConfiguration createDefaultConfig(File configFile) {
 		if (configFile.isDirectory()) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(ChatColor.RED + 
+			QuestManagerPlugin.logger.warning(ChatColor.RED + 
 					"Unable to create default config!" + ChatColor.RESET);
 			return null;
 		}
