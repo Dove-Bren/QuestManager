@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player;
 
 import java.util.ArrayList;
@@ -104,27 +122,26 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
 /**
  * Player wrapper to store questing information and make saving player quest status
  * easier
- * @author Skyler
  *
  */
 public class QuestPlayer implements Participant, Listener, MagicUser, Comparable<QuestPlayer> {
 	
-	public static final String damageMessage = ChatColor.GRAY + "%s "
+	public static final String DAMAGE_MESSAGE = ChatColor.GRAY + "%s "
 			+ ChatColor.DARK_GRAY + "did " + ChatColor.DARK_RED + "%.2f damage"
 			+ ChatColor.DARK_GRAY + " to you" + ChatColor.RESET;
 	
-	public static final String missMessage = ChatColor.GRAY + "%s " + ChatColor.DARK_GRAY + "missed you with their blow";
+	public static final String MISS_MESSAGE = ChatColor.GRAY + "%s " + ChatColor.DARK_GRAY + "missed you with their blow";
 	
-	public static final String noDamageMessage = ChatColor.GRAY + "%s" + ChatColor.DARK_GRAY + "'s attack had "
+	public static final String NO_DAMAGE_MESSAGE = ChatColor.GRAY + "%s" + ChatColor.DARK_GRAY + "'s attack had "
 			+ "no effect";
 	
-	public static final String damageBlockMessage = ChatColor.DARK_GRAY + "You received " 
+	public static final String DAMAGE_BLOCK_MESSAGE = ChatColor.DARK_GRAY + "You received " 
 			+ ChatColor.RED + "%.2f damage" + ChatColor.RESET;
 	
-	public static final String pylonsResetMessage = ChatColor.DARK_GRAY + "Your spell pylons have been cleared"
+	public static final String PYLONS_RESET_MESSAGE = ChatColor.DARK_GRAY + "Your spell pylons have been cleared"
 			+ ChatColor.RESET;
 	
-	public static final String spellWeavingManaMesage = ChatColor.DARK_GRAY + "Your energies were properly"
+	public static final String SPELL_WEAVING_MANA_MESAGE = ChatColor.DARK_GRAY + "Your energies were properly"
 			+ " attuned, but you " + ChatColor.GRAY + "lacked the mana" + ChatColor.DARK_GRAY 
 			+ " to properly invoke your spell" + ChatColor.RESET;
 	
@@ -835,7 +852,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		
 		if (!e.getFrom().getWorld().equals(e.getDestination().getLocation(getPlayer().getPlayer()).getWorld())) {
 			this.clearSpellPylons();
-			getPlayer().getPlayer().sendMessage(pylonsResetMessage);
+			getPlayer().getPlayer().sendMessage(PYLONS_RESET_MESSAGE);
 		}
 			
 		if (e.getTeleportee().equals(getPlayer())) {
@@ -1850,7 +1867,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			return;
 		}
 		
-		List<MetadataValue> meta = e.getEntity().getMetadata(DamageEffect.damageMetaKey);
+		List<MetadataValue> meta = e.getEntity().getMetadata(DamageEffect.DAMAGE_META_KEY);
 		
 		if (meta != null && !meta.isEmpty() && meta.get(0).asBoolean()) {
 			return;
@@ -1901,7 +1918,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 					damager = (Entity) p.getShooter();
 				} else {
 					//custom message for arrows and crap from non-entities
-					getPlayer().getPlayer().sendMessage(String.format(damageBlockMessage, e.getFinalDamage()));
+					getPlayer().getPlayer().sendMessage(String.format(DAMAGE_BLOCK_MESSAGE, e.getFinalDamage()));
 					return;
 				}
 			}
@@ -1914,7 +1931,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			} else {
 				name = damager.getType().toString();
 			}
-			getPlayer().getPlayer().sendMessage(String.format(damageMessage, name, e.getFinalDamage()));
+			getPlayer().getPlayer().sendMessage(String.format(DAMAGE_MESSAGE, name, e.getFinalDamage()));
 		}
 	}
 	
@@ -1927,16 +1944,16 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			
 			//we just got hit by a player.
 			if (e.isMiss()) {
-				p.sendMessage(String.format(missMessage, e.getPlayer().getPlayer().getName()));
+				p.sendMessage(String.format(MISS_MESSAGE, e.getPlayer().getPlayer().getName()));
 				return;
 			}
 			
 			if (e.getFinalDamage() <= 0) {
-				p.sendMessage(String.format(noDamageMessage, e.getPlayer().getPlayer().getName()));
+				p.sendMessage(String.format(NO_DAMAGE_MESSAGE, e.getPlayer().getPlayer().getName()));
 				return;
 			}
 			
-			p.sendMessage(String.format(damageMessage, e.getPlayer().getPlayer().getName(), e.getFinalDamage()));
+			p.sendMessage(String.format(DAMAGE_MESSAGE, e.getPlayer().getPlayer().getName(), e.getFinalDamage()));
 		}
 	}
 	
@@ -2030,13 +2047,13 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				.getSpell(typeList);
 				
 		if (spell == null) {
-			getPlayer().getPlayer().sendMessage(SpellWeavingManager.badRecipeMessage);
+			getPlayer().getPlayer().sendMessage(SpellWeavingManager.BAD_RECIPE_MESSAGE);
 			return;
 		}
 		
 		if (!getPlayer().getPlayer().getGameMode().equals(GameMode.CREATIVE) && 
 				mp < spell.getCost()) {
-			getPlayer().getPlayer().sendMessage(spellWeavingManaMesage);
+			getPlayer().getPlayer().sendMessage(SPELL_WEAVING_MANA_MESAGE);
 			getPlayer().getPlayer().playSound(getPlayer().getPlayer().getLocation(), Sound.BLOCK_WATERLILY_PLACE, 1.0f, 0.5f);
 			return;
 		}

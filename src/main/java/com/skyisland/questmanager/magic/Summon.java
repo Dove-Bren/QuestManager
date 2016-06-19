@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.magic;
 
 import java.util.UUID;
@@ -26,7 +44,7 @@ import com.skyisland.questmanager.scheduling.Alarmable;
 
 public class Summon extends QuestMonsterNPC implements Alarmable<Integer>, Listener {
 	
-	public static final String deathMessage = ChatColor.DARK_GRAY + "Your summon has been dismissed" 
+	public static final String DEATH_MESSAGE = ChatColor.DARK_GRAY + "Your summon has been dismissed"
 	+ ChatColor.RESET;
 	
 	private UUID entityID;
@@ -68,7 +86,7 @@ public class Summon extends QuestMonsterNPC implements Alarmable<Integer>, Liste
 					QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(
 							(Player) tamer);
 					if (qp.getOptions().getOption(PlayerOptions.Key.CHAT_PET_DISMISSAL)) {
-						((Player) tamer).sendMessage(deathMessage);
+						((Player) tamer).sendMessage(DEATH_MESSAGE);
 					}
 				}
 			}
@@ -165,7 +183,7 @@ public class Summon extends QuestMonsterNPC implements Alarmable<Integer>, Liste
 						QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(
 								(Player) tamer);
 						if (qp.getOptions().getOption(PlayerOptions.Key.CHAT_PET_DISMISSAL)) {
-							((Player) tamer).sendMessage(deathMessage);
+							((Player) tamer).sendMessage(DEATH_MESSAGE);
 						}
 					}
 				}

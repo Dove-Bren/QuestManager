@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
@@ -26,14 +44,13 @@ import com.skyisland.questmanager.ui.menu.action.ForgeAction;
 
 /**
  * Skill governing combat with a weapon in main hand, magic in offhand
- * @author Skyler
  *
  */
 public class MagicWeaverSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "MagicWeaver.yml";
+	public static final String CONFIG_NAME = "MagicWeaver.yml";
 	
-	public static final String modifierName = "QuestManager SpellWeaver bonus";
+	public static final String MODIFIER_NAME = "QuestManager SpellWeaver bonus";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -94,8 +111,8 @@ public class MagicWeaverSkill extends LogSkill implements Listener {
 	private int levelPenalty;
 	
 	public MagicWeaverSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {
@@ -139,7 +156,7 @@ public class MagicWeaverSkill extends LogSkill implements Listener {
 		
 		if (!ForgeAction.Repairable.isRepairable(e.getWeapon().getType())
 				|| (e.getWeapon() == null || !SpellHolder.SpellHolderDefinition.isHolder(e.getOtherItem()))) {
-			Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), modifierName, 0);
+			Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), MODIFIER_NAME, 0);
 			return;
 		}
 		
@@ -148,7 +165,7 @@ public class MagicWeaverSkill extends LogSkill implements Listener {
 		//all we do is modify swing speed (so reduce cooldown) when swinging
 		double rate = (lvl * meleeRate); //we'll subtract this.
 		//bonus attack damage
-		Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), modifierName, rate);
+		Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), MODIFIER_NAME, rate);
 		
 		//System.out.println("reported attack speed: " + p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getBaseValue() + " -> " + p.getAttribute(Attribute.GENERIC_ATTACK_SPEED).getValue());
 		

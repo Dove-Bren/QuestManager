@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.ui.menu.inventory.minigames;
 
 import java.util.ArrayList;
@@ -32,32 +50,32 @@ import com.skyisland.questmanager.ui.menu.inventory.InventoryItem;
 
 public class CombiningGui extends GuiInventory {
 	
-	public static final Random random = new Random();
+	public static final Random RANDOM = new Random();
 	
 	public static CookingSkill skillLink = null;
 	
-	public static final Sound mixSound = Sound.BLOCK_BREWING_STAND_BREW;
+	public static final Sound MIX_SOUND = Sound.BLOCK_BREWING_STAND_BREW;
 	/////
-	public static final Sound failSound = Sound.ENTITY_CAT_DEATH;
+	public static final Sound FAIL_SOUND = Sound.ENTITY_CAT_DEATH;
 	
-	public static final Sound clickSound = Sound.UI_BUTTON_CLICK;
+	public static final Sound CLICK_SOUND = Sound.UI_BUTTON_CLICK;
 	
-	public static final String failMessage = ChatColor.RED + "The recipe was good, but you lacked the skill for that craft";
+	public static final String FAIL_MESSAGE = ChatColor.RED + "The recipe was good, but you lacked the skill for that craft";
 	
-	public static final String noRecipeMessage = ChatColor.RED + "The combination didn't result in anything useful";
+	public static final String NO_RECIPE_MESSAGE = ChatColor.RED + "The combination didn't result in anything useful";
 	
-	public static final String winMessage = "You created ";
+	public static final String WIN_MESSAGE = "You created ";
 	
-	public static final ItemStack combineIcon = new ItemStack(Material.BOWL);
+	public static final ItemStack COMBINE_ICON = new ItemStack(Material.BOWL);
 	
-	private static final ChargeEffect succeedEffect = new ChargeEffect(Effect.HAPPY_VILLAGER);
+	private static final ChargeEffect SUCCEED_EFFECT = new ChargeEffect(Effect.HAPPY_VILLAGER);
 	
-	private static final ChargeEffect failEffect = new ChargeEffect(Effect.VILLAGER_THUNDERCLOUD);
+	private static final ChargeEffect FAIL_EFFECT = new ChargeEffect(Effect.VILLAGER_THUNDERCLOUD);
 	
 	{
-		ItemMeta meta = combineIcon.getItemMeta();
+		ItemMeta meta = COMBINE_ICON.getItemMeta();
 		meta.setDisplayName("Combine");
-		combineIcon.setItemMeta(meta);
+		COMBINE_ICON.setItemMeta(meta);
 	}
 	
 	private Player player;
@@ -68,7 +86,7 @@ public class CombiningGui extends GuiInventory {
 		this.player = player;
 		this.inv = Bukkit.createInventory(player, InventoryType.BREWING, name);
 		
-		inv.setItem(4, combineIcon);
+		inv.setItem(4, COMBINE_ICON);
 		
 	}
 	
@@ -84,7 +102,7 @@ public class CombiningGui extends GuiInventory {
 
 	@Override
 	public InventoryItem getItem(int pos) {
-		if (skillLink == null) 
+		if (skillLink == null)
 			return null;
 		
 		/*
@@ -171,7 +189,7 @@ public class CombiningGui extends GuiInventory {
 			if (same) {
 				QualityItem result = combineQuality(args);
 				
-				player.getWorld().playSound(player.getEyeLocation(), mixSound, 1, 1);
+				player.getWorld().playSound(player.getEyeLocation(), MIX_SOUND, 1, 1);
 				if (!(player.getInventory().addItem(result.getItem())).isEmpty()) {
 					player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
 					player.getWorld().dropItem(player.getEyeLocation(), result.getItem());
@@ -188,7 +206,7 @@ public class CombiningGui extends GuiInventory {
 			inv.setItem(1, null);
 			inv.setItem(2, null);
 			inv.setItem(3, null);
-			player.sendMessage(noRecipeMessage);
+			player.sendMessage(NO_RECIPE_MESSAGE);
 			return;
 		}
 		
@@ -206,20 +224,20 @@ public class CombiningGui extends GuiInventory {
 		
 		double chance = skillLink.getCombineChance(qp, recipe);
 		boolean fail = false;
-		if (random.nextDouble() >= chance) {
+		if (RANDOM.nextDouble() >= chance) {
 			fail = true;
 		}
 		
 		if (fail) {
-			player.sendMessage(failMessage);
-			failEffect.play(player, player.getLocation());
-			player.getWorld().playSound(player.getLocation(), failSound, 1, 1);
+			player.sendMessage(FAIL_MESSAGE);
+			FAIL_EFFECT.play(player, player.getLocation());
+			player.getWorld().playSound(player.getLocation(), FAIL_SOUND, 1, 1);
 			skillLink.performMinor(qp, recipe.difficulty, true);
 			return;
 		}
 		
 		//skillLink.perform(qp, recipe.difficulty, false);
-		succeedEffect.play(player, player.getLocation());
+		SUCCEED_EFFECT.play(player, player.getLocation());
 		skillLink.performMinor(qp, recipe.difficulty, false);
 		
 		
@@ -230,7 +248,7 @@ public class CombiningGui extends GuiInventory {
 			name = result.getItem().getItemMeta().getDisplayName();
 		}
 		
-		FancyMessage msg = new FancyMessage(winMessage)
+		FancyMessage msg = new FancyMessage(WIN_MESSAGE)
 				.color(ChatColor.GREEN)
 			.then(result.getItem().getAmount() > 1 ? result.getItem().getAmount() + "x " : "a ")
 			.then("[" + name + "]")
@@ -239,7 +257,7 @@ public class CombiningGui extends GuiInventory {
 		
 		
 		msg.send(player);
-		player.getWorld().playSound(player.getEyeLocation(), mixSound, 1, 1);
+		player.getWorld().playSound(player.getEyeLocation(), MIX_SOUND, 1, 1);
 		if (!(player.getInventory().addItem(result.getItem())).isEmpty()) {
 			player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
 			player.getWorld().dropItem(player.getEyeLocation(), result.getItem());

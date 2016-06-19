@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.fanciful;
 
 import static com.skyisland.questmanager.fanciful.TextualComponent.rawText;
@@ -685,7 +703,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	/**
 	 * Sends this message to a command sender.
 	 * If the sender is a player, they will receive the fully-fledged formatted display of this message.
-	 * Otherwise, they will receive a version of this message with less formatting.
+	 * Otherwise, they will receive a VERSION of this message with less formatting.
 	 * @param sender The command sender who will receive the message.
 	 * @see #toOldMessageFormat()
 	 */

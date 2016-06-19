@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.ui.actionsequence;
 
 import java.util.Random;
@@ -36,41 +54,41 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 		FINISHED
 	}
 
-	private static final Random random = new Random();
+	private static final Random RANDOM = new Random();
 	
-	public static final String missMessage = ChatColor.RED + "You miss the swing, resulting in no good wood";
+	public static final String MISS_MESSAGE = ChatColor.RED + "You miss the swing, resulting in no good wood";
 	
-	public static final String earlyMessage = ChatColor.RED + "You swung too eagerly, ruining the wood";
+	public static final String EARLY_MESSAGE = ChatColor.RED + "You swung too eagerly, ruining the wood";
 	
-	public static final String winMessage = ChatColor.GREEN + "You successfully chopped ";
+	public static final String WIN_MESSAGE = ChatColor.GREEN + "You successfully chopped ";
 	
-	public static final String perfectMessage = ChatColor.GREEN + "You landed a perfect chop!";
+	public static final String PERFECT_MESSAGE = ChatColor.GREEN + "You landed a perfect chop!";
 	
-	public static final Sound countdownSound = Sound.BLOCK_NOTE_PLING;
+	public static final Sound COUNTDOWN_SOUND = Sound.BLOCK_NOTE_PLING;
 	
-	public static final Sound startSound = Sound.BLOCK_GRAVEL_BREAK;
+	public static final Sound START_SOUND = Sound.BLOCK_GRAVEL_BREAK;
 	
-	public static final Sound loseSound = Sound.ENTITY_CAT_DEATH;
+	public static final Sound LOSE_SOUND = Sound.ENTITY_CAT_DEATH;
 	
-	public static final Sound winSound = Sound.ENTITY_PLAYER_LEVELUP;
+	public static final Sound WIN_SOUND = Sound.ENTITY_PLAYER_LEVELUP;
 	
-	public static final Sound clickSound = Sound.BLOCK_WOOD_BREAK;
+	public static final Sound CLICK_SOUND = Sound.BLOCK_WOOD_BREAK;
 	
-	public static final Sound perfectSound = Sound.BLOCK_NOTE_PLING;
+	public static final Sound PERFECT_SOUND = Sound.BLOCK_NOTE_PLING;
 	
-	private static final ChargeEffect successEffect = new ChargeEffect(Effect.CRIT);
+	private static final ChargeEffect SUCCESS_EFFECT = new ChargeEffect(Effect.CRIT);
 	
-	private static final ChargeEffect failEffect = new ChargeEffect(Effect.SMALL_SMOKE);
+	private static final ChargeEffect FAIL_EFFECT = new ChargeEffect(Effect.SMALL_SMOKE);
 	
-	private static final double perfectHitThreshhold = 0.025;
+	private static final double PERFECT_HIT_THRESHHOLD = 0.025;
 	
-	private static final double hitOffbyInterval = 0.1;
+	private static final double HIT_OFFBY_INTERVAL = 0.1;
 	
-	private static final int countdownTimer = 3;
+	private static final int COUNTDOWN_TIMER = 3;
 	
-	private static final double timeStep = 0.05;
+	private static final double TIME_STEP = 0.05;
 	
-	private static final double perfectBonus = .50;
+	private static final double PERFECT_BONUS = .50;
 	
 	private static LumberjackSkill skillLink;
 	
@@ -136,13 +154,13 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 	private void setTimer() {
 		Alarm.getScheduler().unregister(this);
 			
-		this.secondsRemaining = averageSwingTime + (random.nextGaussian() * swingTimeDeviation);
+		this.secondsRemaining = averageSwingTime + (RANDOM.nextGaussian() * swingTimeDeviation);
 		this.swingTime = secondsRemaining;
 		
 		displayBar.setProgress(1);
 		displayBar.setColor(BarColor.YELLOW);
 		
-		Alarm.getScheduler().schedule(this, 0, timeStep);
+		Alarm.getScheduler().schedule(this, 0, TIME_STEP);
 		
 	}
 	
@@ -156,29 +174,29 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 		Player p = player.getPlayer().getPlayer();
 		if (state == State.STARTING) {
 			//starting countdown
-			if (key >= countdownTimer) {
+			if (key >= COUNTDOWN_TIMER) {
 				player.getPlayer().getPlayer().sendMessage(ChatColor.RED + "Go!");
 				state = State.RUNNING;
-				p.playSound(p.getLocation(), startSound, 1, 1);
+				p.playSound(p.getLocation(), START_SOUND, 1, 1);
 				setTimer();
 				return;
 			}
 			
-			p.sendMessage(ChatColor.YELLOW + "" + (countdownTimer - key));
-			p.playSound(p.getLocation(), countdownSound, 1, 1);
+			p.sendMessage(ChatColor.YELLOW + "" + (COUNTDOWN_TIMER - key));
+			p.playSound(p.getLocation(), COUNTDOWN_SOUND, 1, 1);
 			Alarm.getScheduler().schedule(this, key + 1, 1);
 			return;
 		}
 		
 		if (state == State.RUNNING) {
 			
-			this.secondsRemaining -= timeStep;
+			this.secondsRemaining -= TIME_STEP;
 			
 			displayBar.setProgress(Math.max(0, secondsRemaining / swingTime));
 			if (this.secondsRemaining < reactionTime)
 				displayBar.setColor(BarColor.GREEN);
 			
-			if (this.secondsRemaining <= perfectHitThreshhold)
+			if (this.secondsRemaining <= PERFECT_HIT_THRESHHOLD)
 				displayBar.setColor(BarColor.BLUE);
 			
 			if (this.secondsRemaining < -reactionTime) {
@@ -186,7 +204,7 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 				return;
 			}
 			
-			Alarm.getScheduler().schedule(this, 0, timeStep);
+			Alarm.getScheduler().schedule(this, 0, TIME_STEP);
 		}
 	}
 	
@@ -207,9 +225,9 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 		}
 		Player p = player.getPlayer().getPlayer();
 		
-		p.sendMessage(missMessage);
-		p.getWorld().playSound(p.getLocation(), loseSound, 1, 1);
-		failEffect.play(p, p.getLocation());
+		p.sendMessage(MISS_MESSAGE);
+		p.getWorld().playSound(p.getLocation(), LOSE_SOUND, 1, 1);
+		FAIL_EFFECT.play(p, p.getLocation());
 		
 	}
 	
@@ -230,12 +248,12 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 		}
 		Player p = player.getPlayer().getPlayer();
 		
-		p.getWorld().playSound(p.getLocation(), winSound, 1, 1);
-		successEffect.play(p, p.getLocation());
+		p.getWorld().playSound(p.getLocation(), WIN_SOUND, 1, 1);
+		SUCCESS_EFFECT.play(p, p.getLocation());
 		
 		double qratio;
 		if (offByIndex == 0)
-			qratio = 1 + perfectBonus;
+			qratio = 1 + PERFECT_BONUS;
 		else {
 			qratio = 1.0 / (1.0 + (offByIndex / 5.0));
 		}
@@ -248,7 +266,7 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 			name = input.getItem().getItemMeta().getDisplayName();
 		}
 		
-		FancyMessage msg = new FancyMessage(winMessage)
+		FancyMessage msg = new FancyMessage(WIN_MESSAGE)
 				.color(ChatColor.GREEN)
 			.then(input.getItem().getAmount() > 1 ? input.getItem().getAmount() + "x " : "a ")
 			.then("[" + name + "]")
@@ -266,10 +284,10 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 	private static int getOffbyIndex(double secondOffset) {
 		secondOffset = Math.abs(secondOffset);
 		
-		if (secondOffset <= perfectHitThreshhold)
+		if (secondOffset <= PERFECT_HIT_THRESHHOLD)
 			return 0;
 		
-		return (int) Math.round(Math.max(1, secondOffset / hitOffbyInterval));
+		return (int) Math.round(Math.max(1, secondOffset / HIT_OFFBY_INTERVAL));
 	}
 	
 	@EventHandler
@@ -302,7 +320,7 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 			return;
 		
 		Player p = player.getPlayer().getPlayer();
-		p.getWorld().playSound(p.getLocation(), clickSound, 1.1f, 1);
+		p.getWorld().playSound(p.getLocation(), CLICK_SOUND, 1.1f, 1);
 		
 		double timeDifference;
 		timeDifference = Math.abs(secondsRemaining);
@@ -315,8 +333,8 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 		int add = getOffbyIndex(timeDifference);
 		this.offByIndex += add;
 		if (add == 0) {
-			p.sendMessage(perfectMessage);
-			p.playSound(p.getLocation(), perfectSound, 1, 1);
+			p.sendMessage(PERFECT_MESSAGE);
+			p.playSound(p.getLocation(), PERFECT_SOUND, 1, 1);
 		}
 		
 		this.hits--;

@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
@@ -31,9 +49,9 @@ import com.skyisland.questmanager.ui.menu.inventory.minigames.FishingGui;
 
 public class FishingSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "Fishing.yml";
+	public static final String CONFIG_NAME = "Fishing.yml";
 	
-	public static final String badRangeMessage = ChatColor.RED + "There doesn't seem to be any fish in your skill range...";
+	public static final String BAD_RANGE_MESSAGE = ChatColor.RED + "There doesn't seem to be any fish in your skill range...";
 	
 	private static final class FishRecord {
 		
@@ -127,8 +145,8 @@ public class FishingSkill extends LogSkill implements Listener {
 	private List<FishRecord> fishRecords;
 	
 	public FishingSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 
 		
@@ -195,7 +213,7 @@ public class FishingSkill extends LogSkill implements Listener {
 				.addLine("obstacleDifficultyRate", .05, Lists.newArrayList("Time deducted from average time between obstacles", "per level under the fish difficulty", "[double] time in seconds"))
 				.addLine("obstacleDifficultyDiscount", 0.0, Lists.newArrayList("Discount per level given to obstacle time", "[double] .01 is 1%"))
 				.addLine("baseTimePerDifficulty", 2.0, Lists.newArrayList("Time per difficulty of the fish the player must", "play the minigame and hold it for", "[double] time in seconds"))
-				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and fish difficulty", "that will be allowed through random catch", "algorithm", "[int] larger than 0"))
+				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and fish difficulty", "that will be allowed through RANDOM catch", "algorithm", "[int] larger than 0"))
 				.addLine("timeDiscount", 0.025, Lists.newArrayList("Discount taken off total time per skill level", "[double] .01 is 1%"))
 				.addLine("extraFishPerLevel", 0.2, Lists.newArrayList("How many extra fish a level over fish", "difficulty gives. Expected to be a fraction.", "extra fish rounds down. So .8 extra fish is 0", "[double] fish per level. .1 is 1/10 a fish"))
 				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per fishing skill level", "[double] .01 is 1%"));
@@ -258,7 +276,7 @@ public class FishingSkill extends LogSkill implements Listener {
 		
 		FishRecord record = getFish(level);
 		if (record == null) {
-			e.getPlayer().sendMessage(badRangeMessage);
+			e.getPlayer().sendMessage(BAD_RANGE_MESSAGE);
 			return;
 		}
 		

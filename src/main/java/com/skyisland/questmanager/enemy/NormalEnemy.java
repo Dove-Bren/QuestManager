@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.enemy;
 
 import java.util.Collection;
@@ -7,14 +25,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.loot.Loot;
@@ -23,7 +45,6 @@ import com.skyisland.questmanager.loot.Lootable;
 /**
  * Enemy type with very limited, straightforward customization; namely attributes.
  * Also supports loot specification
- * @author Skyler
  *
  */
 public class NormalEnemy extends Enemy implements Lootable, Listener {
@@ -128,24 +149,68 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		
 		return new NormalEnemy(name, type, hp, attack);
 	}
-	
+
 	@Override
-	public List<Loot> getLoot() {
-		return loot;
+	public void spawn(Location loc) {
+				
+		Entity e = loc.getWorld().spawnEntity(loc, type);
+		e.setCustomName(name);
+		e.setCustomNameVisible(true);
+		
+		if (!(e instanceof LivingEntity)) {
+			return;
+		}
+		
+		LivingEntity entity = (LivingEntity) e;
+		entity.setMaxHealth(hp);
+		entity.setHealth(hp);
+		entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(attack);
+		
+		entity.getEquipment().setItemInMainHandDropChance(0f);
+		
+		entity.setMetadata(Enemy.CLASS_META_KEY, new FixedMetadataValue(
+				QuestManagerPlugin.questManagerPlugin,
+				this.enemyClassID
+				));
+		
 	}
 	
 	public void addLoot(Loot loot) {
 		this.loot.add(loot);
 	}
 	
-	@Override
+	@EventHandler
+	public void onEnemyDeath(EntityDeathEvent e) {
+		List<MetadataValue> metas = e.getEntity().getMetadata(CLASS_META_KEY);
+		if (metas == null || metas.isEmpty()) {
+			return;
+		}
+		
+		//eliminate those that have a different EntityType right away, for performance
+		if (e.getEntityType() != this.type) {
+			return;
+		}
+		
+		for (MetadataValue meta : metas) {
+			if (!meta.getOwningPlugin().getName().equals(QuestManagerPlugin.questManagerPlugin.getName())) {
+				continue;
+			}
+			
+			
+			//same plugin and same key. Use it.
+			if (meta.asString().equals(enemyClassID)) {
+				handleDeath(e);
+				return;
+			}
+		}
+
+	}
+	
 	protected void handleDeath(EntityDeathEvent event) {
 		//on death, drop loot (if we have any). otherwise, don't
 		if (loot != null && !loot.isEmpty()) {
 			event.getDrops().clear();
-			event.getDrops().add(
-					Lootable.pickLoot(loot).getItem()
-					);
+			event.getDrops().add(loot().getItem());
 		}
 	}
 
@@ -166,5 +231,10 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 			System.out.println("no GENERIC ATTACK for entity " + base.getType());
 		
 		entity.getEquipment().setItemInMainHandDropChance(0f);
+	}
+	
+	@Override
+	public Loot loot(){
+		return Loot.getRandomLoot(loot);
 	}
 }

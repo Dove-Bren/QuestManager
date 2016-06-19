@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.loot.dynamic;
 
 import java.util.HashMap;
@@ -13,7 +31,6 @@ import com.skyisland.questmanager.loot.Loot;
 /**
  * Loot class which holds a dynamic item rather than a static one. In other words, specifics about the
  * item are generated fresh each time (like enchantments, name, etc)
- * @author Skyler
  *
  */
 public class DynamicLoot extends Loot {
@@ -94,7 +111,7 @@ public class DynamicLoot extends Loot {
 			return null;
 		}
 		
-		double weight = defaultWeight;
+		double weight = DEFAULT_WEIGHT;
 		
 		if (map.containsKey("weight")) {
 			weight = (Double) map.get("weight");
@@ -132,13 +149,13 @@ public class DynamicLoot extends Loot {
 				type = Material.matchMaterial(tName);
 			} catch (Exception e) {
 				QuestManagerPlugin.logger.warning("Unable to match material to "
-						+ tName + ". Defaulting to " + defaultMaterial.name());
-				type = defaultMaterial;
+						+ tName + ". Defaulting to " + DEFAULT_MATERIAL.name());
+				type = DEFAULT_MATERIAL;
 			}
 		} else {
 			QuestManagerPlugin.logger.warning("Unable to find type key in dynamicloot. "
-					+ "Defaulting to " + defaultMaterial.name());
-			type = defaultMaterial;
+					+ "Defaulting to " + DEFAULT_MATERIAL.name());
+			type = DEFAULT_MATERIAL;
 		}
 		
 		return new DynamicLoot(gen, type, weight);

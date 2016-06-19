@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player.skill.event;
 
 import org.bukkit.ChatColor;
@@ -17,40 +35,39 @@ import com.skyisland.questmanager.player.QuestPlayer;
  * Event called when some sort of combat action is happening in a 
  * {@link PluginConfiguration#getWorlds() QuestWorld}
  * by a {@link QuestPlayer QuestPlayer}
- * @author Skyler
  *
  */
 public class CombatEvent extends Event {
 	
-	public static final String missMessage = ChatColor.YELLOW + "You missed!" + ChatColor.RESET;
+	public static final String MISS_MESSAGE = ChatColor.YELLOW + "You missed!" + ChatColor.RESET;
 	
-	public static final String noDamageMessage = ChatColor.YELLOW + "Your attack had no effect!" + ChatColor.RESET;
+	public static final String NO_DAMAGE_MESSAGE = ChatColor.YELLOW + "Your attack had no effect!" + ChatColor.RESET;
 	
-	public static final Sound missSound = Sound.ENTITY_ENDERDRAGON_FLAP;
+	public static final Sound MISS_SOUND = Sound.ENTITY_ENDERDRAGON_FLAP;
 	
-	public static final Sound noDamage = Sound.ITEM_SHIELD_BLOCK;
+	public static final Sound NO_DAMAGE = Sound.ITEM_SHIELD_BLOCK;
 	
-	public static final String damageMessage = ChatColor.DARK_GRAY + "Your attack did "
+	public static final String DAMAGE_MESSAGE = ChatColor.DARK_GRAY + "Your attack did "
 			+ ChatColor.RED + "%.2f damage" + ChatColor.DARK_GRAY + " to "
 			+ ChatColor.GRAY + "%s" + ChatColor.RESET;
 	
 	public static void doMiss(QuestPlayer misser, Location targetLocation) {
 		if (misser.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_RESULT))
-			misser.getPlayer().getPlayer().sendMessage(missMessage);
+			misser.getPlayer().getPlayer().sendMessage(MISS_MESSAGE);
 		targetLocation.getWorld().spigot().playEffect(targetLocation, Effect.SMOKE);
-		targetLocation.getWorld().playSound(targetLocation, missSound, 1f, 1.85f);
+		targetLocation.getWorld().playSound(targetLocation, MISS_SOUND, 1f, 1.85f);
 	}
 
 	public static void doNoDamage(QuestPlayer misser, Location targetLocation) {
 		if (misser.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_RESULT))
-			misser.getPlayer().getPlayer().sendMessage(noDamageMessage);
+			misser.getPlayer().getPlayer().sendMessage(NO_DAMAGE_MESSAGE);
 		targetLocation.getWorld().spigot().playEffect(targetLocation, Effect.VILLAGER_THUNDERCLOUD);
-		targetLocation.getWorld().playSound(targetLocation, noDamage, 1f, 1f);
+		targetLocation.getWorld().playSound(targetLocation, NO_DAMAGE, 1f, 1f);
 	}
 	
 	public static void doHit(QuestPlayer misser, Location targetLocation, double damage, String target) {
 		if (misser.getOptions().getOption(PlayerOptions.Key.CHAT_COMBAT_DAMAGE)) {
-			String modmsg = String.format(damageMessage, damage, target);
+			String modmsg = String.format(DAMAGE_MESSAGE, damage, target);
 			
 			misser.getPlayer().getPlayer().sendMessage(modmsg);
 		}
@@ -58,15 +75,15 @@ public class CombatEvent extends Event {
 		//TODO effects?
 	}
 
-	private static final HandlerList handlers = new HandlerList();
+	private static final HandlerList HANDLERS = new HandlerList();
 		
 	@Override
 	public HandlerList getHandlers() {
-		return handlers;
+		return HANDLERS;
 	}
 	
 	public static HandlerList getHandlerList() {
-		return handlers;
+		return HANDLERS;
 	}
 	
 	private QuestPlayer player;

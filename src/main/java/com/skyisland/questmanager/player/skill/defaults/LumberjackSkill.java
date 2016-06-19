@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
@@ -41,11 +59,11 @@ import com.skyisland.questmanager.ui.actionsequence.LumberjackSequence;
 
 public class LumberjackSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "Lumberjack.yml";
+	public static final String CONFIG_NAME = "Lumberjack.yml";
 	
-	public static final String badRangeMessage = ChatColor.RED + "Despite your efforts, you were unable to find suitable wood";
+	public static final String BAD_RANGE_MESSAGE = ChatColor.RED + "Despite your efforts, you were unable to find suitable wood";
 	
-	public static final String notOreMessage = ChatColor.DARK_GRAY + "There doesn't appear to be any good wood near that area";
+	public static final String NOT_ORE_MESSAGE = ChatColor.DARK_GRAY + "There doesn't appear to be any good wood near that area";
 	
 	public static final String tooSoonMessage = ChatColor.DARK_GRAY + "The wood has not regrown on this tree yet. Try another";
 	
@@ -168,7 +186,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 	
 	public LumberjackSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 
 		
@@ -250,7 +268,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 				.addLine("hitRate", 0.1, Lists.newArrayList("Hits added to total hit count per", "difficulty of the wood", "[double] number of hits"))
 				.addLine("hitBonus", .25, Lists.newArrayList("How much of the hits to subtract per", "skill level", "[double] .01 is 1%"))
 				.addLine("extraWoodPerLevel", 0.05, Lists.newArrayList("Extra pieces of wood given to a player", "per level over difficulty level", "[double] 1.0 is a whole extra log"))
-				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and ore difficulty", "that will be allowed through random ore", "algorithm", "[int] larger than 0"))
+				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and ore difficulty", "that will be allowed through RANDOM ore", "algorithm", "[int] larger than 0"))
 				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per mining skill level", "[double] .01 is 1%"))
 				.addLine("millingEnabled", true, Lists.newArrayList("Can players use logs on crafting tables", "and get a single item stack of average quality", "[true|false]"))
 				.addLine("millPenalty", 0.05, Lists.newArrayList("If milling two items, how much of the sum quality", "is lost in the process?", "[double] .01 is 1%"));
@@ -356,7 +374,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 		
 		TreeRecord record = getTree(e.getClickedBlock(), level);
 		if (record == null) {
-			e.getPlayer().sendMessage(badRangeMessage);
+			e.getPlayer().sendMessage(BAD_RANGE_MESSAGE);
 			return;
 		}
 		

@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player;
 
 import java.util.Collection;
@@ -8,6 +26,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,17 +45,14 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
-import com.skyisland.questmanager.configuration.utils.GUID;
 import com.skyisland.questmanager.fanciful.FancyMessage;
 
 /**
  * A group of players who work together on 
- * @author Skyler
  *
  */
 public class Party implements Participant, Listener {
-	
-	
+
 	public static int maxSize = 4;
 	
 	private List<QuestPlayer> members;
@@ -51,7 +67,7 @@ public class Party implements Participant, Listener {
 	
 	private Objective board;
 	
-	private GUID id;
+	private UUID id;
 	
 	/**
 	 * Registers this class as configuration serializable with all defined 
@@ -104,7 +120,7 @@ public class Party implements Participant, Listener {
 		board.setDisplayName("Party");
 		board.setDisplaySlot(DisplaySlot.SIDEBAR);
 		
-		id = GUID.generateGUID();
+		id = UUID.randomUUID();
 		
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 		
@@ -255,7 +271,7 @@ public class Party implements Participant, Listener {
 		return id.toString();
 	}
 	
-	public GUID getID() {
+	public UUID getID() {
 		return id;
 	}
 	

@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player.utils;
 
 import java.util.List;
@@ -22,12 +40,11 @@ import com.skyisland.questmanager.quest.history.HistoryEvent;
 /**
  * A quest journal keeps track of the current target quest's history
  * This class provides nice helper functions for making that happen
- * @author Skyler
  * @see QuestLog
  */
 public class QuestJournal {
 	
-	public static final String escq = "\\\"";
+	public static final String ESCQ = "\\\"";
 	
 	public static void addQuestJournal(QuestPlayer qp) {
 		if (!qp.getPlayer().isOnline()) {

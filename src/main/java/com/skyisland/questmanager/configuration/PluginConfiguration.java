@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.configuration;
 
 import java.io.File;
@@ -21,7 +39,6 @@ import com.skyisland.questmanager.player.utils.SpellWeavingInvoker;
 /**
  * Wrapper class for configuration files needed by the plugin.
  * This does not include configuration files for individual quests.
- * @author Skyler
  *
  */
 public class PluginConfiguration {
@@ -126,8 +143,8 @@ public class PluginConfiguration {
 	}
 	
 	/**
-	 * Returns the version number of the current configuration file.
-	 * This is simply the reported version number in the configuration file.
+	 * Returns the VERSION number of the current configuration file.
+	 * This is simply the reported VERSION number in the configuration file.
 	 */
 	public double getVersion() {
 		return config.getDouble(PluginConfigurationKey.VERSION.key, 0.0);
@@ -442,7 +459,7 @@ public class PluginConfiguration {
 		
 		YamlConfiguration config = new YamlConfiguration();
 		
-		config.set(PluginConfigurationKey.VERSION.key, QuestManagerPlugin.version);
+		config.set(PluginConfigurationKey.VERSION.key, QuestManagerPlugin.VERSION);
 		
 		//config options
 		config.set(PluginConfigurationKey.CONSERVATIVE.key, true);

@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
@@ -20,7 +38,7 @@ import com.skyisland.questmanager.player.skill.event.CombatEvent;
 
 public class AxeSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "Axe.yml";
+	public static final String CONFIG_NAME = "Axe.yml";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -73,8 +91,8 @@ public class AxeSkill extends LogSkill implements Listener {
 	private double rateDecrease;
 	
 	public AxeSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {
@@ -128,7 +146,7 @@ public class AxeSkill extends LogSkill implements Listener {
 		if (lvl < apprenticeLevel) {
 			//3% per level under apprentice -- up to 45%
 			int miss = (int) (rateDecrease * (apprenticeLevel - lvl)); 
-			int roll = Skill.random.nextInt(100);
+			int roll = Skill.RANDOM.nextInt(100);
 			if (roll <= miss) {
 				e.setMiss(true);
 				causeMiss = true;

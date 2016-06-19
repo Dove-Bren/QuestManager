@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.magic;
 
 import java.util.Set;
@@ -20,15 +38,14 @@ import com.skyisland.questmanager.player.skill.event.CombatEvent;
 
 /**
  * An active imbuement. Watches for events, takes action, fights crime, you name it! 
- * @author Skyler
  * @see QuestPlayer
  * @see ImbuementHandler
  */
 public class Imbuement implements Listener {
 	
-	public static final Sound defaultSlashSound = Sound.BLOCK_FENCE_GATE_CLOSE;
+	public static final Sound DEFAULT_SLASH_SOUND = Sound.BLOCK_FENCE_GATE_CLOSE;
 	
-	public static final String fadeMessage = ChatColor.DARK_GRAY + "Your imbuement fades as you swap items";
+	public static final String FADE_MESSAGE = ChatColor.DARK_GRAY + "Your imbuement fades as you swap items";
 	
 	private Set<ImbuementEffect> effects;
 	
@@ -55,7 +72,7 @@ public class Imbuement implements Listener {
 	}
 	
 	public Imbuement(QuestPlayer player, Set<ImbuementEffect> effects, double cost) {
-		this(player, effects, cost, defaultSlashSound);
+		this(player, effects, cost, DEFAULT_SLASH_SOUND);
 	}
 	
 	/**
@@ -118,6 +135,6 @@ public class Imbuement implements Listener {
 		
 		//not allowed to switch weapons, cheater!
 		this.cancel();
-		e.getPlayer().sendMessage(fadeMessage);
+		e.getPlayer().sendMessage(FADE_MESSAGE);
 	}
 }

@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
@@ -34,9 +52,9 @@ import com.skyisland.questmanager.ui.menu.inventory.minigames.FashioningGui;
 
 public class FashioningSkill extends LogSkill implements Listener, CraftingSkill {
 	
-	private static final String inUseMessage = ChatColor.GRAY + "That fashioning bench is already in use by another player";
+	private static final String IN_USE_MESSAGE = ChatColor.GRAY + "That fashioning bench is already in use by another player";
 	
-	public static final String configName = "Fashioning.yml";
+	public static final String CONFIG_NAME = "Fashioning.yml";
 
 	public static final class FashioningRecipe implements SkillRecipe {
 		
@@ -141,8 +159,8 @@ public class FashioningSkill extends LogSkill implements Listener, CraftingSkill
 	private List<FashioningRecipe> recipes;
 	
 	public FashioningSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 
 		
@@ -272,7 +290,7 @@ public class FashioningSkill extends LogSkill implements Listener, CraftingSkill
 		}
 		
 		if (tableMap.containsKey(e.getClickedBlock().getLocation())) {
-			e.getPlayer().sendMessage(inUseMessage);
+			e.getPlayer().sendMessage(IN_USE_MESSAGE);
 			return;
 		}
 		

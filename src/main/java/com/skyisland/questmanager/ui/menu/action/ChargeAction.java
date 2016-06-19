@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.ui.menu.action;
 
 import org.bukkit.Bukkit;
@@ -20,18 +38,17 @@ import com.skyisland.questmanager.scheduling.Alarmable;
 
 /**
  * An action that must charge for a while, and then happens
- * @author Skyler
  *
  */
 public class ChargeAction implements Listener, Alarmable<Integer> {
 	
-	public static final String disturbedMessage = ChatColor.RED + "Your charging action was disturbed" + ChatColor.RESET;
+	public static final String DISTURBED_MESSAGE = ChatColor.RED + "Your charging action was disturbed" + ChatColor.RESET;
 	
-	public static final String cancelMessage = ChatColor.YELLOW + "You cancelled your action" + ChatColor.RESET;
+	public static final String CANCEL_MESSAGE = ChatColor.YELLOW + "You cancelled your action" + ChatColor.RESET;
 	
-	private static final Effect defaultEffect = Effect.MAGIC_CRIT;
+	private static final Effect DEFAULT_EFFECT = Effect.MAGIC_CRIT;
 	
-	private static final Sound defaultSound = Sound.BLOCK_BREWING_STAND_BREW;
+	private static final Sound DEFAULT_SOUND = Sound.BLOCK_BREWING_STAND_BREW;
 	
 	private boolean canMove;
 	
@@ -47,7 +64,7 @@ public class ChargeAction implements Listener, Alarmable<Integer> {
 	
 	public ChargeAction(MenuAction action, QuestPlayer player, boolean canMove, boolean canGetHit, 
 			boolean canChangeItems, double chargingTime) {
-		this(action, player, defaultEffect, defaultSound, canMove, canGetHit, canChangeItems, chargingTime);
+		this(action, player, DEFAULT_EFFECT, DEFAULT_SOUND, canMove, canGetHit, canChangeItems, chargingTime);
 	}
 	
 	public ChargeAction(MenuAction action, QuestPlayer player, Effect effect, Sound sound, boolean canMove, 
@@ -101,7 +118,7 @@ public class ChargeAction implements Listener, Alarmable<Integer> {
 		}
 		
 		//a current charge has moved, and is not allowed to
-		e.getPlayer().sendMessage(disturbedMessage);
+		e.getPlayer().sendMessage(DISTURBED_MESSAGE);
 		doneCasting();
 	}
 	
@@ -126,7 +143,7 @@ public class ChargeAction implements Listener, Alarmable<Integer> {
 		}
 		
 		//a current charge has moved, and is not allowed to
-		((Player) e.getEntity()).sendMessage(disturbedMessage);
+		((Player) e.getEntity()).sendMessage(DISTURBED_MESSAGE);
 		doneCasting();
 	}
 	
@@ -151,7 +168,7 @@ public class ChargeAction implements Listener, Alarmable<Integer> {
 		
 		//not allowed to switch weapons, cheater!
 		doneCasting();
-		e.getPlayer().sendMessage(disturbedMessage);
+		e.getPlayer().sendMessage(DISTURBED_MESSAGE);
 	}
 	
 	public void alarm(Integer a) {

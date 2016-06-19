@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.ui.menu.action;
 
 import org.bukkit.ChatColor;
@@ -12,7 +30,6 @@ import io.puharesource.mc.titlemanager.api.TitleObject;
 
 /**
  * Levels up a player, awarding them some amount of mana
- * @author Skyler
  *
  */
 public class LevelupManaAction implements MenuAction {
@@ -23,7 +40,7 @@ public class LevelupManaAction implements MenuAction {
 	
 	private QuestPlayer player;
 	
-	private static final String denialFame = "You do not have enough fame...";
+	private static final String DENIAL_FAME = "You do not have enough fame...";
 	
 	public LevelupManaAction(QuestPlayer player, int cost, int manaAmount) {
 		this.player = player;
@@ -41,7 +58,7 @@ public class LevelupManaAction implements MenuAction {
 		Player p = player.getPlayer().getPlayer();
 		
 		if (player.getFame() < cost) {
-			p.sendMessage(denialFame);
+			p.sendMessage(DENIAL_FAME);
 			return;
 		}
 		

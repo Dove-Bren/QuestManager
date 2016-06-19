@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager;
 
 import java.io.File;
@@ -14,7 +32,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.skyisland.questmanager.configuration.PluginConfiguration;
-import com.skyisland.questmanager.configuration.utils.GUID;
 import com.skyisland.questmanager.player.Participant;
 import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -24,14 +41,13 @@ import com.skyisland.questmanager.scheduling.Tickable;
 
 /**
  * Stores a database of QuestPlayers for lookup and loading
- * @author Skyler
  *
  */
 public class PlayerManager implements Tickable {
 	
 	private Map<UUID, QuestPlayer> players;
 	
-	private Map<GUID, Party> parties;
+	private Map<UUID, Party> parties;
 	
 	private TitleEffect titleEffect;
 	
@@ -60,7 +76,7 @@ public class PlayerManager implements Tickable {
 		if (!gSex.getKeys(false).isEmpty())
 		for (String key : gSex.getKeys(false)) {
 			parties.put(
-					GUID.valueOf(key), (Party) gSex.get(key));
+					UUID.fromString(key), (Party) gSex.get(key));
 		}
 		
 		//check if we need to do day/night regen
@@ -104,7 +120,7 @@ public class PlayerManager implements Tickable {
 	 * Returns the party paired with the given ID.
 	 * if the party doesn't exist, null is returned instead
 	 */
-	public Party getParty(GUID id) {
+	public Party getParty(UUID id) {
 		if (!parties.containsKey(id)) {
 			return null;
 		}
@@ -119,13 +135,15 @@ public class PlayerManager implements Tickable {
 	public void removeParty(Party party) {
 		parties.remove(party.getID());
 	}
-	
+
 	public Participant getParticipant(String idString) {
-		
-		if (GUID.valueOf(idString) != null) {
-			return parties.get(GUID.valueOf(idString));
+
+		Participant participant = parties.get(UUID.fromString(idString));
+
+		if (participant != null) {
+			return participant;
 		}
-		
+
 		//assume it's a player string
 		return getPlayer(UUID.fromString(idString));
 	}
@@ -157,7 +175,7 @@ public class PlayerManager implements Tickable {
 		
 		ConfigurationSection gSex = config.createSection("parties");
 		if (!parties.isEmpty()) {
-			for (GUID key : parties.keySet()) {
+			for (UUID key : parties.keySet()) {
 				if (key == null) {
 					continue;
 				}

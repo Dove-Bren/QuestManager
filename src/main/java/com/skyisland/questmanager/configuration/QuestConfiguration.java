@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.configuration;
 
 import java.util.Collection;
@@ -25,7 +43,6 @@ import com.skyisland.questmanager.ui.menu.message.Message;
 
 /**
  * Wrapper for quest configuration
- * @author Skyler
  *
  */
 public class QuestConfiguration {
@@ -36,7 +53,7 @@ public class QuestConfiguration {
 		NOTURNIN;
 	}
 	
-	public static final double configVersion = 1.00;
+	public static final double CONFIG_VERSION = 1.00;
 	
 	private YamlConfiguration config;
 	
@@ -72,10 +89,10 @@ public class QuestConfiguration {
 	 */
 	private void checkConfig() {
 		
-		if (config.getDouble("configversion", 0.0) - configVersion > .001) {
+		if (config.getDouble("configversion", 0.0) - CONFIG_VERSION > .001) {
 			String name = config.getString(QuestConfigurationField.NAME.getKey(), "NO NAME");
 			QuestManagerPlugin.logger.warning("The quest [" + name + "] has an invalid version!\n"
-					+ "QuestManager Configuration Version: " + configVersion + " doesn't match quest's: " 
+					+ "QuestManager Configuration Version: " + CONFIG_VERSION + " doesn't match quest's: " 
 					+ config.getDouble("configversion", 0.0));
 			
 		}

@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.enemy;
 
 import java.util.List;
@@ -44,7 +62,7 @@ public abstract class Enemy implements ConfigurationSerializable, Listener {
 		enemyClassIDIndex = ((new Random()).nextInt(4000));
 	}
 	
-	public static final String classMetaKey = "QMEnemySpawnClass";
+	public static final String CLASS_META_KEY = "QMEnemySpawnClass";
 	
 	public Enemy(String name, EntityType type) {
 		this.enemyClassID = generateNewEnemyClassID();
@@ -55,7 +73,7 @@ public abstract class Enemy implements ConfigurationSerializable, Listener {
 	
 	public void spawn(Location loc) {
 		Entity e = loc.getWorld().spawnEntity(loc, type);
-		e.setMetadata(Enemy.classMetaKey, new FixedMetadataValue(
+		e.setMetadata(Enemy.CLASS_META_KEY, new FixedMetadataValue(
 				QuestManagerPlugin.questManagerPlugin,
 				this.enemyClassID
 				));
@@ -88,7 +106,7 @@ public abstract class Enemy implements ConfigurationSerializable, Listener {
 	
 	@EventHandler
 	public void onEnemyDeath(EntityDeathEvent e) {
-		List<MetadataValue> metas = e.getEntity().getMetadata(classMetaKey);
+		List<MetadataValue> metas = e.getEntity().getMetadata(CLASS_META_KEY);
 		if (metas == null || metas.isEmpty()) {
 			return;
 		}

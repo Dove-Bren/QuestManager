@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.ui.menu.inventory;
 
 import java.util.LinkedList;
@@ -17,12 +35,11 @@ import com.skyisland.questmanager.ui.menu.message.PlainMessage;
 
 /**
  * Represents a craft the service NPC can perform.
- * @author Skyler
  *
  */
 public class ServiceOfferItem extends ServiceItem {
 	
-	private static final Message denialMessage = new PlainMessage(ChatColor.RED + "You were missing some components of the craft");
+	private static final Message DENIAL_MESSAGE = new PlainMessage(ChatColor.RED + "You were missing some components of the craft");
 	
 	private ServiceOffer offer;
 	
@@ -73,7 +90,7 @@ public class ServiceOfferItem extends ServiceItem {
 	
 	@Override
 	public MenuAction getAction(QuestPlayer player) {
-		return new OfferServiceAction(offer, player, denialMessage);
+		return new OfferServiceAction(offer, player, DENIAL_MESSAGE);
 	}
 
 	/**

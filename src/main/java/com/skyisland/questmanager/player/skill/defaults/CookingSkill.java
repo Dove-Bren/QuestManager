@@ -1,3 +1,21 @@
+/*
+ *  QuestManager: An RPG plugin for the Bukkit API.
+ *  Copyright (C) 2015-2016 Github Contributors
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
@@ -40,11 +58,11 @@ import com.skyisland.questmanager.ui.menu.inventory.minigames.CookingGui;
 
 public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 	
-	private static final String inUseMessage = ChatColor.GRAY + "That oven is already in use by another player";
+	private static final String IN_USE_MESSAGE = ChatColor.GRAY + "That oven is already in use by another player";
 	
-	public static final String configName = "Cooking.yml";
+	public static final String CONFIG_NAME = "Cooking.yml";
 
-	private static final String blacklistMessage = ChatColor.GRAY + "You cannot eat food in that state!";
+	private static final String BLACKLIST_MESSAGE = ChatColor.GRAY + "You cannot eat food in that state!";
 	
 	public static final class OvenRecipe implements SkillRecipe {
 		
@@ -267,8 +285,8 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 	private double hungerRate;
 	
 	public CookingSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 
 		
@@ -489,7 +507,7 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		}
 		
 		if (furnaceMap.containsKey(e.getClickedBlock().getLocation())) {
-			e.getPlayer().sendMessage(inUseMessage);
+			e.getPlayer().sendMessage(IN_USE_MESSAGE);
 			e.setCancelled(true);
 			return;
 		}
@@ -634,7 +652,7 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		e.setCancelled(true);
 		
 		if (foodBlacklist.contains(e.getItem().getType())) {
-			e.getPlayer().sendMessage(blacklistMessage);
+			e.getPlayer().sendMessage(BLACKLIST_MESSAGE);
 			return;
 		}
 		
