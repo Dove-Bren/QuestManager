@@ -176,11 +176,6 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		
 	}
 	
-	@Override
-	public List<Loot> getLoot() {
-		return loot;
-	}
-	
 	public void addLoot(Loot loot) {
 		this.loot.add(loot);
 	}
@@ -216,9 +211,12 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		//on death, drop loot (if we have any). otherwise, don't
 		if (loot != null && !loot.isEmpty()) {
 			event.getDrops().clear();
-			event.getDrops().add(
-					Lootable.pickLoot(loot).getItem()
-					);
+			event.getDrops().add(loot().getItem());
 		}
+	}
+
+	@Override
+	public Loot loot(){
+		return Loot.getRandomLoot(loot);
 	}
 }
