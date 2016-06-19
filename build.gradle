@@ -1,12 +1,16 @@
 apply plugin: 'java'
+apply plugin: 'maven'
 apply plugin: 'eclipse'
+apply plugin: 'idea'
 
 eclipse {
     classpath {
         downloadSources=true
     }
 }
-version = '0.1'
+
+group = 'com.skyisland.questmanager'
+version = '0.0.1'
 sourceCompatibility = 1.8
 
 repositories {
