@@ -43,7 +43,7 @@ import com.google.common.collect.Lists;
  */
 public class SpellWeavingSkill extends Skill implements Listener {
 	
-	public static final String configName = "SpellWeaving.yml";
+	public static final String CONFIG_NAME = "SpellWeaving.yml";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -112,8 +112,8 @@ public class SpellWeavingSkill extends Skill implements Listener {
 	private double rateDecrease;
 	
 	public SpellWeavingSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {
@@ -171,7 +171,7 @@ public class SpellWeavingSkill extends Skill implements Listener {
 		
 		if (levelDifference > -levelGrace) {
 			int chance = (int) (levelDifference * rateDecrease), 
-					roll = Skill.random.nextInt(100);
+					roll = Skill.RANDOM.nextInt(100);
 			if (roll < chance) {
 				e.setFail(true);
 				causeMiss = true;

@@ -49,8 +49,8 @@ public abstract class Skill implements Comparable<Skill> {
 		OTHER
 	}
 	
-	//Courtesy random
-	public static final Random random = new Random();
+	//Courtesy RANDOM
+	public static final Random RANDOM = new Random();
 	
 	/**
 	 * Adds experience to the skill, standardized as the specified amount for performing an action of

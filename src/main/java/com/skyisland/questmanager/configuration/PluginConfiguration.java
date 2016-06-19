@@ -130,8 +130,8 @@ public class PluginConfiguration {
 	}
 	
 	/**
-	 * Returns the version number of the current configuration file.
-	 * This is simply the reported version number in the configuration file.
+	 * Returns the VERSION number of the current configuration file.
+	 * This is simply the reported VERSION number in the configuration file.
 	 */
 	public double getVersion() {
 		return config.getDouble(PluginConfigurationKey.VERSION.key, 0.0);
@@ -313,7 +313,7 @@ public class PluginConfiguration {
 		try {
 			return Material.valueOf(config.getString(PluginConfigurationKey.COMPASSTYPE.key, "COMPASS"));
 		} catch (IllegalArgumentException e) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find the compass material: " 
+			QuestManagerPlugin.questManagerPlugin.getLogger().warning("Unable to find the compass material: "
 		+ config.getString(PluginConfigurationKey.COMPASSTYPE.key, "COMPASS"));
 			return Material.COMPASS;
 		}
@@ -427,14 +427,14 @@ public class PluginConfiguration {
 	 */
 	private YamlConfiguration createDefaultConfig(File configFile) {
 		if (configFile.isDirectory()) {
-			QuestManagerPlugin.questManagerPlugin.getLogger().warning(ChatColor.RED + 
+			QuestManagerPlugin.questManagerPlugin.getLogger().warning(ChatColor.RED +
 					"Unable to create default config!" + ChatColor.RESET);
 			return null;
 		}
 		
 		YamlConfiguration config = new YamlConfiguration();
 		
-		config.set(PluginConfigurationKey.VERSION.key, QuestManagerPlugin.version);
+		config.set(PluginConfigurationKey.VERSION.key, QuestManagerPlugin.VERSION);
 		
 		//config options
 		config.set(PluginConfigurationKey.CONSERVATIVE.key, true);

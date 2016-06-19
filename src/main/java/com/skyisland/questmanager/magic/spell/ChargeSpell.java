@@ -48,11 +48,11 @@ import com.skyisland.questmanager.player.skill.event.MagicCastEvent.MagicType;
  */
 public class ChargeSpell extends SimpleSelfSpell implements Listener {
 	
-	public static final String disturbedMessage = ChatColor.RED + "Your charging spell was disturbed" + ChatColor.RESET;
+	public static final String DISTURBED_MESSAGE = ChatColor.RED + "Your charging spell was disturbed" + ChatColor.RESET;
 	
-	public static final String cancelMessage = ChatColor.YELLOW + "You cancelled your charging spell" + ChatColor.RESET;
+	public static final String CANCEL_MESSAGE = ChatColor.YELLOW + "You cancelled your charging spell" + ChatColor.RESET;
 	
-	private static final Effect defaultEffect = Effect.WITCH_MAGIC;
+	private static final Effect DEFAULT_EFFECT = Effect.WITCH_MAGIC;
 	
 	/**
 	 * Registers this class as configuration serializable with all defined 
@@ -218,7 +218,7 @@ public class ChargeSpell extends SimpleSelfSpell implements Listener {
 			startListening();
 		}
 
-		effects.put(caster, new AuraEffect(castEffect == null ? defaultEffect : castEffect));
+		effects.put(caster, new AuraEffect(castEffect == null ? DEFAULT_EFFECT : castEffect));
 		effects.get(caster).play(caster.getEntity());
 		reminders.put(caster, new Reminder(this, caster, castingTime));
 		
@@ -270,7 +270,7 @@ public class ChargeSpell extends SimpleSelfSpell implements Listener {
 		
 		
 		//a current charge has moved, and is not allowed to
-		e.getPlayer().sendMessage(disturbedMessage);
+		e.getPlayer().sendMessage(DISTURBED_MESSAGE);
 		doneCasting(qp);
 	}
 	
@@ -295,14 +295,14 @@ public class ChargeSpell extends SimpleSelfSpell implements Listener {
 		}
 		
 		//a current charge has moved, and is not allowed to
-		((Player) e.getEntity()).sendMessage(disturbedMessage);
+		((Player) e.getEntity()).sendMessage(DISTURBED_MESSAGE);
 		doneCasting(qp);
 	}
 	
 	public void onMagicCast(MagicCastEvent e) {
 		if (effects.containsKey(e.getPlayer())) {
 			//casting another spell! how dare they!
-			e.getPlayer().getPlayer().getPlayer().sendMessage(cancelMessage);
+			e.getPlayer().getPlayer().getPlayer().sendMessage(CANCEL_MESSAGE);
 			doneCasting(e.getPlayer());
 		}
 	}

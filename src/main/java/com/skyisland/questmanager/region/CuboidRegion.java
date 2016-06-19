@@ -171,7 +171,7 @@ public class CuboidRegion implements Region {
 		while (loc.add(0, 1, 0).getBlock().getType().isSolid() ||
 				loc.clone().add(0,1,0).getBlock().getType().isSolid()) {
 			if (loc.getY() > most.getY()) {
-				//exhausted y search, so get a new random and return it instead
+				//exhausted y search, so get a new RANDOM and return it instead
 				return randomLocation(safe);
 			}
 		}

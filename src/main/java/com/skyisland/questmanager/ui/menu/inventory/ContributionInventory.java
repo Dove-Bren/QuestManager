@@ -40,13 +40,13 @@ import com.skyisland.questmanager.ui.menu.action.MenuAction;
  */
 public class ContributionInventory extends GuiInventory {
 	
-	private static final ItemStack submitIcon = new ItemStack(Material.STAINED_GLASS_PANE);
+	private static final ItemStack SUBMIT_ICON = new ItemStack(Material.STAINED_GLASS_PANE);
 	
 	{
-		ItemMeta meta = submitIcon.getItemMeta();
+		ItemMeta meta = SUBMIT_ICON.getItemMeta();
 		meta.setDisplayName("Submit");
-		submitIcon.setItemMeta(meta);
-		submitIcon.setDurability((short) 13);
+		SUBMIT_ICON.setItemMeta(meta);
+		SUBMIT_ICON.setDurability((short) 13);
 	}
 	
 	private Map<Integer, ItemStack> items;
@@ -112,7 +112,7 @@ public class ContributionInventory extends GuiInventory {
 			inv.setItem(i, new ItemStack(Material.BARRIER));
 		}
 		
-		inv.setItem(slots - 1, submitIcon);
+		inv.setItem(slots - 1, SUBMIT_ICON);
 	}
 	
 	@Override

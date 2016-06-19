@@ -32,7 +32,7 @@ import org.bukkit.entity.Entity;
  */
 public class AuraEffect extends EntityEffect implements ConstantEffect, Alarmable<Integer> {
 
-	public static Random rand = new Random();
+	public static final Random RANDOM = new Random();
 	
 	/**
 	 * The particle to create
@@ -85,7 +85,7 @@ public class AuraEffect extends EntityEffect implements ConstantEffect, Alarmabl
 		float dir;
 		for (int i = 0; i < count; i++) {
 			tmp = anchor.clone();
-			dir = (float) (rand.nextFloat() * (2 * Math.PI));
+			dir = (float) (RANDOM.nextFloat() * (2 * Math.PI));
 			tmp.add(Math.cos(dir), 0, Math.sin(dir));
 			
 			tmp.getWorld().playEffect(tmp, effect, data);

@@ -43,7 +43,7 @@ public interface Region extends ConfigurationSerializable {
 	boolean isIn(Location loc);
 	
 	/**
-	 * Returns a random location from within this region.
+	 * Returns a RANDOM location from within this region.
 	 * @param safe Whether or not the location should be safe to spawn a normal mob (2x1).
 	 * Since regions define blocks mobs can spawn on top of, searching for safe locations will
 	 * involve looking up for a suitable location. Regions should be defined to minimize the number

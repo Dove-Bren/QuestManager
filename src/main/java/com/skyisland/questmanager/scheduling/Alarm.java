@@ -27,7 +27,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 
 public class Alarm {
 	
-private static final int ticksPerSecond = 20;
+	private static final int TICKS_PER_SECOND = 20;
 	
 	private static Alarm scheduler;
 	
@@ -103,7 +103,7 @@ private static final int ticksPerSecond = 20;
 		
 		map.put(alarmable, reminder);
 		
-		long ticks = Math.round(seconds * Alarm.ticksPerSecond);
+		long ticks = Math.round(seconds * Alarm.TICKS_PER_SECOND);
 		
 		reminder.runTaskLater(QuestManagerPlugin.questManagerPlugin, ticks);
 		

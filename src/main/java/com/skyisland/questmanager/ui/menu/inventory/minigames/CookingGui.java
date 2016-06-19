@@ -66,37 +66,37 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 	
 	public static CookingSkill skillLink = null;
 	
-	public static final Random random = new Random();
+	public static final Random RANDOM = new Random();
 	
-	public static final Sound burnSound = Sound.BLOCK_FIRE_EXTINGUISH;
+	public static final Sound BURN_SOUND = Sound.BLOCK_FIRE_EXTINGUISH;
 	/////
-	public static final Sound miningHitSound = Sound.BLOCK_STONE_BREAK;
+	public static final Sound MINING_HIT_SOUND = Sound.BLOCK_STONE_BREAK;
 	
-	public static final Sound loseSound = Sound.ENTITY_CAT_DEATH;
+	public static final Sound LOSE_SOUND = Sound.ENTITY_CAT_DEATH;
 	
-	public static final Sound winSound = Sound.ENTITY_PLAYER_LEVELUP;
+	public static final Sound WIN_SOUND = Sound.ENTITY_PLAYER_LEVELUP;
 	
-	public static final Sound countdownSound = Sound.BLOCK_NOTE_PLING;
+	public static final Sound COUNTDOWN_SOUND = Sound.BLOCK_NOTE_PLING;
 	
-	public static final Sound clickSound = Sound.UI_BUTTON_CLICK;
+	public static final Sound CLICK_SOUND = Sound.UI_BUTTON_CLICK;
 	
-	public static final String loseMessage = ChatColor.RED + "Your creation is not edible";
+	public static final String LOSE_MESSAGE = ChatColor.RED + "Your creation is not edible";
 	
-	public static final String burnMessage = ChatColor.RED + "You burnt the food into ash!";
+	public static final String BURN_MESSAGE = ChatColor.RED + "You burnt the food into ash!";
 	
-	public static final String winMessage = "Success!" + ChatColor.RESET + " You successfully cooked ";
+	public static final String WIN_MESSAGE = "Success!" + ChatColor.RESET + " You successfully cooked ";
 	
-	public static final String noRecipeMessage = ChatColor.YELLOW + "You don't know any recipes with that item!";
+	public static final String NO_RECIPE_MESSAGE = ChatColor.YELLOW + "You don't know any recipes with that item!";
 	
-	public static final Sound startSound = Sound.BLOCK_FIRE_AMBIENT;
+	public static final Sound START_SOUND = Sound.BLOCK_FIRE_AMBIENT;
 	
-	private static final int startTime = 3;
+	private static final int START_TIME = 3;
 	
-	public static final Sound dangerSound = Sound.BLOCK_NOTE_PLING;
+	public static final Sound DANGER_SOUND = Sound.BLOCK_NOTE_PLING;
 	
-	private static final double updatePeriod = .1;
+	private static final double UPDATE_PERIOD = .1;
 	
-	private static final double failRate = 0.1;
+	private static final double FAIL_RATE = 0.1;
 	
 	private enum Fuel {
 		WOOD(40, new ItemStack(Material.WOOD)),
@@ -199,7 +199,7 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 			
 			OvenRecipe recipe = skillLink.getOvenRecipe(player.getInventory().getItem(slot));
 			if (recipe == null) {
-				player.sendMessage(noRecipeMessage);
+				player.sendMessage(NO_RECIPE_MESSAGE);
 				return null;
 			}
 			
@@ -241,8 +241,8 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 	}
 	
 	private void generateFuel() {
-		this.topFuel = Fuel.values()[random.nextInt(Fuel.values().length)];
-		this.bottomFuel = Fuel.values()[random.nextInt(Fuel.values().length)];
+		this.topFuel = Fuel.values()[RANDOM.nextInt(Fuel.values().length)];
+		this.bottomFuel = Fuel.values()[RANDOM.nextInt(Fuel.values().length)];
 		furnace.getInventory().setSmelting(topFuel.icon);
 		furnace.getInventory().setFuel(bottomFuel.icon);
 		this.nextFuelTime = fuelSwapTime;
@@ -273,7 +273,7 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 		
 		Alarm.getScheduler().schedule(this, 0, 1);
 		player.getPlayer().sendMessage(ChatColor.RED + "Get ready...");
-		player.playSound(player.getLocation(), startSound, 1, 1);
+		player.playSound(player.getLocation(), START_SOUND, 1, 1);
 		
 		displayBar = Bukkit.createBossBar("Cooking Progress", BarColor.BLUE, BarStyle.SEGMENTED_20, new BarFlag[0]);
 		displayBar.setProgress(1f);
@@ -297,7 +297,7 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 		
 		if (furnace.getBurnTime() > 200) {
 			loseGame();
-			player.getWorld().playSound(player.getLocation(), burnSound, 1, 1);
+			player.getWorld().playSound(player.getLocation(), BURN_SOUND, 1, 1);
 		}
 		if (furnace.getBurnTime() < 0)
 			loseGame();
@@ -343,9 +343,9 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 			skillLink.perform(qp, Math.max(qp.getSkillLevel(skillLink) - range, Math.min(qp.getSkillLevel(skillLink) + range, skillLevel)), true);
 		}
 		
-		//player.sendMessage(loseMessage);
-		player.getWorld().playSound(player.getLocation(), loseSound, 1, 1);
-		player.sendMessage(loseMessage);
+		//player.sendMessage(LOSE_MESSAGE);
+		player.getWorld().playSound(player.getLocation(), LOSE_SOUND, 1, 1);
+		player.sendMessage(LOSE_MESSAGE);
 		
 		if (furnace.getBurnTime() > 200) {
 			ItemStack ash = new ItemStack(Material.SULPHUR);
@@ -424,7 +424,7 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 			name = result.getItem().getItemMeta().getDisplayName();
 		}
 		
-		msg = new FancyMessage(winMessage)
+		msg = new FancyMessage(WIN_MESSAGE)
 				.color(ChatColor.GREEN)
 			.then(result.getItem().getAmount() > 1 ? result.getItem().getAmount() + "x " : "a ")
 			.then("[" + name + "]")
@@ -433,7 +433,7 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 		
 		
 		msg.send(player);
-		player.getWorld().playSound(player.getEyeLocation(), winSound, 1, 1);
+		player.getWorld().playSound(player.getEyeLocation(), WIN_SOUND, 1, 1);
 		if (!(player.getInventory().addItem(result.getItem())).isEmpty()) {
 			player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
 			player.getWorld().dropItem(player.getEyeLocation(), result.getItem());
@@ -465,20 +465,20 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 		
 		
 		if (gameState == State.STARTING) {
-			if (key >= startTime) {
+			if (key >= START_TIME) {
 				p.sendMessage(ChatColor.RED + "Go!");
 				generateFuel();
 				gameState = State.RUNNING;
-				Alarm.getScheduler().schedule(this, 0, updatePeriod);
+				Alarm.getScheduler().schedule(this, 0, UPDATE_PERIOD);
 				furnace.setBurnTime((short) 100);
 				furnace.update();
 				return;
 			}
 			
-			p.sendMessage(ChatColor.YELLOW + "" + (startTime - key));
-			p.playSound(p.getLocation(), countdownSound, 1, 1);
+			p.sendMessage(ChatColor.YELLOW + "" + (START_TIME - key));
+			p.playSound(p.getLocation(), COUNTDOWN_SOUND, 1, 1);
 			
-			furnace.setBurnTime((short) (furnace.getBurnTime() + (100 / startTime)));
+			furnace.setBurnTime((short) (furnace.getBurnTime() + (100 / START_TIME)));
 			furnace.update();
 			Alarm.getScheduler().schedule(this, key + 1, 1);
 			return;
@@ -486,27 +486,27 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 		
 		if (gameState == State.RUNNING) {
 			//update based on burn time, etc
-			this.nextFuelTime -= updatePeriod;
+			this.nextFuelTime -= UPDATE_PERIOD;
 			if (nextFuelTime <= 0)
 				generateFuel();
 			
 
 			
 			if (Math.abs(furnace.getBurnTime() - 100) > failInterval) {
-				missIndex += (failRate * updatePeriod);
-				cooldown -= updatePeriod;
+				missIndex += (FAIL_RATE * UPDATE_PERIOD);
+				cooldown -= UPDATE_PERIOD;
 				if (cooldown <= 0) {
 					cooldown = 1.0;
-					player.playSound(player.getLocation(), dangerSound, 1f, 1.8f);
+					player.playSound(player.getLocation(), DANGER_SOUND, 1f, 1.8f);
 				}
 			} else {
-				this.cookTime -= updatePeriod;
+				this.cookTime -= UPDATE_PERIOD;
 			}
 			
 			update();
 			
 			
-			Alarm.getScheduler().schedule(this, key, updatePeriod);
+			Alarm.getScheduler().schedule(this, key, UPDATE_PERIOD);
 		}
 	}
 	

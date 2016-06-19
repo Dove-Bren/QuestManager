@@ -26,7 +26,7 @@ import java.util.Set;
 
 /**
  * Stores a list of items associated with a weight.
- * This list is designed to be used to pull out random elements, and not for simple traversal.
+ * This list is designed to be used to pull out RANDOM elements, and not for simple traversal.
  *
  * @param <T> The type of the elements of the weighted list.
  */
@@ -69,7 +69,7 @@ public class WeightedList<T>  {
 	}
 	
 	/**
-	 * Attempts to grab a random entry in the list (based on their weight) and reutrn it.
+	 * Attempts to grab a RANDOM entry in the list (based on their weight) and reutrn it.
 	 * @return <i>null</i> on error or if the list is empty, an object stored otherwise
 	 */
 	public T getRandom() {

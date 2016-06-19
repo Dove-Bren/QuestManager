@@ -39,11 +39,11 @@ public class PurchaseAction implements MenuAction {
 	
 	private QuestPlayer player;
 	
-	private static final String denialFame = "Not famous enough!";
+	private static final String DENIAL_FAME = "Not famous enough!";
 	
-	private static final String denialMoney = "Not enough money!";
+	private static final String DENIAL_MONEY = "Not enough money!";
 	
-	private static final String denialSpace = "Not enough room in your inventory!";
+	private static final String DENIAL_SPACE = "Not enough room in your inventory!";
 	
 	public PurchaseAction(QuestPlayer player, ItemStack item, int cost, int fameRequirement) {
 		this.player = player;
@@ -65,17 +65,17 @@ public class PurchaseAction implements MenuAction {
 		Player p = player.getPlayer().getPlayer();
 		
 		if (player.getFame() < fameCheck) {
-			p.sendMessage(denialFame);
+			p.sendMessage(DENIAL_FAME);
 			return;
 		}
 		if (player.getMoney() < cost) {
-			p.sendMessage(denialMoney);
+			p.sendMessage(DENIAL_MONEY);
 			return;			
 		}
 		
 		//make sure there's room in their inventory
 		if (p.getInventory().firstEmpty() == -1) {
-			p.sendMessage(denialSpace);
+			p.sendMessage(DENIAL_SPACE);
 			return;			
 		}
 		

@@ -194,7 +194,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 	
 	private final static String imbuementFileName = "imbuement.yml";
 	
-	public static final double version = 1.00;
+	public static final double VERSION = 1.00;
 	
 	@Override
 	public void onLoad() {

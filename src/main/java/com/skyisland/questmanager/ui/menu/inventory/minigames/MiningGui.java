@@ -67,47 +67,47 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 	
 	public static MiningSkill skillLink = null;
 	
-	public static final Random random = new Random();
+	public static final Random RANDOM = new Random();
 	
-	public static final ItemStack defaultHiddenIcon = new ItemStack(Material.BEDROCK);
+	public static final ItemStack DEFAULT_HIDDEN_ICON = new ItemStack(Material.BEDROCK);
 	
 	{
 		ItemMeta meta;
 		
-		meta = defaultHiddenIcon.getItemMeta();
+		meta = DEFAULT_HIDDEN_ICON.getItemMeta();
 		meta.setDisplayName("???");
-		defaultHiddenIcon.setItemMeta(meta);
+		DEFAULT_HIDDEN_ICON.setItemMeta(meta);
 	}
 	
-	public static final Sound miningSound = Sound.BLOCK_GRAVEL_BREAK;
+	public static final Sound MINING_SOUND = Sound.BLOCK_GRAVEL_BREAK;
 	
-	public static final Sound miningHitSound = Sound.BLOCK_STONE_BREAK;
+	public static final Sound MINING_HIT_SOUND = Sound.BLOCK_STONE_BREAK;
 	
-	public static final Sound loseSound = Sound.ENTITY_CAT_DEATH;
+	public static final Sound LOSE_SOUND = Sound.ENTITY_CAT_DEATH;
 	
-	public static final Sound winSound = Sound.ENTITY_PLAYER_LEVELUP;
+	public static final Sound WIN_SOUND = Sound.ENTITY_PLAYER_LEVELUP;
 	
-	public static final Sound clickSound = Sound.UI_BUTTON_CLICK;
+	public static final Sound CLICK_SOUND = Sound.UI_BUTTON_CLICK;
 	
-	public static final String loseMessage = ChatColor.RED + "You failed to find anything useable";
+	public static final String LOSE_MESSAGE = ChatColor.RED + "You failed to find anything useable";
 	
-	public static final String tooLittleMessage = ChatColor.RED + "You didn't find enough material to be worth anything";
+	public static final String TOO_LITTLE_MESSAGE = ChatColor.RED + "You didn't find enough material to be worth anything";
 	
-	public static final String winMessage = "Success!" + ChatColor.RESET + " You successfully mined ";
+	public static final String WIN_MESSAGE = "Success!" + ChatColor.RESET + " You successfully mined ";
 	
-	public static final Sound startSound = Sound.ITEM_ARMOR_EQUIP_IRON;
+	public static final Sound START_SOUND = Sound.ITEM_ARMOR_EQUIP_IRON;
 	
-	public static final Sound hitSoundStone = Sound.BLOCK_IRON_DOOR_CLOSE;
+	public static final Sound HIT_SOUND_STONE = Sound.BLOCK_IRON_DOOR_CLOSE;
 	
-	public static final Sound hitSoundDirt = Sound.BLOCK_GRAVEL_BREAK;
+	public static final Sound HIT_SOUND_DIRT = Sound.BLOCK_GRAVEL_BREAK;
 	
-	public static final Sound hitSoundObsidian = Sound.BLOCK_ANVIL_PLACE;
+	public static final Sound HIT_SOUND_OBSIDIAN = Sound.BLOCK_ANVIL_PLACE;
 	
-	public static final Sound oreBreakSound = Sound.BLOCK_GLASS_BREAK;
+	public static final Sound ORE_BREAK_SOUND = Sound.BLOCK_GLASS_BREAK;
 	
-	private static final ChargeEffect successEffect = new ChargeEffect(Effect.HAPPY_VILLAGER);
+	private static final ChargeEffect SUCCESS_EFFECT = new ChargeEffect(Effect.HAPPY_VILLAGER);
 	
-	private static final ChargeEffect failEffect = new ChargeEffect(Effect.SMALL_SMOKE);
+	private static final ChargeEffect FAIL_EFFECT = new ChargeEffect(Effect.SMALL_SMOKE);
 	
 	private enum BlockMaterial {
 		AIR(null),
@@ -197,7 +197,7 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 		this.hiddenMap = new HashMap<>();
 		this.oreSlots = new LinkedList<>();
 		
-		this.hiddenIcon = defaultHiddenIcon;
+		this.hiddenIcon = DEFAULT_HIDDEN_ICON;
 		BlockMaterial.ORE.setIcon(oreIcon);
 				
 		int size = 9 * this.depth;
@@ -268,14 +268,14 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 		case AIR:
 		case DIRT:
 		case ORE:
-			player.playSound(player.getLocation(), hitSoundDirt, 1, 1);
+			player.playSound(player.getLocation(), HIT_SOUND_DIRT, 1, 1);
 			break;
 		case STONE:
-			player.playSound(player.getLocation(), hitSoundStone, 1, 1);
+			player.playSound(player.getLocation(), HIT_SOUND_STONE, 1, 1);
 			break;
 		case OBSIDIAN:
 		default:
-			player.playSound(player.getLocation(), hitSoundObsidian, 1, 1);
+			player.playSound(player.getLocation(), HIT_SOUND_OBSIDIAN, 1, 1);
 		}
 		
 		hitBlock(pos);
@@ -306,7 +306,7 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 		case ORE:
 			backend.put(pos, BlockMaterial.AIR);
 			if (player.isOnline())
-				player.playSound(player.getLocation(), oreBreakSound, 1, 1);
+				player.playSound(player.getLocation(), ORE_BREAK_SOUND, 1, 1);
 			break;
 		case STONE:
 			backend.put(pos, BlockMaterial.DIRT);
@@ -346,7 +346,7 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 		int max = depth * 9, cur;
 		for (int i = 0; i < max; i++) {
 			hiddenMap.put(i, true);
-			cur = (int) Math.round((random.nextGaussian() * hardnessDeviation) + averageHardness);
+			cur = (int) Math.round((RANDOM.nextGaussian() * hardnessDeviation) + averageHardness);
 			if (cur == 1)
 				backend.put(i, BlockMaterial.STONE);
 			else if (cur >= 2)
@@ -362,14 +362,14 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 		//pick spot to put first piece of ore from row 1+
 		Queue<Integer> newSpots = new LinkedList<>();
 		List<Integer> dump;
-		newSpots.add(random.nextInt(max));
+		newSpots.add(RANDOM.nextInt(max));
 		
 		oreSlots = new ArrayList<>(oreCount);
 		int len, buf;
 		while (oreSlots.size() < oreCount) {
-			len = random.nextInt(newSpots.size()) + 1;
+			len = RANDOM.nextInt(newSpots.size()) + 1;
 			for (int index = 0; index < len && oreSlots.size() < oreCount; index++) {
-				//some random i times, expand those items
+				//some RANDOM i times, expand those items
 				cur = newSpots.remove();
 				
 				oreSlots.add(cur);
@@ -401,7 +401,7 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 		
 		Alarm.getScheduler().schedule(this, 0, 1);
 		player.getPlayer().sendMessage(ChatColor.RED + "Get ready...");
-		player.playSound(player.getLocation(), startSound, 1, 1);
+		player.playSound(player.getLocation(), START_SOUND, 1, 1);
 		
 		this.gameState = State.STARTING;
 		
@@ -508,9 +508,9 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 			skillLink.perform(qp, Math.max(qp.getSkillLevel(skillLink) - range, Math.min(qp.getSkillLevel(skillLink) + range, skillLevel)), true);
 		}
 		
-		//player.sendMessage(loseMessage);
-		player.getWorld().playSound(player.getLocation(), loseSound, 1, 1);
-		player.sendMessage(loseMessage);
+		//player.sendMessage(LOSE_MESSAGE);
+		player.getWorld().playSound(player.getLocation(), LOSE_SOUND, 1, 1);
+		player.sendMessage(LOSE_MESSAGE);
 
 
 		clean();
@@ -553,7 +553,7 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 			result.setQuality(inputOre.getQuality() * (oreRatio + bonusQuality));
 			
 			if (result.getUnderlyingItem().getAmount() <= 0)
-				msg = new FancyMessage(tooLittleMessage);
+				msg = new FancyMessage(TOO_LITTLE_MESSAGE);
 			else {
 				String name;
 				if (inputOre.getItem().getItemMeta() == null || result.getItem().getItemMeta().getDisplayName() == null) {
@@ -562,7 +562,7 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 					name = result.getItem().getItemMeta().getDisplayName();
 				}
 				
-				msg = new FancyMessage(winMessage)
+				msg = new FancyMessage(WIN_MESSAGE)
 						.color(ChatColor.GREEN)
 					.then(result.getItem().getAmount() > 1 ? result.getItem().getAmount() + "x " : "a ")
 					.then("[" + name + "]")
@@ -572,7 +572,7 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 		}
 		
 		msg.send(player);
-		player.getWorld().playSound(player.getEyeLocation(), winSound, 1, 1);
+		player.getWorld().playSound(player.getEyeLocation(), WIN_SOUND, 1, 1);
 		
 		this.inputOre = null;
 
@@ -596,10 +596,10 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 		}
 		
 		if (ret == null || ret.getAmount() <= 0) {
-			//p.sendMessage(FishingGui.loseMessage);
-			failEffect.play(player, null);
+			//p.sendMessage(FishingGui.LOSE_MESSAGE);
+			FAIL_EFFECT.play(player, null);
 		} else {
-			successEffect.play(player, null);
+			SUCCESS_EFFECT.play(player, null);
 			if (!(player.getInventory().addItem(ret)).isEmpty()) {
 				player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
 				player.getWorld().dropItem(player.getEyeLocation(), ret);
@@ -648,13 +648,13 @@ public class MiningGui extends GuiInventory implements Alarmable<Integer>, Close
 				
 			//pick a spots to reveal
 			
-			int cur = random.nextInt(depth * 9);
+			int cur = RANDOM.nextInt(depth * 9);
 			if (backend.get(cur) == BlockMaterial.ORE || backend.get(cur) == BlockMaterial.AIR) {
 				alarm(key);
 			} else {
 				//else reveal it
 				if (player.isOnline())
-					player.playSound(player.getLocation(), hitSoundStone, 1, 1.5f);
+					player.playSound(player.getLocation(), HIT_SOUND_STONE, 1, 1.5f);
 				for (int j = 0; j < 3; j++)
 					hitBlock(cur);
 			}

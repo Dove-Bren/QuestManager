@@ -703,7 +703,7 @@ public class FancyMessage implements JsonRepresentedObject, Cloneable, Iterable<
 	/**
 	 * Sends this message to a command sender.
 	 * If the sender is a player, they will receive the fully-fledged formatted display of this message.
-	 * Otherwise, they will receive a version of this message with less formatting.
+	 * Otherwise, they will receive a VERSION of this message with less formatting.
 	 * @param sender The command sender who will receive the message.
 	 * @see #toOldMessageFormat()
 	 */

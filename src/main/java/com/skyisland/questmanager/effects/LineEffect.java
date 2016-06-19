@@ -37,7 +37,7 @@ public class LineEffect extends QuestEffect implements Runnable {
 	
 	private double speed;
 	
-	private static final int ticksPerSecond = 20;
+	private static final int TICKS_PER_SECOND = 20;
 	
 	private int delay;
 	
@@ -65,7 +65,7 @@ public class LineEffect extends QuestEffect implements Runnable {
 		dir.normalize();
 		target = location;
 		
-		double rate = ticksPerSecond / speed;
+		double rate = TICKS_PER_SECOND / speed;
 		
 		if (rate >= 1) {
 			perTick = 1;

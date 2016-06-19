@@ -59,11 +59,11 @@ import com.google.common.collect.Lists;
 
 public class LumberjackSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "Lumberjack.yml";
+	public static final String CONFIG_NAME = "Lumberjack.yml";
 	
-	public static final String badRangeMessage = ChatColor.RED + "Despite your efforts, you were unable to find suitable wood";
+	public static final String BAD_RANGE_MESSAGE = ChatColor.RED + "Despite your efforts, you were unable to find suitable wood";
 	
-	public static final String notOreMessage = ChatColor.DARK_GRAY + "There doesn't appear to be any good wood near that area";
+	public static final String NOT_ORE_MESSAGE = ChatColor.DARK_GRAY + "There doesn't appear to be any good wood near that area";
 	
 	private static final class TreeRecord {
 		
@@ -182,7 +182,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 	
 	public LumberjackSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 
 		
@@ -263,7 +263,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 				.addLine("hitRate", 0.1, Lists.newArrayList("Hits added to total hit count per", "difficulty of the wood", "[double] number of hits"))
 				.addLine("hitBonus", .25, Lists.newArrayList("How much of the hits to subtract per", "skill level", "[double] .01 is 1%"))
 				.addLine("extraWoodPerLevel", 0.05, Lists.newArrayList("Extra pieces of wood given to a player", "per level over difficulty level", "[double] 1.0 is a whole extra log"))
-				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and ore difficulty", "that will be allowed through random ore", "algorithm", "[int] larger than 0"))
+				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and ore difficulty", "that will be allowed through RANDOM ore", "algorithm", "[int] larger than 0"))
 				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per mining skill level", "[double] .01 is 1%"))
 				.addLine("millingEnabled", true, Lists.newArrayList("Can players use logs on crafting tables", "and get a single item stack of average quality", "[true|false]"))
 				.addLine("millPenalty", 0.05, Lists.newArrayList("If milling two items, how much of the sum quality", "is lost in the process?", "[double] .01 is 1%"));
@@ -360,7 +360,7 @@ public class LumberjackSkill extends LogSkill implements Listener {
 		
 		TreeRecord record = getTree(e.getClickedBlock(), level);
 		if (record == null) {
-			e.getPlayer().sendMessage(badRangeMessage);
+			e.getPlayer().sendMessage(BAD_RANGE_MESSAGE);
 			return;
 		}
 		

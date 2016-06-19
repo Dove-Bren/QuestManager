@@ -41,13 +41,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
  */
 public class ChargeAction implements Listener, Alarmable<Integer> {
 	
-	public static final String disturbedMessage = ChatColor.RED + "Your charging action was disturbed" + ChatColor.RESET;
+	public static final String DISTURBED_MESSAGE = ChatColor.RED + "Your charging action was disturbed" + ChatColor.RESET;
 	
-	public static final String cancelMessage = ChatColor.YELLOW + "You cancelled your action" + ChatColor.RESET;
+	public static final String CANCEL_MESSAGE = ChatColor.YELLOW + "You cancelled your action" + ChatColor.RESET;
 	
-	private static final Effect defaultEffect = Effect.MAGIC_CRIT;
+	private static final Effect DEFAULT_EFFECT = Effect.MAGIC_CRIT;
 	
-	private static final Sound defaultSound = Sound.BLOCK_BREWING_STAND_BREW;
+	private static final Sound DEFAULT_SOUND = Sound.BLOCK_BREWING_STAND_BREW;
 	
 	private boolean canMove;
 	
@@ -63,7 +63,7 @@ public class ChargeAction implements Listener, Alarmable<Integer> {
 	
 	public ChargeAction(MenuAction action, QuestPlayer player, boolean canMove, boolean canGetHit, 
 			boolean canChangeItems, double chargingTime) {
-		this(action, player, defaultEffect, defaultSound, canMove, canGetHit, canChangeItems, chargingTime);
+		this(action, player, DEFAULT_EFFECT, DEFAULT_SOUND, canMove, canGetHit, canChangeItems, chargingTime);
 	}
 	
 	public ChargeAction(MenuAction action, QuestPlayer player, Effect effect, Sound sound, boolean canMove, 
@@ -117,7 +117,7 @@ public class ChargeAction implements Listener, Alarmable<Integer> {
 		}
 		
 		//a current charge has moved, and is not allowed to
-		e.getPlayer().sendMessage(disturbedMessage);
+		e.getPlayer().sendMessage(DISTURBED_MESSAGE);
 		doneCasting();
 	}
 	
@@ -142,7 +142,7 @@ public class ChargeAction implements Listener, Alarmable<Integer> {
 		}
 		
 		//a current charge has moved, and is not allowed to
-		((Player) e.getEntity()).sendMessage(disturbedMessage);
+		((Player) e.getEntity()).sendMessage(DISTURBED_MESSAGE);
 		doneCasting();
 	}
 	
@@ -167,7 +167,7 @@ public class ChargeAction implements Listener, Alarmable<Integer> {
 		
 		//not allowed to switch weapons, cheater!
 		doneCasting();
-		e.getPlayer().sendMessage(disturbedMessage);
+		e.getPlayer().sendMessage(DISTURBED_MESSAGE);
 	}
 	
 	public void alarm(Integer a) {

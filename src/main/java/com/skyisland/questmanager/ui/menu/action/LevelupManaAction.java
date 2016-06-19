@@ -39,7 +39,7 @@ public class LevelupManaAction implements MenuAction {
 	
 	private QuestPlayer player;
 	
-	private static final String denialFame = "You do not have enough fame...";
+	private static final String DENIAL_FAME = "You do not have enough fame...";
 	
 	public LevelupManaAction(QuestPlayer player, int cost, int manaAmount) {
 		this.player = player;
@@ -57,7 +57,7 @@ public class LevelupManaAction implements MenuAction {
 		Player p = player.getPlayer().getPlayer();
 		
 		if (player.getFame() < cost) {
-			p.sendMessage(denialFame);
+			p.sendMessage(DENIAL_FAME);
 			return;
 		}
 		

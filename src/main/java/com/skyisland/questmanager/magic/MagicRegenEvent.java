@@ -24,7 +24,7 @@ import org.bukkit.event.HandlerList;
 
 public class MagicRegenEvent extends Event implements Cancellable {
 
-	private static final HandlerList handlers = new HandlerList();
+	private static final HandlerList HANDLERS = new HandlerList();
 	
 	private MagicUser entity;
 	
@@ -36,11 +36,11 @@ public class MagicRegenEvent extends Event implements Cancellable {
 	
 	@Override
 	public HandlerList getHandlers() {
-		return handlers;
+		return HANDLERS;
 	}
 	
 	public static HandlerList getHandlerList() {
-		return handlers;
+		return HANDLERS;
 	}
 
 	public MagicRegenEvent(MagicUser entity, double amount) {

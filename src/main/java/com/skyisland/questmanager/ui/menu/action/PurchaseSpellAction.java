@@ -37,11 +37,11 @@ public class PurchaseSpellAction implements MenuAction {
 	
 	private QuestPlayer player;
 	
-	private static final String denialFame = "Not famous enough!";
+	private static final String DENIAL_FAME = "Not famous enough!";
 	
-	private static final String denialMoney = "Not enough money!";
+	private static final String DENIAL_MONEY = "Not enough money!";
 	
-	private static final String denialExists = "You've already learned this spell!";
+	private static final String DENIAL_EXISTS = "You've already learned this spell!";
 	
 	public PurchaseSpellAction(QuestPlayer player, String spellName, int cost, int fameRequirement) {
 		this.player = player;
@@ -63,18 +63,18 @@ public class PurchaseSpellAction implements MenuAction {
 		Player p = player.getPlayer().getPlayer();
 		
 		if (player.getFame() < fameCheck) {
-			p.sendMessage(denialFame);
+			p.sendMessage(DENIAL_FAME);
 			return;
 		}
 		if (player.getMoney() < cost) {
-			p.sendMessage(denialMoney);
+			p.sendMessage(DENIAL_MONEY);
 			return;			
 		}
 		
 		//make sure they don't already have it
 		
 		if (player.getSpells().contains(spell)) {
-			p.sendMessage(denialExists);
+			p.sendMessage(DENIAL_EXISTS);
 			return;
 		}
 		

@@ -39,7 +39,7 @@ import com.google.common.collect.Lists;
 
 public class TacticsSkill extends LogReducedSkill implements Listener {
 	
-	public static final String configName = "Tactics.yml";
+	public static final String CONFIG_NAME = "Tactics.yml";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -85,7 +85,7 @@ public class TacticsSkill extends LogReducedSkill implements Listener {
 	
 	public TacticsSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {

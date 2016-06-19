@@ -29,7 +29,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 
 public class FoodItem extends QualityItem {
 		
-	public static int defaultFoodLevel = 4;
+	public static final int DEFAULT_FOOD_LEVEL = 4;
 	
 	private int foodLevel;
 	
@@ -44,17 +44,17 @@ public class FoodItem extends QualityItem {
 		
 		if (!item.hasItemMeta() || !item.getItemMeta().hasLore()
 				|| !item.getItemMeta().getLore().get(0).toLowerCase().contains("food level: ")) {
-			return new FoodItem(item, defaultFoodLevel);
+			return new FoodItem(item, DEFAULT_FOOD_LEVEL);
 		}
 		
 		String line = ChatColor.stripColor(item.getItemMeta().getLore().get(0));
 		line = line.toLowerCase().substring(line.indexOf("food level: ") + 12).trim();
-		int foodLevel = defaultFoodLevel;
+		int foodLevel = DEFAULT_FOOD_LEVEL;
 		try {
 			foodLevel = Integer.parseInt(line);
 		} catch (Exception e) {
 			e.printStackTrace();
-			QuestManagerPlugin.questManagerPlugin.getLogger().info("Just pretending it said " + defaultFoodLevel);
+			QuestManagerPlugin.questManagerPlugin.getLogger().info("Just pretending it said " + DEFAULT_FOOD_LEVEL);
 		}
 		
 		ItemMeta meta = item.getItemMeta();

@@ -42,7 +42,7 @@ import com.google.common.collect.Lists;
  */
 public class ImbuementSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "Imbuement.yml";
+	public static final String CONFIG_NAME = "Imbuement.yml";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -114,8 +114,8 @@ public class ImbuementSkill extends LogSkill implements Listener {
 	private boolean enabled;
 	
 	public ImbuementSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 
 		

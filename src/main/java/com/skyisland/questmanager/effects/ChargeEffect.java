@@ -47,7 +47,7 @@ public class ChargeEffect extends QuestEffect implements Runnable {
 		this.player = player;
 		count = 0;
 		spark();
-		Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, this, 
+		Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, this,
 				4);
 	}
 
@@ -56,7 +56,7 @@ public class ChargeEffect extends QuestEffect implements Runnable {
 		count++;
 		spark();
 		if (count < 4) {
-			Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, this, 
+			Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, this,
 					4);			
 		}
 	}

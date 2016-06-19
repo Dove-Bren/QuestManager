@@ -40,9 +40,9 @@ import com.google.common.collect.Lists;
 
 public class SwordsmanshipSkill extends LogSkill implements Listener {
 	
-	public static final String configName = "Swordsmanship.yml";
+	public static final String CONFIG_NAME = "Swordsmanship.yml";
 	
-	public static final String modifierName = "QuestManager Swordsmanship Bonus";
+	public static final String MODIFIER_NAME = "QuestManager Swordsmanship Bonus";
 
 	public Type getType() {
 		return Skill.Type.COMBAT;
@@ -97,7 +97,7 @@ public class SwordsmanshipSkill extends LogSkill implements Listener {
 	
 	public SwordsmanshipSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {
@@ -141,7 +141,7 @@ public class SwordsmanshipSkill extends LogSkill implements Listener {
 		Player p = e.getPlayer().getPlayer().getPlayer();
 		
 		if (!e.getWeapon().getType().name().toLowerCase().contains("sword")) {
-			Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), modifierName, 0);
+			Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), MODIFIER_NAME, 0);
 			return;
 		}
 		
@@ -152,7 +152,7 @@ public class SwordsmanshipSkill extends LogSkill implements Listener {
 		if (lvl < apprenticeLevel) {
 			//3% per level under apprentice -- up to 45%
 			int miss = (int) (rateDecrease * (apprenticeLevel - lvl)); 
-			int roll = Skill.random.nextInt(100);
+			int roll = Skill.RANDOM.nextInt(100);
 			if (roll <= miss) {
 				e.setMiss(true);
 				causeMiss = true;
@@ -160,7 +160,7 @@ public class SwordsmanshipSkill extends LogSkill implements Listener {
 		}
 		
 		double rate = Math.max(lvl - apprenticeLevel, 0) * levelRate;
-		Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), modifierName, rate);
+		Skill.setAttributeModifier(p.getAttribute(Attribute.GENERIC_ATTACK_SPEED), MODIFIER_NAME, rate);
 		
 		this.perform(e.getPlayer(), causeMiss); //only get a 'cause miss' if this skill caused it 
 		

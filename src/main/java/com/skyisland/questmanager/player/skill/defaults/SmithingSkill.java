@@ -63,29 +63,29 @@ import com.skyisland.questmanager.ui.menu.inventory.minigames.SmeltingGui;
 
 public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	
-	public static final String configName = "Smithing.yml";
+	public static final String CONFIG_NAME = "Smithing.yml";
 	
-	private static final String badRangeMessage = ChatColor.RED + "You knew how to work the metal, but didn't possess "
+	private static final String BAD_RANGE_MESSAGE = ChatColor.RED + "You knew how to work the metal, but didn't possess "
 			+ "enough skill to truly see your creation live.";
 	
-	private static final String noRecipeMessage = ChatColor.RED + "Your work with the metal was long, but the "
+	private static final String NO_RECIPE_MESSAGE = ChatColor.RED + "Your work with the metal was long, but the "
 			+ "result wasn't anything of use. The unused ingredients have been returned to your inventory.";
 	
-	private static final String failMessage = ChatColor.RED + "Despite your efforts, the craft ended in failure. Perhaps "
+	private static final String FAIL_MESSAGE = ChatColor.RED + "Despite your efforts, the craft ended in failure. Perhaps "
 			+ "with a little more skill..?";
 	
-	private static final String noSmeltingRecipeMessage = ChatColor.RED + "You don't know a recipe that uses those "
+	private static final String NO_SMELTING_RECIPE_MESSAGE = ChatColor.RED + "You don't know a recipe that uses those "
 			+ "ingredients";
 	
-	private static final String winMessage = ChatColor.GREEN + "You successfully forged ";
+	private static final String WIN_MESSAGE = ChatColor.GREEN + "You successfully forged ";
 	
-	private static final Sound loseSound = Sound.BLOCK_GLASS_BREAK;
+	private static final Sound LOSE_SOUND = Sound.BLOCK_GLASS_BREAK;
 	
-	private static final Sound winSound = Sound.BLOCK_ANVIL_USE;
+	private static final Sound WIN_SOUND = Sound.BLOCK_ANVIL_USE;
 	
-	private static final ChargeEffect successEffect = new ChargeEffect(Effect.LAVA_POP);
+	private static final ChargeEffect CHARGE_EFFECT = new ChargeEffect(Effect.LAVA_POP);
 	
-	private static final ChargeEffect failEffect = new ChargeEffect(Effect.SMALL_SMOKE);
+	private static final ChargeEffect FAIL_EFFECT = new ChargeEffect(Effect.SMALL_SMOKE);
 	
 	public static final class Metal implements SkillRecipe {
 		
@@ -486,7 +486,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 	
 	public SmithingSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 
 		
@@ -856,7 +856,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		Player p = player.getPlayer().getPlayer();
 		
 		if (recipe == null) {
-			p.sendMessage(noSmeltingRecipeMessage);
+			p.sendMessage(NO_SMELTING_RECIPE_MESSAGE);
 			
 			boolean trip = false;
 			for (ItemStack input : inputs) {
@@ -881,7 +881,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		Bukkit.getPluginManager().callEvent(event);
 		
 		if (event.isFail()) {
-			p.sendMessage(failMessage);
+			p.sendMessage(FAIL_MESSAGE);
 			
 			boolean trip = false;
 			for (ItemStack input : inputs) {
@@ -1011,8 +1011,8 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		ForgeRecipe recipe = getForgeRecipe(base, inputs, hammers, cut, quelch);
 		if (recipe == null) {
-			p.sendMessage(noRecipeMessage);
-			p.getWorld().playSound(p.getLocation(), loseSound, 1, 1);
+			p.sendMessage(NO_RECIPE_MESSAGE);
+			p.getWorld().playSound(p.getLocation(), LOSE_SOUND, 1, 1);
 			
 			boolean trip = false;
 			for (ItemStack input : inputs) {
@@ -1025,7 +1025,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 				}
 			}
 			
-			failEffect.play(p, p.getLocation());
+			FAIL_EFFECT.play(p, p.getLocation());
 			this.performMinor(player, base.difficulty, true);
 			return;
 		}
@@ -1033,22 +1033,22 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		int skillLevel = player.getSkillLevel(this);
 		
 		if (recipe.difficulty > skillLevel + maxDifficultyRange) {
-			p.sendMessage(badRangeMessage);
-			p.getWorld().playSound(p.getLocation(), loseSound, 1, 1);
+			p.sendMessage(BAD_RANGE_MESSAGE);
+			p.getWorld().playSound(p.getLocation(), LOSE_SOUND, 1, 1);
 
 			this.performMinor(player, recipe.difficulty, true);
-			failEffect.play(p, p.getLocation());
+			FAIL_EFFECT.play(p, p.getLocation());
 			return;
 		}
 		
 		int adjustedOffset = Math.max(0, recipe.difficulty - (skillLevel - masteryOffset));
 		double successChance = 1 - (difficultyRate * adjustedOffset);
-		if (random.nextDouble() >= successChance) {
-			p.sendMessage(failMessage);
-			p.getWorld().playSound(p.getLocation(), loseSound, 1, 1);
+		if (RANDOM.nextDouble() >= successChance) {
+			p.sendMessage(FAIL_MESSAGE);
+			p.getWorld().playSound(p.getLocation(), LOSE_SOUND, 1, 1);
 
 			this.perform(player, recipe.difficulty, true);
-			failEffect.play(p, p.getLocation());
+			FAIL_EFFECT.play(p, p.getLocation());
 			return;
 		}
 
@@ -1057,17 +1057,17 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		Bukkit.getPluginManager().callEvent(event);
 		
 		if (event.isFail()) {
-			p.sendMessage(failMessage);
-			p.getWorld().playSound(p.getLocation(), loseSound, 1, 1);
+			p.sendMessage(FAIL_MESSAGE);
+			p.getWorld().playSound(p.getLocation(), LOSE_SOUND, 1, 1);
 
 			this.perform(player, recipe.difficulty, true);
-			failEffect.play(p, p.getLocation());
+			FAIL_EFFECT.play(p, p.getLocation());
 			return;
 		}
 		
 		perform(player, recipe.difficulty, false);
-		p.getWorld().playSound(p.getLocation(), winSound, 1, 1);
-		successEffect.play(p, p.getLocation());
+		p.getWorld().playSound(p.getLocation(), WIN_SOUND, 1, 1);
+		CHARGE_EFFECT.play(p, p.getLocation());
 		
 		event.setQualityModifier(event.getQualityModifier() + skillLevel * qualityRate);
 		
@@ -1083,7 +1083,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 			name = result.getItem().getItemMeta().getDisplayName();
 		}
 		
-		FancyMessage msg = new FancyMessage(winMessage)
+		FancyMessage msg = new FancyMessage(WIN_MESSAGE)
 				.color(ChatColor.GREEN)
 			.then(result.getItem().getAmount() > 1 ? result.getItem().getAmount() + "x " : "a ")
 			.then("[" + name + "]")

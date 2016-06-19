@@ -40,7 +40,7 @@ import com.skyisland.questmanager.player.skill.event.WoodChopEvent;
 
 public class PatienceSkill extends LogReducedSkill implements Listener {
 	
-	public static final String configName = "Patience.yml";
+	public static final String CONFIG_NAME = "Patience.yml";
 
 	public Type getType() {
 		return Skill.Type.OTHER;
@@ -80,8 +80,8 @@ public class PatienceSkill extends LogReducedSkill implements Listener {
 	private double levelRate;
 	
 	public PatienceSkill() {
-		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(), 
-				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + configName);
+		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
+				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
 		YamlConfiguration config = createConfig(configFile);
 		
 		if (!config.getBoolean("enabled", true)) {
