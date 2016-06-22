@@ -18,12 +18,12 @@
 
 package com.skyisland.questmanager.ui.menu.action;
 
+import com.skyisland.questmanager.party.Party;
 import org.bukkit.Instrument;
 import org.bukkit.Note;
 import org.bukkit.Note.Tone;
 import org.bukkit.entity.Player;
 
-import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.QuestPlayer;
 
 /**

@@ -24,6 +24,8 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.logging.Logger;
 
+import com.skyisland.questmanager.party.Party;
+import com.skyisland.questmanager.party.PartyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -84,7 +86,6 @@ import com.skyisland.questmanager.npc.TeleportNPC;
 import com.skyisland.questmanager.npc.utils.BankStorageManager;
 import com.skyisland.questmanager.npc.utils.ServiceCraft;
 import com.skyisland.questmanager.npc.utils.ServiceOffer;
-import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.PlayerOptions;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.CraftingSkill;
@@ -164,7 +165,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 	private SpellWeavingManager spellWeavingManager;
 	
 	private ImbuementHandler imbuementHandler;
-	
+
 	private QuestManager manager;
 	
 	private ChatGuiHandler chatGuiHandler;
@@ -198,7 +199,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 	public static final double VERSION = 1.00;
 	
 	public static Logger logger;
-	
+
 	@Override
 	public void onLoad() {
 		QuestManagerPlugin.questManagerPlugin = this;
@@ -269,8 +270,6 @@ public class QuestManagerPlugin extends JavaPlugin {
 
 		chatGuiHandler = new ChatGuiHandler(this, config.getMenuVerbose());
 		inventoryGuiHandler = new InventoryGuiHandler();
-		
-
 		
 		skillManager = new SkillManager();
 
@@ -352,7 +351,9 @@ public class QuestManagerPlugin extends JavaPlugin {
 //		e = new DefaultEnemy(EntityType.SKELETON);
 //		regionManager.addEnemy(r, e);
 //		
-//		///////////////////////////////////////////////////////////////////////////////		
+//		///////////////////////////////////////////////////////////////////////////////
+
+		PartyManager.createAndRegisterListeners();
 	}
 	
 	@Override
@@ -361,7 +362,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 		//unregister our scheduler
 		Bukkit.getScheduler().cancelTasks(this);
 
-		playerManager.getParties().forEach(Party::disband);
+		playerManager.getParties().forEach(PartyManager::disband);
 		
 		//save user database
 		playerManager.save(new File(getDataFolder(), playerConfigFileName));
@@ -654,7 +655,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 			for (String part : args) {
 				msg += part + " ";
 			}
-			qp.getParty().tellMembers(msg);
+			PartyManager.tellMembers(qp.getParty(), msg);
 			return true;
 		}
 		
@@ -672,7 +673,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 				return true;
 			}
 			
-			qp.getParty().removePlayer(qp, ChatColor.YELLOW + "You left the party"+ ChatColor.RESET);
+			PartyManager.removePlayer(qp.getParty(), qp, ChatColor.YELLOW + "You left the party"+ ChatColor.RESET);
 			return true;
 		}
 		
@@ -710,7 +711,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 					return true;
 				}
 				
-				party.removePlayer(other, ChatColor.DARK_RED + "You've been kicked from the party" + ChatColor.RESET);
+				PartyManager.removePlayer(party, other, ChatColor.DARK_RED + "You've been kicked from the party" + ChatColor.RESET);
 				return true;
 			} else {
 				//not leader, can't boot

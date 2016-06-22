@@ -30,6 +30,8 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
+import com.skyisland.questmanager.party.Party;
+import com.skyisland.questmanager.party.PartyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -431,7 +433,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	
 	public void completeQuest(Quest quest) {
 		if (!completedQuests.contains(quest.getName())) {
-			completedQuests.add(quest.getName());			
+			completedQuests.add(quest.getName());
 		}
 		removeQuest(quest);
 		
@@ -476,12 +478,11 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	public Party createParty() {
-		this.party = new Party(this);
-		return party;
+		return PartyManager.createParty(this);
 	}
 	
 	public void joinParty(Party party) {
-		if (party.addMember(this))	{
+		if (PartyManager.addMember(party, this))	{
 			this.party = party;
 		}
 	}
@@ -1113,7 +1114,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		
 		refreshPlayer();
 		if (this.party != null) {
-			this.party.updateScoreboard(this, this.maxHp);
+			PartyManager.updateScoreboard(this.party, this, this.maxHp);
 		}
 		
 		//in a quest world, so put them back to their last checkpoint
@@ -1145,7 +1146,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	 */
 	private void onPlayerQuit() {
 		if (party != null) {
-			party.removePlayer(this, "You've been disconnected!");
+			PartyManager.removePlayer(party, this, "You've been disconnected!");
 			party = null;
 		}
 		
@@ -1718,7 +1719,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				this.updateCompass(true);
 				
 				if (this.party != null) {
-					this.party.updateScoreboard(this, (int) p.getHealth());
+					PartyManager.updateScoreboard(party, this, (int) p.getHealth());
 				}
 				
 				if (getOptions().isDirty()) {

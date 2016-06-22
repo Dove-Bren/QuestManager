@@ -24,6 +24,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.skyisland.questmanager.party.Party;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -39,8 +40,7 @@ import com.skyisland.questmanager.configuration.QuestConfiguration;
 import com.skyisland.questmanager.configuration.state.QuestState;
 import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.Participant;
-import com.skyisland.questmanager.player.Party;
-import com.skyisland.questmanager.player.PartyDisbandEvent;
+import com.skyisland.questmanager.event.PartyDisbandEvent;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.quest.history.History;
 import com.skyisland.questmanager.quest.history.HistoryEvent;

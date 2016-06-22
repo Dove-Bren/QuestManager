@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import com.skyisland.questmanager.party.Party;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -33,7 +34,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.skyisland.questmanager.configuration.PluginConfiguration;
 import com.skyisland.questmanager.player.Participant;
-import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.special.TitleEffect;
 import com.skyisland.questmanager.scheduling.IntervalScheduler;
@@ -129,11 +129,11 @@ public class PlayerManager implements Tickable {
 	}
 	
 	public void addParty(Party party) {
-		parties.put(party.getID(), party);
+		parties.put(party.getId(), party);
 	}
 	
 	public void removeParty(Party party) {
-		parties.remove(party.getID());
+		parties.remove(party.getId());
 	}
 
 	public Participant getParticipant(String idString) {

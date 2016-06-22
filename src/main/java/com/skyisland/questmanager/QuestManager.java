@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.skyisland.questmanager.party.PartyManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -62,7 +63,6 @@ import com.skyisland.questmanager.configuration.QuestConfiguration;
 import com.skyisland.questmanager.configuration.SessionConflictException;
 import com.skyisland.questmanager.configuration.state.QuestState;
 import com.skyisland.questmanager.npc.NPC;
-import com.skyisland.questmanager.player.Party;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.quest.Quest;
 
@@ -118,7 +118,7 @@ public class QuestManager implements Listener {
 			QuestManagerPlugin.logger.info("Purged villagers!");
 		}
 		
-		Party.maxSize = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getMaxPartySize();
+		PartyManager.maxSize = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getMaxPartySize();
 		
 		this.saveDirectory = saveDirectory;
 		this.questDirectory = questDirectory;

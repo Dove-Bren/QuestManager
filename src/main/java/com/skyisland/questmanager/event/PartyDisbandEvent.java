@@ -16,31 +16,38 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.skyisland.questmanager.ui.menu.action;
+package com.skyisland.questmanager.event;
 
 import com.skyisland.questmanager.party.Party;
-import com.skyisland.questmanager.party.PartyManager;
-import org.bukkit.ChatColor;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
 
-import com.skyisland.questmanager.player.QuestPlayer;
+/** An event triggered by a party being disbanded */
+public class PartyDisbandEvent extends Event {
 
-/**
- * Boots a player from a party
- *
- */
-public class BootFromPartyAction implements MenuAction {
+	private static final HandlerList HANDLERS = new HandlerList();
 	
-	private Party party;
-	
-	private QuestPlayer other;
-	
-	public BootFromPartyAction(Party party, QuestPlayer other) {
+	/** The disbanded party. */
+	private final Party party;
+
+	public PartyDisbandEvent(Party party) {
 		this.party = party;
-		this.other = other;
 	}
-	
+
+	/**
+	 * Returns the disbanded party for this event.
+	 * @return the disbanded party.
+	 */
+	public Party getParty() {
+		return party;
+	}
+
 	@Override
-	public void onAction() {
-		PartyManager.removePlayer(party, other, ChatColor.DARK_RED + "You've been kicked from the party" + ChatColor.RESET);
+	public HandlerList getHandlers() {
+		return HANDLERS;
+	}
+
+	public static HandlerList getHandlerList() {
+		return HANDLERS;
 	}
 }

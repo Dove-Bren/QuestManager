@@ -15,41 +15,25 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package com.skyisland.questmanager.party;
 
-package com.skyisland.questmanager.player;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
+final class PartyRepository {
 
-public class PartyDisbandEvent extends Event {
+	/** A map of player's UUIDs to their parties */
+	private static final Map<UUID, Party> PARTY_MAP = new HashMap<>();
 
-	private static final HandlerList HANDLERS = new HandlerList();
-	
-	/**
-	 * Keeps track of the party that disbanded
-	 */
-	private Party party;
-	
-	@Override
-	public HandlerList getHandlers() {
-		return HANDLERS;
+	private PartyRepository(){}
+
+	public static Optional<Party> get(UUID uuid){
+		return Optional.ofNullable(PARTY_MAP.get(uuid));
 	}
-	
-	public static HandlerList getHandlerList() {
-		return HANDLERS;
-	}
-	
-	/**
-	 * Constructs an event with given party
-	 */
-	public PartyDisbandEvent(Party party) {
-		this.party = party;
-	}
-	
-	/**
-	 * Returns the party that disbanded.
-	 */
-	public Party getParty() {
-		return party;
+
+	public static void put(UUID uuid, Party party){
+		PARTY_MAP.put(uuid, party);
 	}
 }
