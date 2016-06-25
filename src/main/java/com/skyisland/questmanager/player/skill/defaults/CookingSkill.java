@@ -658,6 +658,22 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		ItemStack inHand = e.getItem();
 		FoodItem food = FoodItem.wrapItem(inHand.clone());
+		
+		//make sure not raw food
+		if (inHand.hasItemMeta() && inHand.getItemMeta().hasLore()) {
+			boolean qlevel = false, flevel = false;
+			for (String line : inHand.getItemMeta().getLore()) {
+				if (line.toLowerCase().contains("quality:"))
+					qlevel = true;
+				else if (line.toLowerCase().contains("food level:"))
+					flevel = true;
+			}
+			
+			if (qlevel && !flevel)
+				return;
+		}
+
+		
 		int pos = e.getPlayer().getInventory().getHeldItemSlot();
 		
 		inHand.setAmount(inHand.getAmount() - 1);

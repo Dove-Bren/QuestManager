@@ -164,7 +164,9 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		LivingEntity entity = (LivingEntity) e;
 		entity.setMaxHealth(hp);
 		entity.setHealth(hp);
-		entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(attack);
+		AttributeInstance att = entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+		if (att != null)
+			att.setBaseValue(attack);
 		
 		entity.getEquipment().setItemInMainHandDropChance(0f);
 		
