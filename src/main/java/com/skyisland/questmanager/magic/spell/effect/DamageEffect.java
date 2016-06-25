@@ -150,4 +150,12 @@ public class DamageEffect extends ImbuementEffect {
 		effect.setDisplayName(getDisplayName());
 		return effect;		
 	}
+	
+	public double getDamage() {
+		return damage;
+	}
+	
+	public void setDamage(double damage) {
+		this.damage = damage;
+	}
 }

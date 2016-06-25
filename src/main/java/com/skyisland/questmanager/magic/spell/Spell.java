@@ -73,6 +73,22 @@ public abstract class Spell implements ConfigurationSerializable {
 		return description;
 	}
 	
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
+	}
+
 	public void addSpellEffect(SpellEffect effect) {
 		this.spellEffects.add(effect);
 	}

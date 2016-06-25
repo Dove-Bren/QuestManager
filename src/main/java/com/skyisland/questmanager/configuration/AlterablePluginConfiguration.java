@@ -7,12 +7,25 @@ import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 
+import com.skyisland.questmanager.QuestManagerPlugin;
+
 /**
  * A PluginConfiguration that allows modification.
  * @author Skyler
  *
  */
 public class AlterablePluginConfiguration extends PluginConfiguration {
+	
+	public static AlterablePluginConfiguration copyOf(PluginConfiguration config) {
+		AlterablePluginConfiguration copy = new AlterablePluginConfiguration();
+		copy.config = config.config;
+		copy.conservative = config.conservative;
+		return copy;
+	}
+	
+	private AlterablePluginConfiguration() {
+		
+	}
 	
 	public AlterablePluginConfiguration(File configFile) {
 		super(configFile);
@@ -190,7 +203,25 @@ public class AlterablePluginConfiguration extends PluginConfiguration {
 	
 	public void setMusicDurations(Map<Sound, Double> map) {
 		for (Sound sound : map.keySet()) {
-			config.set(sound.name(), map.get(sound));
+			config.set(PluginConfigurationKey.MUSICDURATIONS.getKey() + "." + sound.name(), map.get(sound));
 		}
+	}
+	
+	/**
+	 * Perform an un-typed set. This method is <string>dangerous</stong> and should only be used when:
+	 * <ul>
+	 * <li>You know the type stored in the field</li>
+	 * <li>You cannot call the normal method (you're being dynamic and cool or something)</li>
+	 * </ul>
+	 * @param key
+	 * @param value
+	 */
+	public void setBaseValue(PluginConfigurationKey key, Object value) {
+		if (!key.def.getClass().isAssignableFrom(value.getClass())) {
+			QuestManagerPlugin.logger.warning("Could not set raw value in Config; type mismatch"
+					+ key.getDef().getClass().getName() + " <> " + value.getClass().getName());
+			return;
+		}
+		config.set(key.getKey(), value);
 	}
 }

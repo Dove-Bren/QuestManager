@@ -237,4 +237,36 @@ public class SimpleTargetSpell extends TargetSpell {
 			target.getWorld().playSound(target.getEyeLocation(), contactSound, 1, 1);
 		}
 	}
+
+	public double getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
+	public int getMaxDistance() {
+		return maxDistance;
+	}
+
+	public void setMaxDistance(int maxDistance) {
+		this.maxDistance = maxDistance;
+	}
+
+	public Effect getProjectileEffect() {
+		return projectileEffect;
+	}
+
+	public Effect getContactEffect() {
+		return contactEffect;
+	}
+
+	public Sound getCastSound() {
+		return castSound;
+	}
+
+	public Sound getContactSound() {
+		return contactSound;
+	}
 }

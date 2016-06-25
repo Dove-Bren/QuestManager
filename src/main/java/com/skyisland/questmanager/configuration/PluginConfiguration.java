@@ -28,9 +28,11 @@ import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.utils.Compass;
 import com.skyisland.questmanager.player.utils.SpellHolder;
@@ -47,61 +49,119 @@ public class PluginConfiguration {
 	
 	protected boolean conservative;
 	
-	public enum PluginConfigurationKey {
+	public static enum Category {
+		PLUGIN("Plugin"),
+		MANAGER("Manager"),
+		PLAYER("Player Interfaces"),
+		FEATURE("Special Features"),
+		OTHER("Other");
 		
-		VERSION("version"),
-		CONSERVATIVE("config.conservativeMode"),
-		VERBOSEMENUS("menus.verboseMenus"),
-		ALLOWCRAFTING("player.allowCrafting"),
-		ALLOWNAMING("player.allowNaming"),
-		ALLOWTAMING("player.allowTaming"),
-		PARTYSIZE("player.maxPartySize"),
-		CLEANUPVILLAGERS("world.villagerCleanup"),
-		XPMONEY("interface.useXPMoney"),
-		PORTALS("interface.usePortals"),
-		ADJUSTXP("interface.adjustXP"),
-		TITLECHAT("interface.titleInChat"),
-		COMPASS("interface.compass.enabled"),
-		COMPASSTYPE("interface.compass.type"),
-		COMPASSNAME("interface.compass.name"),
-		ALLOWMAGIC("magic.enabled"),
-		MANADEFAULT("magic.startingMana"),
-		DAYREGEN("magic.dayRegen"),
-		NIGHTREGEN("magic.nightRegen"),
-		OUTSIDEREGEN("magic.outsideRegen"),
-		KILLREGEN("magic.regenOnKill"),
-		XPREGEN("magic.regenOnXP"),
-		FOODREGEN("magic.regenOnFood"),
-		HOLDERNAME("interface.magic.holderName"),
-		ALLOWWEAVING("spellweaving.enabled"),
-		USEINVOKER("spellweaving.useInvoker"),
-		INVOKERNAME("interface.spellweaving.invokerName"),
-		INVOKERTYPE("interface.spellweaving.invokerType"),
-		ALTERTYPE("interface.magic.alterBlockType"),
-		WORLDS("questWorlds"),
-		QUESTDIR("questDir"),
-		SAVEDIR("saveDir"),
-		REGIONDIR("regionDir"),
-		MUSICDURATIONS("musicDurations"),
-		SPELLDIR("spellDir"),
-		SKILLDIR("skillDir"),
-		SKILLCAP("skill.cap"),
-		SKILLSUCCESSGROWTH("skill.growth.success"),
-		SKILLFAILGROWTH("skill.growth.fail"),
-		SKILLGROWTHCUTOFF("skill.growth.cutoff"),
-		SKILLGROWTHUPPERCUTOFF("skill.growth.cutoffUpper"),
-		SUMMONLIMIT("summonLimit");
+		private String name;
 		
+		private Category(String name) {
+			this.name = name;
+		}
+		
+		public String getName() {
+			return name;
+		}
+		
+	}
+	
+	public static enum PluginConfigurationKey {
+		
+		VERSION("version", Category.PLUGIN, null, "The config version number", 1.0),
+		CONSERVATIVE("config.conservativeMode", Category.MANAGER, "Conservative Loading", "Whether quest save files with missing keys should be removed or left alone (default)", true),
+		VERBOSEMENUS("menus.verboseMenus", Category.PLAYER, "Verbose Menus", "Should menus send messages when already expired? If not, they silently ignore input (default)", false),
+		ALLOWCRAFTING("player.allowCrafting", Category.PLAYER, "Allow Crafting", "Can players craft like normal? If false, prevents all crafting (default)", true),
+		ALLOWNAMING("player.allowNaming", Category.PLAYER, "Allow Naming", "Can players rename items on an anvil? (default no)", false),
+		ALLOWTAMING("player.allowTaming", Category.PLAYER, "Allow Taming", "Can players tame cats and dogs", false),
+		PARTYSIZE("player.maxPartySize", Category.PLAYER, "Party Limit", "Maximum players in a party", 4),
+		CLEANUPVILLAGERS("world.villagerCleanup", Category.MANAGER, "Villager Removal", "Should NPCs be killed when the plugin is disabled? They will be regenerated when next enabled", false),
+		XPMONEY("interface.useXPMoney", Category.PLAYER, "XP Money", "XP can be used as money; When XP is picked up, it'll be used as xp instead, and the player's experience level is used as money indicator", true),
+		PORTALS("interface.usePortals", Category.PLAYER, "Use MV Portals", "Should QM use MultiversePortals to set player checkpoints when taking a portal to and from a QuestWorld? REQUIRES MultiversePortals", true),
+		ADJUSTXP("interface.adjustXP", Category.PLAYER, "Adjust XP", "QM can change the amount of xp dropped by mobs automatically based on their name. This only works on mobs with names that include their 'lvl' in format [Mob (Lvl 4)]", true),
+		TITLECHAT("interface.titleInChat", Category.PLAYER, "Title in Chat", "Should player titles prefix their chat messasge? Works accross worlds", true),
+		COMPASS("interface.compass.enabled", Category.PLAYER, "Enable Compass", "The Magic Compass points players to select locatable objectives for quets. If diabled, compasses work like Vanilla", true),
+		COMPASSTYPE("interface.compass.type", Category.PLAYER, "Compass Type", "What MATERIAL should be used as the compass. You most certainly want this to be COMPASS, usually", "COMPASS"),
+		COMPASSNAME("interface.compass.name", Category.PLAYER, "Compass Name", "What name should compasses have to have to be considered valid magic compasses?", "Magic Compass"),
+		ALLOWMAGIC("magic.enabled", Category.FEATURE, "Enable Magic", "Can magic be used? Also enabled magic interfaces", true),
+		MANADEFAULT("magic.startingMana", Category.FEATURE, "Starting Mana", "How much mana should new players get?", 20.0),
+		DAYREGEN("magic.dayRegen", Category.FEATURE, "Daytime Mana Regen", "How much mana is regenned in the day? If positive, this is the amount. If negative, this is the percent (-50 is 50% of max)", 1.0),
+		NIGHTREGEN("magic.nightRegen", Category.FEATURE, "Nighttime Mane Regen", "How much mana is regenned at night. Follows the same rules as Daytime Mana", 1.0),
+		OUTSIDEREGEN("magic.outsideRegen", Category.FEATURE, "Outside Regen", "Do players ONLY regen if they can see the sky?", true),
+		KILLREGEN("magic.regenOnKill", Category.FEATURE, "Kill Mana Regen", "How much mana does a player get each time they kill something? Follows same rules as Daytime Mana", 1.0),
+		XPREGEN("magic.regenOnXP", Category.FEATURE, "XP Mana Regen", "How much mana does a player get when they absorb an XP orb? Same rules as Daytime Mana", 1.0),
+		FOODREGEN("magic.regenOnFood", Category.FEATURE, "Food Regen", "Each time a player eats, how much mana do they regen? Same rules as Daytime Mana", -50),
+		HOLDERNAME("interface.magic.holderName", Category.PLAYER, "Spellholder Name", "What name should spellholders have to be considered valid spellholders?", "Spell Vessel"),
+		ALLOWWEAVING("spellweaving.enabled", Category.FEATURE, "Enable Spellweaving", "Should spellweaving be enabled?", true),
+		USEINVOKER("spellweaving.useInvoker", Category.FEATURE, "Use Invoker", "Can players use an item invoker to invoke their spellweaving spells?", true),
+		INVOKERNAME("interface.spellweaving.invokerName", Category.PLAYER, "Invoker Name", "What name should an invoker have to be considered valid", "Spell Invoker"),
+		INVOKERTYPE("interface.spellweaving.invokerType", Category.PLAYER, "Invoker Type", "What material type is the spell invoker?", "CARROT_STICK"),
+		ALTERTYPE("interface.magic.alterBlockType", Category.PLAYER, "Magic Altar Type", "What block type is the magic altar, which is used to load spells into spell holders", "ENCHANTMENT_TABLE"),
+		WORLDS("questWorlds", Category.MANAGER, "Quest Worlds", "Which worlds should be treated as quest worlds? Players not in these worlds are overlooked by QM", Lists.newArrayList("World1", "World2")),
+		QUESTDIR("questDir", Category.PLUGIN, "Quest Directory", "Where are quest template files stored?", "quests/"),
+		SAVEDIR("saveDir", Category.PLUGIN, "Save Directory", "Where are quest save files stored between disables and enables?", "savedata/"),
+		REGIONDIR("regionDir", Category.PLUGIN, "Region Directory", "Where are region files stored?", "region/"),
+		SPELLDIR("spellDir", Category.PLUGIN, "Spell Directory", "Where are spell files stored", "spells/"),
+		SKILLDIR("skillDir", Category.PLUGIN, "Skill Config Directory", "Where can skills look to find and store their config", "skills/"),
+		SKILLCAP("skill.cap", Category.FEATURE, "Skill Cap", "Maximum skill level for any skill", 100),
+		SKILLSUCCESSGROWTH("skill.growth.success", Category.FEATURE, "Skill Growth - Success", "How much a skill grows when performing an action at the same level, on success", 0.10),
+		SKILLFAILGROWTH("skill.growth.fail", Category.FEATURE, "Skill Growth - Failure", "How much a skill grows when performing an action at the same level, on success", 0.025),
+		SKILLGROWTHCUTOFF("skill.growth.cutoff", Category.FEATURE, "Skill Cuttoff", "Maximum difference between skill level and action level where a player gets xp", 10),
+		SKILLGROWTHUPPERCUTOFF("skill.growth.cutoffUpper", Category.FEATURE, "Skill Upper Cuttoff", "How much higher a skill can be and the player still get xp for a failure", 10),
+		SUMMONLIMIT("summonLimit", Category.FEATURE, "Summon Limit", "Maximum summons a player can have", 2),
+		MUSICDURATIONS("musicDurations", Category.FEATURE, "Music Durations", "Map between Sounds and their durations", null);
 		
 		private String key;
 		
-		PluginConfigurationKey(String key) {
+		protected Object def;
+		
+		private String name;
+		
+		private String desc;
+		
+		private Category category;
+		
+		PluginConfigurationKey(String key, Category category, String name, String description, Object def) {
 			this.key = key;
+			this.name = name;
+			this.desc = description;
+			this.def = def;
+			this.category = category;
+		}
+		
+		public Category getCaterogy() {
+			return category;
 		}
 		
 		public String getKey() {
 			return key;
 		}
+
+		public Object getDef() {
+			if (this != MUSICDURATIONS)
+				return def;
+			
+			YamlConfiguration yaml = new YamlConfiguration();
+			ConfigurationSection mdur = yaml.createSection("aslkfl");
+			mdur.set("RECORD_CHIRP", 16.0);
+			mdur.set("RECORD_11", 123.45);
+			return mdur;
+		}
+
+		public String getName() {
+			return name;
+		}
+		
+		public String getDescription() {
+			return desc;
+		}
+	}
+	
+	protected PluginConfiguration() {
+		config = null;
+		conservative = (Boolean) PluginConfigurationKey.CONSERVATIVE.def;
 	}
 	
 	public PluginConfiguration(File configFile) {
@@ -435,16 +495,38 @@ public class PluginConfiguration {
 		return Material.valueOf(config.getString(PluginConfigurationKey.INVOKERTYPE.key));
 	}
 	
+	@SuppressWarnings("unchecked")
 	public Map<Sound, Double> getMusicDurations() {
 		Map<Sound, Double> map = new HashMap<>();
-		for (String key : config.getConfigurationSection(PluginConfigurationKey.MUSICDURATIONS.key).getKeys(false)) {
+		Map<String, Object> configMap = config.getConfigurationSection(PluginConfigurationKey.MUSICDURATIONS.key)
+				.getValues(false);
+//		if (!config.contains(PluginConfigurationKey.MUSICDURATIONS.key)) {
+//			configMap = (Map<S, Double>) PluginConfigurationKey.MUSICDURATIONS.getDef();
+//		}
+		
+		//for (String key : config.getConfigurationSection(PluginConfigurationKey.MUSICDURATIONS.key).getKeys(false)) {
+		for (String key : configMap.keySet()) {
 			try {
-				map.put(Sound.valueOf(key), config.getDouble(PluginConfigurationKey.MUSICDURATIONS.key + "." + key));
+				map.put(Sound.valueOf(key), (Double) configMap.get(key));
 			} catch (Exception e) {
 				QuestManagerPlugin.logger.warning("Unable to determine sound from " + key);
 			}
 		}
 		return map;
+	}
+	
+	public Object getBaseValue(PluginConfigurationKey key) {
+		return config.get(key.key, key.def);
+	}
+	
+	public static PluginConfiguration generateDefault() {
+		PluginConfiguration config = new PluginConfiguration();
+		YamlConfiguration yaml = new YamlConfiguration();
+		for (PluginConfigurationKey key : PluginConfigurationKey.values()) {
+			yaml.set(key.key, key.getDef());
+		}
+		config.config = yaml;
+		return config;
 	}
 	
 	/**

@@ -33,7 +33,7 @@ commands:
         usage: /invite [player]
         description: Invites a player to your party
     questmanager:
-        usage: /questmanager [reload]
+        usage: /questmanager [reload | grantSpell | launch]
         description: QuestManager admin command
         permission: questmanager.admin
     player:

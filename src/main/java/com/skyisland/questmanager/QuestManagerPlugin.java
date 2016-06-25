@@ -29,6 +29,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -36,6 +37,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.skyisland.questmaker.Driver;
 import com.skyisland.questmanager.configuration.PluginConfiguration;
 import com.skyisland.questmanager.configuration.utils.Chest;
 import com.skyisland.questmanager.configuration.utils.LocationState;
@@ -199,8 +201,14 @@ public class QuestManagerPlugin extends JavaPlugin {
 	
 	public static Logger logger;
 	
+	/**
+	 * Captures whether or not the plugin has access to a running bukkit instance.
+	 */
+	public static boolean bukkit = false;
+	
 	@Override
 	public void onLoad() {
+		bukkit = true;
 		QuestManagerPlugin.questManagerPlugin = this;
 		QuestManagerPlugin.logger = getLogger();
 		reqManager = new RequirementManager();
@@ -569,6 +577,18 @@ public class QuestManagerPlugin extends JavaPlugin {
 					sender.sendMessage(ChatColor.GREEN + playerName + " has been given " + ChatColor.DARK_PURPLE
 							+ spellName);
 				}
+				
+				return true;
+			}
+			
+			if (args[0].equals("launch")) {
+				if (!(sender instanceof ConsoleCommandSender)) {
+					sender.sendMessage("This command must be executed by the console");
+					return true;
+				}
+				
+				Driver.main(null);
+				
 				
 				return true;
 			}

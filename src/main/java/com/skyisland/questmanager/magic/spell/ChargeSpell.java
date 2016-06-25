@@ -311,4 +311,8 @@ public class ChargeSpell extends SimpleSelfSpell implements Listener {
 		doneCasting(caster);
 		heldSpell.cast(caster);
 	}
+	
+	public Spell getHeldSpell() {
+		return this.heldSpell;
+	}
 }

@@ -331,4 +331,8 @@ public class SpellWeavingSpell extends Spell implements ConfigurationSerializabl
 	public void cast(MagicUser caster) {
 		
 	}
+	
+	public void setTargetType(SpellTarget targetType) {
+		this.target = targetType;
+	}
 }
