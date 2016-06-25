@@ -120,6 +120,8 @@ public class FishingSkill extends LogSkill implements Listener {
 	
 	private float baseReelDeviation;
 	
+	private float letRate;
+	
 	private float reelDifficultyRate;
 	
 	private double reelDifficultyDiscount;
@@ -158,6 +160,7 @@ public class FishingSkill extends LogSkill implements Listener {
 		this.difficultyPerRow = config.getDouble("difficultyPerRow", 15);
 		this.baseReelDifficulty = (float) config.getDouble("baseReelDifficulty", .03);
 		this.baseReelDeviation = (float) config.getDouble("baseReelDeviation", .02);
+		this.letRate = (float) config.getDouble("letRate", 3.0);
 		this.reelDifficultyRate = (float) config.getDouble("reelDifficultyRate", .001);
 		this.reelDifficultyDiscount = config.getDouble("reelDifficultyDiscount", .003);
 		this.baseObstacleDifficulty = config.getDouble("baseObstacleDifficulty", 2.0);
@@ -166,7 +169,7 @@ public class FishingSkill extends LogSkill implements Listener {
 		this.obstacleDifficultyDiscount = config.getDouble("obstacleDifficultyDiscount", 0.0);
 		this.baseTimePerDifficulty = config.getDouble("baseTimePerDifficulty", 2.0);
 		this.maxDifficultyRange = config.getInt("maxDifficultyRange", 20);
-		this.timeDiscount = config.getDouble("timeDiscount", 0.025);
+		this.timeDiscount = config.getDouble("timeDiscount", 0.0025);
 		this.extraFishPerLevel = config.getDouble("extraFishPerLevel", 0.2);
 		this.qualityRate = config.getDouble("qualityRate", 0.01);
 		
@@ -204,8 +207,9 @@ public class FishingSkill extends LogSkill implements Listener {
 			writer.addLine("enabled", true, Lists.newArrayList("Whether or not this skill is allowed to be used.",  "true | false"))
 				.addLine("startingLevel", 0, Lists.newArrayList("The level given to players who don't have this skill yet", "[int]"))
 				.addLine("difficultyPerRow", 15, Lists.newArrayList("How many difficulty levels are required to add", "another row of water to the minigame", "[int] greater than 0", "Will enforce cap of 5"))
-				.addLine("baseReelDifficulty", 0.03, Lists.newArrayList("Average reel change (out of 1) per half second.", "higher levels are harder", "[double] ratio out of 1. Game fails when", "the total number goes above 1 or below 0"))
+				.addLine("baseReelDifficulty", 0.03, Lists.newArrayList("Average reel change (out of 1) per second", "higher levels are harder", "[double] ratio out of 1. Game fails when", "the total number goes above 1 or below 0"))
 				.addLine("baseReelDeviation", 0.02, Lists.newArrayList("Standard deviation of change in reel change. Larger", "values make for more sporadic, harder games", "[double] ratio out of 1. Google [Std. Deviation]"))
+				.addLine("letRate", 3.0, Lists.newArrayList("Multiplier applied when the line is being let", "[double] straight multiplier"))
 				.addLine("reelDifficultyRate", 0.001, Lists.newArrayList("Amount added per level under fish difficulty to", "reel difficulty", "[double] ratio out of 1"))
 				.addLine("reelDifficultyDiscount", .003, Lists.newArrayList("Discount per level given to reel difficulty", "[double] .01 is 1% total discount"))
 				.addLine("baseObstacleDifficulty", 2.0, Lists.newArrayList("Average time between obstacle creation. Smaller", "values make for harder games ", "[double] time in seconds, rounds to nearest 0.05"))
@@ -214,7 +218,7 @@ public class FishingSkill extends LogSkill implements Listener {
 				.addLine("obstacleDifficultyDiscount", 0.0, Lists.newArrayList("Discount per level given to obstacle time", "[double] .01 is 1%"))
 				.addLine("baseTimePerDifficulty", 2.0, Lists.newArrayList("Time per difficulty of the fish the player must", "play the minigame and hold it for", "[double] time in seconds"))
 				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and fish difficulty", "that will be allowed through RANDOM catch", "algorithm", "[int] larger than 0"))
-				.addLine("timeDiscount", 0.025, Lists.newArrayList("Discount taken off total time per skill level", "[double] .01 is 1%"))
+				.addLine("timeDiscount", 0.0025, Lists.newArrayList("Discount taken off total time per skill level", "[double] .01 is 1%"))
 				.addLine("extraFishPerLevel", 0.2, Lists.newArrayList("How many extra fish a level over fish", "difficulty gives. Expected to be a fraction.", "extra fish rounds down. So .8 extra fish is 0", "[double] fish per level. .1 is 1/10 a fish"))
 				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per fishing skill level", "[double] .01 is 1%"));
 			
@@ -324,7 +328,7 @@ public class FishingSkill extends LogSkill implements Listener {
 		reward.setQuality(reward.getQuality() * event.getQualityModifier());
 		
 		FishingGui gui = new FishingGui(e.getPlayer(), reward, record.difficulty, rows,
-				reelDifficulty, reelDeviation, obstacleTime, obstacleDeviation, completionTime);
+				reelDifficulty, reelDeviation, letRate, obstacleTime, obstacleDeviation, completionTime);
 		InventoryMenu menu = new InventoryMenu(qp, gui);
 		QuestManagerPlugin.questManagerPlugin.getInventoryGuiHandler().showMenu(e.getPlayer(), menu);
 		gui.start();

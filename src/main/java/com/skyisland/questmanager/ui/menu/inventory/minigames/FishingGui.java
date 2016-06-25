@@ -110,6 +110,8 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 	
 	private static final ChargeEffect FAIL_EFFECT = new ChargeEffect(Effect.SMALL_SMOKE);
 	
+	private static final double TIMESTEP = 0.1;
+	
 	private static final class ObstacleSetter implements Alarmable<Integer> {
 		
 		private FishingGui gui;
@@ -140,42 +142,42 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		
 	}
 	
-	private static class ReelTimer implements Alarmable<Integer> {
-		
-		private FishingGui gui;
-		
-		private int id;
-		
-		public ReelTimer(FishingGui gui) {
-			Alarm.getScheduler().schedule(this, 0, .5);
-			this.id = RANDOM.nextInt(Integer.MAX_VALUE);
-			this.gui = gui;
-		}
-		
-		@Override
-		public void alarm(Integer key) {
-			if (gui.phase != GamePhase.RUNNING) {
-				return;
-			}
-			
-			gui.updateReel();
-		}
-		
-		protected void set() {
-			Alarm.getScheduler().schedule(this, 0, .5);
-		}
-		
-		@Override
-		public boolean equals(Object o) {
-			if (o instanceof ReelTimer) {
-				if (((ReelTimer) o).id == id) {
-					return true;
-				}
-			}
-			
-			return false;
-		}
-	}
+//	private static class ReelTimer implements Alarmable<Integer> {
+//		
+//		private FishingGui gui;
+//		
+//		private int id;
+//		
+//		public ReelTimer(FishingGui gui) {
+//			Alarm.getScheduler().schedule(this, 0, TIMESTEP);
+//			this.id = RANDOM.nextInt(Integer.MAX_VALUE);
+//			this.gui = gui;
+//		}
+//		
+//		@Override
+//		public void alarm(Integer key) {
+//			if (gui.phase != GamePhase.RUNNING) {
+//				return;
+//			}
+//			
+//			gui.updateReel();
+//		}
+//		
+//		protected void set() {
+//			Alarm.getScheduler().schedule(this, 0, TIMESTEP);
+//		}
+//		
+//		@Override
+//		public boolean equals(Object o) {
+//			if (o instanceof ReelTimer) {
+//				if (((ReelTimer) o).id == id) {
+//					return true;
+//				}
+//			}
+//			
+//			return false;
+//		}
+//	}
 	
 	public enum GamePhase {
 		SETTINGUP,
@@ -198,6 +200,8 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 	
 	private float reelDeviation;
 	
+	private float letRate;
+	
 	private double obstacleTime;
 	
 	private double obstacleDeviation;
@@ -218,9 +222,9 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 	
 	private ItemStack obstacleIcon;
 	
-	private ItemStack meterOffIcon;
+//	private ItemStack meterOffIcon;
 	
-	private ItemStack meterOnIcon;
+//	private ItemStack meterOnIcon;
 	
 	private ItemStack reelOffIcon;
 	
@@ -228,26 +232,29 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 	
 	private ItemStack waterIcon;
 	
-	private int stressCache;
+//	private int stressCache;
 	
 	private int skillLevel;
 	
 	private BossBar displayBar;
 	
-	private ReelTimer reel;
+	private BossBar stressBar;
+	
+//	private ReelTimer reel;
 	
 	public FishingGui(Player player, QualityItem result, int skillLevel, int waterRows, float reelDifficulty, 
-			float reelDeviation, double obstacleTime, double obstacleDeviation, double completionTime) {
-		this(player, result, skillLevel, waterRows, reelDifficulty, reelDeviation, obstacleTime, obstacleDeviation, 
+			float reelDeviation, float letRate, double obstacleTime, double obstacleDeviation, double completionTime) {
+		this(player, result, skillLevel, waterRows, reelDifficulty, reelDeviation, letRate, obstacleTime, obstacleDeviation, 
 				completionTime, "Fishing - " + player.getUniqueId().toString().substring(0, 8));
 	}
 	
 	public FishingGui(Player player, QualityItem result, int skillLevel, int waterRows, float reelDifficulty, 
-			float reelDeviation, double obstacleTime, double obstacleDeviation, double completionTime, 
+			float reelDeviation, float letRate, double obstacleTime, double obstacleDeviation, double completionTime, 
 			String name) {
 		this.player = player;
 		this.reelDifficulty = reelDifficulty;
 		this.reelDeviation = reelDeviation;
+		this.letRate = letRate;
 		this.obstacleTime = obstacleTime;
 		this.obstacleDeviation = obstacleDeviation;
 		this.invName = name;
@@ -261,17 +268,14 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		this.isReeling = false;
 		this.obstacles = new HashMap<>();
 		
-		this.meterOffIcon = DEFAULT_METER_OFF_ICON;
-		this.meterOnIcon = DEFAULT_METER_ON_ICON;
 		this.reelOffIcon = DEFAULT_REEL_OFF_ICON;
 		this.reelOnIcon = DEFAULT_REEL_ON_ICON;
 		this.obstacleIcon = DEFAULT_OBSTACLE_ICON;
 		this.waterIcon = DEFAULT_WATER_ICON;
 		
-		this.stressCache = 3;
 		this.phase = GamePhase.SETTINGUP;
 		
-		int size = 9 * (1 + this.waterRows);
+		int size = 9 * (this.waterRows);
 		this.inv = Bukkit.createInventory(null, size, invName);
 		
 	}
@@ -339,17 +343,21 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 
 		//Set up top bar
 		inv.setItem(0, this.reelOffIcon);
-		for (int i = 1; i < 4; i++) {
-			inv.setItem(i, this.meterOnIcon);
-		}
-		for (int i = 4; i < 8; i++) {
-			inv.setItem(i, this.meterOffIcon);
-		}
+//		for (int i = 1; i < 4; i++) {
+//			inv.setItem(i, this.meterOnIcon);
+//		}
+//		for (int i = 4; i < 8; i++) {
+//			inv.setItem(i, this.meterOffIcon);
+//		}
 		inv.setItem(8, this.reelOnIcon);
 		
 		displayBar = Bukkit.createBossBar("Fishing Progress", BarColor.BLUE, BarStyle.SEGMENTED_20, new BarFlag[0]);
 		displayBar.setProgress(1f);
 		displayBar.addPlayer(player);
+		
+		stressBar = Bukkit.createBossBar("Line Stress", BarColor.GREEN, BarStyle.SEGMENTED_10, new BarFlag[0]);
+		stressBar.setProgress(lineStress);
+		stressBar.addPlayer(player);
 		
 		//start filling the 'sea'
 		//time is time to fill all in 5 seconds, or .2 if less than that (it would be too fast!)
@@ -367,8 +375,10 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		
 		if (phase == GamePhase.SETTINGUP) {
 			//populating 'sea'
-			inv.setItem(reminder + 9, this.waterIcon);
-			player.playSound(player.getEyeLocation(), WATER_SOUND, 1, 1);
+			if (reminder != 0 && reminder != 8) {
+				inv.setItem(reminder, this.waterIcon);
+				player.playSound(player.getEyeLocation(), WATER_SOUND, 1, 1);
+			}
 			
 			if (reminder >= (9 * this.waterRows) -1) {
 				startCountdown();
@@ -397,7 +407,7 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		if (phase == GamePhase.RUNNING) {
 			//deduct from running tiem if conditions are good
 			if (Math.abs(this.lineStress - 0.5f) < 0.2f) {
-				this.completionTime -= .25;
+				this.completionTime -= TIMESTEP;
 				displayBar.setColor(BarColor.BLUE);
 			} else {
 				displayBar.setColor(BarColor.RED);
@@ -405,10 +415,30 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 			
 			displayBar.setProgress(Math.max(0f, completionTime / maxCompletionTime));
 			
+			float diff = ((float) RANDOM.nextGaussian() * reelDeviation) + reelDifficulty;
+			diff *= TIMESTEP;
+			
+			if (!isReeling && !isStuck) {
+				this.lineStress -= diff * this.letRate;
+			} else {
+				//either reeling or stuck, so stress increases
+				this.lineStress += diff;
+			}
+			
+			if (lineStress > 1f || lineStress < 0) {
+				//game lost
+				loseGame();
+				return;
+			}
+			stressBar.setProgress(Math.min(1.0, Math.max(0.0, lineStress)));
+			
 			if (this.completionTime < 0)
 				winGame();
 			else
-				Alarm.getScheduler().schedule(this, 0, .25);
+				Alarm.getScheduler().schedule(this, 0, TIMESTEP);
+			
+			
+			
 			return;
 		}
 	}
@@ -422,11 +452,11 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 	private void startGame() {
 		this.phase = GamePhase.RUNNING;
 		this.isReeling = true;
-		this.lineStress = ((float) 3 / (float) 7);
+		this.lineStress = .5f;
 		
 		double oTime = Math.max(.5, RANDOM.nextGaussian() * this.obstacleDeviation + this.obstacleTime);
 		new ObstacleSetter(this, oTime);
-		reel = new ReelTimer(this);
+		//reel = new ReelTimer(this);
 		
 		Alarm.getScheduler().schedule(this, 0, .25);
 	}
@@ -443,9 +473,9 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 			return; //no place to put one
 		}
 		
-		int slot = RANDOM.nextInt(9 * waterRows) + 9;
-		while (inv.getItem(slot).isSimilar(this.obstacleIcon)) {
-			slot = RANDOM.nextInt(9 * waterRows) + 9;
+		int slot = RANDOM.nextInt(9 * waterRows);
+		while (slot == 0 || slot == 8 || inv.getItem(slot).isSimilar(this.obstacleIcon)) {
+			slot = RANDOM.nextInt(9 * waterRows);
 		}
 		
 		player.playSound(player.getLocation(), WATER_SOUND, 1, 1);
@@ -454,49 +484,50 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		this.isStuck = true;
 	}
 	
-	protected void updateReel() {
-		if (phase != GamePhase.RUNNING) {
-			return;
-		}
-		
-		//calculate reel + or -
-		float diff = ((float) RANDOM.nextGaussian() * reelDeviation) + reelDifficulty;
-		
-		if (!isReeling && !isStuck) {
-			this.lineStress -= diff * 5;
-		} else {
-			//either reeling or stuck, so stress increases
-			this.lineStress += diff;
-		}
-		
-		if (lineStress > 1f || lineStress < 0) {
-			//game lost
-			loseGame();
-			return;
-		}
-		
-
-		reel.set();
-		//update inventory 
-		int icons = Math.round(lineStress * 7f);
-		if (icons == stressCache) {
-			return; //no need to update
-		}
-		
-		for (int i = 1; i < icons + 1; i++) {
-			inv.setItem(i, meterOnIcon);
-		}
-		for (int i = icons + 1; i < 8; i++) {
-			inv.setItem(i, meterOffIcon);
-		}
-		
-	}
+//	protected void updateReel() {
+//		if (phase != GamePhase.RUNNING) {
+//			return;
+//		}
+//		
+//		//calculate reel + or -
+//		float diff = ((float) RANDOM.nextGaussian() * reelDeviation) + reelDifficulty;
+//		diff *= TIMESTEP;
+//		
+//		if (!isReeling && !isStuck) {
+//			this.lineStress -= diff * this.letRate;
+//		} else {
+//			//either reeling or stuck, so stress increases
+//			this.lineStress += diff;
+//		}
+//		
+//		if (lineStress > 1f || lineStress < 0) {
+//			//game lost
+//			loseGame();
+//			return;
+//		}
+//		
+//
+//		reel.set();
+//		//update inventory 
+//		int icons = Math.round(lineStress * 7f);
+//		if (icons == stressCache) {
+//			return; //no need to update
+//		}
+//		
+//		for (int i = 1; i < icons + 1; i++) {
+//			inv.setItem(i, meterOnIcon);
+//		}
+//		for (int i = icons + 1; i < 8; i++) {
+//			inv.setItem(i, meterOffIcon);
+//		}
+//		
+//	}
 	
 	private void loseGame() {
-		if (phase == GamePhase.DONE || player == null || reel == null) {
+		if (phase == GamePhase.DONE || player == null /*|| reel == null*/) {
 			return;
 		}
-		Alarm.getScheduler().unregister(reel);
+//		Alarm.getScheduler().unregister(reel);
 		
 		phase = GamePhase.DONE;
 		Alarm.getScheduler().unregister(this);
@@ -592,14 +623,6 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		this.obstacleIcon = obstacleIcon;
 	}
 
-	public void setMeterOffIcon(ItemStack meterOffIcon) {
-		this.meterOffIcon = meterOffIcon;
-	}
-
-	public void setMeterOnIcon(ItemStack meterOnIcon) {
-		this.meterOnIcon = meterOnIcon;
-	}
-
 	public void setReelOffIcon(ItemStack reelOffIcon) {
 		this.reelOffIcon = reelOffIcon;
 	}
@@ -618,8 +641,6 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 	
 	private void clean() {
 		this.inv = null;
-		this.meterOffIcon = null;
-		this.meterOnIcon = null;
 		this.reelOffIcon = null;
 		this.reelOnIcon = null;
 		this.obstacleIcon = null;
@@ -629,10 +650,13 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 		if (displayBar != null)
 			displayBar.removeAll();
 		displayBar = null;
+		if (stressBar != null)
+			stressBar.removeAll();
+		stressBar = null;
 		//this.player = null;
 		this.result = null;
 		this.waterIcon = null;
-		this.reel = null;
+		//this.reel = null;
 	}
 	
 	@Override
