@@ -198,7 +198,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 
 		@Override
 		public ItemStack getDisplay() {
-			return image;
+			return image.clone();
 		}
 		
 		@Override
@@ -388,7 +388,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 
 		@Override
 		public ItemStack getDisplay() {
-			return reward;
+			return reward.clone();
 		}
 
 
