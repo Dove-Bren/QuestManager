@@ -31,6 +31,7 @@ import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.LocationState;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
+import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
@@ -54,6 +55,8 @@ public class TrappingSkill extends Skill implements Listener {
 	private static final String BAD_TIME_MESSAGE = ChatColor.DARK_GRAY + "The trap hasn't caught anything yet";
 	
 	private static final String BAD_TRAP_COUNT = ChatColor.RED + "You cannot place any more traps!";
+	
+	private static final String WIN_MESSAGE = ChatColor.GREEN + "Your prey was fruitful. You got ";
 	
 	public Type getType() {
 		return Skill.Type.TRADE;
@@ -183,7 +186,6 @@ public class TrappingSkill extends Skill implements Listener {
 			this.oplayer = player;
 			this.block = trapBlock;
 			isDone = false;
-			System.out.println("Time: " + time);
 			Alarm.getScheduler().schedule(this, 0, Math.max(1.0, time));
 			
 			memory = block.getType();
@@ -534,8 +536,25 @@ public class TrappingSkill extends Skill implements Listener {
 		}
 		
 		QualityItem result = validTrap.reward;
+		ItemStack formattedResult = result.getItem();
 		
-		if (!(player.getInventory().addItem(result.getItem())).isEmpty()) {
+		String name;
+		if (formattedResult.getItemMeta() == null || formattedResult.getItemMeta().getDisplayName() == null) {
+			name = YamlWriter.toStandardFormat(formattedResult.getType().toString());
+		} else {
+			name = formattedResult.getItemMeta().getDisplayName();
+		}
+		
+		FancyMessage msg = new FancyMessage(WIN_MESSAGE)
+				.color(ChatColor.GREEN)
+			.then(formattedResult.getAmount() > 1 ? formattedResult.getAmount() + "x " : "a ")
+			.then("[" + name + "]")
+				.color(ChatColor.DARK_PURPLE)
+				.itemTooltip(formattedResult);
+		
+		
+		msg.send(player);
+		if (!(player.getInventory().addItem(formattedResult)).isEmpty()) {
 			player.sendMessage(ChatColor.RED + "There is no space left in your inventory");
 			player.getWorld().dropItem(player.getEyeLocation(), result.getItem());
 		}
