@@ -1058,6 +1058,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		if (Recaller.RecallerDefinition.isHolder(e.getItem())) {
 			//check clicked block. if mark type, mark. else, recall
 			if (Recaller.MarkerDefinition.isMarker(e.getClickedBlock())) {
+				e.setCancelled(true);
 				Location loc = e.getClickedBlock().getLocation().clone();
 				loc.add(0,1,0); //move up 1
 				int max = 5;
@@ -1070,7 +1071,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 				return;
 			}
 			
-			recall();
+			if (e.isCancelled()) //stops us from recallign if we open door, etc
+				recall(); 
 		}
 		
 	}

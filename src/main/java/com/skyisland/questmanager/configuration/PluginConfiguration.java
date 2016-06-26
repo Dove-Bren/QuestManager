@@ -184,6 +184,8 @@ public class PluginConfiguration {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		proofConfig();
 
 		if (config.getBoolean(PluginConfigurationKey.CONSERVATIVE.key, true)) {
 			this.conservative = true;
@@ -211,6 +213,12 @@ public class PluginConfiguration {
 	
 	public boolean getConservative() {
 		return this.conservative;
+	}
+	
+	private void proofConfig() {
+		for (PluginConfigurationKey key : PluginConfigurationKey.values())
+		if (!config.contains(key.getKey()))
+			config.set(key.getKey(), key.getDef());
 	}
 	
 	/**

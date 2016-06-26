@@ -419,9 +419,9 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		
 		int level = player.getSkillLevel(this);
 		
-		ret += "\n\n" + ChatColor.GOLD + "Tree Range: " 
+		ret += "\n\n" + ChatColor.GOLD + "Craft Range: " 
 				+ Math.max(0, level - maxDifficultyRange) + " - " + (level + maxDifficultyRange);
-		ret += "\n" + ChatColor.GOLD + "Wood Quality: +" + (level * qualityRate);
+		ret += "\n" + ChatColor.GOLD + "Craft Quality: +" + (level * qualityRate);
 		
 		ret += "\n" + ChatColor.GREEN + "Hit Discount: " 
 				+ ((float) (level * hitBonus)) + ChatColor.RESET;
