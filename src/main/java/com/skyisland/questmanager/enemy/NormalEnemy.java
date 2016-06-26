@@ -32,11 +32,9 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.loot.Loot;
@@ -150,63 +148,64 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		return new NormalEnemy(name, type, hp, attack);
 	}
 
-	@Override
-	public void spawn(Location loc) {
-				
-		Entity e = loc.getWorld().spawnEntity(loc, type);
-		e.setCustomName(name);
-		e.setCustomNameVisible(true);
-		
-		if (!(e instanceof LivingEntity)) {
-			return;
-		}
-		
-		LivingEntity entity = (LivingEntity) e;
-		entity.setMaxHealth(hp);
-		entity.setHealth(hp);
-		AttributeInstance att = entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
-		if (att != null)
-			att.setBaseValue(attack);
-		
-		entity.getEquipment().setItemInMainHandDropChance(0f);
-		
-		entity.setMetadata(Enemy.CLASS_META_KEY, new FixedMetadataValue(
-				QuestManagerPlugin.questManagerPlugin,
-				this.enemyClassID
-				));
-		
-	}
+//	@Override
+//	public void spawn(Location loc) {
+//				
+//		Entity e = loc.getWorld().spawnEntity(loc, type);
+//		e.setCustomName(name);
+//		e.setCustomNameVisible(true);
+//		
+//		if (!(e instanceof LivingEntity)) {
+//			return;
+//		}
+//		
+//		LivingEntity entity = (LivingEntity) e;
+//		entity.setRemoveWhenFarAway(true);
+//		entity.setMaxHealth(hp);
+//		entity.setHealth(hp);
+//		AttributeInstance att = entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+//		if (att != null)
+//			att.setBaseValue(attack);
+//		
+//		entity.getEquipment().setItemInMainHandDropChance(0f);
+//		
+//		entity.setMetadata(Enemy.CLASS_META_KEY, new FixedMetadataValue(
+//				QuestManagerPlugin.questManagerPlugin,
+//				this.enemyClassID
+//				));
+//		
+//	}
 	
 	public void addLoot(Loot loot) {
 		this.loot.add(loot);
 	}
 	
-	@EventHandler
-	public void onEnemyDeath(EntityDeathEvent e) {
-		List<MetadataValue> metas = e.getEntity().getMetadata(CLASS_META_KEY);
-		if (metas == null || metas.isEmpty()) {
-			return;
-		}
-		
-		//eliminate those that have a different EntityType right away, for performance
-		if (e.getEntityType() != this.type) {
-			return;
-		}
-		
-		for (MetadataValue meta : metas) {
-			if (!meta.getOwningPlugin().getName().equals(QuestManagerPlugin.questManagerPlugin.getName())) {
-				continue;
-			}
-			
-			
-			//same plugin and same key. Use it.
-			if (meta.asString().equals(enemyClassID)) {
-				handleDeath(e);
-				return;
-			}
-		}
-
-	}
+//	@EventHandler
+//	public void onEnemyDeath(EntityDeathEvent e) {
+//		List<MetadataValue> metas = e.getEntity().getMetadata(CLASS_META_KEY);
+//		if (metas == null || metas.isEmpty()) {
+//			return;
+//		}
+//		
+//		//eliminate those that have a different EntityType right away, for performance
+//		if (e.getEntityType() != this.type) {
+//			return;
+//		}
+//		
+//		for (MetadataValue meta : metas) {
+//			if (!meta.getOwningPlugin().getName().equals(QuestManagerPlugin.questManagerPlugin.getName())) {
+//				continue;
+//			}
+//			
+//			
+//			//same plugin and same key. Use it.
+//			if (meta.asString().equals(enemyClassID)) {
+//				handleDeath(e);
+//				return;
+//			}
+//		}
+//
+//	}
 	
 	protected void handleDeath(EntityDeathEvent event) {
 		//on death, drop loot (if we have any). otherwise, don't

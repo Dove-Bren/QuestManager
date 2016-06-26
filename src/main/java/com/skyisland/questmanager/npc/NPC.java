@@ -174,6 +174,7 @@ public abstract class NPC implements ConfigurationSerializable, Listener, Tickab
 		e.getLocation().getChunk().load();
 		
 		if (now) {
+			System.out.println("Trying to remove " + name);
 			e.remove();
 		} else {
 			Bukkit.getScheduler().runTaskLater(QuestManagerPlugin.questManagerPlugin, e::remove, 1);

@@ -106,23 +106,24 @@ public abstract class Enemy implements ConfigurationSerializable, Listener {
 	
 	@EventHandler
 	public void onEnemyDeath(EntityDeathEvent e) {
+		if (!QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds().contains(
+				e.getEntity().getWorld().getName()))
+			return;
+			
 		List<MetadataValue> metas = e.getEntity().getMetadata(CLASS_META_KEY);
 		if (metas == null || metas.isEmpty()) {
 			return;
 		}
 		
 		
-		
 		//eliminate those that have a different EntityType right away, for performance
 		if (e.getEntityType() != this.type) {
 			return;
 		}
-		
 		for (MetadataValue meta : metas) {
 			if (!meta.getOwningPlugin().getName().equals(QuestManagerPlugin.questManagerPlugin.getName())) {
 				continue;
 			}
-			
 			
 			//same plugin and same key. Use it.
 			if (meta.asString().equals(enemyClassID)) {

@@ -53,6 +53,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
@@ -97,26 +98,26 @@ public class QuestManager implements Listener {
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 		
 		//purge villagers, if enabled
-		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getVillagerCleanup()) {
-			//go through worlds, kill them!
-			World w;
-			for (String worldName : QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds()) {
-				w = Bukkit.getWorld(worldName);
-				if (w == null) {
-					continue;
-				}
-				
-				for (Entity e : w.getEntities()) 
-				if (e.getType().equals(EntityType.VILLAGER)) {
-					e.getLocation().getChunk().load(); //load chunk
-					e.remove();
-				}
-				
-				System.out.println("purged " + worldName);
-			}
-			
-			QuestManagerPlugin.logger.info("Purged villagers!");
-		}
+//		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getVillagerCleanup()) {
+//			//go through worlds, kill them!
+//			World w;
+//			for (String worldName : QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds()) {
+//				w = Bukkit.getWorld(worldName);
+//				if (w == null) {
+//					continue;
+//				}
+//				
+//				for (Entity e : w.getEntities()) 
+//				if (e.getType().equals(EntityType.VILLAGER)) {
+//					e.getLocation().getChunk().load(); //load chunk
+//					e.remove();
+//				}
+//				
+//				System.out.println("purged " + worldName);
+//			}
+//			
+//			QuestManagerPlugin.logger.info("Purged villagers!");
+//		}
 		
 		Party.maxSize = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getMaxPartySize();
 		
@@ -653,44 +654,70 @@ public class QuestManager implements Listener {
 		}
 	}
 	
+//	@EventHandler
+//	public void onChunkLoad(ChunkLoadEvent e) {
+//		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds().contains(e.getWorld().getName())) {
+//			boolean trip, match;
+//			if (questNPCs == null || questNPCs.isEmpty() || e.getChunk().getEntities().length == 0) {
+//				return;
+//			}
+//			for (Entity entity : e.getChunk().getEntities()) {
+//				if (entity.getCustomName() == null || entity.getCustomName().isEmpty()) {
+//					continue;
+//				}
+//				
+//				trip = false;
+//				match = false;
+//				for (NPC npc : questNPCs) {
+//					//if (npc.getEntity() == null) {
+//					//	return;
+//					//}
+//					
+//					//if (npc.getEntity().getCustomName() != null &&
+//					if (npc.getName() != null &&
+//							//npc.getEntity().getCustomName().equals(entity.getCustomName()))
+//							npc.getName().equals(entity.getCustomName()))
+//						match = true;
+//					
+//					//if (npc.getEntity().getUniqueId().equals(entity.getUniqueId())) {
+//					if (npc.getID().equals(entity.getUniqueId())) {
+//						trip = true;
+//						break;
+//					}
+//				}
+//				
+//				
+//				if (match == true) {
+//				if (trip != true)
+//					entity.remove(); 
+////				} else if (entity instanceof LivingEntity) {
+////					QuestManagerPlugin.questManagerPlugin.getEnemyManager().removeEntity(entity);
+////					entity.remove();
+//				} //else
+//					//entity.remove();
+//			}
+//		}
+//	}
+	
 	@EventHandler
-	public void onChunkLoad(ChunkLoadEvent e) {
-		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds().contains(e.getWorld().getName())) {
-			boolean trip, match;
-			if (questNPCs == null || questNPCs.isEmpty() || e.getChunk().getEntities().length == 0) {
-				return;
+	public void onChunkUnload(ChunkUnloadEvent e) {
+		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds().contains(
+				e.getWorld().getName()))
+		for (Entity entity : e.getChunk().getEntities()) {
+			for (NPC npc : questNPCs) {
+				
+				//if (npc.getEntity().getCustomName() != null &&
+				if (npc.getName() != null &&
+						//npc.getEntity().getCustomName().equals(entity.getCustomName()))
+						npc.getName().equals(entity.getCustomName()))
+				if (npc.getID().equals(entity.getUniqueId())) {
+					return;
+				}
 			}
-			for (Entity entity : e.getChunk().getEntities()) {
-				if (entity.getCustomName() == null || entity.getCustomName().isEmpty()) {
-					continue;
-				}
-				
-				trip = false;
-				match = false;
-				for (NPC npc : questNPCs) {
-					if (npc.getEntity() == null) {
-						return;
-					}
-					
-					if (npc.getEntity().getCustomName() != null &&
-							npc.getEntity().getCustomName().equals(entity.getCustomName()))
-						match = true;
-					
-					if (npc.getEntity().getUniqueId().equals(entity.getUniqueId())) {
-						trip = true;
-						break;
-					}
-				}
-				
-				
-				if (match == true) {
-				if (trip != true)
-					entity.remove(); 
-				} else if (entity instanceof LivingEntity) {
-					QuestManagerPlugin.questManagerPlugin.getEnemyManager().removeEntity(entity);
-					entity.remove();
-				} else
-					entity.remove();
+			if (entity instanceof LivingEntity) {
+				LivingEntity live = (LivingEntity) entity;
+				QuestManagerPlugin.questManagerPlugin.getEnemyManager().removeEntity(live);
+				entity.remove();
 			}
 		}
 	}
