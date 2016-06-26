@@ -495,7 +495,6 @@ public class PluginConfiguration {
 		return Material.valueOf(config.getString(PluginConfigurationKey.INVOKERTYPE.key));
 	}
 	
-	@SuppressWarnings("unchecked")
 	public Map<Sound, Double> getMusicDurations() {
 		Map<Sound, Double> map = new HashMap<>();
 		Map<String, Object> configMap = config.getConfigurationSection(PluginConfigurationKey.MUSICDURATIONS.key)

@@ -98,6 +98,8 @@ public class BowSkill extends LogSkill implements Listener {
 	
 	private double critDamage;
 	
+	private boolean useEnemyLevel;
+	
 	public BowSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
 				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
@@ -113,6 +115,7 @@ public class BowSkill extends LogSkill implements Listener {
 		this.rateDecrease = config.getDouble("hitchancePenalty", 3.0);
 		this.doCrits = config.getBoolean("doCrits", true);
 		this.critDamage = config.getDouble("critDamage", .5);
+		this.useEnemyLevel = config.getBoolean("useEnemyLevel", false);
 		
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}
@@ -128,7 +131,8 @@ public class BowSkill extends LogSkill implements Listener {
 				.addLine("hitchancePenalty", 3.0, Lists.newArrayList("The penalty per level under apprentiveLevel given to the", "chance to hit. Maximum penalty is (apprenticeLevel * hitchancePenalty)", "[double]"))
 				.addLine("doCrits", true, Lists.newArrayList("Whether bow shots should do custom critical hits"))
 				.addLine("critRate", 0.01, Lists.newArrayList("Chance per level over apprentice to land a critical shot.", "Only in effect if doCrits is true", "[double], greater than 0. 0.01 is 1%"))
-				.addLine("critDamage", 0.5, Lists.newArrayList("Critical hit damage multiplier. This is added to 1 and", "multiplied by the base damage of the attack." , "Only in effect if doCrits is true", "[double], greater than 0. 0.01 is 1%"));
+				.addLine("critDamage", 0.5, Lists.newArrayList("Critical hit damage multiplier. This is added to 1 and", "multiplied by the base damage of the attack." , "Only in effect if doCrits is true", "[double], greater than 0. 0.01 is 1%"))
+				.addLine("useEnemyLevel", false, Lists.newArrayList("Should thiis skill use the damaged creature's level", "as the action level?", "Prevents farming low level stuff", "Level is defined after a monster's name: Wolf (Lvl 10)", "Enemies with an unparsable lvl (like no name) default to skill level", "[true|false]"));
 			
 			try {
 				writer.save(configFile);
@@ -152,6 +156,44 @@ public class BowSkill extends LogSkill implements Listener {
 		}
 		
 		int lvl = e.getPlayer().getSkillLevel(this);
+		int actionLevel = lvl;
+		if (useEnemyLevel) {
+			actionLevel = -1;
+			if (e.getTarget().getCustomName() != null)
+			if (e.getTarget().getKiller() != null)
+			if (e.getTarget().getCustomName().contains("(Lvl ")) {
+				//level'ed entity!
+				String cache = e.getTarget().getCustomName();
+				int pos = cache.indexOf("(Lvl ");
+				//advance pos by 5 to get the number
+				pos += 5;
+				String tail = cache.substring(pos);
+				int length = 0;
+				for (char c : tail.toCharArray()) {
+					if (Character.isDigit(c)) {
+						length += 1;
+					} else {
+						break;
+					}
+				}
+				
+				if (length == 0) {
+					System.out.println("Error when finding level! Expected a number, got:  " + tail.charAt(0));
+					return;
+				}
+				
+				String slvl = tail.substring(0, length);
+				actionLevel = Integer.valueOf(slvl);
+			}
+			
+			if (actionLevel == -1)
+				actionLevel = lvl;
+			
+			if (lvl - actionLevel > QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillCutoff()
+				|| actionLevel - lvl > QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillUpperCutoff()) {
+				return; //too big a difference
+			}
+		}
 		
 		//reduce chance to hit if level under apprentice level
 		boolean causeMiss = false;
@@ -179,7 +221,7 @@ public class BowSkill extends LogSkill implements Listener {
 			}
 		}
 		
-		this.perform(e.getPlayer(), causeMiss); //only get a 'cause miss' if this skill caused it 
+		this.perform(e.getPlayer(), actionLevel, causeMiss); //only get a 'cause miss' if this skill caused it 
 		
 	}
 }

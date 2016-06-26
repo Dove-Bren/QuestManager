@@ -87,6 +87,8 @@ public class SwordAndShieldSkill extends Skill implements Listener {
 	
 	private int levelRate;
 	
+	private boolean useEnemyLevel;
+	
 	public SwordAndShieldSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
 				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
@@ -98,6 +100,7 @@ public class SwordAndShieldSkill extends Skill implements Listener {
 		
 		this.startingLevel = config.getInt("startingLevel", 0);
 		this.levelRate = config.getInt("levelsperdefenseincrease", 10);
+		this.useEnemyLevel = config.getBoolean("useEnemyLevel", false);
 		
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}
@@ -108,7 +111,8 @@ public class SwordAndShieldSkill extends Skill implements Listener {
 			
 			writer.addLine("enabled", true, Lists.newArrayList("Whether or not this skill is allowed to be used.", "true | false"))
 				.addLine("startingLevel", 0, Lists.newArrayList("The level given to players who don't have this skill yet", "[int]"))
-				.addLine("levelsperdefenseincrease", 10, Lists.newArrayList("How many levels are required to gain an additional", "point in defense", "[int], greater than 0"));
+				.addLine("levelsperdefenseincrease", 10, Lists.newArrayList("How many levels are required to gain an additional", "point in defense", "[int], greater than 0"))
+				.addLine("useEnemyLevel", false, Lists.newArrayList("Should thiis skill use the damaged creature's level", "as the action level?", "Prevents farming low level stuff", "Level is defined after a monster's name: Wolf (Lvl 10)", "Enemies with an unparsable lvl (like no name) default to skill level", "[true|false]"));
 			
 			try {
 				writer.save(configFile);
@@ -134,12 +138,50 @@ public class SwordAndShieldSkill extends Skill implements Listener {
 			return;
 		
 		int lvl = e.getPlayer().getSkillLevel(this);
+		int actionLevel = lvl;
+		if (useEnemyLevel) {
+			actionLevel = -1;
+			if (e.getTarget().getCustomName() != null)
+			if (e.getTarget().getKiller() != null)
+			if (e.getTarget().getCustomName().contains("(Lvl ")) {
+				//level'ed entity!
+				String cache = e.getTarget().getCustomName();
+				int pos = cache.indexOf("(Lvl ");
+				//advance pos by 5 to get the number
+				pos += 5;
+				String tail = cache.substring(pos);
+				int length = 0;
+				for (char c : tail.toCharArray()) {
+					if (Character.isDigit(c)) {
+						length += 1;
+					} else {
+						break;
+					}
+				}
+				
+				if (length == 0) {
+					System.out.println("Error when finding level! Expected a number, got:  " + tail.charAt(0));
+					return;
+				}
+				
+				String slvl = tail.substring(0, length);
+				actionLevel = Integer.valueOf(slvl);
+			}
+			
+			if (actionLevel == -1)
+				actionLevel = lvl;
+			
+			if (lvl - actionLevel > QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillCutoff()
+				|| actionLevel - lvl > QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillUpperCutoff()) {
+				return; //too big a difference
+			}
+		}
 		
 		//just increase defense based on level
 		//every n levels, one more defense point
 		e.setModifiedDamage(e.getModifiedDamage() - (lvl / levelRate));
 		
-		this.perform(e.getPlayer(), e.isMiss());
+		this.perform(e.getPlayer(), actionLevel, e.isMiss());
 		
 	}
 }
