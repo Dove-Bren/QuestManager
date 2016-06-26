@@ -171,16 +171,34 @@ public class CombiningGui extends GuiInventory {
 			boolean same = true;
 			Material type = null;
 			short data = 0;
+			String name = null;
 			for (ItemStack item : args) {
 				if (item == null)
 					continue;
 				if (type == null) {
 					type = item.getType();
 					data = item.getDurability();
+					name = (item.hasItemMeta() && item.getItemMeta().hasDisplayName() ?
+							item.getItemMeta().getDisplayName() : null);
 					continue;
 				}
 				
 				if (item.getType() != type || item.getDurability() != data) {
+					same = false;
+					break;
+				}
+				
+				if (name != null && (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName())) {
+					same = false;
+					break;
+				}
+				
+				if (name == null && item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+					same = false;
+					break;
+				}
+				
+				if (name != null && !name.equals(item.getItemMeta().getDisplayName())) {
 					same = false;
 					break;
 				}
@@ -341,6 +359,7 @@ public class CombiningGui extends GuiInventory {
 			//one last check; are they combining quality items?
 			boolean same = true;
 			Material type = null;
+			String name = null;
 			short data = 0;
 			for (ItemStack item : args) {
 				if (item == null)
@@ -348,10 +367,27 @@ public class CombiningGui extends GuiInventory {
 				if (type == null) {
 					type = item.getType();
 					data = item.getDurability();
+					name = (item.hasItemMeta() && item.getItemMeta().hasDisplayName() ?
+							item.getItemMeta().getDisplayName() : null);
 					continue;
 				}
 				
 				if (item.getType() != type || item.getDurability() != data) {
+					same = false;
+					break;
+				}
+				
+				if (name != null && (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName())) {
+					same = false;
+					break;
+				}
+				
+				if (name == null && item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+					same = false;
+					break;
+				}
+				
+				if (name != null && !name.equals(item.getItemMeta().getDisplayName())) {
 					same = false;
 					break;
 				}

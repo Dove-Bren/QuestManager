@@ -79,7 +79,7 @@ public class FashioningSkill extends LogSkill implements Listener, CraftingSkill
 		
 		@Override
 		public ItemStack getDisplay() {
-			return result;
+			return result.clone();
 		}
 		
 		@Override
