@@ -201,6 +201,26 @@ public class AlterablePluginConfiguration extends PluginConfiguration {
 		config.set(PluginConfigurationKey.INVOKERTYPE.getKey(), type.name());
 	}
 	
+	public void setRecallerType(Material type) {
+		config.set(PluginConfigurationKey.RECALLERTYPE.getKey(), type);
+	}
+	
+	public void setMarkType(Material type) {
+		config.set(PluginConfigurationKey.MARKLOCTYPE.getKey(), type);
+	}
+	
+	public void setSingleRecall(boolean singleRecall) {
+		config.set(PluginConfigurationKey.MARKONCE.getKey(), singleRecall);
+	}
+	
+	public void setRecallCost(double cost) {
+		config.set(PluginConfigurationKey.RECALLCOST.getKey(), cost);
+	}
+	
+	public void setRecallerName(String name) {
+		config.set(PluginConfigurationKey.RECALLERNAME.getKey(), name);
+	}
+	
 	public void setMusicDurations(Map<Sound, Double> map) {
 		for (Sound sound : map.keySet()) {
 			config.set(PluginConfigurationKey.MUSICDURATIONS.getKey() + "." + sound.name(), map.get(sound));

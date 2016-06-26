@@ -35,6 +35,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.utils.Compass;
+import com.skyisland.questmanager.player.utils.Recaller;
 import com.skyisland.questmanager.player.utils.SpellHolder;
 import com.skyisland.questmanager.player.utils.SpellWeavingInvoker;
 
@@ -98,6 +99,12 @@ public class PluginConfiguration {
 		USEINVOKER("spellweaving.useInvoker", Category.FEATURE, "Use Invoker", "Can players use an item invoker to invoke their spellweaving spells?", true),
 		INVOKERNAME("interface.spellweaving.invokerName", Category.PLAYER, "Invoker Name", "What name should an invoker have to be considered valid", "Spell Invoker"),
 		INVOKERTYPE("interface.spellweaving.invokerType", Category.PLAYER, "Invoker Type", "What material type is the spell invoker?", "CARROT_STICK"),
+		ALLOWRECALL("interface.recall.enabled", Category.PLAYER, "Enable Recall", "Should the mark/recall mechanic be enabled?", true),
+		RECALLERTYPE("interface.recall.recallerType", Category.PLAYER, "Recaller Type", "What material is used as the recaller object? If the player can't get the item, they can only recall if you set up a recall spell", "BOOK"),
+		RECALLERNAME("interface.recall.recallerName", Category.PLAYER, "Recaller Name", "What name must items have to be considered a recaller?", "Waystone"),
+		MARKLOCTYPE("interface.recall.markerType", Category.PLAYER, "Marker Type", "What type of block players click on with a recaller to set their mark? If a recaller isn't obtainable, a player can still mark with a mark spell", "BEACON"),
+		MARKONCE("interface.recall.singleRecall", Category.PLAYER, "Single Recall", "Should a player's mark be removed once they recall?", false),
+		RECALLCOST("interface.recall.cost", Category.PLAYER, "Recall Cost", "How much mana it costs to recall. Follows same rules as man regen", -100),
 		ALTERTYPE("interface.magic.alterBlockType", Category.PLAYER, "Magic Altar Type", "What block type is the magic altar, which is used to load spells into spell holders", "ENCHANTMENT_TABLE"),
 		WORLDS("questWorlds", Category.MANAGER, "Quest Worlds", "Which worlds should be treated as quest worlds? Players not in these worlds are overlooked by QM", Lists.newArrayList("World1", "World2")),
 		QUESTDIR("questDir", Category.PLUGIN, "Quest Directory", "Where are quest template files stored?", "quests/"),
@@ -193,6 +200,10 @@ public class PluginConfiguration {
 			SpellWeavingInvoker.InvokerDefinition.setDisplayName(getSpellInvokerName());
 			SpellWeavingInvoker.InvokerDefinition.setInvokerType(getInvokerType());
 		}
+		
+		Recaller.RecallerDefinition.setDisplayName(getRecallerName());
+		Recaller.RecallerDefinition.setType(getRecallerType());
+		Recaller.MarkerDefinition.setType(getMarkType());
 		
 		SpellHolder.SpellHolderDefinition.setDisplayName(getSpellHolderName());
 		SpellHolder.SpellAlterTableDefinition.setBlockType(getAlterType());
@@ -495,6 +506,45 @@ public class PluginConfiguration {
 		return Material.valueOf(config.getString(PluginConfigurationKey.INVOKERTYPE.key));
 	}
 	
+	/**
+	 * The material used to stand for the mark/recall item
+	 */
+	public Material getRecallerType() {
+		return Material.valueOf(config.getString(PluginConfigurationKey.RECALLERTYPE.key));
+	}
+	
+	/**
+	 * The block material used to set a mark point
+	 * @return
+	 */
+	public Material getMarkType() {
+		return Material.valueOf(config.getString(PluginConfigurationKey.MARKLOCTYPE.key));
+	}
+	
+	/**
+	 * Should a mark'ed location be removed once the player recalls to it?
+	 * @return
+	 */
+	public boolean singleRecall() {
+		return config.getBoolean(PluginConfigurationKey.MARKONCE.key);
+	}
+	
+	/**
+	 * How much does it cost to recall? Same rules as the mana regen options (50 is 50 mana, -50 is 50% of max)
+	 * @return
+	 */
+	public double getRecallCost() {
+		return config.getDouble(PluginConfigurationKey.RECALLCOST.key);
+	}
+	
+	/**
+	 * What name do recallers need to have?
+	 * @return
+	 */
+	public String getRecallerName() {
+		return config.getString(PluginConfigurationKey.RECALLERNAME.getKey());
+	}
+
 	public Map<Sound, Double> getMusicDurations() {
 		Map<Sound, Double> map = new HashMap<>();
 		Map<String, Object> configMap = config.getConfigurationSection(PluginConfigurationKey.MUSICDURATIONS.key)

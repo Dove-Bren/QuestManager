@@ -60,6 +60,7 @@ public class ShowSkillRecipesAction implements MenuAction {
 			name = YamlWriter.toStandardFormat(recipe.getDisplay().getType().name());
 			if (recipe.getDisplay().hasItemMeta() && recipe.getDisplay().getItemMeta().hasDisplayName())
 				name = recipe.getDisplay().getItemMeta().getDisplayName();
+			name += " - Level " + recipe.getDifficulty();
 			
 			desc = formatDescription(recipe.getDescription());
 			desc.add(0, ChatColor.LIGHT_PURPLE + name);

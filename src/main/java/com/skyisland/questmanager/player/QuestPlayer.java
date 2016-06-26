@@ -91,6 +91,7 @@ import com.skyisland.questmanager.player.utils.CompassTrackable;
 import com.skyisland.questmanager.player.utils.ImbuementHolder;
 import com.skyisland.questmanager.player.utils.QuestJournal;
 import com.skyisland.questmanager.player.utils.QuestLog;
+import com.skyisland.questmanager.player.utils.Recaller;
 import com.skyisland.questmanager.player.utils.SpellHolder;
 import com.skyisland.questmanager.quest.Goal;
 import com.skyisland.questmanager.quest.Quest;
@@ -144,6 +145,14 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	public static final String SPELL_WEAVING_MANA_MESAGE = ChatColor.DARK_GRAY + "Your energies were properly"
 			+ " attuned, but you " + ChatColor.GRAY + "lacked the mana" + ChatColor.DARK_GRAY 
 			+ " to properly invoke your spell" + ChatColor.RESET;
+	
+	public static final String NO_MARK_MESSAGE = ChatColor.GRAY + "No mark location has been set!";
+	
+	public static final String MARK_MESSAGE = ChatColor.DARK_GRAY + "Your mark location has been set.";
+	
+	public static final Effect MARK_EFFECT = Effect.FLYING_GLYPH;
+	
+	public static final Sound MARK_SOUND = Sound.ENTITY_ENDERMEN_TELEPORT;
 	
 	public static boolean meetsRequirement(QuestPlayer player, String requirement) {
 		if (requirement.contains("|")) {
@@ -217,6 +226,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	
 	private Location questPortal;
 	
+	private Location markLocation;
+	
 	private Party party;
 	
 	private CompassTrackable compassTarget;
@@ -281,6 +292,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		this.pylons = new LinkedList<>();
 		this.skillLevels = new HashMap<>();
 		this.skillXP = new HashMap<>();
+		this.markLocation = null;
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}
 	
@@ -644,6 +656,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		map.put("maxmp", maxMp);
 		map.put("id", getPlayer().getUniqueId().toString());
 		map.put("portalloc", this.questPortal);
+		map.put("markloc", markLocation);
 		map.put("completedquests", completedQuests);
 		map.put("focusquest", focusQuest);
 		map.put("notes", journalNotes);
@@ -801,6 +814,10 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		
 		if (map.containsKey("storedimbuements")) {
 			qp.storedImbuements = (Map<Integer, ImbuementSet>) map.get("storedimbuements");
+		}
+		
+		if (map.containsKey("markloc")) {
+			qp.markLocation = ((LocationState) map.get("markloc")).getLocation();;
 		}
 		
 		////////////////////////////////
@@ -1036,6 +1053,24 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			
 			e.setCancelled(true);
 			return;
+		}
+		
+		if (Recaller.RecallerDefinition.isHolder(e.getItem())) {
+			//check clicked block. if mark type, mark. else, recall
+			if (Recaller.MarkerDefinition.isMarker(e.getClickedBlock())) {
+				Location loc = e.getClickedBlock().getLocation().clone();
+				loc.add(0,1,0); //move up 1
+				int max = 5;
+				while (max > 0 && !(loc.getBlock() == null || loc.getBlock().getType() == Material.AIR)) {
+					loc.add(0, 1, 0);
+					max--;
+				}
+				
+				mark(loc);
+				return;
+			}
+			
+			recall();
 		}
 		
 	}
@@ -2232,5 +2267,56 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	
 	public ImbuementSet getStoredImbuement(short data) {
 		return storedImbuements.get(Short.toUnsignedInt(data));
+	}
+	
+	public void recall() {
+		if (!getPlayer().isOnline())
+			return;
+
+		Player p = getPlayer().getPlayer();
+		
+		if (markLocation == null) {
+			p.sendMessage(NO_MARK_MESSAGE);
+			return;
+		}
+		
+		double cost = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getRecallCost();
+		if (cost != 0) {
+			if (cost < 0) {
+				//it's a percentage
+				cost = ((-cost) / 100) * maxMp;
+			}
+		}
+		
+		if (p.getGameMode() != GameMode.CREATIVE) {
+			
+			if (mp < cost) {
+				getPlayer().getPlayer().playSound(getPlayer().getPlayer().getLocation(), Sound.BLOCK_WATERLILY_PLACE, 1.0f, 0.5f);
+				return;
+			}
+			
+			this.addMP(-cost);
+		}
+		
+		ChargeEffect ef = new ChargeEffect(Effect.ENDER_SIGNAL);
+		ef.play(p, p.getLocation());
+		p.playSound(p.getLocation(), Sound.BLOCK_PORTAL_TRAVEL, 1, 1);
+		getPlayer().getPlayer().teleport(markLocation);
+		ef.play(p, p.getLocation());
+		p.playSound(p.getLocation(), Sound.BLOCK_PORTAL_TRAVEL, 1, 1);
+		
+		if (QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().singleRecall())
+			markLocation = null;
+	}
+	
+	public void mark(Location loc) {
+		markLocation = loc.clone();
+		if (getPlayer().isOnline()) {
+			Player p = getPlayer().getPlayer();
+			p.sendMessage(MARK_MESSAGE);
+			p.getWorld().playSound(p.getLocation(), MARK_SOUND, 1, 1);
+			ChargeEffect ef = new ChargeEffect(MARK_EFFECT);
+			ef.play(p, p.getLocation());
+		}
 	}
 }

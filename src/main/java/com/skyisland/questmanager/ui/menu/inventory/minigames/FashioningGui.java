@@ -142,7 +142,7 @@ public class FashioningGui extends GuiInventory {
 	private void submit() {
 		//get all our items and look for a recipe, and then try to perform it
 		
-		if (inv.getItem(0) == null || inv.getItem(1) == null)
+		if (inv.getItem(0) == null)
 			return;
 		
 		FashioningRecipe recipe = skillLink.getRecipe(inv.getItem(0), inv.getItem(1));
@@ -155,7 +155,6 @@ public class FashioningGui extends GuiInventory {
 			return;
 		}
 		
-
 		
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
 		

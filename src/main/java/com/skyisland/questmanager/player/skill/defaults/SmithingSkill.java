@@ -402,7 +402,7 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 
 	public Type getType() {
 		return Skill.Type.TRADE;
-	}
+		}
 	
 	public String getName() {
 		return "Smithing";

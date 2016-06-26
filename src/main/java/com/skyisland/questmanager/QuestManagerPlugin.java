@@ -68,6 +68,8 @@ import com.skyisland.questmanager.magic.spell.effect.DamageUndeadEffect;
 import com.skyisland.questmanager.magic.spell.effect.FireEffect;
 import com.skyisland.questmanager.magic.spell.effect.HealEffect;
 import com.skyisland.questmanager.magic.spell.effect.InvokeSpellWeavingEffect;
+import com.skyisland.questmanager.magic.spell.effect.MarkEffect;
+import com.skyisland.questmanager.magic.spell.effect.RecallEffect;
 import com.skyisland.questmanager.magic.spell.effect.StatusEffect;
 import com.skyisland.questmanager.magic.spell.effect.SummonTamedEffect;
 import com.skyisland.questmanager.magic.spell.effect.SwapEffect;
@@ -470,6 +472,8 @@ public class QuestManagerPlugin extends JavaPlugin {
 		SwapEffect.registerWithAliases();
 		SummonTamedEffect.registerWithAliases();
 		FireEffect.registerWithAliases();
+		MarkEffect.registerWithAliases();
+		RecallEffect.registerWithAliases();
 		InvokeSpellWeavingEffect.registerWithAliases();
 		DamageUndeadEffect.registerWithAliases();
 		CastPylonEffect.registerWithAliases();
