@@ -12,9 +12,11 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
@@ -33,6 +35,7 @@ import com.google.common.collect.Sets;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.LocationState;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
+import com.skyisland.questmanager.effects.ChargeEffect;
 import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.QualityItem;
@@ -62,6 +65,12 @@ public class TrappingSkill extends Skill implements Listener {
 	
 	private static final String WIN_MESSAGE = ChatColor.GREEN + "Your prey was fruitful. You got ";
 	
+	private static final Sound PLACE_SOUND = Sound.BLOCK_IRON_TRAPDOOR_OPEN;
+	
+	private static final Sound COLLECT_SOUND = Sound.BLOCK_IRON_DOOR_OPEN;
+	
+	private static final Effect COLLECT_EFFECT = Effect.HAPPY_VILLAGER;
+	
 	/**
 	 * Set of materials traps can be placed on
 	 */
@@ -75,7 +84,7 @@ public class TrappingSkill extends Skill implements Listener {
 	}
 	
 	public String getName() {
-		return "Trapping";
+		return "Trapping"; 
 	}
 	
 	public String getDescription(QuestPlayer player) {
@@ -184,6 +193,8 @@ public class TrappingSkill extends Skill implements Listener {
 		
 		private OfflinePlayer oplayer;
 		
+		private int difficulty;
+		
 		private Block block;
 		
 		private Material memory;
@@ -192,8 +203,9 @@ public class TrappingSkill extends Skill implements Listener {
 		
 		private int id;
 		
-		public Trap(OfflinePlayer player, QualityItem reward, Block trapBlock, double time) {
+		public Trap(OfflinePlayer player, int difficulty, QualityItem reward, Block trapBlock, double time) {
 			this.id = trapIDBase++;
+			this.difficulty = difficulty;
 			this.reward = reward;
 			this.oplayer = player;
 			this.block = trapBlock;
@@ -496,12 +508,12 @@ public class TrappingSkill extends Skill implements Listener {
 		double time = record.trapTime + (Skill.RANDOM.nextGaussian() * record.trapDeviation);
 		time *= event.getTimingModifier();
 		
-		Trap trap = new Trap(player, result, trapBlock, time);
+		Trap trap = new Trap(player, record.difficulty, result, trapBlock, time);
 		if (!activeTraps.containsKey(player.getUniqueId()))
 			activeTraps.put(player.getUniqueId(), new LinkedList<>());
 		
 		activeTraps.get(player.getUniqueId()).add(trap);
-		
+		player.getWorld().playSound(trapBlock.getLocation(), PLACE_SOUND, 1, 1);
 		ItemStack main, off;
 		main = player.getInventory().getItemInMainHand();
 		if (main.getAmount() > 1)
@@ -551,6 +563,11 @@ public class TrappingSkill extends Skill implements Listener {
 			e.getPlayer().sendMessage(BAD_TIME_MESSAGE);
 			return;
 		}
+		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
+		this.perform(qp, validTrap.difficulty);
+		player.getWorld().playSound(player.getLocation(), COLLECT_SOUND, 1, 1);
+		ChargeEffect ef = new ChargeEffect(COLLECT_EFFECT);
+		ef.play(player, player.getLocation());
 		
 		QualityItem result = validTrap.reward;
 		ItemStack formattedResult = result.getItem();
