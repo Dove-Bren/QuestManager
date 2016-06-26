@@ -435,6 +435,7 @@ public final class RegionManager implements Alarmable<EnemyAlarms>, Listener {
 		RegionRecord rec = regionMap.get(e.getRegion());
 		if (rec == null)
 			return;
+		
 		rec.decrementEnemies();
 	}
 	
