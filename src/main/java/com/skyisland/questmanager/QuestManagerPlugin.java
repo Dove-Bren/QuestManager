@@ -112,6 +112,7 @@ import com.skyisland.questmanager.player.skill.defaults.SpellWeavingSkill;
 import com.skyisland.questmanager.player.skill.defaults.SwordAndShieldSkill;
 import com.skyisland.questmanager.player.skill.defaults.SwordsmanshipSkill;
 import com.skyisland.questmanager.player.skill.defaults.TacticsSkill;
+import com.skyisland.questmanager.player.skill.defaults.TrappingSkill;
 import com.skyisland.questmanager.player.skill.defaults.TwoHandedSkill;
 import com.skyisland.questmanager.player.utils.SpellWeavingInvoker;
 import com.skyisland.questmanager.quest.Quest;
@@ -383,7 +384,12 @@ public class QuestManagerPlugin extends JavaPlugin {
 			p.clearSpellPylons();
 		}
 		
-		
+		for (Skill s : skillManager.getAllSkills()) {
+			if (s.getName().equals("Trapping")) {
+				((TrappingSkill) s).removeTraps();
+				break;
+			}
+		}
 	}
 	
 	public void onReload() {
@@ -417,6 +423,7 @@ public class QuestManagerPlugin extends JavaPlugin {
 		skillManager.registerSkill(new SmithingSkill());
 		skillManager.registerSkill(new DexteritySkill());
 		skillManager.registerSkill(new PatienceSkill());
+		skillManager.registerSkill(new TrappingSkill());
 	}
 	
 	public static void registerConfigurationClasses() {

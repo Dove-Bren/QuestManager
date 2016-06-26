@@ -36,6 +36,7 @@ import com.skyisland.questmanager.player.skill.LogReducedSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.FishEvent;
 import com.skyisland.questmanager.player.skill.event.MineEvent;
+import com.skyisland.questmanager.player.skill.event.TrapSetEvent;
 import com.skyisland.questmanager.player.skill.event.WoodChopEvent;
 
 public class PatienceSkill extends LogReducedSkill implements Listener {
@@ -154,5 +155,15 @@ public class PatienceSkill extends LogReducedSkill implements Listener {
 		
 		this.perform(player);  
 		
+	}
+	
+	@EventHandler
+	public void onTrap(TrapSetEvent e) {
+		QuestPlayer player = e.getPlayer();
+		
+		int lvl = player.getSkillLevel(this);
+				
+		e.setTimingModifier(e.getTimingModifier() - (levelRate * (double) lvl));
+		this.perform(player, e.getDifficulty());
 	}
 }

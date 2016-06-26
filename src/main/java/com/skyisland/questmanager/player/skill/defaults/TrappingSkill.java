@@ -2,6 +2,7 @@ package com.skyisland.questmanager.player.skill.defaults;
 
 import java.io.File;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,21 +15,28 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.LocationState;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.TrapSetEvent;
 import com.skyisland.questmanager.region.Region;
+import com.skyisland.questmanager.region.RegionManager;
 import com.skyisland.questmanager.scheduling.Alarm;
 import com.skyisland.questmanager.scheduling.Alarmable;
 
@@ -36,13 +44,16 @@ public class TrappingSkill extends Skill implements Listener {
 	
 	public static final String CONFIG_NAME = "Trapping.yml";
 	
-	private static final String BAD_TRAP_LVL = ChatColor.RED + "You aren't skilled enough to use this type of trap!";
+	private static final String BAD_TRAP_LVL = ChatColor.RED + "You aren't skilled enough to use this type of trap!"
+			+ " It requires level %d Trapping skill";
 	
 	private static final String BAD_OWNER_MESSAGE = ChatColor.DARK_GRAY + "This is not your trap";
 	
 	private static final String BAD_RANGE_MESSAGE = ChatColor.RED + "There is no game nearby in your level range";
 	
 	private static final String BAD_TIME_MESSAGE = ChatColor.DARK_GRAY + "The trap hasn't caught anything yet";
+	
+	private static final String BAD_TRAP_COUNT = ChatColor.RED + "You cannot place any more traps!";
 	
 	public Type getType() {
 		return Skill.Type.TRADE;
@@ -85,8 +96,6 @@ public class TrappingSkill extends Skill implements Listener {
 	
 	private static class GameRecord {
 		
-		private String name;
-		
 		private int difficulty;
 		
 		private double trapTime;
@@ -99,8 +108,7 @@ public class TrappingSkill extends Skill implements Listener {
 		
 		private Region region;
 		
-		public GameRecord(String name, Region region, int difficulty, double trapTime, double trapDeviation, TrapType trap, ItemStack result) {
-			this.name = name;
+		public GameRecord(Region region, int difficulty, double trapTime, double trapDeviation, TrapType trap, ItemStack result) {
 			this.trapTime = trapTime;
 			this.trapDeviation = trapDeviation;
 			this.trap = trap;
@@ -129,6 +137,8 @@ public class TrappingSkill extends Skill implements Listener {
 		 * @return
 		 */
 		public boolean matches(ItemStack trap) {
+			if (trap == null || trap.getType() == Material.AIR)
+				return false;
 			if (trap.getType() != icon.getType())
 				return false;
 			if (trap.getDurability() != icon.getDurability())
@@ -142,7 +152,7 @@ public class TrappingSkill extends Skill implements Listener {
 			if (!trap.getItemMeta().hasDisplayName() || !icon.getItemMeta().hasDisplayName())
 				return false;
 			
-			return trap.getItemMeta().getDisplayName().equals(trap.getItemMeta().getDisplayName());
+			return trap.getItemMeta().getDisplayName().equals(icon.getItemMeta().getDisplayName());
 		}
 	}
 	
@@ -173,7 +183,8 @@ public class TrappingSkill extends Skill implements Listener {
 			this.oplayer = player;
 			this.block = trapBlock;
 			isDone = false;
-			Alarm.getScheduler().schedule(this, 0, time);
+			System.out.println("Time: " + time);
+			Alarm.getScheduler().schedule(this, 0, Math.max(1.0, time));
 			
 			memory = block.getType();
 			block.setType(trapMaterial);
@@ -230,6 +241,7 @@ public class TrappingSkill extends Skill implements Listener {
 			return;
 		}
 		
+		this.activeTraps = new HashMap<>();
 		this.startingLevel = config.getInt("startingLevel", 0);
 		this.qualityRate = config.getDouble("bonusQualityRate", 0.002);
 		this.maxLevelDifference = config.getInt("maxLevelDifference", 10);
@@ -241,6 +253,65 @@ public class TrappingSkill extends Skill implements Listener {
 		
 		if (trapMaterial == null)
 			trapMaterial = Material.IRON_TRAPDOOR;
+		
+		this.trapTypes = new LinkedList<>();
+		if (!config.contains("traps")) {
+			QuestManagerPlugin.logger.warning("No traps are defined, making the Trapping skill worthless!");
+			return;
+		}
+		/*
+		 * traps:
+		 *   noobtrap:
+		 *     difficulty: 0
+		 *     icon: ==:ItemStack
+		 *   bosstrap: ...
+		 */
+		for (String key : config.getConfigurationSection("traps").getKeys(false)) {
+			try {
+				trapTypes.add(new TrapType(key,
+						config.getInt("traps." + key + ".difficulty"),
+						config.getItemStack("traps." + key + ".icon")));
+			} catch (Exception e) {
+				QuestManagerPlugin.logger.warning("Skipping trap type " + key);
+			}
+		}
+		
+		this.records = new LinkedList<>();
+		if (!config.contains("game")) {
+			QuestManagerPlugin.logger.warning("No game are defined, making the Trapping skill worthless!");
+			return;
+		}
+		/*
+		 * game:
+		 *   bear:
+		 *     difficulty: 0
+		 *     trapTime: 30.0
+		 *     trapDeviation: 10.0
+		 *     trapType: noobtrap
+		 *     region: [Location]
+		 *     result: ==:ItemStack
+		 */
+		RegionManager rManager = QuestManagerPlugin.questManagerPlugin.getEnemyManager();
+		for (String key : config.getConfigurationSection("game").getKeys(false)) {
+			ConfigurationSection subsex = config.getConfigurationSection("game." + key);
+			try {
+				TrapType type = lookupTrap(subsex.getString("trapType"));
+				if (type == null) {
+					QuestManagerPlugin.logger.warning("Unable to find trap type for name " + subsex.getString("trapType"));
+					continue;
+				}
+				Region region = rManager.getRegion(subsex.contains("region") ? 
+						(subsex.get("region") == null ? null : ((LocationState) subsex.get("region")).getLocation())
+						: null);
+				records.add(new GameRecord(
+						region, subsex.getInt("difficulty"),
+						subsex.getDouble("trapTime"), subsex.getDouble("trapDeviation"),
+						type, subsex.getItemStack("result")
+						));
+			} catch (Exception e) {
+				QuestManagerPlugin.logger.warning("Skipping game " + key);
+			}
+		}
 		
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}
@@ -258,6 +329,63 @@ public class TrappingSkill extends Skill implements Listener {
 				.addLine("trapMaterial", Material.IRON_TRAPDOOR.name(), Lists.newArrayList("What should a trap set in the world look like?", "[Material] Defaults to an Iron Trapdoor"))
 				.addLine("alertMessage", null, Lists.newArrayList("When a trap is ready to be collected, what (if", "any) message should players get? If empty or null", "no message is sent"));
 			
+			Map<String, Map<String, Object>> map;
+			Map<String, Object> submap;
+			ItemStack item;
+			ItemMeta meta;
+			
+			//trapTypes
+			map = new HashMap<>();
+			submap = new HashMap<>();
+			submap.put("difficulty", 0);
+			item = new ItemStack(Material.TRIPWIRE_HOOK);
+			meta = item.getItemMeta();
+			meta.setDisplayName("Small Trap");
+			item.setItemMeta(meta);
+			submap.put("icon", item);
+			map.put("SmallTrap", submap);
+
+			submap = new HashMap<>();
+			submap.put("difficulty", 20);
+			item = new ItemStack(Material.TRIPWIRE_HOOK);
+			meta = item.getItemMeta();
+			meta.setDisplayName("Strong Trap");
+			item.setItemMeta(meta);
+			submap.put("icon", item);
+			map.put("StrongTrap", submap);
+			
+			writer.addLine("traps", map, Lists.newArrayList("A list of trap types with their difficulty and item representations"));
+			
+			//game
+			map = new HashMap<>();
+			submap = new HashMap<>();
+			submap.put("difficulty", 0);
+			submap.put("trapTime", 180.0);
+			submap.put("trapDeviation", 30.0);
+			submap.put("trapType", "SmallTrap");
+			submap.put("region", null);
+			item = new ItemStack(Material.RABBIT);
+			meta = item.getItemMeta();
+			meta.setDisplayName("Raw Rabbit");
+			item.setItemMeta(meta);
+			submap.put("result", item);
+			map.put("rabbit", submap);
+
+			submap = new HashMap<>();
+			submap.put("difficulty", 10);
+			submap.put("trapTime", 200.0);
+			submap.put("trapDeviation", 50.0);
+			submap.put("trapType", "SmallTrap");
+			submap.put("region", new Location(Bukkit.getWorld("QuestWorld"), -486, 54, -506));
+			item = new ItemStack(Material.RAW_CHICKEN);
+			meta = item.getItemMeta();
+			meta.setDisplayName("Raw Chicken");
+			item.setItemMeta(meta);
+			submap.put("result", item);
+			map.put("chicken", submap);
+			
+			writer.addLine("game", map, Lists.newArrayList("List of possible game", "If region is left out or is null, the game", "can be caught anywhere instead of", "a specific region"));
+			
 			try {
 				writer.save(configFile);
 			} catch (Exception e) {
@@ -272,42 +400,59 @@ public class TrappingSkill extends Skill implements Listener {
 	}
 
 	@EventHandler
-	public void onSnarePlace(PlayerInteractEvent e) {		
+	public void onSnarePlace(PlayerInteractEvent e) {
+		if (e.getAction() != Action.RIGHT_CLICK_BLOCK)
+			return;
 		if (e.getClickedBlock() == null || e.getClickedBlock().getType() == Material.AIR)
 			return;
-		
 		if (!QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds().contains(
 				e.getClickedBlock().getWorld().getName()))
 			return;
-		
 		if (e.getClickedBlock().getType() == trapMaterial) {
 			onSnareCollect(e);
 			return;
 		}
 		
+		if (e.getHand() != EquipmentSlot.HAND)
+			return; //only do once
+		
+		ItemStack inHand;
+		inHand = e.getPlayer().getInventory().getItemInMainHand();
+		if (!inHand.isSimilar(e.getPlayer().getInventory().getItemInOffHand()))
+			return;
+		
 		TrapType trapType = null;
 		for (TrapType type : trapTypes) {
-			if (type.matches(e.getItem())) {
+			if (type.matches(inHand)) {
 				trapType = type;
 				break;
 			}
 		}
-		
 		if (trapType == null)
 			return;
-		
 		e.setCancelled(true);
+		
+		Block trapBlock = e.getClickedBlock().getRelative(BlockFace.UP);
+		if (trapBlock.getType() != Material.AIR)
+			return;
 		
 		Player player = e.getPlayer();
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
 		
 		int lvl = qp.getSkillLevel(this);
-		if (lvl < trapType.skillRequirement) {
-			player.sendMessage(BAD_TRAP_LVL);
+		
+		int maxTraps = 1 + (int) (lvl * trapRate);
+		if (activeTraps.containsKey(player.getUniqueId()) && activeTraps.get(player.getUniqueId()).size() >= maxTraps) {
+			player.sendMessage(BAD_TRAP_COUNT);
 			return;
 		}
 		
-		GameRecord record = getRecord(e.getClickedBlock().getLocation(), trapType, lvl);
+		if (lvl < trapType.skillRequirement) {
+			player.sendMessage(String.format(BAD_TRAP_LVL, trapType.skillRequirement));
+			return;
+		}
+		
+		GameRecord record = getRecord(trapBlock.getLocation(), trapType, lvl);
 		if (record == null) {
 			player.sendMessage(BAD_RANGE_MESSAGE);
 			return;
@@ -332,11 +477,25 @@ public class TrappingSkill extends Skill implements Listener {
 		double time = record.trapTime + (Skill.RANDOM.nextGaussian() * record.trapDeviation);
 		time *= event.getTimingModifier();
 		
-		Trap trap = new Trap(player, result,e.getClickedBlock(), time);
+		Trap trap = new Trap(player, result, trapBlock, time);
 		if (!activeTraps.containsKey(player.getUniqueId()))
 			activeTraps.put(player.getUniqueId(), new LinkedList<>());
 		
 		activeTraps.get(player.getUniqueId()).add(trap);
+		
+		ItemStack main, off;
+		main = player.getInventory().getItemInMainHand();
+		if (main.getAmount() > 1)
+			main.setAmount(main.getAmount() - 1);
+		else
+			main = null;
+		off = player.getInventory().getItemInOffHand();
+		if (off.getAmount() > 1)
+			off.setAmount(off.getAmount() - 1);
+		else
+			off = null;
+		player.getInventory().setItemInMainHand(main);
+		player.getInventory().setItemInOffHand(off);
 		
 	}
 	
@@ -381,6 +540,7 @@ public class TrappingSkill extends Skill implements Listener {
 			player.getWorld().dropItem(player.getEyeLocation(), result.getItem());
 		}
 		traps.remove(validTrap);
+		validTrap.remove();
 		
 	}
 	
@@ -416,5 +576,16 @@ public class TrappingSkill extends Skill implements Listener {
 		for (Trap trap : entry.getValue()) {
 			trap.remove();
 		}
+	}
+	
+	private TrapType lookupTrap(String name) {
+		if (trapTypes.isEmpty())
+			return null;
+		
+		for (TrapType type : trapTypes) {
+			if (type.name.equals(name))
+				return type;
+		}
+		return null;
 	}
 }

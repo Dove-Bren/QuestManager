@@ -35,6 +35,7 @@ import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.LogReducedSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.CraftEvent;
+import com.skyisland.questmanager.player.skill.event.TrapSetEvent;
 
 public class DexteritySkill extends LogReducedSkill implements Listener {
 	
@@ -129,5 +130,15 @@ public class DexteritySkill extends LogReducedSkill implements Listener {
 		
 		this.perform(player);  
 		
+	}
+	
+	@EventHandler
+	public void onTrap(TrapSetEvent e) {
+		QuestPlayer player = e.getPlayer();
+		
+		int lvl = player.getSkillLevel(this);
+				
+		e.setQualityModifier(e.getQualityModifier() + (levelRate * (double) lvl));
+		this.perform(player, e.getDifficulty());
 	}
 }
