@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -28,6 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.LocationState;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
@@ -56,7 +58,17 @@ public class TrappingSkill extends Skill implements Listener {
 	
 	private static final String BAD_TRAP_COUNT = ChatColor.RED + "You cannot place any more traps!";
 	
+	private static final String BAD_BASE_TYPE = ChatColor.DARK_GRAY + "You cannot set a trap here!";
+	
 	private static final String WIN_MESSAGE = ChatColor.GREEN + "Your prey was fruitful. You got ";
+	
+	/**
+	 * Set of materials traps can be placed on
+	 */
+	private static final Set<Material> validMaterials = Sets.immutableEnumSet(
+			Material.GRASS,
+			Material.DIRT
+			);
 	
 	public Type getType() {
 		return Skill.Type.TRADE;
@@ -433,6 +445,11 @@ public class TrappingSkill extends Skill implements Listener {
 		if (trapType == null)
 			return;
 		e.setCancelled(true);
+		
+		if (!validMaterials.contains(e.getClickedBlock().getType())) {
+			e.getPlayer().sendMessage(BAD_BASE_TYPE);
+			return;
+		}
 		
 		Block trapBlock = e.getClickedBlock().getRelative(BlockFace.UP);
 		if (trapBlock.getType() != Material.AIR)
