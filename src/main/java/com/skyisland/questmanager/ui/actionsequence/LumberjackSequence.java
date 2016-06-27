@@ -23,6 +23,8 @@ import java.util.Random;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
@@ -89,6 +91,8 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 	private static final double TIME_STEP = 0.05;
 	
 	private static final double PERFECT_BONUS = .50;
+	
+	private static final Effect CHOP_EFFECT = Effect.STEP_SOUND;
 	
 	private static LumberjackSkill skillLink;
 	
@@ -310,17 +314,18 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 			return;
 		
 		//wood chop. 
-		doChop();
+		doChop(e.getClickedBlock().getLocation(), e.getClickedBlock().getType());
 		
 	}
 	
-	private void doChop() {
+	private void doChop(Location chopLocation, Material chopData) {
 		//check time. Add offby points or fail game
 		if (!player.getPlayer().isOnline())
 			return;
 		
 		Player p = player.getPlayer().getPlayer();
 		p.getWorld().playSound(p.getLocation(), CLICK_SOUND, 1.1f, 1);
+		p.getWorld().playEffect(chopLocation, CHOP_EFFECT, chopData);
 		
 		double timeDifference;
 		timeDifference = Math.abs(secondsRemaining);
@@ -335,6 +340,8 @@ public class LumberjackSequence implements Listener, Alarmable<Integer> {
 		if (add == 0) {
 			p.sendMessage(PERFECT_MESSAGE);
 			p.playSound(p.getLocation(), PERFECT_SOUND, 1, 1);
+			p.getWorld().playEffect(chopLocation, CHOP_EFFECT, chopData);
+			p.getWorld().playEffect(chopLocation, CHOP_EFFECT, chopData);
 		}
 		
 		this.hits--;

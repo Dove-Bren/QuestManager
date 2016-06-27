@@ -223,6 +223,47 @@ interface:
     # This is a Bukkit.Material
     #####################################
     invokerType: CARROT_STICK
+    
+  #####################################
+  # Mark/Recall Interfaces
+  #####################################
+  recall:
+    #####################################
+    # Name recallers are required to have
+    # to  be considered valid
+    #####################################
+    recallerName: "Waystone"
+    
+    #####################################
+    # Item used as the recaller. Works well
+    # when you haven't made a recall
+    # spell and want to use an item instead
+    # This is a Bukkit.Material
+    #####################################
+    recallerType: BOOK
+    
+    #####################################
+    # Item used as mark anchors. Works well
+    # when you haven't made a mark
+    # spell and want to use an item instead
+    # This is a Bukkit.Material
+    #####################################
+    markerType: BEACON
+    
+    #####################################
+    # QM can erase marks right after a
+    # recall to discourage 'home base'
+    # thinking. Should it?
+    #####################################
+    singleRecall: false
+    
+    #####################################
+    # How much mana should a recall with
+    # the recaller cost? Follows the same
+    # rules as mana regen: 100 is 100 mana.
+    # -100 is 100% mana
+    #####################################
+    cost: -100
   
   
 ###############################################################################

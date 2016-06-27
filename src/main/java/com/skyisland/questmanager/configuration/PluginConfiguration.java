@@ -99,7 +99,6 @@ public class PluginConfiguration {
 		USEINVOKER("spellweaving.useInvoker", Category.FEATURE, "Use Invoker", "Can players use an item invoker to invoke their spellweaving spells?", true),
 		INVOKERNAME("interface.spellweaving.invokerName", Category.PLAYER, "Invoker Name", "What name should an invoker have to be considered valid", "Spell Invoker"),
 		INVOKERTYPE("interface.spellweaving.invokerType", Category.PLAYER, "Invoker Type", "What material type is the spell invoker?", "CARROT_STICK"),
-		ALLOWRECALL("interface.recall.enabled", Category.PLAYER, "Enable Recall", "Should the mark/recall mechanic be enabled?", true),
 		RECALLERTYPE("interface.recall.recallerType", Category.PLAYER, "Recaller Type", "What material is used as the recaller object? If the player can't get the item, they can only recall if you set up a recall spell", "BOOK"),
 		RECALLERNAME("interface.recall.recallerName", Category.PLAYER, "Recaller Name", "What name must items have to be considered a recaller?", "Waystone"),
 		MARKLOCTYPE("interface.recall.markerType", Category.PLAYER, "Marker Type", "What type of block players click on with a recaller to set their mark? If a recaller isn't obtainable, a player can still mark with a mark spell", "BEACON"),

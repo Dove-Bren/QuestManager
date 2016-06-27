@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -87,6 +88,10 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 	private static final Sound MISS_SOUND = Sound.ENTITY_ENDERDRAGON_FLAP;
 	
 	private static final Sound HIT_SOUND = Sound.BLOCK_ANVIL_PLACE;
+	
+	private static final Effect HIT_EFFECT = Effect.LAVA_POP;
+	
+	private static final Material HIT_DATA = null;
 	
 	private static final double TIME_STEP = 0.05;
 	
@@ -316,6 +321,9 @@ public class ForgeSequence implements Listener, Alarmable<Integer> {
 		
 		if (RANDOM.nextDouble() < hitChance) {
 			e.getPlayer().getWorld().playSound(e.getPlayer().getLocation(), HIT_SOUND, 1, 1);
+			e.getPlayer().getWorld().playEffect(e.getClickedBlock().getLocation().add(0,1,0), HIT_EFFECT, HIT_DATA);
+			e.getPlayer().getWorld().playEffect(e.getClickedBlock().getLocation().add(0,1,0), HIT_EFFECT, HIT_DATA);
+			e.getPlayer().getWorld().playEffect(e.getClickedBlock().getLocation().add(0,1,0), HIT_EFFECT, HIT_DATA);
 			this.hammerHits++;
 			this.timeLeft *= .8;
 		} else {
