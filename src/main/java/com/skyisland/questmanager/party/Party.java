@@ -17,7 +17,6 @@
  */
 package com.skyisland.questmanager.party;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.skyisland.questmanager.player.Participant;
 import com.skyisland.questmanager.player.QuestPlayer;
