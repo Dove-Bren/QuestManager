@@ -345,7 +345,13 @@ public class SmithingSkill extends LogSkill implements Listener, CraftingSkill {
 		@Override
 		public String getDescription() {
 						
-			String builder = "Start by taking " + base.name + " and combine it with " + delistInputs() + ". Then, heat the metal "
+			String builder = "Start by taking " + base.name;
+			
+			if (inputs != null && !inputs.isEmpty())
+				builder += " and combine it with " + delistInputs(); 
+					
+					
+			builder += ". Then, heat the metal "
 					+ "near a forge. Take the hot metal and hammer it " + hammerTimes + " times, keeping the metal hot.";
 			
 			if (needsCut)
