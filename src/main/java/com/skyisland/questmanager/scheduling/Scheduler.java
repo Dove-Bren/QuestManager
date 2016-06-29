@@ -29,4 +29,9 @@ public abstract class Scheduler implements Runnable {
 	 * Register a Tickable entity to be ticked 
 	 */
 	public abstract void register(Tickable tick);
+	
+	/**
+	 * Removes a Tickable entity from the scheduler
+	 */
+	public abstract void unregister(Tickable tick);
 }

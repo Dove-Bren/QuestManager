@@ -389,7 +389,11 @@ public class QuestManagerPlugin extends JavaPlugin {
 		for (Skill s : skillManager.getAllSkills()) {
 			if (s.getName().equals("Trapping")) {
 				((TrappingSkill) s).removeTraps();
-				break;
+				continue;
+			}
+			if (s.getName().equals("Mining")) {
+				((MiningSkill) s).revertOres();
+				continue;
 			}
 		}
 	}

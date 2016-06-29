@@ -31,6 +31,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
@@ -48,6 +49,8 @@ import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.MineEvent;
+import com.skyisland.questmanager.scheduling.IntervalScheduler;
+import com.skyisland.questmanager.scheduling.Tickable;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.MiningGui;
 
@@ -79,6 +82,63 @@ public class MiningSkill extends LogSkill implements Listener {
 			this.rows = rows;
 		}
 		
+	}
+	
+	private static int FIELD_ID = 50;
+	
+	/**
+	 * Holds an ore location and a time until it is replenished
+	 */
+	private class FieldRecord implements Tickable {
+		
+		private final Material DRY_MATERIAL = Material.STONE;
+		
+		private final byte DRY_DATA = 5;
+		
+		private int countdown;
+		
+		private BlockState memory;
+		
+		private int id;
+		
+		@SuppressWarnings("deprecation")
+		public FieldRecord(Block block, int countdown) {
+			id = FIELD_ID++;
+			memory = block.getState();
+			this.countdown = countdown;
+			block.setType(DRY_MATERIAL);
+			block.setData(DRY_DATA);
+			
+			IntervalScheduler.getScheduler().register(this);
+		}
+
+		@Override
+		public void tick() {
+			countdown--;
+			if (countdown <= 0) {
+				revert();
+			}
+		}
+		
+		@Override
+		public boolean equals(Object o) {
+			if (o instanceof MiningSkill.FieldRecord)
+				return ((FieldRecord) o).id == id;
+			
+			return false;
+		}
+		
+		@Override
+		public int hashCode() {
+			return 1837
+					+ id * 17;
+		}
+		
+		public void revert() {
+			memory.update(true);
+			IntervalScheduler.getScheduler().unregister(this);
+			fieldRecords.remove(this);
+		}
 	}
 
 	public Type getType() {
@@ -157,6 +217,10 @@ public class MiningSkill extends LogSkill implements Listener {
 	
 	private Map<Material, List<OreRecord>> oreRecords;
 	
+	private double cooldownTime;
+	
+	private List<FieldRecord> fieldRecords;
+	
 	public MiningSkill() {
 		File configFile = new File(QuestManagerPlugin.questManagerPlugin.getDataFolder(),
 				QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getSkillPath() + CONFIG_NAME);
@@ -166,6 +230,7 @@ public class MiningSkill extends LogSkill implements Listener {
 		if (!config.getBoolean("enabled", true)) {
 			return;
 		}
+		fieldRecords = new LinkedList<>();
 		
 		this.startingLevel = config.getInt("startingLevel", 0);
 		this.baseHardness = (float) config.getDouble("baseHardness", 1);
@@ -182,6 +247,7 @@ public class MiningSkill extends LogSkill implements Listener {
 		this.qualityRate = config.getDouble("qualityRate", 0.01);
 		this.smeltingEnabled = config.getBoolean("smeltingEnabled", true);
 		this.smeltPenalty = config.getDouble("smeltPenalty", 0.05);
+		this.cooldownTime = config.getDouble("cooldownTime", 90.0);
 		
 		this.oreRecords = new HashMap<>();
 		if (!config.contains("ore")) {
@@ -246,7 +312,8 @@ public class MiningSkill extends LogSkill implements Listener {
 				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and ore difficulty", "that will be allowed through RANDOM ore", "algorithm", "[int] larger than 0"))
 				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per mining skill level", "[double] .01 is 1%"))
 				.addLine("smeltingEnabled", true, Lists.newArrayList("Can players use ores on lava to combine it with another", "and get a single item stack of average quality", "[true|false]"))
-				.addLine("smeltPenalty", 0.05, Lists.newArrayList("If smelting two items, how much of the sum quality", "is lost in the process?", "[double] .01 is 1%"));
+				.addLine("smeltPenalty", 0.05, Lists.newArrayList("If smelting two items, how much of the sum quality", "is lost in the process?", "[double] .01 is 1%"))
+				.addLine("cooldownTime", 90.0, Lists.newArrayList("How long a vein of ore remains dry before becoming available again", "[double] seconds. Rounds down to nearest .02'th"));
 			
 			
 			Map<String, Map<String, Map<String, Object>>> map = new HashMap<>();
@@ -348,6 +415,10 @@ public class MiningSkill extends LogSkill implements Listener {
 		if (event.isCancelled()) {
 			return;
 		}
+		
+		int intervals = (int) (cooldownTime * 20);
+		intervals /= IntervalScheduler.getScheduler().getDelay();
+		fieldRecords.add(new FieldRecord(e.getClickedBlock(), intervals));
 		
 		int deltaDifficulty = Math.max(0, record.difficulty - level);
 		float averageHardness;
@@ -509,5 +580,9 @@ public class MiningSkill extends LogSkill implements Listener {
 		smeltItem.setItemMeta(meta);
 		QualityItem result = new QualityItem(smeltItem.clone(), sum);
 		e.getPlayer().getInventory().addItem(result.getItem());
+	}
+	
+	public void revertOres() {
+		fieldRecords.forEach(FieldRecord::revert);
 	}
 }

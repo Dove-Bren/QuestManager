@@ -169,4 +169,9 @@ public class DispersedScheduler extends Scheduler {
 	public void register(Tickable tick) {
 		this.list.add(tick);
 	}
+	
+	@Override
+	public void unregister(Tickable tick) {
+		this.list.remove(tick);
+	}
 }
