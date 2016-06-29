@@ -58,7 +58,7 @@ public class Party implements Participant {
 		this(leader, new ArrayList<>(), "");
 	}
 
-	Party(QuestPlayer leader, List<QuestPlayer> members, String name) {
+	private Party(QuestPlayer leader, List<QuestPlayer> members, String name) {
 		this.members = members;
 		this.leader = leader;
 		this.name = name;
