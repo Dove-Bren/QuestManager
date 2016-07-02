@@ -485,6 +485,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	public void addQuestKey(String quest, String key) {
+		if (key == null)
+			return;
 		String base = "";
 		if (questKeys.containsKey(quest))
 			base = questKeys.get(quest);

@@ -48,6 +48,8 @@ public class Goal {
 	
 	private Integer nextGoalIndex; 
 	
+	private String goalKey;
+	
 	private String name;
 	
 	private String description;
@@ -85,13 +87,16 @@ public class Goal {
 		
 		String name, description;
 		Integer nextIndex;
+		String key;
 		
 		name = config.getString("name");
 		description = config.getString("description");
 		nextIndex = (config.contains("next") ? config.getInt("next") : null);
+		key = (config.contains("questKey") ? config.getString("questKey") : null);
 		
 
 		Goal goal = new Goal(quest, index, nextIndex, name, description);
+		goal.goalKey = key;
 		
 		List<ConfigurationSection> reqs = new LinkedList<>();
 		for (String requirementKey : config.getConfigurationSection("requirements").getKeys(false)) {
@@ -289,5 +294,14 @@ public class Goal {
 	
 	public int getIndex() {
 		return index;
+	}
+	
+	/**
+	 * Returns any questKeys this goal may have. These are added to the player's key list
+	 * when the objective is complete
+	 * @return A string with the key, or null if there isn't one
+	 */
+	public String getKeys() {
+		return goalKey;
 	}
 }

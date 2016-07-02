@@ -34,6 +34,8 @@ public class Junction extends Goal {
 		
 		private Integer resultIndex;
 		
+		private String questKey;
+		
 		public Path(List<Requirement> requirements, Integer resultIndex) {
 			this.requirements = requirements;
 			this.resultIndex = resultIndex;
@@ -116,8 +118,10 @@ public class Junction extends Goal {
 				requirements.add(r);
 			}
 			Integer next = (section.contains("resultIndex") ? section.getInt("resultIndex") : null);
+			String questKey = (section.contains("questKey") ? section.getString("questKey") : null);
 			
 			Path p = new Path(requirements, next);
+			p.questKey = questKey;
 			//paths.add(p);
 			goal.addPath(p);
 		}
@@ -310,6 +314,21 @@ public class Junction extends Goal {
 			QuestManagerPlugin.logger.warning("Failed to get goal data from configuration!");
 			return null;
 		}
+	}
+	
+	/**
+	 * Returns any questKeys the first completed path has. If no paths are completed, returns keys from
+	 * the first path in the defined path list.
+	 * @return A string with the key, or null if there isn't one
+	 */
+	@Override
+	public String getKeys() {
+		for (Path path : paths)
+			if (path.isComplete()) {
+				return path.questKey;
+			}
+		
+		return (paths.get(0).questKey);
 	}
 	
 }
