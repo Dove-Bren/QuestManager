@@ -225,8 +225,6 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 				
 		if (attribute != null)
 			attribute.setBaseValue(attack);
-		else
-			System.out.println("no GENERIC ATTACK for entity " + base.getType());
 		
 		entity.getEquipment().setItemInMainHandDropChance(0f);
 	}

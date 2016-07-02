@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -193,7 +194,12 @@ public class StandardEnemy extends NormalEnemy {
 		LivingEntity entity = (LivingEntity) base;
 		entity.setMaxHealth(hp);
 		entity.setHealth(hp);
-		entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(attack);
+		//entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(attack);
+		
+		AttributeInstance attribute = entity.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+		
+		if (attribute != null)
+			attribute.setBaseValue(attack);
 		
 		EntityEquipment eq = entity.getEquipment();
 		eq.setHelmet(head);
