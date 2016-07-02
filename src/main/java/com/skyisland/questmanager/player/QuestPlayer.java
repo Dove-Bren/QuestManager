@@ -218,6 +218,15 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			return true;
 		}
 		
+		if (requirement.contains(".")) {
+			int pos = requirement.indexOf(".");
+			String name = requirement.substring(0, pos);
+			String keys = requirement.substring(pos + 1);
+			if (!hasKey(player, name, keys))
+				return false;
+			return meetsRequirement(player, name);
+		}
+		
 		if (requirement.startsWith("*")) {
 			String req = requirement.substring(1);
 			for (Quest q : player.getCurrentQuests()) {
@@ -236,6 +245,14 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	public static boolean hasKey(QuestPlayer player, String questName, String key) {
 		if (player.questKeys.containsKey(questName)) {
 			String keys = player.questKeys.get(questName);
+			if (key.length() > 1) {
+				for (int i = 0; i < key.length(); i++)
+				if (!hasKey(player, questName, "" + key.charAt(i)))
+					return false;
+				
+				return true;
+			}
+			
 			return keys.contains(key);
 		}
 		return false;
@@ -465,6 +482,14 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		}
 		
 		return false;
+	}
+	
+	public void addQuestKey(String quest, String key) {
+		String base = "";
+		if (questKeys.containsKey(quest))
+			base = questKeys.get(quest);
+		
+		questKeys.put(quest, base + key);
 	}
 	
 	public void addQuest(Quest quest) {
