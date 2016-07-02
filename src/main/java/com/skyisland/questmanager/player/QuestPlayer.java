@@ -154,13 +154,65 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	
 	public static final Sound MARK_SOUND = Sound.ENTITY_ENDERMEN_TELEPORT;
 	
+	/**
+	 * Quests requirements are a little more dynamic than they used to be. Instead of just having a 'did they do this
+	 * quest' requirement, you have either a 'did they do this quest' or 'are they currently doing this quest' requirement.
+	 * In addition, you can have a list of requirements with ANDS and ORs between them. Still additionally, you
+	 * can then specify keys required from another quest. The syntax is as follows:
+	 * <p>
+	 * <table style="border: 1px; border-style: solid;">
+	 * <tr><th>Operation</th><th style="padding-right: 20px">Syntax</th><th>Description</th></tr>
+	 * <tr><td>OR</td><td>Q1 | Q2</td><td>The player has to have completed either Q1 or Q2</td></tr>
+	 * <tr><td>AND</td><td>Q1 & Q2</td><td>The player has to have completed both Q1 and Q2</td></tr>
+	 * <tr><td>CURRENT</td><td>*Q1</td><td>The player must currently be doing Q1</td></tr>
+	 * <tr><td>KEYS</td><td>Q1.ac</td><td>The player must have both keys a and c from quest Q1 and have finished Q1</td></tr>
+	 * </table>
+	 * </p>
+	 * <p>
+	 * From these rules, complex expressions may be formed. Order of precedence is the order of the operations
+	 * listed in the table, except for KEYS; KEYS is broken down into two sub expressions, as detailed below. Anywhere
+	 * where a simple Q1 or Q2 is listed below (except in the case of the KEYS operation) may be substituted for
+	 * another expression. For example, <i>Q1 | Q2 & Q3</i> is valid, and stands for 'Finished Q1 or Finished both
+	 * Q2 and Q3.' More complex examples are below.
+	 * </p>
+	 * <p>
+	 * It's important to note that keys are treated seperately from quests. Regardless of if the requirement
+	 * lists that the player needs to be currently doing a quest or if it says it needed to have been completed
+	 * already, the key check is done regardless of if such statement is true. These statements are treated
+	 * almost as if two seperate expressions in the form
+	 * <center>quest1.ab <==> (player has key quest1.a & player has key quest1.b & player has done quest 1)</center>
+	 * Similarly, if an * were to be put before the quest, the last part of the expression would change to <i>is doing</i>
+	 * rather than <i>has done</i>.
+	 * </p>
+	 * <h3>Examples</h3>
+	 * <ul>
+	 * <li>Player should have completed the quest "Quest For Money": <span style="color: red;"><i>Quest For Money</i></span></li>
+	 * <li>Player should have either completed the quest "Quest For Money" or be doing it now: <span style="color: red;"><i>Quest For Money|*Quest For Money</i></span></li>
+	 * <li>Player should have completed the quest "Quest For Money" or gotten key 'a' from the quest "Quest For Glory": <span style="color: red;"><i>Quest For Money|Quest For Glory.a</i></span></li>
+	 * <li>Player should have completed any of the following: "Quest For Money", "Quest For Glory", "Quest For Questing": <span style="color: red;"><i>Quest For Money|Quest For Glory|Quest For Questing</i></span></li>
+	 * </ul>
+	 * @param player
+	 * @param requirement
+	 * @return
+	 */
 	public static boolean meetsRequirement(QuestPlayer player, String requirement) {
+		requirement = requirement.trim();
 		if (requirement.contains("|")) {
 			String[] reqs = requirement.split("\\|");
 			for (String req : reqs) {
-				if (!meetsRequirement(player, req)) {
-					return false;
+				if (meetsRequirement(player, req)) {
+					return true;
 				}
+			}
+			
+			return false;
+		}
+		
+		if (requirement.contains("&")) {
+			String[] reqs = requirement.split("&");
+			for (String req : reqs) {
+				if (!meetsRequirement(player, req))
+					return false;
 			}
 			
 			return true;
@@ -181,6 +233,14 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		return player.getCompletedQuests().contains(requirement);
 	}
 	
+	public static boolean hasKey(QuestPlayer player, String questName, String key) {
+		if (player.questKeys.containsKey(questName)) {
+			String keys = player.questKeys.get(questName);
+			return keys.contains(key);
+		}
+		return false;
+	}
+	
 	private UUID playerID;
 	
 	private PlayerOptions options;
@@ -190,6 +250,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	private List<Quest> currentQuests;
 	
 	private List<String> completedQuests;
+	
+	private Map<String, String> questKeys;
 	
 	private String focusQuest;
 	
@@ -306,6 +368,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		this.playerID = player.getUniqueId();
 		this.currentQuests = new LinkedList<>();
 		this.completedQuests = new LinkedList<>();
+		this.questKeys = new HashMap<>();
 		this.history = new History();
 		
 		if (player.isOnline()) {
@@ -658,6 +721,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		map.put("portalloc", this.questPortal);
 		map.put("markloc", markLocation);
 		map.put("completedquests", completedQuests);
+		map.put("questKeys", questKeys);
 		map.put("focusquest", focusQuest);
 		map.put("notes", journalNotes);
 		map.put("spells", spells);
@@ -818,6 +882,10 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		
 		if (map.containsKey("markloc")) {
 			qp.markLocation = ((LocationState) map.get("markloc")).getLocation();;
+		}
+		
+		if (map.containsKey("questKeys")) {
+			qp.questKeys = (Map<String, String>) map.get("questKeys");
 		}
 		
 		////////////////////////////////
