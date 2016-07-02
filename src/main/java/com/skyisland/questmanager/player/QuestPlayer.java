@@ -158,12 +158,12 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		if (requirement.contains("|")) {
 			String[] reqs = requirement.split("\\|");
 			for (String req : reqs) {
-				if (meetsRequirement(player, req)) {
-					return true;
+				if (!meetsRequirement(player, req)) {
+					return false;
 				}
 			}
 			
-			return false;
+			return true;
 		}
 		
 		if (requirement.startsWith("*")) {
