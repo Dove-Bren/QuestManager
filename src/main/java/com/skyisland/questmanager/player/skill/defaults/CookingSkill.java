@@ -558,8 +558,8 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		List<ItemStack> args, inputs;
 		Iterator<ItemStack> it;
 		inputs = Lists.newArrayList(input1, input2, input3);
-		int size = inputs.size();
 		for (CombineRecipe recipe : cRecipes) {
+			int size = inputs.size();
 			args = Lists.newArrayList(recipe.input1, recipe.input2, recipe.input3);
 			for (ItemStack item : inputs) {
 				size--;
@@ -596,21 +596,35 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		if (i1.getType() != i2.getType() || i1.getDurability() != i2.getDurability())
 			return false;
 		
-		if (!i1.hasItemMeta() && !i2.hasItemMeta())
+//		if (!i1.hasItemMeta() && !i2.hasItemMeta())
+//			return true;
+//		
+//		if (!i1.hasItemMeta() || !i2.hasItemMeta())
+//			return false;
+//		
+//		ItemMeta m1 = i1.getItemMeta(), m2 = i2.getItemMeta();
+//		
+//		if (m1.getDisplayName() == null && m2.getDisplayName() == null)
+//			return true;
+//		
+//		if (m1.getDisplayName() == null || m2.getDisplayName() == null)
+//			return false;
+		
+		String name1, name2;
+		name1 = name2 = null;
+		if (i1.hasItemMeta() && i1.getItemMeta().hasDisplayName())
+			name1 = i1.getItemMeta().getDisplayName();
+		if (i2.hasItemMeta() && i2.getItemMeta().hasDisplayName())
+			name2 = i2.getItemMeta().getDisplayName();
+		
+		if (name1 == null && name2 == null)
 			return true;
 		
-		if (!i1.hasItemMeta() || !i2.hasItemMeta())
+		if (name1 == null || name2 == null)
 			return false;
 		
-		ItemMeta m1 = i1.getItemMeta(), m2 = i2.getItemMeta();
 		
-		if (m1.getDisplayName() == null && m2.getDisplayName() == null)
-			return true;
-		
-		if (m1.getDisplayName() == null || m2.getDisplayName() == null)
-			return false;
-		
-		return ChatColor.stripColor(m1.getDisplayName()).equals(ChatColor.stripColor(m2.getDisplayName()));
+		return ChatColor.stripColor(name1).equals(ChatColor.stripColor(name2));
 	}
 	
 	public void unregisterOven(Location location) {

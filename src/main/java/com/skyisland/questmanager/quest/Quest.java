@@ -660,6 +660,8 @@ public class Quest implements Listener {
 	 * Loads the next goal and starts its requirements for listening
 	 */
 	private void nextGoal() {
+		if (currentGoal == null) //finished already
+			return;
 		currentGoal.stop();
 		for (QuestPlayer p : participant.getParticipants()) {
 			p.addQuestKey(getName(), currentGoal.getKeys());

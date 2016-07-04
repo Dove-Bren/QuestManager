@@ -104,6 +104,8 @@ public class CombiningGui extends GuiInventory {
 	public InventoryItem getItem(int pos) {
 		if (skillLink == null)
 			return null;
+		if (pos < 0) 
+			return null;
 		
 		/*
 		 * 0,1,2 are bottom slots

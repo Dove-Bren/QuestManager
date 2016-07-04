@@ -824,11 +824,20 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			qp.alphaFame = qp.fame;
 		}
 		if (map.containsKey("mp")) {
-			qp.mp = (double) map.get("mp");
+			//bad legacy config carry :(
+			Object o = map.get("mp");
+			if (o instanceof Integer) {
+				qp.mp = (Integer) o;
+			} else
+				qp.mp = (double) map.get("mp");
 		} //else handled by default constructor
 		
 		if (map.containsKey("maxmp")) {
-			qp.maxMp = (double) map.get("maxmp");
+			Object o = map.get("maxmp");
+			if (o instanceof Integer) {
+				qp.maxMp = (Integer) o;
+			} else
+				qp.maxMp = (double) map.get("maxmp");
 		} //else again handled by default constructor
 		
 		if (map.containsKey("maxhp")) {
@@ -907,7 +916,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			qp.storedImbuements = (Map<Integer, ImbuementSet>) map.get("storedimbuements");
 		}
 		
-		if (map.containsKey("markloc")) {
+		if (map.containsKey("markloc") && map.get("markloc") != null) {
 			qp.markLocation = ((LocationState) map.get("markloc")).getLocation();;
 		}
 		

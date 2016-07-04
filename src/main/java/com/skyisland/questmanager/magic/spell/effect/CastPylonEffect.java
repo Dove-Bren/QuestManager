@@ -89,7 +89,7 @@ public class CastPylonEffect extends SpellEffect {
 		return map;
 	}
 	
-	private CastPylonEffect(String name, ItemStack icon) {
+	public CastPylonEffect(String name, ItemStack icon) {
 		this.type = name;
 		this.icon = icon;
 	}
