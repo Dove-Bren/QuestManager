@@ -45,7 +45,7 @@ import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.skill.LogSkill;
+import com.skyisland.questmanager.player.skill.LogReducedSkill;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.MineEvent;
@@ -54,7 +54,7 @@ import com.skyisland.questmanager.scheduling.Tickable;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.MiningGui;
 
-public class MiningSkill extends LogSkill implements Listener {
+public class MiningSkill extends LogReducedSkill implements Listener {
 	
 	public static final String CONFIG_NAME = "Mining.yml";
 	

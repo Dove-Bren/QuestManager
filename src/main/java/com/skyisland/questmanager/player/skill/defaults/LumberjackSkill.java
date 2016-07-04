@@ -49,7 +49,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.LocationState;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.skill.LogSkill;
+import com.skyisland.questmanager.player.skill.LogReducedSkill;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.WoodChopEvent;
@@ -57,7 +57,7 @@ import com.skyisland.questmanager.region.Region;
 import com.skyisland.questmanager.region.RegionManager;
 import com.skyisland.questmanager.ui.actionsequence.LumberjackSequence;
 
-public class LumberjackSkill extends LogSkill implements Listener {
+public class LumberjackSkill extends LogReducedSkill implements Listener {
 	
 	public static final String CONFIG_NAME = "Lumberjack.yml";
 	

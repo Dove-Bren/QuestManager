@@ -32,6 +32,7 @@ import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
+import com.skyisland.questmanager.player.skill.LogReducedSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.CombatEvent;
 import com.skyisland.questmanager.ui.menu.action.ForgeAction;
@@ -40,7 +41,7 @@ import com.skyisland.questmanager.ui.menu.action.ForgeAction;
  * Skill governing combat with a weapon in main hand, shield in offhand
  *
  */
-public class SwordAndShieldSkill extends Skill implements Listener {
+public class SwordAndShieldSkill extends LogReducedSkill implements Listener {
 	
 	public static final String CONFIG_NAME = "SwordAndShield.yml";
 

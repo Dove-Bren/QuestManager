@@ -35,7 +35,7 @@ import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.magic.MagicRegenEvent;
 import com.skyisland.questmanager.player.QuestPlayer;
-import com.skyisland.questmanager.player.skill.LogSkill;
+import com.skyisland.questmanager.player.skill.LogReducedSkill;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.CombatEvent;
 import com.skyisland.questmanager.player.skill.event.MagicCastEvent;
@@ -46,7 +46,7 @@ import com.skyisland.questmanager.ui.menu.action.ForgeAction;
  * Skill governing combat with a weapon in main hand, magic in offhand
  *
  */
-public class MagicWeaverSkill extends LogSkill implements Listener {
+public class MagicWeaverSkill extends LogReducedSkill implements Listener {
 	
 	public static final String CONFIG_NAME = "MagicWeaver.yml";
 	
