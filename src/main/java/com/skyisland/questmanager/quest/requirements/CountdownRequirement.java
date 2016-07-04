@@ -134,8 +134,9 @@ public class CountdownRequirement extends Requirement implements Tickable, State
 	}
 
 	@Override
-	public void tick() {
+	public boolean tick() {
 		update();
+		return false;
 	}
 
 	@Override

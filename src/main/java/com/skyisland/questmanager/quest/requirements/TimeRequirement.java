@@ -157,8 +157,9 @@ public class TimeRequirement extends Requirement implements Tickable {
 	}
 
 	@Override
-	public void tick() {
+	public boolean tick() {
 		update();
+		return false;
 	}
 	
 	@Override

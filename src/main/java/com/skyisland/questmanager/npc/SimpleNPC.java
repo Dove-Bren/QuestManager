@@ -53,17 +53,17 @@ public abstract class SimpleNPC extends NPC {
 	 * Motivate entity to move back to the original location, if we hve one set
 	 */
 	@Override
-	public void tick() {
+	public boolean tick() {
 		Entity e = getEntity();
 		
 		if (e == null || startingLoc == null) {
-			return;
+			return false;
 		}
 		
 
 		if (!e.getLocation().getWorld().isChunkLoaded(e.getLocation().getBlockX() / 16, e.getLocation().getBlockZ() / 16) 
 			|| !startingLoc.getWorld().isChunkLoaded(startingLoc.getBlockX() / 16, startingLoc.getBlockZ() / 16)) {
-			return;
+			return false;
 		}
 		
 		if (!e.getLocation().getWorld().getName().equals(
@@ -75,6 +75,8 @@ public abstract class SimpleNPC extends NPC {
 			startingLoc.getChunk().load();
 			e.teleport(startingLoc);
 		}
+		
+		return false;
 	}
 
 	/**

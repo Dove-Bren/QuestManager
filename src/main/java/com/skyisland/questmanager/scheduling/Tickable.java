@@ -32,6 +32,7 @@ public interface Tickable {
 	 * Performs a scheduled 'tick'.
 	 * This method can mean anything a Tickable class wants it to be. Scheduled
 	 * Tickable classes receive calls to this on a scheduled and regular basis
+	 * @return <i>true</i> if the ticked instance no longer wishes to be ticked
 	 */
-	void tick();
+	boolean tick();
 }

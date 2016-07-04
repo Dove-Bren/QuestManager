@@ -191,7 +191,7 @@ public class PlayerManager implements Tickable {
 	}
 
 	@Override
-	public void tick() {
+	public boolean tick() {
 		PluginConfiguration pc = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration();
 		double day = pc.getMagicRegenDay();
 		double night = pc.getMagicRegenNight();
@@ -216,6 +216,8 @@ public class PlayerManager implements Tickable {
 				}
 			}
 		}
+		
+		return false;
 	}
 	
 	public TitleEffect getTitleEffect() {

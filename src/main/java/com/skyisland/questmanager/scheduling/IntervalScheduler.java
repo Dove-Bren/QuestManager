@@ -18,6 +18,7 @@
 
 package com.skyisland.questmanager.scheduling;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -94,7 +95,11 @@ public class IntervalScheduler extends Scheduler {
 	@Override
 	public void run() {
 		//when run, just tick everything.
-		list.forEach(Tickable::tick);
+		//list.forEach(Tickable::tick);
+		Iterator<Tickable> it = list.iterator();
+		while (it.hasNext())
+		if (it.next().tick())
+			it.remove();
 	}
 
 	@Override

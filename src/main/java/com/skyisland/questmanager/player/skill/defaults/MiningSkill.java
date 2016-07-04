@@ -113,11 +113,14 @@ public class MiningSkill extends LogSkill implements Listener {
 		}
 
 		@Override
-		public void tick() {
+		public boolean tick() {
 			countdown--;
 			if (countdown <= 0) {
 				revert();
+				return true;
 			}
+			
+			return false;
 		}
 		
 		@Override
@@ -136,7 +139,7 @@ public class MiningSkill extends LogSkill implements Listener {
 		
 		public void revert() {
 			memory.update(true);
-			IntervalScheduler.getScheduler().unregister(this);
+			//IntervalScheduler.getScheduler().unregister(this);
 			fieldRecords.remove(this);
 		}
 	}

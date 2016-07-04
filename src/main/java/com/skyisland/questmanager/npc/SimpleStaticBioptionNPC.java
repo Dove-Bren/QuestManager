@@ -38,21 +38,23 @@ public abstract class SimpleStaticBioptionNPC extends SimpleBioptionNPC {
 	/**
 	 * Render this NPC imobile using slowness instead of teleporting them
 	 */
-	public void tick() {
+	public boolean tick() {
 		Entity e = getEntity();
 		
 		if (e == null) {
-			return;
+			return false;
 		}
 		
 		Location loc = e.getLocation();
 		if (!loc.getWorld().isChunkLoaded(loc.getBlockX() / 16, loc.getBlockZ() / 16)) {
-			return;
+			return false;
 		}
 		
 		if (e instanceof LivingEntity) {
 			((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 99999999, 10, false, false), true);
 		}
+		
+		return false;
 	}
 	
 	@Override

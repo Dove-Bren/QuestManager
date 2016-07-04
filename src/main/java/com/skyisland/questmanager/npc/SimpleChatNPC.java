@@ -189,7 +189,7 @@ public class SimpleChatNPC extends SimpleNPC {
 	}
 	
 	@Override
-	public void tick() {
-		
+	public boolean tick() {
+		return false;
 	}
 }

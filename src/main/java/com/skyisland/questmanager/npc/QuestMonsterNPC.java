@@ -35,10 +35,10 @@ public class QuestMonsterNPC extends NPC {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
-	public void tick() {
-		;
+	public boolean tick() {
+		return false;
 	}
 
 	@Override
