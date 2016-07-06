@@ -55,6 +55,7 @@ configurations.all {
 dependencies {
     compile 'org.spigotmc:spigot-api:1.9.4-R0.1-SNAPSHOT'
     compile files('lib/TitleManager-1.5.11.jar')
+    compile files('lib/QuestMaker.jar')
     compile 'com.onarandombox.multiverseportals:Multiverse-Portals:2.5'
 }
 
