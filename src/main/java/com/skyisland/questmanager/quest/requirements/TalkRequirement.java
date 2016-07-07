@@ -143,8 +143,7 @@ public class TalkRequirement extends Requirement implements Listener, CompassTra
 
 		menu = ChatMenu.getDefaultMenu(message);
 		
-		this.desc = config.getString("description", config.getString("action", "Right")
-				+ " click the area");
+		this.desc = config.getString("description", "Talk to " + npc.getName());
 	}
 	
 	public void stop() {

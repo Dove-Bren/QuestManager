@@ -29,7 +29,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
@@ -37,7 +36,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.skyisland.questmaker.Driver;
 import com.skyisland.questmanager.configuration.PluginConfiguration;
 import com.skyisland.questmanager.configuration.utils.Chest;
 import com.skyisland.questmanager.configuration.utils.LocationState;
@@ -121,6 +119,7 @@ import com.skyisland.questmanager.quest.Quest;
 import com.skyisland.questmanager.quest.requirements.ArriveRequirement;
 import com.skyisland.questmanager.quest.requirements.ChestRequirement;
 import com.skyisland.questmanager.quest.requirements.CountdownRequirement;
+import com.skyisland.questmanager.quest.requirements.CraftRequirement;
 import com.skyisland.questmanager.quest.requirements.DeliverRequirement;
 import com.skyisland.questmanager.quest.requirements.InteractRequirement;
 import com.skyisland.questmanager.quest.requirements.PositionRequirement;
@@ -270,6 +269,8 @@ public class QuestManagerPlugin extends JavaPlugin {
 				new ChestRequirement.ChestRequirementFactory());
 		reqManager.registerFactory("TALK", 
 				new TalkRequirement.TalkRequirementFactory());
+		reqManager.registerFactory("CRAFT",
+				new CraftRequirement.CraftRequirementFactory());
 		
 	}
 	
@@ -596,17 +597,17 @@ public class QuestManagerPlugin extends JavaPlugin {
 				return true;
 			}
 			
-			if (args[0].equals("launch")) {
-				if (!(sender instanceof ConsoleCommandSender)) {
-					sender.sendMessage("This command must be executed by the console");
-					return true;
-				}
-				
-				Driver.main(null);
-				
-				
-				return true;
-			}
+//			if (args[0].equals("launch")) {
+//				if (!(sender instanceof ConsoleCommandSender)) {
+//					sender.sendMessage("This command must be executed by the console");
+//					return true;
+//				}
+//				
+//				Driver.main(null);
+//				
+//				
+//				return true;
+//			}
 			
 			return false;
 			
