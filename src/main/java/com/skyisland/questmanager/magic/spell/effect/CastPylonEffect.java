@@ -109,4 +109,12 @@ public class CastPylonEffect extends SpellEffect {
 		
 		cause.addSpellPylon(pylon);
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public ItemStack getIcon() {
+		return icon;
+	}
 }

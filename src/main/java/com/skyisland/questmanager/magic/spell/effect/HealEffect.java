@@ -181,4 +181,8 @@ public class HealEffect extends ImbuementEffect {
 		effect.setDisplayName(getDisplayName());
 		return effect;
 	}
+	
+	public double getAmount() {
+		return amount;
+	}
 }

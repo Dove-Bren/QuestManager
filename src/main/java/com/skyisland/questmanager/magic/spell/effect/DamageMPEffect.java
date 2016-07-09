@@ -167,4 +167,8 @@ public class DamageMPEffect extends ImbuementEffect {
 		effect.setDisplayName(getDisplayName());
 		return effect;		
 	}
+	
+	public double getDamage() {
+		return damage;
+	}
 }

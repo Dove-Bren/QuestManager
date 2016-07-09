@@ -105,4 +105,12 @@ public class BlockEffect extends SpellEffect {
 			loc.getBlock().setType(typeTo);
 		}
 	}
+
+	public Material getTypeFrom() {
+		return typeFrom;
+	}
+
+	public Material getTypeTo() {
+		return typeTo;
+	}
 }

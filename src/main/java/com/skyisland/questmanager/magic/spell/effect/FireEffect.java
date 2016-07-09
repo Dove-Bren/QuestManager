@@ -117,4 +117,8 @@ public class FireEffect extends ImbuementEffect {
 		effect.setDisplayName(getDisplayName());
 		return effect;
 	}
+	
+	public int getDuration() {
+		return duration;
+	}
 }

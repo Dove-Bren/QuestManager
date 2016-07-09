@@ -291,6 +291,10 @@ public class StatusEffect extends ImbuementEffect {
 		return list;
 	}
 	
+	public PotionEffect getEffect() {
+		return effect;
+	}
+
 	public boolean isEffectHarmful(PotionEffectType type) {
 		return type.equals(PotionEffectType.BLINDNESS)
 			|| type.equals(PotionEffectType.CONFUSION)
