@@ -27,6 +27,7 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -38,12 +39,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.google.common.collect.Lists;
 import com.skyisland.questmanager.QuestManagerPlugin;
+import com.skyisland.questmanager.configuration.utils.LocationState;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.LogSkill;
 import com.skyisland.questmanager.player.skill.QualityItem;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.event.FishEvent;
+import com.skyisland.questmanager.region.Region;
+import com.skyisland.questmanager.region.RegionManager;
 import com.skyisland.questmanager.ui.menu.InventoryMenu;
 import com.skyisland.questmanager.ui.menu.inventory.minigames.FishingGui;
 
@@ -59,9 +63,15 @@ public class FishingSkill extends LogSkill implements Listener {
 		
 		private ItemStack icon;
 		
-		public FishRecord(int difficulty, ItemStack icon) {
+		private Region region;
+		
+		private double weight;
+		
+		public FishRecord(int difficulty, double weight, ItemStack icon, Region region) {
 			this.difficulty = difficulty;
+			this.weight = weight;
 			this.icon = icon;
+			this.region = region;
 		}
 		
 	}
@@ -180,6 +190,7 @@ public class FishingSkill extends LogSkill implements Listener {
 			return;
 		} else {
 			ConfigurationSection sex = config.getConfigurationSection("fish");
+			RegionManager rManager = QuestManagerPlugin.questManagerPlugin.getEnemyManager();
 			for (String key : sex.getKeys(false)) {
 				if (key.startsWith("==")) {
 					continue;
@@ -187,8 +198,11 @@ public class FishingSkill extends LogSkill implements Listener {
 				
 				try {
 					fishRecords.add(new FishRecord(
-							sex.getInt(key + ".difficulty"), sex.getItemStack(key + ".icon", new ItemStack(Material.RAW_FISH))
-							));
+							sex.getInt(key + ".difficulty"), sex.getDouble(key + ".weight", 1.0), 
+							sex.getItemStack(key + ".icon", new ItemStack(Material.RAW_FISH)),
+							rManager.getRegion(sex.contains(key + ".region") ? 
+									(sex.get(key + ".region") == null ? null : ((LocationState) sex.get(key + ".region")).getLocation())
+									: null)));
 				} catch (Exception e) {
 					e.printStackTrace();
 					QuestManagerPlugin.logger.warning("Skipping that one! ^");
@@ -227,6 +241,7 @@ public class FishingSkill extends LogSkill implements Listener {
 			Map<String, Object> sub = new HashMap<>();
 			
 			sub.put("difficulty", 10);
+			sub.put("weight", 1.0);
 			ItemStack item = new ItemStack(Material.RAW_FISH);
 			ItemMeta meta = item.getItemMeta();
 			meta.setDisplayName("Trout");
@@ -237,6 +252,7 @@ public class FishingSkill extends LogSkill implements Listener {
 			
 			sub = new HashMap<>();
 			sub.put("difficulty", 20);
+			sub.put("weight", 0.75);
 			item = new ItemStack(Material.RAW_FISH, 1, (short) 1);
 			meta = item.getItemMeta();
 			meta.setDisplayName("Salmon");
@@ -245,7 +261,7 @@ public class FishingSkill extends LogSkill implements Listener {
 			sub.put("icon", item);
 			map.put("Salmon", sub);
 			
-			writer.addLine("fish", map, Lists.newArrayList("List of fish and their difficulties", "Plan difficulties carefully, as players that are", "at a level with no fish in range (maxDifficultyRange)", "are stuck forever!", "name: {difficulty: [int], icon: [itemstack]}"));
+			writer.addLine("fish", map, Lists.newArrayList("List of fish and their difficulties", "Plan difficulties carefully, as players that are", "at a level with no fish in range (maxDifficultyRange)", "are stuck forever!", "name: {difficulty: [int], icon: [itemstack], weight: [double], region: [null|regionName]}"));
 			
 			try {
 				writer.save(configFile);
@@ -278,7 +294,7 @@ public class FishingSkill extends LogSkill implements Listener {
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(e.getPlayer());
 		int level = qp.getSkillLevel(this);
 		
-		FishRecord record = getFish(level);
+		FishRecord record = getFish(level, e.getHook().getLocation());
 		if (record == null) {
 			e.getPlayer().sendMessage(BAD_RANGE_MESSAGE);
 			return;
@@ -340,18 +356,35 @@ public class FishingSkill extends LogSkill implements Listener {
 	 * difficulty.
 	 * @return A fish record within the provided limits, or null if none were found
 	 */
-	private FishRecord getFish(int difficulty) {
+	private FishRecord getFish(int difficulty, Location bobberLocation) {
 		if (fishRecords.isEmpty()) {
 			return null;
 		}
 		
+		List<FishRecord> applicable = new LinkedList<>();
+		double sum = 0;
 		Collections.shuffle(fishRecords);
 		for (FishRecord record : fishRecords) {
-			if (Math.abs(record.difficulty - difficulty) <= maxDifficultyRange) {
-				return record;
+			if (Math.abs(record.difficulty - difficulty) <= maxDifficultyRange)
+			if (record.region == null || record.region.isIn(bobberLocation)) {
+				//return record;
+				applicable.add(record);
+				sum += record.weight;
 			}
 		}
 		
-		return null;
+		//have a list of applicable. get random based on weight
+		if (applicable.isEmpty())
+			return null;
+
+		double index = RANDOM.nextDouble() * sum;
+		for (FishRecord record : applicable) {
+			index -= record.weight;
+			if (index <= 0)
+				return record;
+		}
+		
+		//shouldn't ever get here. If it does, just return last in list
+		return applicable.get(applicable.size() - 1);
 	}
 }
