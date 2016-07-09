@@ -178,6 +178,8 @@ public class LumberjackSkill extends LogReducedSkill implements Listener {
 	
 	private boolean millingEnabled;
 	
+	private boolean restrictLower;
+	
 	private List<TreeRecord> treeRecords;
 	
 	private Map<UUID, LumberjackSequence> activeSessions;
@@ -207,6 +209,7 @@ public class LumberjackSkill extends LogReducedSkill implements Listener {
 		this.qualityRate = config.getDouble("qualityRate", 0.01);
 		this.millingEnabled = config.getBoolean("millingEnabled", true);
 		this.millPenalty = config.getDouble("millPenalty", 0.05);
+		this.restrictLower = config.getBoolean("restrictLower", false);
 		
 		this.activeSessions = new HashMap<>();
 		this.lastLocations = new HashMap<>();
@@ -271,7 +274,8 @@ public class LumberjackSkill extends LogReducedSkill implements Listener {
 				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and ore difficulty", "that will be allowed through RANDOM ore", "algorithm", "[int] larger than 0"))
 				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per mining skill level", "[double] .01 is 1%"))
 				.addLine("millingEnabled", true, Lists.newArrayList("Can players use logs on crafting tables", "and get a single item stack of average quality", "[true|false]"))
-				.addLine("millPenalty", 0.05, Lists.newArrayList("If milling two items, how much of the sum quality", "is lost in the process?", "[double] .01 is 1%"));
+				.addLine("millPenalty", 0.05, Lists.newArrayList("If milling two items, how much of the sum quality", "is lost in the process?", "[double] .01 is 1%"))
+				.addLine("restrictLower", false, Lists.newArrayList("Prevent players from getting wood with level too much lower than theirs"));
 			
 			
 			Map<String, Map<String, Object>> map = new HashMap<>();
@@ -446,7 +450,8 @@ public class LumberjackSkill extends LogReducedSkill implements Listener {
 		
 		Collections.shuffle(list);
 		for (TreeRecord record : list) {
-			if (Math.abs(record.difficulty - difficulty) <= maxDifficultyRange) {
+			if ((!restrictLower && record.difficulty < difficulty) || 
+					Math.abs(record.difficulty - difficulty) <= maxDifficultyRange) {
 				return record;
 			}
 		}

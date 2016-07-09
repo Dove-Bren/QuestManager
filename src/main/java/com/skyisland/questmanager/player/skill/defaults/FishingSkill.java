@@ -154,6 +154,8 @@ public class FishingSkill extends LogSkill implements Listener {
 	
 	private double qualityRate;
 	
+	private boolean restrictLower;
+	
 	private List<FishRecord> fishRecords;
 	
 	public FishingSkill() {
@@ -182,6 +184,7 @@ public class FishingSkill extends LogSkill implements Listener {
 		this.timeDiscount = config.getDouble("timeDiscount", 0.0025);
 		this.extraFishPerLevel = config.getDouble("extraFishPerLevel", 0.2);
 		this.qualityRate = config.getDouble("qualityRate", 0.01);
+		this.restrictLower = config.getBoolean("restrictLower", false);
 		
 		this.fishRecords = new LinkedList<>();
 		if (!config.contains("fish")) {
@@ -234,7 +237,8 @@ public class FishingSkill extends LogSkill implements Listener {
 				.addLine("maxDifficultyRange", 20, Lists.newArrayList("Biggest gap between player and fish difficulty", "that will be allowed through RANDOM catch", "algorithm", "[int] larger than 0"))
 				.addLine("timeDiscount", 0.0025, Lists.newArrayList("Discount taken off total time per skill level", "[double] .01 is 1%"))
 				.addLine("extraFishPerLevel", 0.2, Lists.newArrayList("How many extra fish a level over fish", "difficulty gives. Expected to be a fraction.", "extra fish rounds down. So .8 extra fish is 0", "[double] fish per level. .1 is 1/10 a fish"))
-				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per fishing skill level", "[double] .01 is 1%"));
+				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per fishing skill level", "[double] .01 is 1%"))
+				.addLine("restrictLower", false, Lists.newArrayList("Prevent players from getting fish that are too low level"));
 			
 			
 			Map<String, Map<String, Object>> map = new HashMap<>();
@@ -365,7 +369,8 @@ public class FishingSkill extends LogSkill implements Listener {
 		double sum = 0;
 		Collections.shuffle(fishRecords);
 		for (FishRecord record : fishRecords) {
-			if (Math.abs(record.difficulty - difficulty) <= maxDifficultyRange)
+			if ((!restrictLower && record.difficulty < difficulty) ||
+					Math.abs(record.difficulty - difficulty) <= maxDifficultyRange)
 			if (record.region == null || record.region.isIn(bobberLocation)) {
 				//return record;
 				applicable.add(record);

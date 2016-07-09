@@ -218,6 +218,8 @@ public class MiningSkill extends LogReducedSkill implements Listener {
 	
 	private boolean smeltingEnabled;
 	
+	private boolean restrictLower;
+	
 	private Map<Material, List<OreRecord>> oreRecords;
 	
 	private double cooldownTime;
@@ -251,6 +253,7 @@ public class MiningSkill extends LogReducedSkill implements Listener {
 		this.smeltingEnabled = config.getBoolean("smeltingEnabled", true);
 		this.smeltPenalty = config.getDouble("smeltPenalty", 0.05);
 		this.cooldownTime = config.getDouble("cooldownTime", 90.0);
+		this.restrictLower = config.getBoolean("restrictLower", false);
 		
 		this.oreRecords = new HashMap<>();
 		if (!config.contains("ore")) {
@@ -316,7 +319,8 @@ public class MiningSkill extends LogReducedSkill implements Listener {
 				.addLine("qualityRate", 0.01, Lists.newArrayList("Bonus to quality per mining skill level", "[double] .01 is 1%"))
 				.addLine("smeltingEnabled", true, Lists.newArrayList("Can players use ores on lava to combine it with another", "and get a single item stack of average quality", "[true|false]"))
 				.addLine("smeltPenalty", 0.05, Lists.newArrayList("If smelting two items, how much of the sum quality", "is lost in the process?", "[double] .01 is 1%"))
-				.addLine("cooldownTime", 90.0, Lists.newArrayList("How long a vein of ore remains dry before becoming available again", "[double] seconds. Rounds down to nearest .02'th"));
+				.addLine("cooldownTime", 90.0, Lists.newArrayList("How long a vein of ore remains dry before becoming available again", "[double] seconds. Rounds down to nearest .02'th"))
+				.addLine("restrictLower", false, Lists.newArrayList("Restricts players from mining ore that's too low level", "[true|false]"));
 			
 			
 			Map<String, Map<String, Map<String, Object>>> map = new HashMap<>();
@@ -484,7 +488,8 @@ public class MiningSkill extends LogReducedSkill implements Listener {
 		
 		Collections.shuffle(list);
 		for (OreRecord record : list) {
-			if (Math.abs(record.difficulty - difficulty) <= maxDifficultyRange) {
+			if ((!restrictLower && record.difficulty < difficulty) ||
+					Math.abs(record.difficulty - difficulty) <= maxDifficultyRange) {
 				return record;
 			}
 		}
