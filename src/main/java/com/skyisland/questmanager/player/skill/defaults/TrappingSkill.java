@@ -167,16 +167,27 @@ public class TrappingSkill extends Skill implements Listener {
 				return false;
 			if (trap.getDurability() != icon.getDurability())
 				return false;
-			if (!trap.hasItemMeta() && !icon.hasItemMeta())
+			String trapName, iconName;
+			trapName = iconName = null;
+			if (icon.hasItemMeta() && icon.getItemMeta().hasDisplayName())
+				iconName = icon.getItemMeta().getDisplayName();
+			if (trap.hasItemMeta() && trap.getItemMeta().hasDisplayName())
+				trapName = trap.getItemMeta().getDisplayName();
+			
+//			if (!trap.hasItemMeta() && !icon.hasItemMeta())
+//				return true;
+//			if (!trap.hasItemMeta() || !icon.hasItemMeta())
+//				return false; //since they _both_ don't have on meta, if a single one does then false
+//			if (!trap.getItemMeta().hasDisplayName() && !icon.getItemMeta().hasDisplayName())
+//				return true;
+//			if (!trap.getItemMeta().hasDisplayName() || !icon.getItemMeta().hasDisplayName())
+//				return false;
+			if (iconName == null && trapName == null)
 				return true;
-			if (!trap.hasItemMeta() || !icon.hasItemMeta())
-				return false; //since they _both_ don't have on meta, if a single one does then false
-			if (!trap.getItemMeta().hasDisplayName() && !icon.getItemMeta().hasDisplayName())
-				return true;
-			if (!trap.getItemMeta().hasDisplayName() || !icon.getItemMeta().hasDisplayName())
+			if (iconName == null || trapName == null)
 				return false;
 			
-			return trap.getItemMeta().getDisplayName().equals(icon.getItemMeta().getDisplayName());
+			return trapName.equals(iconName);
 		}
 	}
 	
@@ -442,9 +453,25 @@ public class TrappingSkill extends Skill implements Listener {
 		if (e.getHand() != EquipmentSlot.HAND)
 			return; //only do once
 		
-		ItemStack inHand;
+		ItemStack inHand, offHand;
 		inHand = e.getPlayer().getInventory().getItemInMainHand();
-		if (!inHand.isSimilar(e.getPlayer().getInventory().getItemInOffHand()))
+		offHand = e.getPlayer().getInventory().getItemInOffHand();
+		//if (!inHand.isSimilar(e.getPlayer().getInventory().getItemInOffHand()))
+		if (inHand == null || offHand == null ||
+				inHand.getType() != e.getPlayer().getInventory().getItemInOffHand().getType()
+				|| inHand.getDurability() != e.getPlayer().getInventory().getItemInOffHand().getDurability())
+			return;
+		
+		String mainName, offName;
+		mainName = offName = null;
+		if (inHand.hasItemMeta() && inHand.getItemMeta().hasDisplayName())
+			mainName = inHand.getItemMeta().getDisplayName();
+		if (offHand.hasItemMeta() && offHand.getItemMeta().hasDisplayName())
+			offName = offHand.getItemMeta().getDisplayName();
+		
+		if ((mainName == null) ^ (offName == null))
+			return;
+		if (!mainName.equals(offName))
 			return;
 		
 		TrapType trapType = null;
