@@ -228,7 +228,7 @@ public class AlterablePluginConfiguration extends PluginConfiguration {
 	}
 	
 	/**
-	 * Perform an un-typed set. This method is <string>dangerous</stong> and should only be used when:
+	 * Perform an un-typed set. This method is <strong>dangerous</strong> and should only be used when:
 	 * <ul>
 	 * <li>You know the type stored in the field</li>
 	 * <li>You cannot call the normal method (you're being dynamic and cool or something)</li>

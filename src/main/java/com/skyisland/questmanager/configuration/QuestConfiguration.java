@@ -339,7 +339,7 @@ public class QuestConfiguration {
 	 * goal in the Quest. Unless the underlying quest is changed, this key is static per goal, and can be used
 	 * between server restarts.
 	 * <p>
-	 * To get the first goal (regardless of it's index) in this quest, use {@link #fetchFirstGoal()} instead.
+	 * To get the first goal (regardless of it's index) in this quest, use {@link #fetchFirstGoal(Quest)} instead.
 	 * </p>
 	 * @param key
 	 * @return
