@@ -971,7 +971,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			return;
 		}
 		
-		if (!e.getFrom().getWorld().equals(e.getDestination().getLocation(getPlayer().getPlayer()).getWorld())) {
+		if (!e.getFrom().getWorld().equals(e.getDestination().getLocation(getPlayer().getPlayer()).getWorld()))
+		if (!pylons.isEmpty()) {
 			this.clearSpellPylons();
 			getPlayer().getPlayer().sendMessage(PYLONS_RESET_MESSAGE);
 		}
