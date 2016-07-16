@@ -788,4 +788,17 @@ public class QuestManager implements Listener {
 			}
 		}
 	}
+	
+	public void wipeEntities() {
+		for (String worldName : QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getWorlds()) {
+			World w = Bukkit.getWorld(worldName);
+			if (w == null)
+				continue;
+			for (Entity e : w.getEntities()) {
+				if (!(e instanceof Player) && e instanceof LivingEntity)
+					e.remove();
+			}
+		}
+		
+	}
 }
