@@ -24,7 +24,14 @@ import java.util.Map;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Skeleton.SkeletonType;
+import org.bukkit.entity.Slime;
+import org.bukkit.entity.Villager.Profession;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDeathEvent;
+
+import com.skyisland.questmanager.QuestManagerPlugin;
 
 /**
  * Default enemy type for default mobs in minecraft.
@@ -66,8 +73,11 @@ public class DefaultEnemy extends Enemy {
 		}
 	}
 	
+	private String variantData;
+	
 	public DefaultEnemy(String name, EntityType type) {
 		super(name, type);
+		variantData = null;
 	}
 	
 	@Override
@@ -76,6 +86,7 @@ public class DefaultEnemy extends Enemy {
 		
 		map.put("type", type.name());
 		map.put("name", name);
+		map.put("variantData", variantData);
 		
 		return map;
 	}
@@ -93,15 +104,50 @@ public class DefaultEnemy extends Enemy {
 		}
 		
 		String name = (String) map.get("name");
+		String variantData = null;
+		if (map.containsKey("variantData"))
+			variantData = map.get("variantData").toString();
 		
-		return new DefaultEnemy(name, et);
+		DefaultEnemy dent = new DefaultEnemy(name, et);
+		dent.variantData = variantData;
+		return dent;
 	}
 
 	@Override
 	protected void spawnEntity(Entity base) {
-		; //nothing
+		if (variantData != null) {
+			switch (type){
+			case ZOMBIE:
+				Zombie zombie = (Zombie) base;
+				try {
+					zombie.setVillagerProfession(Profession.valueOf(variantData));
+				} catch (Exception e) {
+					QuestManagerPlugin.logger.warning("Failed to identify zombie type: " + variantData);
+				}
+				break;
+			case SKELETON:
+				Skeleton skele = (Skeleton) base;
+				try {
+					skele.setSkeletonType(SkeletonType.valueOf(variantData));
+				} catch (Exception e) {
+					QuestManagerPlugin.logger.warning("Failed to identify skeleton type: " + variantData);
+				}
+				break;
+			case SLIME:
+				int size = 0;
+				try {
+					size = Integer.parseInt(variantData);
+				} catch (NumberFormatException e) {
+					QuestManagerPlugin.logger.warning("Failed to parse slime size int: " + variantData + ". Defaulting to 0");
+				}
+				((Slime) base).setSize(size);
+				break;
+			default:
+				break;
+			}
+		}
 	}
-
+	
 	@Override
 	protected void handleDeath(EntityDeathEvent e) {
 		; //nothing

@@ -686,15 +686,16 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 			if (qlevel && !flevel)
 				return;
 		}
-
-		
-		int pos = e.getPlayer().getInventory().getHeldItemSlot();
+		 
 		
 		inHand.setAmount(inHand.getAmount() - 1);
 		if (inHand.getAmount() == 0)
 			inHand = null;
 		
-		e.getPlayer().getInventory().setItem(pos, inHand);
+		if (e.getItem().isSimilar(e.getPlayer().getInventory().getItemInMainHand()))
+			e.getPlayer().getInventory().setItemInMainHand(inHand);
+		else
+			e.getPlayer().getInventory().setItemInOffHand(inHand);		
 		
 		double qualityDifference = food.getQuality() - 1.0;
 		qualityDifference = qualityDifference * hungerRate;

@@ -20,6 +20,7 @@ package com.skyisland.questmanager.enemy;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,11 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Slime;
+import org.bukkit.entity.Zombie;
+import org.bukkit.entity.Skeleton.SkeletonType;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
@@ -106,6 +112,14 @@ public class StandardEnemy extends NormalEnemy {
 		this.loot.addAll(loot);
 	}
 	
+	public StandardEnemy(String name, EntityType type, double hp, double attack,
+			ItemStack head, ItemStack chest, ItemStack legs, ItemStack boots, ItemStack mainhand, ItemStack offhand,
+			Collection<Loot> loot, String variantData) {
+		this(name, type, hp, attack, head, chest, legs, boots, mainhand, offhand);
+		this.loot.addAll(loot);
+		this.variantData = variantData;
+	}
+	
 	@Override
 	public Map<String, Object> serialize() {
 		Map<String, Object> map = new HashMap<>();
@@ -121,6 +135,7 @@ public class StandardEnemy extends NormalEnemy {
 		map.put("mainhand", mainhand);
 		map.put("offhand", offhand);
 		map.put("loot", this.loot);
+		map.put("variantData", variantData);
 		
 		return map;
 	}
@@ -178,11 +193,16 @@ public class StandardEnemy extends NormalEnemy {
 			}
 		}
 		
-		if (loot != null) {
-			return new StandardEnemy(name, type, hp, attack, head, chest, legs, boots, mainhand, offhand, loot);
+		String variantData = null;
+		if (map.containsKey("variantData")) {
+			variantData = map.get("variantData").toString();
 		}
 		
-		return new StandardEnemy(name, type, hp, attack, head, chest, legs, boots, mainhand, offhand);
+		if (loot != null) {
+			return new StandardEnemy(name, type, hp, attack, head, chest, legs, boots, mainhand, offhand, loot, variantData);
+		}
+		
+		return new StandardEnemy(name, type, hp, attack, head, chest, legs, boots, mainhand, offhand, new LinkedList<>(), variantData);
 	}
 	
 	@Override
@@ -214,5 +234,37 @@ public class StandardEnemy extends NormalEnemy {
 		eq.setBootsDropChance(0f);
 		eq.setItemInMainHandDropChance(0f);
 		eq.setItemInOffHandDropChance(0f);
+		
+		if (variantData != null) {
+			switch (type){
+			case ZOMBIE:
+				Zombie zombie = (Zombie) base;
+				try {
+					zombie.setVillagerProfession(Profession.valueOf(variantData));
+				} catch (Exception e) {
+					QuestManagerPlugin.logger.warning("Failed to identify zombie type: " + variantData);
+				}
+				break;
+			case SKELETON:
+				Skeleton skele = (Skeleton) base;
+				try {
+					skele.setSkeletonType(SkeletonType.valueOf(variantData));
+				} catch (Exception e) {
+					QuestManagerPlugin.logger.warning("Failed to identify skeleton type: " + variantData);
+				}
+				break;
+			case SLIME:
+				int size = 0;
+				try {
+					size = Integer.parseInt(variantData);
+				} catch (NumberFormatException e) {
+					QuestManagerPlugin.logger.warning("Failed to parse slime size int: " + variantData + ". Defaulting to 0");
+				}
+				((Slime) base).setSize(size);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 }

@@ -30,6 +30,11 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Skeleton;
+import org.bukkit.entity.Slime;
+import org.bukkit.entity.Zombie;
+import org.bukkit.entity.Skeleton.SkeletonType;
+import org.bukkit.entity.Villager.Profession;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
@@ -83,6 +88,8 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 	
 	protected List<Loot> loot;
 	
+	protected String variantData;
+	
 //	protected String type;
 	
 	public NormalEnemy(String name, EntityType type, double hp, double attack) {
@@ -90,6 +97,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		this.hp = hp;
 		this.attack = attack;
 		this.loot = new LinkedList<>();
+		this.variantData = null;
 		
 		//Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}
@@ -97,6 +105,12 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 	public NormalEnemy(String name, EntityType type, double hp, double attack, Collection<Loot> loot) {
 		this(name, type, hp, attack);
 		this.loot.addAll(loot);
+	}
+	
+	public NormalEnemy(String name, EntityType type, double hp, double attack, Collection<Loot> loot, String variantData) {
+		this(name, type, hp, attack);
+		this.loot.addAll(loot);
+		this.variantData = variantData;
 	}
 	
 	@Override
@@ -108,6 +122,7 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 		map.put("hp", hp);
 		map.put("attack", attack);
 		map.put("loot", loot);
+		map.put("variantData", variantData);
 		
 		return map;
 	}
@@ -138,11 +153,17 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 			}
 		}
 		
+		String variantData = null;
+		if (map.containsKey("variantData")) {
+			variantData = map.get("variantData").toString();
+		}
+			
+		
 		if (loot != null) {
-			return new NormalEnemy(name, type, hp, attack, loot);
+			return new NormalEnemy(name, type, hp, attack, loot, variantData);
 		}
 		
-		return new NormalEnemy(name, type, hp, attack);
+		return new NormalEnemy(name, type, hp, attack, new LinkedList<>(), variantData);
 	}
 
 //	@Override
@@ -227,6 +248,38 @@ public class NormalEnemy extends Enemy implements Lootable, Listener {
 			attribute.setBaseValue(attack);
 		
 		entity.getEquipment().setItemInMainHandDropChance(0f);
+		
+		if (variantData != null) {
+			switch (type){
+			case ZOMBIE:
+				Zombie zombie = (Zombie) base;
+				try {
+					zombie.setVillagerProfession(Profession.valueOf(variantData));
+				} catch (Exception e) {
+					QuestManagerPlugin.logger.warning("Failed to identify zombie type: " + variantData);
+				}
+				break;
+			case SKELETON:
+				Skeleton skele = (Skeleton) base;
+				try {
+					skele.setSkeletonType(SkeletonType.valueOf(variantData));
+				} catch (Exception e) {
+					QuestManagerPlugin.logger.warning("Failed to identify skeleton type: " + variantData);
+				}
+				break;
+			case SLIME:
+				int size = 0;
+				try {
+					size = Integer.parseInt(variantData);
+				} catch (NumberFormatException e) {
+					QuestManagerPlugin.logger.warning("Failed to parse slime size int: " + variantData + ". Defaulting to 0");
+				}
+				((Slime) base).setSize(size);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 	
 	@Override
