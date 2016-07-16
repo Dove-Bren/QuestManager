@@ -397,6 +397,8 @@ public class QuestManagerPlugin extends JavaPlugin {
 				continue;
 			}
 		}
+		
+		manager.wipeEntities();
 	}
 	
 	public void onReload() {
