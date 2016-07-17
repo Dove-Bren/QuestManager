@@ -309,7 +309,8 @@ public class Quest implements Listener {
 				}
 				
 				if (spellReward != null && !spellReward.trim().isEmpty()) {
-					qp.addSpell(spellReward);
+					for (String str : spellReward.split(" "))
+						processSpell(qp, str); //qp.addSpell(spellReward);
 				}
 				
 			    QuestManagerPlugin.questManagerPlugin.getManager().removeQuest(this);
@@ -318,6 +319,23 @@ public class Quest implements Listener {
 			}
 		}
 		
+	}
+	
+	private void processSpell(QuestPlayer player, String spellString) {
+		spellString = spellString.trim();
+		String key, spell;
+		int pos = spellString.indexOf(":");
+		
+		if (pos == -1) { //no restriction to spell
+			player.addSpell(spellString);
+			return;
+		}
+		
+		key = spellString.substring(0, 1);
+		spell = spellString.substring(pos + 1);
+		
+		if (QuestPlayer.hasKey(player, getName(), key))
+			player.addSpell(spell);;
 	}
 	
 	/**
@@ -557,6 +575,12 @@ public class Quest implements Listener {
 		this.titleReward = titleReward;
 	}
 
+	/**
+	 * Returns the spell reward string. This is <strong>not guaranteed</strong> to be a spell by itself. It may be a
+	 * formatted string instead (like <i>a:Flare b:Explosion</i>) Be sure to read about the formatting of
+	 * quest spell rewards in the default config.
+	 * @return
+	 */
 	public String getSpellReward() {
 		return spellReward;
 	}
