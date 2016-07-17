@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -16,7 +18,10 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.magic.MagicUser;
+import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.scheduling.Tickable;
+
+import io.puharesource.mc.titlemanager.api.ActionbarTitleObject;
 
 /**
  * Status effect that takes a portion of damage and applies it to the damager instead of the target.
@@ -151,6 +156,9 @@ public class ReflectEffect implements MagicStatusEffect, Listener, Tickable {
 			record.ticksLeft -= statusTicker.getDelay();
 			if (record.ticksLeft < 0) {
 				it.remove();
+				if (record.user instanceof QuestPlayer)
+				if (((QuestPlayer) record.user).getPlayer().isOnline())
+					alertPlayer(((QuestPlayer) record.user).getPlayer().getPlayer());
 			}
 		}
 		
@@ -175,6 +183,10 @@ public class ReflectEffect implements MagicStatusEffect, Listener, Tickable {
 	@Override
 	public void cancel() {
 		victims.clear();
+	}
+	
+	private void alertPlayer(Player p) {
+		new ActionbarTitleObject(ChatColor.DARK_GRAY + "Reflect faded" + ChatColor.RESET).send(p);
 	}
 
 	@Override
