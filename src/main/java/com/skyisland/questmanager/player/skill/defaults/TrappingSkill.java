@@ -456,6 +456,10 @@ public class TrappingSkill extends Skill implements Listener {
 		ItemStack inHand, offHand;
 		inHand = e.getPlayer().getInventory().getItemInMainHand();
 		offHand = e.getPlayer().getInventory().getItemInOffHand();
+		if (inHand.getType() == Material.AIR)
+			inHand = null;
+		if (offHand.getType() == Material.AIR)
+			offHand = null;
 		//if (!inHand.isSimilar(e.getPlayer().getInventory().getItemInOffHand()))
 		if (inHand == null || offHand == null ||
 				inHand.getType() != e.getPlayer().getInventory().getItemInOffHand().getType()

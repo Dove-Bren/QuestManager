@@ -174,11 +174,14 @@ public class DeliverRequirement extends Requirement implements Listener, Stateke
 			
 				int count = 0;
 				Inventory inv = player.getPlayer().getPlayer().getInventory();
+				String name;
 				
 				for (ItemStack item : inv.all(itemType).values()) {
-					if ((itemName == null && (!item.hasItemMeta() || !item.getItemMeta().hasDisplayName())) || 
-							(item.hasItemMeta() && item.getItemMeta().getDisplayName() != null 
-							  && item.getItemMeta().getDisplayName().equals(itemName))) {
+					name = null;
+					if (item.hasItemMeta() && item.getItemMeta().hasDisplayName())
+						name = item.getItemMeta().getDisplayName();
+					if ((itemName == null && name == null) || 
+						(itemName != null && name != null && name.equals(itemName))) {
 						count += item.getAmount();
 					}
 				}
