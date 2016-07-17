@@ -22,6 +22,8 @@ import java.util.List;
 
 import org.bukkit.entity.Entity;
 
+import com.skyisland.questmanager.magic.spell.status.MagicStatusEffect;
+
 public interface MagicUser {
 	
 	Entity getEntity();
@@ -43,4 +45,8 @@ public interface MagicUser {
 	 * mana, skill level, etc
 	 */
 	void castSpellWeavingSpell();
+	
+	void clearMagicEffects();
+	
+	List<MagicStatusEffect> getMagicEffects();
 }

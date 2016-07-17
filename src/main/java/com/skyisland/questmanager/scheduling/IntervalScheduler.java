@@ -71,6 +71,19 @@ public class IntervalScheduler extends Scheduler {
 				, this, delay, delay);
 	}
 	
+	private IntervalScheduler(long delay) {
+		this.delay = delay;
+		
+		this.list = new LinkedList<>();
+		
+		Bukkit.getScheduler().runTaskTimer(QuestManagerPlugin.questManagerPlugin
+				, this, delay, delay);
+	}
+	
+	public static IntervalScheduler createCustomScheduler(long delay) {
+		return new IntervalScheduler(delay);
+	}
+	
 	/**
 	 * @return the delay
 	 */

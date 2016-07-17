@@ -83,6 +83,7 @@ import com.skyisland.questmanager.magic.spell.Spell;
 import com.skyisland.questmanager.magic.spell.SpellWeavingManager;
 import com.skyisland.questmanager.magic.spell.SpellWeavingSpell;
 import com.skyisland.questmanager.magic.spell.effect.DamageEffect;
+import com.skyisland.questmanager.magic.spell.status.MagicStatusEffect;
 import com.skyisland.questmanager.player.skill.Skill;
 import com.skyisland.questmanager.player.skill.defaults.ImbuementSkill;
 import com.skyisland.questmanager.player.skill.event.CombatEvent;
@@ -317,6 +318,8 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	
 	private Map<Skill, Float> skillXP;
 	
+	private List<MagicStatusEffect> currentMagicEffects;
+	
 	/**
 	 * Registers this class as configuration serializable with all defined 
 	 * {@link aliases aliases}
@@ -372,6 +375,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 		this.skillLevels = new HashMap<>();
 		this.skillXP = new HashMap<>();
 		this.markLocation = null;
+		this.currentMagicEffects = new LinkedList<>();
 		Bukkit.getPluginManager().registerEvents(this, QuestManagerPlugin.questManagerPlugin);
 	}
 	
@@ -2425,5 +2429,21 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			ChargeEffect ef = new ChargeEffect(MARK_EFFECT);
 			ef.play(p, p.getLocation());
 		}
+	}
+
+	@Override
+	public void clearMagicEffects() {
+		if (currentMagicEffects.isEmpty())
+			return;
+		
+		for (MagicStatusEffect ef : currentMagicEffects)
+			ef.cancel();
+		
+		currentMagicEffects.clear();
+	}
+
+	@Override
+	public List<MagicStatusEffect> getMagicEffects() {
+		return currentMagicEffects;
 	}
 }
