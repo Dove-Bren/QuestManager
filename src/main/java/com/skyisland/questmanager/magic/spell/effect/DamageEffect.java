@@ -19,6 +19,7 @@
 package com.skyisland.questmanager.magic.spell.effect;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -30,10 +31,12 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.configuration.utils.YamlWriter;
 import com.skyisland.questmanager.magic.MagicUser;
+import com.skyisland.questmanager.npc.NPC;
 import com.skyisland.questmanager.player.PlayerOptions;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.event.MagicApplyEvent;
@@ -116,8 +119,12 @@ public class DamageEffect extends ImbuementEffect {
 			boolean invi = false;
 			double snapshot = targ.getHealth();
 			if (!(targ instanceof Player && (((Player) targ).getGameMode() == GameMode.CREATIVE || ((Player) targ).getGameMode() == GameMode.SPECTATOR))) {
-				targ.setInvulnerable(false);
-				invi = true;
+				List<MetadataValue> meta = targ.getMetadata(NPC.NPC_META_KEY);
+				
+				if (meta == null || meta.isEmpty() || !meta.get(0).asBoolean()) {
+					targ.setInvulnerable(false);
+					invi = true;
+				}
 			}
 			
 			targ.damage(curDamage, cause.getEntity());

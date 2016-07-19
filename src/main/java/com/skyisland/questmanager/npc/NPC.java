@@ -34,6 +34,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import com.skyisland.questmanager.QuestManagerPlugin;
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -43,6 +44,8 @@ import com.skyisland.questmanager.scheduling.Tickable;
 
 public abstract class NPC implements ConfigurationSerializable, Listener, Tickable {
 	
+	public static final String NPC_META_KEY = "QM_META_NPC";
+
 	/**
 	 * Cache value for saving lookup times for entities
 	 */
@@ -110,11 +113,24 @@ public abstract class NPC implements ConfigurationSerializable, Listener, Tickab
 	 * Register an entity to this NPC. This method also updates the ID of this npc
 	 */
 	public void setEntity(Entity entity) {
+		if (this.entity != null && this.entity.isValid()) {
+			stripEntity(this.entity);
+		}
+		
+		dressEntity(entity);
 		this.entity = entity;
 		this.id = entity.getUniqueId();
 		if (entity instanceof LivingEntity) {
 			((LivingEntity) entity).setRemoveWhenFarAway(false);
 		}
+	}
+	
+	private void stripEntity(Entity e) {
+		e.removeMetadata(NPC_META_KEY, QuestManagerPlugin.questManagerPlugin);
+	}
+	
+	private void dressEntity(Entity e) {
+		e.setMetadata(NPC_META_KEY, new FixedMetadataValue(QuestManagerPlugin.questManagerPlugin, Boolean.TRUE));
 	}
 	
 	/**
