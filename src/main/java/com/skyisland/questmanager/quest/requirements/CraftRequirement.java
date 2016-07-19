@@ -37,7 +37,7 @@ import com.skyisland.questmanager.quest.Goal;
 import com.skyisland.questmanager.quest.requirements.factory.RequirementFactory;
 
 /**
- * Requirement that a participant must talk to an npc.
+ * Requirement that a participant must craft a certain item
  *
  */
 public class CraftRequirement extends Requirement implements Listener, StatekeepingRequirement {

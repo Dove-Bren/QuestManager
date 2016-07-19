@@ -309,7 +309,7 @@ public class Quest implements Listener {
 				}
 				
 				if (spellReward != null && !spellReward.trim().isEmpty()) {
-					for (String str : spellReward.split("|"))
+					for (String str : spellReward.split("\\|"))
 						processSpell(qp, str); //qp.addSpell(spellReward);
 				}
 				

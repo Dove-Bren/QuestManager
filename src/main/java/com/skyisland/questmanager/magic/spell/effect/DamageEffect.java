@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
@@ -111,9 +112,25 @@ public class DamageEffect extends ImbuementEffect {
 			LivingEntity targ = (LivingEntity) e;
 			targ.setMetadata(DAMAGE_META_KEY, new FixedMetadataValue
 					(QuestManagerPlugin.questManagerPlugin, true));
+			
+			boolean invi = false;
+			double snapshot = targ.getHealth();
+			if (!(targ instanceof Player && (((Player) targ).getGameMode() == GameMode.CREATIVE || ((Player) targ).getGameMode() == GameMode.SPECTATOR))) {
+				targ.setInvulnerable(false);
+				invi = true;
+			}
+			
 			targ.damage(curDamage, cause.getEntity());
+//			targ.damage(0.0, cause.getEntity());
+//			targ.setHealth(Math.max(0.0, Math.min(targ.getMaxHealth(), targ.getHealth() - curDamage)));
 			targ.setMetadata(DAMAGE_META_KEY, new FixedMetadataValue
 					(QuestManagerPlugin.questManagerPlugin, true));
+			
+			//make sure they didn't invincible their way out damage
+			if (invi && Math.abs(snapshot - targ.getHealth()) < .0001) {
+				//targ.setHealth(targ.getHealth() - curDamage);
+				targ.setHealth(Math.max(0.0, Math.min(targ.getMaxHealth(), targ.getHealth() - curDamage)));
+			}
 			
 			if (cause instanceof QuestPlayer) {
 				QuestPlayer qp = (QuestPlayer) cause;
@@ -123,6 +140,10 @@ public class DamageEffect extends ImbuementEffect {
 					
 					String msg;
 					String name = e.getCustomName();
+					
+					if (e instanceof Player)
+						name = ((Player) e).getName();
+					
 					if (name == null) {
 						name = YamlWriter.toStandardFormat(cause.getEntity().getType().toString());
 					}

@@ -165,6 +165,7 @@ public abstract class NPC implements ConfigurationSerializable, Listener, Tickab
 			return;
 		}
 			
+		System.out.println("Setting to 0!");
 		e.setDamage(0);
 	}
 	

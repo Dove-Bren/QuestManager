@@ -71,6 +71,8 @@ public class AreaEffect extends SpellEffect {
 	
 	public static AreaEffect valueOf(Map<String, Object> map) {
 		AreaEffect ret = new AreaEffect((double) map.get("radius"));
+		if (map.containsKey("spreadOnTile"))
+			ret.spreadOnTile = (boolean) map.get("spreadOnTile");
 		//load effects
 		@SuppressWarnings("unchecked")
 		List<SpellEffect> effects = (List<SpellEffect>) map.get("effects");
@@ -94,13 +96,28 @@ public class AreaEffect extends SpellEffect {
 	
 	private double radius;
 	
+	private boolean spreadOnTile;
+	
 	/**
-	 * Makes an empty area of effect shell. It contains no spell effects.
+	 * Makes an empty area of effect shell. It contains no spell effects, and only spreads via entity.
 	 * @see #addEffect(SpellEffect)
+	 * @see 
 	 */
 	public AreaEffect(double radius) {
+		this(radius, false);
+	}
+	
+	/**
+	 * Makes an empty area of effect shell which contains no effects.
+	 * @param radius The radius to apply contained effects
+	 * @param spreadOnTile Whether the effects should be applied at every location in the radius, or just on entities
+	 * found in the radius. If you plan on nesting and AoE inside and AoE, make sure this is set to false or you'll have
+	 * lots of duplicate effect applications.
+	 */
+	public AreaEffect(double radius, boolean spreadOnTile) {
 		this.radius = radius;
 		this.effects = new LinkedList<>();
+		this.spreadOnTile = spreadOnTile;
 	}
 	
 	public void addEffect(SpellEffect effect) {
@@ -115,8 +132,19 @@ public class AreaEffect extends SpellEffect {
 	@Override
 	public void apply(Location loc, MagicUser cause) {
 		
+		if (!spreadOnTile) {
+			
+			Collection<Entity> nearby = loc.getWorld().getNearbyEntities(
+					loc, radius, radius, radius);
+			for (Entity near : nearby)
+				for (SpellEffect ef : effects) {
+					ef.apply(near, cause);
+				}
+			return;
+		}
+		
 		Collection<Entity> nearby = loc.getWorld().getNearbyEntities(
-				loc, radius, radius, radius);
+				loc, 0.5, 0.5, 0.5);
 		
 		for (Entity near : nearby)
 		for (SpellEffect ef : effects) {
