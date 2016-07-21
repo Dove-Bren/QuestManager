@@ -97,6 +97,7 @@ public class PluginConfiguration {
 		HOLDERNAME("interface.magic.holderName", Category.PLAYER, "Spellholder Name", "What name should spellholders have to be considered valid spellholders?", "Spell Vessel"),
 		ALLOWWEAVING("spellweaving.enabled", Category.FEATURE, "Enable Spellweaving", "Should spellweaving be enabled?", true),
 		USEINVOKER("spellweaving.useInvoker", Category.FEATURE, "Use Invoker", "Can players use an item invoker to invoke their spellweaving spells?", true),
+		PYLONMAXDISTANCE("spellweaving.maxDistance", Category.FEATURE, "Max Pylon Distance", "Maximum distance between pylons allowed. Limits cast load", 20.0),
 		INVOKERNAME("interface.spellweaving.invokerName", Category.PLAYER, "Invoker Name", "What name should an invoker have to be considered valid", "Spell Invoker"),
 		INVOKERTYPE("interface.spellweaving.invokerType", Category.PLAYER, "Invoker Type", "What material type is the spell invoker?", "CARROT_STICK"),
 		RECALLERTYPE("interface.recall.recallerType", Category.PLAYER, "Recaller Type", "What material is used as the recaller object? If the player can't get the item, they can only recall if you set up a recall spell", "BOOK"),
@@ -569,6 +570,10 @@ public class PluginConfiguration {
 			}
 		}
 		return map;
+	}
+	
+	public Double getMaxPylonDistance() {
+		return config.getDouble(PluginConfigurationKey.PYLONMAXDISTANCE.key, (Double) PluginConfigurationKey.PYLONMAXDISTANCE.def);
 	}
 	
 	public Object getBaseValue(PluginConfigurationKey key) {

@@ -19,6 +19,7 @@
 package com.skyisland.questmanager.npc;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.bukkit.Location;
@@ -37,9 +38,11 @@ import com.skyisland.questmanager.fanciful.FancyMessage;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.ui.ChatMenu;
 import com.skyisland.questmanager.ui.menu.BioptionChatMenu;
+import com.skyisland.questmanager.ui.menu.SimpleChatMenu;
 import com.skyisland.questmanager.ui.menu.action.OpenInventoryGuiAction;
 import com.skyisland.questmanager.ui.menu.inventory.ShopInventory;
 import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
+import com.skyisland.questmanager.ui.menu.message.Message;
 
 /**
  * NPC which offers to and repairs a players equipment, for a fee
@@ -84,6 +87,8 @@ public class ShopNPC extends SimpleStaticBioptionNPC {
 	
 	private ShopNPC(Location startingLoc) {
 		super(startingLoc);
+		altMessage = null;
+		requirements = null;
 	}
 	
 	@Override
@@ -113,6 +118,7 @@ public class ShopNPC extends SimpleStaticBioptionNPC {
 		return map;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static ShopNPC valueOf(Map<String, Object> map) {
 		if (map == null || !map.containsKey("name") || !map.containsKey("type") 
 				 || !map.containsKey("location") || !map.containsKey("equipment")
@@ -167,16 +173,52 @@ public class ShopNPC extends SimpleStaticBioptionNPC {
 			npc.chat.setSourceLabel(label);			
 		}
 		
+		//update code 3
+		if (map.containsKey("badrequirementmessage"))
+			npc.altMessage = (Message) map.get("badrequirementmessage");
+		if (map.containsKey("requiredquests"))
+		npc.requirements = (List<String>) map.get("requiredquests");
+		
 		return npc;
 	}
 	
 	private ShopInventory inventory;
+	
+	private Message altMessage;
+	
+	private List<String> requirements;
 		
 	@Override
 	protected void interact(Player player) {
 		
 		QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager()
 				.getPlayer(player.getUniqueId());
+		
+		boolean meetreqs = true;
+		
+		if (requirements != null && !requirements.isEmpty()) {
+			//go through reqs, see if the player has those quests completed
+			for (String req : requirements) {
+				//check for optionals/sets
+				if (!QuestPlayer.meetsRequirement(qp, req)) {
+					meetreqs = false;
+					break;
+				}
+			}
+		}
+		
+		if (!meetreqs) {
+			//doesn't have all the required quests done yet!
+			ChatMenu messageChat;
+			
+			if (altMessage == null) {
+				messageChat = new SimpleChatMenu(new FancyMessage("Hail, adventurer."));
+			} else {
+				messageChat = ChatMenu.getDefaultMenu(altMessage);
+			}
+			messageChat.show(player);
+			return;
+		}
 		
 		
 		ChatMenu messageChat = new BioptionChatMenu(chat,

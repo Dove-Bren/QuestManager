@@ -170,11 +170,11 @@ public class StatusEffect extends ImbuementEffect {
 			list.add(ChatColor.WHITE + "Grants temporary health that cannot be");
 			list.add(ChatColor.WHITE + "regenerated, but will be deducted from");
 			list.add(ChatColor.WHITE + "first");
-			list.add(ChatColor.GOLD + " Bonus Health: " + ChatColor.GREEN + (4 * effect.getAmplifier())
+			list.add(ChatColor.GOLD + " Bonus Health: " + ChatColor.GREEN + (4 * (effect.getAmplifier() + 1))
 					+ ChatColor.RESET);
 		} else if (effect.getType().equals(PotionEffectType.DAMAGE_RESISTANCE)) {
 			list.add(ChatColor.WHITE + "Reduces damage taken from all sources");
-			list.add(ChatColor.GOLD + " Damage Reduction: " + ChatColor.GREEN + (20 * effect.getAmplifier())
+			list.add(ChatColor.GOLD + " Damage Reduction: " + ChatColor.GREEN + (20 * (effect.getAmplifier() + 1))
 					+ "%" + ChatColor.RESET);
 		} else if (effect.getType().equals(PotionEffectType.FAST_DIGGING)) {
 			list.add(ChatColor.WHITE + "Improves attack speed and digging speed");
@@ -185,16 +185,16 @@ public class StatusEffect extends ImbuementEffect {
 		} else if (effect.getType().equals(PotionEffectType.HEALTH_BOOST)) {
 			list.add(ChatColor.WHITE + "Grants a boost to maximum health for");
 			list.add(ChatColor.WHITE + "the duration of the effect");
-			list.add(ChatColor.GOLD + " Bonus Health: " + ChatColor.GREEN + (4 * effect.getAmplifier())
+			list.add(ChatColor.GOLD + " Bonus Health: " + ChatColor.GREEN + (4 * (effect.getAmplifier() + 1))
 					 + ChatColor.RESET);
 		} else if (effect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) {
 			list.add(ChatColor.WHITE + "Increases melee damage dealt");
-			list.add(ChatColor.GOLD + " Damage Increase: " + ChatColor.GREEN + (3 * effect.getAmplifier())
+			list.add(ChatColor.GOLD + " Damage Increase: " + ChatColor.GREEN + (3 * (effect.getAmplifier() + 1))
 					+ ChatColor.RESET);
 		} else if (effect.getType().equals(PotionEffectType.LUCK)) {
 			list.add(ChatColor.WHITE + "Increases the chance of getting better");
 			list.add(ChatColor.WHITE + "loot from monsters and chests");
-			list.add(ChatColor.GOLD + " Luck Bonus: " + ChatColor.GREEN + effect.getAmplifier()
+			list.add(ChatColor.GOLD + " Luck Bonus: " + ChatColor.GREEN + (effect.getAmplifier() + 1)
 				+ ChatColor.RESET);
 		} else if (effect.getType().equals(PotionEffectType.POISON)) {
 			list.add(ChatColor.WHITE + "Deals damage over time until cured");
@@ -225,7 +225,7 @@ public class StatusEffect extends ImbuementEffect {
 					(float) effect.getDuration() / 20));
 		} else if (effect.getType().equals(PotionEffectType.SLOW)) {
 			list.add(ChatColor.WHITE + "Reduces all movement speed");
-			list.add(ChatColor.GOLD + " Reduction: " + ChatColor.RED + (15 * effect.getAmplifier())
+			list.add(ChatColor.GOLD + " Reduction: " + ChatColor.RED + (15 * (effect.getAmplifier() + 1))
 					+ "%" + ChatColor.RESET);
 		} else if (effect.getType().equals(PotionEffectType.SLOW_DIGGING)) {
 			list.add(ChatColor.WHITE + "Reduces swing and mining speed");
@@ -233,11 +233,11 @@ public class StatusEffect extends ImbuementEffect {
 					+ (10 * effect.getAmplifier()) + "%");
 		} else if (effect.getType().equals(PotionEffectType.SPEED)) {
 			list.add(ChatColor.WHITE + "Increases movement speed");
-			list.add(ChatColor.GOLD + " Reduction: " + ChatColor.GREEN + (20 * effect.getAmplifier())
+			list.add(ChatColor.GOLD + " Reduction: " + ChatColor.GREEN + (20 * (effect.getAmplifier() + 1))
 					+ "%" + ChatColor.RESET);
 		} else if (effect.getType().equals(PotionEffectType.WEAKNESS)) {
 			list.add(ChatColor.WHITE + "Decreases melee damage dealt");
-			list.add(ChatColor.GOLD + " Damage Penalty: " + ChatColor.RED + (4 * effect.getAmplifier())
+			list.add(ChatColor.GOLD + " Damage Penalty: " + ChatColor.RED + (4 * (effect.getAmplifier() + 1))
 					+ ChatColor.RESET);
 		} else if (effect.getType().equals(PotionEffectType.WITHER)) {
 			list.add(ChatColor.WHITE + "Deals damage over time until cured");

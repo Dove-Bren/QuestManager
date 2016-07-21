@@ -218,7 +218,7 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 			
 			return true;
 		}
-		
+		//"Driven.a"  6
 		if (requirement.contains(".")) {
 			int pos = requirement.indexOf(".");
 			String name = requirement.substring(0, pos);
@@ -244,6 +244,9 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	}
 	
 	public static boolean hasKey(QuestPlayer player, String questName, String key) {
+		if (questName.startsWith("*"))
+			questName = questName.substring(1);
+		System.out.println("check haskey. Quest: [" + questName + "] key: [" + key + "]");
 		if (player.questKeys.containsKey(questName)) {
 			String keys = player.questKeys.get(questName);
 			if (key.length() > 1) {
@@ -2231,6 +2234,20 @@ public class QuestPlayer implements Participant, Listener, MagicUser, Comparable
 	 */
 	private List<Entity> getEntitiesInBound(List<Location> points) {
 		List<Entity> list = new LinkedList<>();
+		
+		//prelim area check. Can't be over config values
+		Location last = null;
+		double maxDistance = QuestManagerPlugin.questManagerPlugin.getPluginConfiguration().getMaxPylonDistance();
+		for (Location l : points) {
+			if (last == null) {
+				last = l;
+				continue;
+			}
+			
+			if (l.distance(last) > maxDistance) {
+				return list; //cancel everything. just stop, cause it's gonna be too big.
+			}
+		}
 		
 		if (points == null || points.isEmpty()) {
 			return list;
