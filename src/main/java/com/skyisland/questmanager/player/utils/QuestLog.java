@@ -41,6 +41,7 @@ import com.skyisland.questmanager.player.PlayerOptions;
 import com.skyisland.questmanager.player.QuestPlayer;
 import com.skyisland.questmanager.player.skill.CraftingSkill;
 import com.skyisland.questmanager.player.skill.Skill;
+import com.skyisland.questmanager.player.skill.defaults.MagerySkill;
 import com.skyisland.questmanager.quest.Quest;
 
 /**
@@ -261,6 +262,9 @@ public class QuestLog {
 						if (s instanceof CraftingSkill) {
 							title.tooltip(desc + "\n\n" + ChatColor.BLUE + "Click here for recipes")
 							.command("/player recipe " + s.getName());
+						} else if (s instanceof MagerySkill) {
+							title.tooltip(desc + "\n\n" + ChatColor.BLUE + "Click here to see your spells")
+							.command("/player spells");
 						} else {
 							title.tooltip(desc);
 						}

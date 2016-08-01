@@ -25,6 +25,7 @@ import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -127,7 +128,7 @@ public class ContributionInventory extends GuiInventory {
 	}
 
 	@Override
-	public InventoryItem getItem(int pos) {
+	public InventoryItem getItem(int pos, InventoryAction action) {
 		//real logic is here
 		/*
 		 * Check slot. If in player's inventory, try to take. If in top inventory, try and put back.

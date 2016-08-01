@@ -113,4 +113,8 @@ public class FoodItem extends QualityItem {
 		ret.setQuality(this.getQuality());
 		return ret;
 	}
+
+	public int setFoodLevel(double calculateFoodLevel) {
+		return foodLevel;
+	}
 }

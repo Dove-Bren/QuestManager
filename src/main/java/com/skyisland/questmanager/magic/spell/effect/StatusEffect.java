@@ -119,10 +119,13 @@ public class StatusEffect extends ImbuementEffect {
 						msg = ChatColor.DARK_GRAY + "You gained the effect ";
 					} else {
 						String name = cause.getEntity().getCustomName();
+						if (cause.getEntity() instanceof Player) {
+							name = ((Player) cause.getEntity()).getName();
+						}
 						if (name == null) {
 							name = cause.getEntity().getType().toString();
 						}
-						msg = ChatColor.GRAY + cause.getEntity().getCustomName() + ChatColor.DARK_GRAY 
+						msg = ChatColor.GRAY + name + ChatColor.DARK_GRAY 
 								+ " gave you the effect ";
 					}
 					
@@ -144,7 +147,7 @@ public class StatusEffect extends ImbuementEffect {
 							(QuestManagerPlugin.questManagerPlugin, true));
 					targ.damage(0.0, cause.getEntity());
 					targ.setMetadata(DamageEffect.DAMAGE_META_KEY, new FixedMetadataValue
-							(QuestManagerPlugin.questManagerPlugin, true));
+							(QuestManagerPlugin.questManagerPlugin, false));
 				}
 				
 			}

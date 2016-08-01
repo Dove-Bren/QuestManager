@@ -138,6 +138,7 @@ import com.skyisland.questmanager.ui.InventoryGuiHandler;
 import com.skyisland.questmanager.ui.menu.action.PartyInviteAction;
 import com.skyisland.questmanager.ui.menu.action.ShowSkillMenuAction;
 import com.skyisland.questmanager.ui.menu.action.ShowSkillRecipesAction;
+import com.skyisland.questmanager.ui.menu.action.ShowSpellsMenuAction;
 import com.skyisland.questmanager.ui.menu.inventory.ServiceInventory;
 import com.skyisland.questmanager.ui.menu.inventory.ShopInventory;
 import com.skyisland.questmanager.ui.menu.message.BioptionMessage;
@@ -375,7 +376,10 @@ public class QuestManagerPlugin extends JavaPlugin {
 		//unregister our scheduler
 		Bukkit.getScheduler().cancelTasks(this);
 
-		playerManager.getParties().forEach(Party::disband);
+		//playerManager.getParties().forEach(Party::disband);
+		while (!playerManager.getParties().isEmpty()) {
+			playerManager.getParties().iterator().next().disband();
+		}
 		
 		//save user database
 		playerManager.save(new File(getDataFolder(), playerConfigFileName));
@@ -826,6 +830,10 @@ public class QuestManagerPlugin extends JavaPlugin {
 			if (args[0].equals("options")) {
 				qp.showPlayerOptionMenu();
 				return true;
+			}
+			
+			if (args[0].equals("spells")) {
+				new ShowSpellsMenuAction(qp).onAction();
 			}
 			
 			if (args[0].equals("recipe")) {

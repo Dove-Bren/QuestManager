@@ -66,7 +66,7 @@ public class ShopItem extends InventoryItem {
 		meta.setLore(Arrays.asList(
 				(cost <= player.getMoney() ? ChatColor.DARK_GREEN : ChatColor.DARK_RED) + 
 					"Cost:               " + cost,
-				(famecost <= player.getFame() ? ChatColor.DARK_GREEN : ChatColor.DARK_RED) +
+				(famecost <= player.getAlphaFame() ? ChatColor.DARK_GREEN : ChatColor.DARK_RED) +
 					"Fame Required: " + famecost));
 		ret.setItemMeta(meta);
 		

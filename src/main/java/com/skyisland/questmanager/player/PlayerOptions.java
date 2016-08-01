@@ -49,7 +49,9 @@ public class PlayerOptions implements ConfigurationSerializable {
 		SKILL_LIST("skill.inLog", new ItemStack(Material.WRITTEN_BOOK),
 				Lists.newArrayList("Display skill levels in", "the questlog. If off, you", "can still use the command", "/player skills", "to see your skill levels"), true),
 		SKILL_RECIPES_ALL("skill.recipes.all", new ItemStack(Material.SHEARS),
-				Lists.newArrayList("Shows all recipes for", "a skill even if it is", "way more difficult than", "what you could achieve"));
+				Lists.newArrayList("Shows all recipes for", "a skill even if it is", "way more difficult than", "what you could achieve")),
+		SHOW_PLAYER_MENU("player.menu", new ItemStack(Material.SKULL_ITEM), 
+				Lists.newArrayList("Right click players to see", "a player menu"));
 		
 		private String key;
 		

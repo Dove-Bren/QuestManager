@@ -36,6 +36,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.inventory.FurnaceSmeltEvent;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -155,6 +156,8 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 	
 	private double cooldown;
 	
+	private int inputAmount;
+	
 	public CookingGui(Player player, Furnace furnace, double bonusQuality, boolean useInputQuality) {
 		this.player = player;
 		this.furnace = furnace;
@@ -182,7 +185,7 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 	}
 
 	@Override
-	public InventoryItem getItem(int pos) {
+	public InventoryItem getItem(int pos, InventoryAction action) {
 		//0 is top slot, 1 is bottom, 2 is result
 		if (pos > 2) {
 			int slot = pos + 6;
@@ -203,15 +206,20 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 				return null;
 			}
 			
+			inputAmount = 1;
+			if (action == InventoryAction.PICKUP_HALF) {
+				inputAmount = currentTarget.getAmount();
+			}
+			
 			ItemStack replace = null;
-			if (currentTarget.getAmount() > 1) {
+			if (currentTarget.getAmount() > inputAmount) {
 				replace = currentTarget.clone();
-				replace.setAmount(currentTarget.getAmount() - 1);
+				replace.setAmount(currentTarget.getAmount() - inputAmount);
 			}
 			
 			player.getInventory().setItem(slot, replace);
 			
-			currentTarget.setAmount(1);
+			currentTarget.setAmount(inputAmount);
 			
 			furnace.getInventory().setResult(currentTarget);
 			QuestPlayer qp = QuestManagerPlugin.questManagerPlugin.getPlayerManager().getPlayer(player);
@@ -349,6 +357,7 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 		
 		if (furnace.getBurnTime() > 200) {
 			ItemStack ash = new ItemStack(Material.SULPHUR);
+			ash.setAmount(inputAmount);
 			ItemMeta meta = ash.getItemMeta();
 			meta.setDisplayName("Ash");
 			ash.setItemMeta(meta);
@@ -385,6 +394,7 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 		
 		OvenRecipe recipe = skillLink.getOvenRecipe(currentTarget);
 		FoodItem result = recipe.output.clone();
+		result.getUnderlyingItem().setAmount(inputAmount * result.getUnderlyingItem().getAmount());
 		
 		if (useInputQuality) {
 			result.setQuality((new QualityItem(currentTarget)).getQuality());
@@ -397,6 +407,10 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 		this.bottomFuel = null;
 		this.currentTarget = null;
 
+		if (inputAmount > 1) {
+			skillLevel += 3;
+		}
+		
 		CraftEvent event = new CraftEvent(qp, CraftEvent.CraftingType.COOKING, skillLevel, result);
 		Bukkit.getPluginManager().callEvent(event);
 		
@@ -415,6 +429,10 @@ public class CookingGui extends GuiInventory implements Alarmable<Integer>, List
 		FancyMessage msg;
 		
 		result.setQuality(result.getQuality() * ((1 - missIndex) + bonusQuality));
+		
+		//factor in bonus food points
+		result.setFoodLevel(skillLink.calculateFoodLevel
+				(result.getFoodLevel(), result.getQuality()));
 		
 		
 		String name;

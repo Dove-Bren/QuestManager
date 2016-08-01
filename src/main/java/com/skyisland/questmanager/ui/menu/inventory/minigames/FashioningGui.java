@@ -29,6 +29,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -93,7 +94,7 @@ public class FashioningGui extends GuiInventory {
 	}
 
 	@Override
-	public InventoryItem getItem(int pos) {
+	public InventoryItem getItem(int pos, InventoryAction action) {
 		if (skillLink == null) 
 			return null;
 		

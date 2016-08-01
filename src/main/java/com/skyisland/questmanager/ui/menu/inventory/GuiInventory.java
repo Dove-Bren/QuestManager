@@ -19,6 +19,7 @@
 package com.skyisland.questmanager.ui.menu.inventory;
 
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 
 import com.skyisland.questmanager.player.QuestPlayer;
@@ -31,8 +32,7 @@ import com.skyisland.questmanager.player.QuestPlayer;
  */
 public abstract class GuiInventory implements ConfigurationSerializable {
 	
-	
-	public abstract InventoryItem getItem(int pos);
+	public abstract InventoryItem getItem(int pos, InventoryAction action);
 	
 	public abstract Inventory getFormattedInventory(QuestPlayer player);
 }

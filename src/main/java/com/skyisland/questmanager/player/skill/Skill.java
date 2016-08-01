@@ -85,6 +85,7 @@ public abstract class Skill implements Comparable<Skill> {
 		//every level difference between skill and player decreases xp. Each level differene is 
 		//1/[cutoff] reduction. That way, we get a nice approach towards 0 at the cutoff
 		float xp = (float) (base * (1-(Math.abs((double) levelDifference) / (double) config.getSkillCutoff())));
+		xp = Math.max(0, xp);
 		
 		//lulz now just add it to player xp
 		participant.setSkillExperience(this, participant.getSkillExperience(this) + xp);

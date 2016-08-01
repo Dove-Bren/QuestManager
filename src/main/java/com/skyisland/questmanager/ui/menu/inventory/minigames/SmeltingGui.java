@@ -35,6 +35,7 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -205,7 +206,7 @@ public class SmeltingGui extends GuiInventory implements Alarmable<Integer>, Clo
 	}
 
 	@Override
-	public InventoryItem getItem(int pos) {
+	public InventoryItem getItem(int pos, InventoryAction action) {
 		if (!player.isOnline()) {
 			Alarm.getScheduler().unregister(this);
 			loseGame();

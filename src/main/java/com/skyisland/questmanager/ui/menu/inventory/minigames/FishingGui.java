@@ -32,6 +32,7 @@ import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -292,7 +293,7 @@ public class FishingGui extends GuiInventory implements Alarmable<Integer>, Clos
 	}
 
 	@Override
-	public InventoryItem getItem(int pos) {
+	public InventoryItem getItem(int pos, InventoryAction action) {
 		if (this.phase != GamePhase.RUNNING) {
 			return null;
 		}

@@ -130,14 +130,14 @@ public class DamageEffect extends ImbuementEffect {
 			targ.damage(curDamage, cause.getEntity());
 //			targ.damage(0.0, cause.getEntity());
 //			targ.setHealth(Math.max(0.0, Math.min(targ.getMaxHealth(), targ.getHealth() - curDamage)));
-			targ.setMetadata(DAMAGE_META_KEY, new FixedMetadataValue
-					(QuestManagerPlugin.questManagerPlugin, true));
 			
 			//make sure they didn't invincible their way out damage
 			if (invi && Math.abs(snapshot - targ.getHealth()) < .0001) {
 				//targ.setHealth(targ.getHealth() - curDamage);
 				targ.setHealth(Math.max(0.0, Math.min(targ.getMaxHealth(), targ.getHealth() - curDamage)));
 			}
+			targ.setMetadata(DAMAGE_META_KEY, new FixedMetadataValue
+					(QuestManagerPlugin.questManagerPlugin, false));
 			
 			if (cause instanceof QuestPlayer) {
 				QuestPlayer qp = (QuestPlayer) cause;

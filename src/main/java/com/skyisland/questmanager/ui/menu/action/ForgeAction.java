@@ -50,7 +50,9 @@ public class ForgeAction implements MenuAction {
 		CHESTPLATE,
 		LEGGINGS,
 		HELMET,
-		BOOTS;
+		BOOTS,
+		SHIELD,
+		ROD;
 		
 		public static boolean isRepairable(Material mat) {
 			

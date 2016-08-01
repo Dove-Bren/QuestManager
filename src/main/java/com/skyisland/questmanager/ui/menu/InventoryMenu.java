@@ -87,15 +87,19 @@ public class InventoryMenu implements Listener {
 			return;
 		}
 		
+		if (!e.getWhoClicked().getUniqueId().equals(player.getPlayer().getUniqueId())) {
+			return;
+		}
+		
 		//our inventory event!
 		int pos = e.getRawSlot();
 
 		e.setCancelled(true);
-		if (gui.getItem(pos) == null || gui.getItem(pos).getAction(player) == null) {
+		if (gui.getItem(pos, e.getAction()) == null || gui.getItem(pos, e.getAction()).getAction(player) == null) {
 			return;
 		}
 		
-		gui.getItem(pos).getAction(player).onAction();
+		gui.getItem(pos, e.getAction()).getAction(player).onAction();
 	}
 	
 	@EventHandler

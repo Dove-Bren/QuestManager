@@ -100,7 +100,7 @@ public class FireEffect extends ImbuementEffect {
 					(QuestManagerPlugin.questManagerPlugin, true));
 			targ.damage(0.0, cause.getEntity());
 			targ.setMetadata(DamageEffect.DAMAGE_META_KEY, new FixedMetadataValue
-					(QuestManagerPlugin.questManagerPlugin, true));
+					(QuestManagerPlugin.questManagerPlugin, false));
 		}
 	}
 	

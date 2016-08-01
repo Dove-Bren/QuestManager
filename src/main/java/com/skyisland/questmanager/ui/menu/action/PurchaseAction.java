@@ -64,7 +64,8 @@ public class PurchaseAction implements MenuAction {
 		
 		Player p = player.getPlayer().getPlayer();
 		
-		if (player.getFame() < fameCheck) {
+		//if (player.getFame() < fameCheck) {
+		if (player.getAlphaFame() < fameCheck) {
 			p.sendMessage(DENIAL_FAME);
 			return;
 		}

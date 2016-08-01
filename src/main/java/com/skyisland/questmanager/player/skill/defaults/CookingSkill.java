@@ -700,7 +700,8 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		double qualityDifference = food.getQuality() - 1.0;
 		qualityDifference = qualityDifference * hungerRate;
 		int newLevel = Math.min(20, e.getPlayer().getFoodLevel()
-				+ (int) Math.round(food.getFoodLevel() * (1 + qualityDifference)));
+		//		+ (int) Math.round(food.getFoodLevel() * (1 + qualityDifference)));
+				+ (int) Math.round(food.getFoodLevel()));
 		
 		FoodLevelChangeEvent event = new FoodLevelChangeEvent(e.getPlayer(), newLevel);
 		Bukkit.getPluginManager().callEvent(event);
@@ -726,5 +727,11 @@ public class CookingSkill extends LogSkill implements Listener, CraftingSkill {
 		return list;
 	}
 	
-	
+	public double calculateFoodLevel(int initialFoodLevel, double quality) {
+		double additional = Math.max(0, quality - 1);
+		additional *= hungerRate;
+		
+		return initialFoodLevel + additional;
+		
+	}
 }
