@@ -11,6 +11,7 @@ com.skyisland.questmanager.loot.dynamic
 com.skyisland.questmanager.magic
 com.skyisland.questmanager.magic.spell
 com.skyisland.questmanager.magic.spell.effect
+com.skyisland.questmanager.magic.spell.status
 com.skyisland.questmanager.npc
 com.skyisland.questmanager.npc.utils
 com.skyisland.questmanager.player
